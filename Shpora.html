@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Китайский словарь — полные горные карточки (ничего не обрезано)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', '微软雅黑', system-ui, -apple-system, sans-serif;
+            background: #2b3b2c;
+            min-height: 100vh;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCI+PHBvbHlsaW5lIHBvaW50cz0iMCw2MDAgMjAwLDQwMCA0MDAsNTUwIDYwMCwzMDAgODAwLDQ1MCA5MDAsMjUwIDEwMDAsMzUwIDEyMDAsMjAwIDEyMDAsODAwIDAsODAwIiBmaWxsPSIjM2E1YzNiIi8+PHBvbHlsaW5lIHBvaW50cz0iMCw2NTAgMjUwLDQ4MCA0NTAsNjAwIDcwMCwzODAgOTUwLDUwMCAxMjAwLDMwMCAxMjAwLDgwMCAwLDgwMCIgZmlsbD0iIzRlNzE0ZSIvPjxwb2x5bGluZSBwb2ludHM9IjAsNzAwIDMwMCw1NTAgNjAwLDY4MCA5MDAsNTAwIDEyMDAsNjAwIDEyMDAsODAwIDAsODAwIiBmaWxsPSIjNjI5MTVhIi8+PHBvbHlsaW5lIHBvaW50cz0iMCw3NTAgNDAwLDYyMCA4MDAsNzAwIDEyMDAsNjUwIDEyMDAsODAwIDAsODAwIiBmaWxsPSIjN2ZhYjZmIi8+PHJlY3QgeD0iMCIgeT0iNzUwIiB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI1MCIgZmlsbD0iIzhjYjM3MSIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjQ1MCIgcj0iMTUiIGZpbGw9IiNlM2Q4YzgiLz48Y2lyY2xlIGN4PSI4MDAiIGN5PSIzMjAiIHI9IjEwIiBmaWxsPSIjZTNkOGM4Ii8+PC9zdmc+');
+            background-size: cover;
+            background-position: bottom;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 40, 25, 0.55);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container { position: relative; z-index: 2; max-width: 650px; margin: 0 auto; padding: 16px 12px 40px; min-height: 100vh; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { font-size: 1.7rem; background: linear-gradient(135deg, #FFF8E7, #FFE4B5); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .header p { color: #F0E6C5; font-size: 0.8rem; }
+
+        .controls-panel { background: rgba(0,0,0,0.55); backdrop-filter: blur(12px); border-radius: 60px; padding: 10px 14px; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .ctrl-btn { background: #fff4e0; border: none; padding: 6px 14px; border-radius: 50px; font-weight: 600; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
+        .ctrl-btn.pinyin-toggle { background: #c9e0ff; color: #1e4663; }
+        .ctrl-btn.trans-toggle { background: #fbe9c3; color: #7a4c1d; }
+
+        .search-box { margin-bottom: 16px; }
+        .search-box input { width: 100%; padding: 10px 16px; border-radius: 60px; border: none; background: rgba(255,255,240,0.95); font-size: 0.9rem; outline: none; text-align: center; }
+
+        .category-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .cat-btn { border: none; padding: 5px 12px; border-radius: 40px; font-weight: 600; font-size: 0.7rem; cursor: pointer; color: white; text-shadow: 0 1px 1px rgba(0,0,0,0.3); }
+        .cat-btn.active { transform: scale(1.02); box-shadow: 0 0 0 2px white; }
+
+        .cards-grid { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+        .word-ball { width: 95px; height: 95px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; box-shadow: 0 8px 14px rgba(0,0,0,0.3); text-align: center; padding: 6px; }
+        .word-ball:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.05); }
+        .ball-emoji { font-size: 1.9rem; margin-bottom: 2px; }
+        .ball-chinese { font-size: 0.9rem; font-weight: 800; color: #2c1e0f; background: rgba(255,250,210,0.85); padding: 2px 6px; border-radius: 30px; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(20, 25, 15, 0.96); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(6px); padding: 16px; overflow-y: auto; }
+        .modal.active { display: flex; }
+        .modal-card { background: #fffcf0; border-radius: 44px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 26px 22px; box-shadow: 0 30px 40px rgba(0,0,0,0.5); position: relative; }
+        .modal-close { position: absolute; top: 14px; right: 18px; background: #efdbc1; border: none; font-size: 1.5rem; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-weight: bold; }
+        .modal-emoji { font-size: 3rem; text-align: center; margin-bottom: 8px; }
+        .modal-word { font-size: 2rem; font-weight: 800; text-align: center; color: #2f4d2d; margin-bottom: 20px; word-break: break-word; }
+        .detail-row { margin: 14px 0; background: #f6efdf; padding: 12px 14px; border-radius: 32px; }
+        .detail-label { font-weight: bold; color: #936e3e; margin-bottom: 8px; font-size: 0.85rem; }
+        .pinyin-area, .trans-area { font-size: 0.95rem; background: #fff2e0; padding: 8px 12px; border-radius: 28px; margin-top: 5px; word-break: break-word; white-space: pre-wrap; line-height: 1.4; }
+        .comment-area { background: #e5dccf; padding: 10px 14px; border-radius: 28px; margin-top: 10px; font-size: 0.85rem; white-space: pre-wrap; line-height: 1.5; }
+        .grammar-note { background: #d9e0c5; padding: 10px 14px; border-radius: 28px; margin-top: 10px; font-size: 0.85rem; border-left: 4px solid #7a9c3e; white-space: pre-wrap; line-height: 1.5; }
+        .modal-buttons { display: flex; gap: 12px; margin-top: 20px; justify-content: center; flex-wrap: wrap; }
+        .modal-btn { background: #c7d3bf; border: none; padding: 8px 18px; border-radius: 40px; font-weight: 600; font-size: 0.75rem; cursor: pointer; }
+        .no-results { text-align: center; padding: 30px; background: rgba(0,0,0,0.5); border-radius: 40px; color: #ffefc0; font-size: 0.9rem; }
+        footer { margin-top: 28px; text-align: center; font-size: 0.65rem; color: #cddbbc; }
+        @media (max-width: 480px) {
+            .word-ball { width: 80px; height: 80px; }
+            .ball-chinese { font-size: 0.8rem; }
+            .ball-emoji { font-size: 1.6rem; }
+            .modal-word { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>🏔️ 汉语·полный словарь</h1><p>цветные шары → вся информация | поиск | скрыть/показать пиньинь и перевод</p></div>
+    <div class="controls-panel">
+        <button class="ctrl-btn pinyin-toggle" id="globalHidePinyinBtn">🔇 Скрыть пиньинь</button>
+        <button class="ctrl-btn pinyin-toggle" id="globalShowPinyinBtn">🔊 Показать пиньинь</button>
+        <button class="ctrl-btn trans-toggle" id="globalHideTransBtn">🌙 Скрыть перевод</button>
+        <button class="ctrl-btn trans-toggle" id="globalShowTransBtn">☀️ Показать перевод</button>
+    </div>
+    <div class="search-box"><input type="text" id="searchInput" placeholder="🔍 Поиск (汉字, pinyin, перевод...)" autocomplete="off"></div>
+    <div class="category-filters" id="categoryFilters"></div>
+    <div class="cards-grid" id="cardsGrid"></div>
+    <div id="noResultsMsg" style="display: none;" class="no-results">✨ Нет совпадений ✨</div>
+    <footer>⛰️ Нажми на шарик → вся информация. Пиньинь и перевод скрыты по умолчанию. Все данные из вашего текста сохранены полностью.</footer>
+</div>
+<div id="wordModal" class="modal"><div class="modal-card"><button class="modal-close" id="closeModalBtn">✖</button><div id="modalContent"></div></div></div>
+
+<script>
+    // ==========================================================
+    // ПОЛНЫЙ СЛОВАРЬ — ВСЕ ДАННЫЕ ИЗ ВАШЕГО ТЕКСТА (НИЧЕГО НЕ ОБРЕЗАНО)
+    // Сохранены все примеры, стрелочки 👉, жирный шрифт (в тексте), длинные объяснения
+    // ==========================================================
+    const vocabulary = [
+        // 🟡 ВРЕМЯ / ДАТЫ — с полными комментариями
+        { word: "今天", emoji: "🕒", pinyin: "jīn tiān", translation: "сегодня", category: "time", comments: "сегодня, текущий день", grammar: "" },
+        { word: "几号", emoji: "📅", pinyin: "jǐ hào", translation: "какое число", category: "time", comments: "вопрос о дате", grammar: "几 = сколько? для дат" },
+        { word: "月", emoji: "📆", pinyin: "yuè", translation: "месяц", category: "time", comments: "месяц календарный", grammar: "" },
+        { word: "星期", emoji: "📆", pinyin: "xīng qī", translation: "день недели / неделя", category: "time", comments: "неделя, день недели: 星期一 понедельник", grammar: "" },
+        { word: "昨天", emoji: "⬅️", pinyin: "zuó tiān", translation: "вчера", category: "time", comments: "", grammar: "" },
+        { word: "明天", emoji: "➡️", pinyin: "míng tiān", translation: "завтра", category: "time", comments: "", grammar: "" },
+        { word: "几点", emoji: "⏰", pinyin: "jǐ diǎn", translation: "который час?", category: "time", comments: "спрашиваем время", grammar: "" },
+        { word: "一点", emoji: "🕐", pinyin: "yī diǎn", translation: "1 час / чуть-чуть", category: "time", comments: "👉 1 час / после глагола = чуть-чуть / после прилагательного = приставка «по-» + суффикс «-ка»\n👉 Пример: 快一点 kuài yī diǎn, 少一点 shǎo yī diǎn, 多一点 duō yī diǎn", grammar: "点 — час момента времени; 小时 — длительность" },
+        { word: "六点", emoji: "🕕", pinyin: "liù diǎn", translation: "6 часов", category: "time", comments: "", grammar: "" },
+        { word: "十点半", emoji: "🕥", pinyin: "shí diǎn bàn", translation: "10:30", category: "time", comments: "半 = половина", grammar: "" },
+        { word: "一个小时", emoji: "⏳", pinyin: "yī gè xiǎo shí", translation: "один час (длительность)", category: "time", comments: "для длительности", grammar: "小时 — промежуток времени" },
+        { word: "两个小时", emoji: "⏳", pinyin: "liǎng gè xiǎo shí", translation: "два часа", category: "time", comments: "", grammar: "" },
+        { word: "每天", emoji: "📆", pinyin: "měi tiān", translation: "каждый день", category: "time", comments: "", grammar: "" },
+        { word: "周末", emoji: "📆", pinyin: "zhōu mò", translation: "выходные", category: "time", comments: "", grammar: "" },
+        { word: "早上", emoji: "🌅", pinyin: "zǎo shang", translation: "утро", category: "time", comments: "", grammar: "" },
+        { word: "早上好", emoji: "🌅", pinyin: "zǎo shang hǎo", translation: "доброе утро", category: "time", comments: "", grammar: "" },
+        { word: "早", emoji: "☀️", pinyin: "zǎo", translation: "утро (приветствие)", category: "time", comments: "короткое утреннее приветствие", grammar: "" },
+        { word: "晚上", emoji: "🌙", pinyin: "wǎn shang", translation: "вечер", category: "time", comments: "", grammar: "" },
+        { word: "晚上好", emoji: "🌙", pinyin: "wǎn shang hǎo", translation: "добрый вечер", category: "time", comments: "", grammar: "" },
+        { word: "今年", emoji: "📅", pinyin: "jīn nián", translation: "в этом году", category: "time", comments: "", grammar: "" },
+        { word: "明年", emoji: "📅", pinyin: "míng nián", translation: "в следующем году", category: "time", comments: "", grammar: "" },
+        { word: "去年", emoji: "📅", pinyin: "qù nián", translation: "в прошлом году", category: "time", comments: "", grammar: "" },
+        { word: "最近", emoji: "🔁", pinyin: "zuì jìn", translation: "в последнее время", category: "time", comments: "", grammar: "最 + прил. = самый" },
+        { word: "平时", emoji: "🔁", pinyin: "píng shí", translation: "обычно", category: "time", comments: "", grammar: "" },
+        { word: "老样子", emoji: "🔁", pinyin: "lǎo yàng zi", translation: "как обычно", category: "time", comments: "устойчивое выражение", grammar: "" },
+        { word: "上次", emoji: "🔄", pinyin: "shàng cì", translation: "в прошлый раз", category: "time", comments: "", grammar: "" },
+        { word: "下次再见", emoji: "🔄", pinyin: "xià cì zài jiàn", translation: "увидимся в следующий раз", category: "time", comments: "", grammar: "" },
+        { word: "等一下", emoji: "⏳", pinyin: "děng yī xià", translation: "подожди", category: "time", comments: "一下 — недолго", grammar: "动词 + 一下 = сделать немного" },
+        { word: "从…到…", emoji: "➖", pinyin: "cóng… dào…", translation: "с… до… (время/место/возраст)", category: "time", comments: "универсальный предлог\n👉 универсально: время / географически / возраст / всё\n👉 Пример: 从早上八点到晚上五点\n👉 Пример: 从莫斯科到北京", grammar: "从早上八点到晚上五点" },
+        { word: "从几点", emoji: "⏰", pinyin: "cóng jǐ diǎn", translation: "с которого часа?", category: "time", comments: "", grammar: "" },
+        { word: "每天工作几个小时", emoji: "🕤", pinyin: "měi tiān gōng zuò jǐ gè xiǎo shí", translation: "сколько часов работаешь каждый день?", category: "time", comments: "пример вопроса о длительности", grammar: "" },
+
+        // 🔴 ДЕЙСТВИЯ — с полными примерами из текста
+        { word: "去", emoji: "🚶", pinyin: "qù", translation: "идти / ехать (туда)", category: "action", comments: "去 + место + действие", grammar: "去学校看书 — пойти в школу читать книгу" },
+        { word: "来", emoji: "🚶‍♂️", pinyin: "lái", translation: "приходить (сюда)", category: "action", comments: "", grammar: "" },
+        { word: "看", emoji: "👀", pinyin: "kàn", translation: "смотреть / читать / навестить", category: "action", comments: "1) смотреть / читать: 看书 kàn shū\n2) навестить кого-то (типа прийти на осмотр):\n👉去看朋友 qù kàn péng you, 去看爸妈 qù kàn bà mā, 去看医生 qù kàn yī shēng", grammar: "многозначный глагол" },
+        { word: "读", emoji: "🔊", pinyin: "dú", translation: "читать (вслух)", category: "action", comments: "", grammar: "" },
+        { word: "写", emoji: "✍️", pinyin: "xiě", translation: "писать", category: "action", comments: "", grammar: "" },
+        { word: "写汉字", emoji: "✍️", pinyin: "xiě hàn zì", translation: "писать иероглифы", category: "action", comments: "写汉字最难", grammar: "" },
+        { word: "做饭", emoji: "🍳", pinyin: "zuò fàn", translation: "готовить еду", category: "action", comments: "", grammar: "" },
+        { word: "做", emoji: "🔨", pinyin: "zuò", translation: "делать", category: "action", comments: "⚠️ Не путать с 作 (труд)", grammar: "" },
+        { word: "说", emoji: "🗣️", pinyin: "shuō", translation: "говорить", category: "action", comments: "👉怎么说？ zěn me shuō?\n👉请再说 qǐng zài shuō — пожалуйста, скажи ещё раз\n👉我会说中文 wǒ huì shuō zhōng wén — я умею говорить по-китайски", grammar: "" },
+        { word: "请再说", emoji: "🔄", pinyin: "qǐng zài shuō", translation: "пожалуйста, скажи ещё раз", category: "action", comments: "вежливая просьба", grammar: "请 + глагол" },
+        { word: "开始", emoji: "▶️", pinyin: "kāi shǐ", translation: "начинать", category: "action", comments: "", grammar: "" },
+        { word: "知道", emoji: "🧠", pinyin: "zhī dào", translation: "знать", category: "action", comments: "", grammar: "" },
+        { word: "觉得", emoji: "🤔", pinyin: "jué de", translation: "чувствовать / казаться", category: "action", comments: "", grammar: "для выражения мнения" },
+        { word: "忘了", emoji: "🔁", pinyin: "wàng le", translation: "забыл", category: "action", comments: "了 — смена состояния", grammar: "" },
+        { word: "迟到", emoji: "⏰", pinyin: "chí dào", translation: "опоздать", category: "action", comments: "", grammar: "" },
+        { word: "打包", emoji: "📦", pinyin: "dǎ bāo", translation: "упаковать с собой", category: "action", comments: "в ресторане", grammar: "" },
+        { word: "散散步", emoji: "🚶‍♀️", pinyin: "sàn sàn bù", translation: "погулять", category: "action", comments: "редупликация глагола", grammar: "" },
+        { word: "加油", emoji: "💪", pinyin: "jiā yóu", translation: "давай! вперёд!", category: "action", comments: "поддержка", grammar: "" },
+        { word: "工作", emoji: "👔", pinyin: "gōng zuò", translation: "работать / работа", category: "action", comments: "", grammar: "" },
+        { word: "去过了", emoji: "✔️", pinyin: "qù guo le", translation: "побывал (где-то)", category: "action", comments: "опыт в прошлом", grammar: "V + 过 = бывал когда-то" },
+        { word: "学做饭", emoji: "🎓", pinyin: "xué zuò fàn", translation: "учиться готовить", category: "action", comments: "", grammar: "" },
+        { word: "读一本很有意思的书", emoji: "📖", pinyin: "dú yī běn hěn yǒu yì si de shū", translation: "читаю очень интересную книгу", category: "action", comments: "пример фразы", grammar: "" },
+
+        // 🟢 ЛЮДИ — с именами и всеми пояснениями
+        { word: "妈妈", emoji: "👩", pinyin: "mā ma", translation: "мама", category: "people", comments: "他妈妈 — его мама\n👉 для близких людей 的 de можно не говорить: 我的妈妈 wǒ de mā ma", grammar: "" },
+        { word: "老板", emoji: "👩‍💼", pinyin: "lǎo bǎn", translation: "начальник", category: "people", comments: "обращение к мужчине в повседневности", grammar: "" },
+        { word: "同事", emoji: "👥", pinyin: "tóng shì", translation: "коллега", category: "people", comments: "сосед по делам", grammar: "" },
+        { word: "同学", emoji: "🧑‍🎓", pinyin: "tóng xué", translation: "одноклассник", category: "people", comments: "сосед по учёбе", grammar: "" },
+        { word: "服务员", emoji: "🍽️", pinyin: "fú wù yuán", translation: "официант", category: "people", comments: "", grammar: "" },
+        { word: "老师", emoji: "👩‍🏫", pinyin: "lǎo shī", translation: "учитель", category: "people", comments: "", grammar: "" },
+        { word: "学生", emoji: "🧑‍🎓", pinyin: "xué sheng", translation: "ученик", category: "people", comments: "", grammar: "" },
+        { word: "朋友", emoji: "👫", pinyin: "péng you", translation: "друг", category: "people", comments: "", grammar: "" },
+        { word: "美女", emoji: "👩", pinyin: "měi nǚ", translation: "красавица", category: "people", comments: "", grammar: "" },
+        { word: "男的 / 女的", emoji: "🧑", pinyin: "nán de / nǚ de", translation: "мужчина / женщина", category: "people", comments: "", grammar: "" },
+        { word: "男朋友", emoji: "💑", pinyin: "nán péng you", translation: "парень (романтический смысл)", category: "people", comments: "", grammar: "" },
+        { word: "女朋友", emoji: "💑", pinyin: "nǚ péng you", translation: "девушка (романтический смысл)", category: "people", comments: "", grammar: "" },
+        { word: "爱人", emoji: "💑", pinyin: "ài rén", translation: "супруг / супруга", category: "people", comments: "", grammar: "" },
+        { word: "女儿", emoji: "👧", pinyin: "nǚ ér", translation: "дочь", category: "people", comments: "", grammar: "" },
+        { word: "儿子", emoji: "👦", pinyin: "ér zi", translation: "сын", category: "people", comments: "", grammar: "" },
+        { word: "家人", emoji: "🏠", pinyin: "jiā rén", translation: "семья", category: "people", comments: "", grammar: "" },
+        { word: "大家", emoji: "👥", pinyin: "dà jiā", translation: "все", category: "people", comments: "", grammar: "" },
+        { word: "乐溪", emoji: "🎋", pinyin: "Lè xī", translation: "Le Xi (имя)", category: "people", comments: "пример имени", grammar: "" },
+        { word: "欣怡", emoji: "😊", pinyin: "Xīn yí", translation: "Xin Yi (имя)", category: "people", comments: "пример имени", grammar: "" },
+        { word: "均蕾", emoji: "🌿", pinyin: "Jūn lěi", translation: "Jun Lei (имя)", category: "people", comments: "пример имени", grammar: "" },
+        { word: "美娜老师", emoji: "🌸", pinyin: "Měi nà lǎo shī", translation: "учитель Мэйна", category: "people", comments: "пример имени", grammar: "" },
+        { word: "我 / 我们 / 你 / 你们 / 他 / 她 / 他们 / 您", emoji: "👤", pinyin: "wǒ / wǒ men / nǐ / nǐ men / tā / tā / tā men / nín", translation: "я / мы / ты / вы / он / она / они / Вы", category: "people", comments: "местоимения", grammar: "您 — вежливая форма" },
+
+        // 🟣 МЕСТА / ПРЕДМЕТЫ — со всеми культурными пояснениями
+        { word: "学校", emoji: "🏫", pinyin: "xué xiào", translation: "школа", category: "places", comments: "", grammar: "" },
+        { word: "办公室", emoji: "🏢", pinyin: "bàn gōng shì", translation: "офис", category: "places", comments: "", grammar: "" },
+        { word: "家", emoji: "🏠", pinyin: "jiā", translation: "дом", category: "places", comments: "", grammar: "" },
+        { word: "在家", emoji: "🏠", pinyin: "zài jiā", translation: "дома", category: "places", comments: "", grammar: "在 + место = находиться где-то" },
+        { word: "海南", emoji: "🌴", pinyin: "Hǎi nán", translation: "Хайнань", category: "places", comments: "", grammar: "" },
+        { word: "上海", emoji: "🏙️", pinyin: "Shàng hǎi", translation: "Шанхай", category: "places", comments: "", grammar: "" },
+        { word: "中国", emoji: "🇨🇳", pinyin: "Zhōng guó", translation: "Китай", category: "places", comments: "", grammar: "" },
+        { word: "美国", emoji: "🇺🇸", pinyin: "Měi guó", translation: "Америка", category: "places", comments: "", grammar: "" },
+        { word: "新疆", emoji: "🏜️", pinyin: "Xīn jiāng", translation: "Синьцзян", category: "places", comments: "👉 вопрос, который задают иностранцам в Китае: 你是新疆人吗？\n👉 люди из этой провинции не выглядят как ханьцы, похожи на узбеков внешностью и культурой, очень часто у них очень явный и сильный акцент", grammar: "" },
+        { word: "俄罗斯", emoji: "🇷🇺", pinyin: "É luó sī", translation: "Россия", category: "places", comments: "俄罗斯人 — русский\n俄语 — русский язык\n👉 как правило, страны строятся по схеме: иероглиф, означающий смысл страны (либо фонетически)\n👉 Граждане: страна + 人\n👉 Языки: первый иероглиф из страны + 语: 俄语, 英语, 汉语, 德语", grammar: "" },
+        { word: "埃及", emoji: "🇪🇬", pinyin: "Āi jí", translation: "Египет", category: "places", comments: "", grammar: "" },
+
+        // 🟠 ЕДА — с фразами
+        { word: "米饭", emoji: "🍚", pinyin: "mǐ fàn", translation: "рис", category: "food", comments: "", grammar: "" },
+        { word: "菜", emoji: "🥘", pinyin: "cài", translation: "блюдо / овощи", category: "food", comments: "", grammar: "" },
+        { word: "甜点", emoji: "🍰", pinyin: "tián diǎn", translation: "десерт", category: "food", comments: "", grammar: "" },
+        { word: "巧克力", emoji: "🍫", pinyin: "qiǎo kè lì", translation: "шоколад", category: "food", comments: "", grammar: "" },
+        { word: "爱莲巧", emoji: "🍫", pinyin: "Ài lián qiǎo", translation: "Алёнка", category: "food", comments: "", grammar: "" },
+        { word: "寿司", emoji: "🍣", pinyin: "shòu sī", translation: "суши", category: "food", comments: "", grammar: "" },
+        { word: "三明治", emoji: "🥪", pinyin: "sān míng zhì", translation: "сэндвич", category: "food", comments: "", grammar: "" },
+        { word: "做了很多菜", emoji: "🍳", pinyin: "zuò le hěn duō cài", translation: "приготовила много блюд", category: "food", comments: "пример фразы", grammar: "了 — завершённое действие" },
+        { word: "不太喜欢", emoji: "🍚", pinyin: "bù tài xǐ huan", translation: "не очень нравится", category: "food", comments: "выражение отношения", grammar: "不太 = не очень" },
+        { word: "妈妈做的菜比饭店好吃", emoji: "🏠", pinyin: "mā ma zuò de cài bǐ fàn diàn hǎo chī", translation: "мамины блюда вкуснее ресторанных", category: "food", comments: "пример сравнения", grammar: "A 比 B + прилагательное" },
+
+        // 💙 ВОПРОСЫ — со всеми нюансами
+        { word: "几", emoji: "🔢", pinyin: "jǐ", translation: "сколько? / для дат", category: "question", comments: "📅 几号 jǐ hào — какое число?\n星期几？ xīng qī jǐ — какой день недели?", grammar: "" },
+        { word: "什么", emoji: "❓", pinyin: "shén me", translation: "что? / какой?", category: "question", comments: "", grammar: "" },
+        { word: "啥", emoji: "🗣️", pinyin: "shá", translation: "что? (разговорное)", category: "question", comments: "разговорный вариант 什么", grammar: "" },
+        { word: "为什么", emoji: "🤔", pinyin: "wèi shén me", translation: "почему? / зачем?", category: "question", comments: "", grammar: "因为... 所以..." },
+        { word: "啥意思", emoji: "🤔", pinyin: "shá yì si", translation: "что значит?", category: "question", comments: "разговорное", grammar: "意思 = значение" },
+        { word: "多少", emoji: "🔢", pinyin: "duō shao", translation: "сколько? (количество)", category: "question", comments: "для больших чисел и цен", grammar: "" },
+        { word: "怎么样", emoji: "🤷", pinyin: "zěn me yàng", translation: "как тебе? (мнение, качество)", category: "question", comments: "👉 ставится всегда в конце предложения\n你最近怎么样? nǐ zuì jìn zěn me yàng?", grammar: "" },
+        { word: "怎么", emoji: "⚙️", pinyin: "zěn me", translation: "как? / почему? / что?", category: "question", comments: "怎么，这个可以吗？ — что, это подойдёт?", grammar: "怎么 + глагол" },
+        { word: "哪国人", emoji: "🌍", pinyin: "nǎ guó rén", translation: "из какой страны?", category: "question", comments: "", grammar: "哪 = который" },
+        { word: "你是哪里的", emoji: "📍", pinyin: "nǐ shì nǎ lǐ de", translation: "ты откуда?", category: "question", comments: "", grammar: "" },
+        { word: "什么时候", emoji: "⏰", pinyin: "shén me shí hou", translation: "когда? (момент)", category: "question", comments: "ответ: в 点 и 分", grammar: "" },
+        { word: "在哪儿", emoji: "📍", pinyin: "zài nǎr", translation: "где?", category: "question", comments: "👉 哪 — which one / 儿 — суффикс места", grammar: "在 + место" },
+        { word: "去哪儿", emoji: "📍", pinyin: "qù nǎr", translation: "куда?", category: "question", comments: "", grammar: "" },
+        { word: "有没有", emoji: "✅❌", pinyin: "yǒu méi yǒu", translation: "есть или нет?", category: "question", comments: "вопрос о наличии", grammar: "" },
+        { word: "对不对", emoji: "✅❌", pinyin: "duì bù duì", translation: "правильно или нет?", category: "question", comments: "", grammar: "повторение глагола для вопроса" },
+        { word: "叫什么", emoji: "📛", pinyin: "jiào shén me", translation: "как зовут?", category: "question", comments: "", grammar: "叫 = звать" },
+        { word: "多大", emoji: "🎂", pinyin: "duō dà", translation: "сколько лет? (о возрасте)", category: "question", comments: "你多大？ nǐ duō dà?", grammar: "" },
+        { word: "呢", emoji: "🤔", pinyin: "ne", translation: "а? (альтернативный вопрос)", category: "question", comments: "👉 для альтернативного вопроса:\n你呢？ nǐ ne? (а ты?)\n鸡肉呢？ jī ròu ne? (а курица?)\n明天呢？ míng tiān ne? (а завтра?)\n👉 второе значение — иногда используют как замену 在哪儿: 书呢？ shū ne? (а где книга?)", grammar: "" },
+
+        // 🟤 ОЦЕНКА — с жирными примерами
+        { word: "太…了", emoji: "🔥", pinyin: "tài… le", translation: "очень / слишком", category: "evaluation", comments: "📖 太棒了 tài bàng le — здорово!\n🤯 太难了 tài nán le — слишком сложно", grammar: "усилитель" },
+        { word: "超", emoji: "⚡", pinyin: "chāo", translation: "супер / сверх", category: "evaluation", comments: "современное слово", grammar: "" },
+        { word: "最", emoji: "🥇", pinyin: "zuì", translation: "самый", category: "evaluation", comments: "最喜欢的 zuì xǐ huan de\n最喜欢 zuì xǐ huan\n最近 zuì jìn", grammar: "превосходная степень" },
+        { word: "不太", emoji: "😐", pinyin: "bù tài", translation: "не очень", category: "evaluation", comments: "不太喜欢", grammar: "мягкое отрицание" },
+        { word: "还不错", emoji: "👍", pinyin: "hái bù cuò", translation: "ещё неплохо", category: "evaluation", comments: "", grammar: "" },
+        { word: "还好", emoji: "🙂", pinyin: "hái hǎo", translation: "ещё хорошо", category: "evaluation", comments: "你最近还好吗？ nǐ zuì jìn hái hǎo ma?", grammar: "" },
+        { word: "很有意思", emoji: "📖", pinyin: "hěn yǒu yì si", translation: "очень интересно", category: "evaluation", comments: "", grammar: "有意思 = интересно" },
+        { word: "写汉字最难", emoji: "✍️", pinyin: "xiě hàn zì zuì nán", translation: "писать иероглифы сложнее всего", category: "evaluation", comments: "", grammar: "" },
+        { word: "漂亮", emoji: "🎨", pinyin: "piào liang", translation: "красивый", category: "evaluation", comments: "", grammar: "" },
+        { word: "真好看", emoji: "🎨", pinyin: "zhēn hǎo kàn", translation: "очень красиво (приятно смотреть)", category: "evaluation", comments: "👉 перед глаголами — приятно смотреть записи", grammar: "" },
+
+        // 💬 ФРАЗЫ — все речевые штампы из текста
+        { word: "您好", emoji: "👋", pinyin: "nín hǎo", translation: "здравствуйте", category: "phrase", comments: "вежливая форма", grammar: "" },
+        { word: "大家好", emoji: "👋", pinyin: "dà jiā hǎo", translation: "всем привет", category: "phrase", comments: "", grammar: "" },
+        { word: "嗨 / 哈喽", emoji: "👋", pinyin: "hāi / hā lou", translation: "привет", category: "phrase", comments: "заимствования", grammar: "" },
+        { word: "拜拜", emoji: "👋", pinyin: "bài bai", translation: "пока", category: "phrase", comments: "от английского bye-bye", grammar: "" },
+        { word: "谢谢您", emoji: "🙏", pinyin: "xiè xie nín", translation: "спасибо (вежливо)", category: "phrase", comments: "", grammar: "" },
+        { word: "多谢啦", emoji: "🙏", pinyin: "duō xiè la", translation: "большое спасибо", category: "phrase", comments: "неформально", grammar: "" },
+        { word: "是应该的", emoji: "🎯", pinyin: "shì yīng gāi de", translation: "не за что / это правильно", category: "phrase", comments: "ответ на спасибо", grammar: "" },
+        { word: "不好意思", emoji: "😅", pinyin: "bù hǎo yì si", translation: "извините / неудобно / стесняюсь", category: "phrase", comments: "универсальное", grammar: "" },
+        { word: "没事儿", emoji: "😌", pinyin: "méi shìr", translation: "ничего страшного", category: "phrase", comments: "ответ на извинения", grammar: "儿化音" },
+        { word: "麻烦你", emoji: "🙏", pinyin: "má fan nǐ", translation: "побеспокою тебя / будьте добры", category: "phrase", comments: "вежливая просьба", grammar: "" },
+        { word: "哇 / 好滴", emoji: "😲", pinyin: "wā / hǎo dī", translation: "вау / хорошо (мило)", category: "phrase", comments: "междометия", grammar: "" },
+        { word: "哎哟 / 哎呀", emoji: "😩", pinyin: "āi yō / āi yā", translation: "ой! ай!", category: "phrase", comments: "междометия", grammar: "" },
+        { word: "真的？", emoji: "❓", pinyin: "zhēn de?", translation: "правда?", category: "phrase", comments: "", grammar: "" },
+        { word: "幸会幸会", emoji: "🤝", pinyin: "xìng huì xìng huì", translation: "рад познакомиться (деловой)", category: "phrase", comments: "формально", grammar: "" },
+        { word: "怎么称呼你", emoji: "💬", pinyin: "zěn me chēng hū nǐ", translation: "как к тебе обращаться?", category: "phrase", comments: "деловой контекст", grammar: "" },
+        { word: "先生", emoji: "👨‍💼", pinyin: "xiān sheng", translation: "мистер, господин", category: "phrase", comments: "фамилия + 先生 + 好: 李先生好！", grammar: "" },
+        { word: "我的中文名字是", emoji: "📛", pinyin: "wǒ de zhōng wén míng zi shì", translation: "моё китайское имя...", category: "phrase", comments: "", grammar: "" },
+        { word: "你小时候想做什么工作？", emoji: "👶", pinyin: "nǐ xiǎo shí hou xiǎng zuò shén me gōng zuò?", translation: "кем ты хотел стать в детстве?", category: "phrase", comments: "", grammar: "" },
+        { word: "你觉得怎么样？", emoji: "🤔", pinyin: "nǐ jué de zěn me yàng?", translation: "ты как считаешь?", category: "phrase", comments: "", grammar: "" },
+        { word: "明白了", emoji: "🧠", pinyin: "míng bai le", translation: "понял", category: "phrase", comments: "", grammar: "" },
+        { word: "当然", emoji: "✅", pinyin: "dāng rán", translation: "конечно", category: "phrase", comments: "", grammar: "" },
+        { word: "怎么了？", emoji: "😟", pinyin: "zěn me le?", translation: "что случилось?", category: "phrase", comments: "", grammar: "" },
+        { word: "我和他关系不太好", emoji: "💔", pinyin: "wǒ hé tā guān xi bù tài hǎo", translation: "у нас с ним не очень хорошие отношения", category: "phrase", comments: "", grammar: "" },
+        { word: "我不忙", emoji: "😊", pinyin: "wǒ bù máng", translation: "я не занят", category: "phrase", comments: "", grammar: "" },
+        { word: "去过了七个国家", emoji: "🚀", pinyin: "qù guo le qī ge guó jiā", translation: "побывал в семи странах", category: "phrase", comments: "опыт", grammar: "去过" },
+        { word: "吃过了", emoji: "🍽️", pinyin: "chī guo le", translation: "поел / поела", category: "phrase", comments: "", grammar: "" },
+        { word: "在读一下", emoji: "🔊", pinyin: "zài dú yī xià", translation: "ещё раз прочитай-ка", category: "phrase", comments: "", grammar: "再 + глагол = снова" },
+        { word: "均蕾三十六岁", emoji: "👤", pinyin: "Jūn lěi sān shí liù suì", translation: "Jun Lei 36 лет", category: "phrase", comments: "пример возраста", grammar: "" },
+        { word: "乐溪三十三岁", emoji: "👤", pinyin: "Lè xī sān shí sān suì", translation: "Le Xi 33 года", category: "phrase", comments: "пример возраста", grammar: "" },
+        { word: "欣怡三十三岁", emoji: "👤", pinyin: "Xīn yí sān shí sān suì", translation: "Xin Yi 33 года", category: "phrase", comments: "пример возраста", grammar: "" },
+        { word: "你多大？你呢？", emoji: "❓", pinyin: "nǐ duō dà? nǐ ne?", translation: "сколько тебе лет? а тебе?", category: "phrase", comments: "", grammar: "" },
+
+        // 🧩 ГРАММАТИКА — с полными примерами (как в вашем тексте)
+        { word: "是", emoji: "⚪", pinyin: "shì", translation: "быть, являться", category: "grammar", comments: "связка", grammar: "я есть кто-то" },
+        { word: "不", emoji: "⚪", pinyin: "bù", translation: "нет (отрицание)", category: "grammar", comments: "👉 перед четвёртым тоном меняется: bú → 不要，不做，不是", grammar: "" },
+        { word: "对 / 正确", emoji: "⚪", pinyin: "duì / zhèng què", translation: "да / верно / правильно", category: "grammar", comments: "", grammar: "" },
+        { word: "可能 / 可能吧", emoji: "⚪", pinyin: "kě néng / kě néng ba", translation: "может быть", category: "grammar", comments: "吧 — мягкость", grammar: "" },
+        { word: "就是", emoji: "⚪", pinyin: "jiù shì", translation: "именно / просто / сразу", category: "grammar", comments: "👉 именно: 是的，就是这样\n👉 просто: 就是我也不知道\n👉 сразу: 明天就做", grammar: "" },
+        { word: "行", emoji: "⚪", pinyin: "xíng", translation: "ладно / хорошо / можно", category: "grammar", comments: "согласие", grammar: "" },
+        { word: "跟 / 和", emoji: "⚪", pinyin: "gēn / hé", translation: "с / и", category: "grammar", comments: "跟 — союз для подлежащих (с кем-то)\n和 — союз для дополнений (и)\n👉 我跟女儿散散步了 — я с дочкой гуляла\n👉 看见妈妈和爸爸 — видел маму и папу\n👉 吃爱莲巧和蛋糕 — ел Алёнку и торт", grammar: "важное различие" },
+        { word: "但", emoji: "⚪", pinyin: "dàn", translation: "но", category: "grammar", comments: "", grammar: "" },
+        { word: "因为", emoji: "⚪", pinyin: "yīn wèi", translation: "потому что", category: "grammar", comments: "после него причина", grammar: "因为... 所以..." },
+        { word: "意思", emoji: "💡", pinyin: "yì si", translation: "значение / смысл", category: "grammar", comments: "💡 很有意思 — очень интересно\n😅 不好意思 — извините / неудобно\n❓ 啥意思 — что значит?\n🗣️ 你的意思是 — ты имеешь в виду\n🗣️ 我的意思是 — я имею в виду", grammar: "" },
+        { word: "就行", emoji: "✅", pinyin: "jiù xíng", translation: "достаточно / и всё", category: "grammar", comments: "👉 你说就行 — просто скажи, и всё\n👉 你叫我美娜就行 — можешь называть меня Мэйна\n👉 你支付就行 — просто заплати, и всё", grammar: "после глагола" },
+        { word: "一下", emoji: "⏳", pinyin: "yī xià", translation: "немного (по- + ка)", category: "grammar", comments: "✍️ 写一下 — напиши-ка\n👂 想听一下 — хочу послушать\n🔊 请读一下 — пожалуйста, прочитай\n⏳ 等一下 — подожди", grammar: "动词 + 一下" },
+        { word: "一点儿", emoji: "🔹", pinyin: "yī diǎnr", translation: "чуть-чуть / по- + суффикс -ее", category: "grammar", comments: "快一点 — быстрее\n少一点 — поменьше\n多一点 — побольше", grammar: "после прилагательного" },
+        { word: "了", emoji: "✔️", pinyin: "le", translation: "уже / смена состояния", category: "grammar", comments: "忘了 — забыл\n吃了 — поел\n⚠️ Отрицание для прошедшего времени — 没", grammar: "смена состояния" },
+        { word: "过", emoji: "✔️", pinyin: "guò", translation: "бывал когда-то / переходить / отмечать", category: "grammar", comments: "👉 Оригинальное значение — «переходить»: 过马路\n👉 Значение 1: 过 + праздник = отмечать: 过生日\n👉 Значение 2: V + 过 — было уже такое: 去过了七个国家, 吃过了中国菜", grammar: "опыт в прошлом" },
+        { word: "也", emoji: "⚪", pinyin: "yě", translation: "тоже", category: "grammar", comments: "⚠️ Не употребляется без глагола\n❌ 我也\n✔️ 我也去\n✔️ 我也有书\n✔️ 我也是", grammar: "" },
+        { word: "时候 vs 时间", emoji: "🕐", pinyin: "shí hou / shí jiān", translation: "момент vs длительность", category: "grammar", comments: "❓ 你什么时候睡觉？ — когда? (момент, в ответе: 点, 分)\n❓ 你睡觉多长时间？ — сколько времени? (длительность, в ответе: 小时, 分钟)", grammar: "важное различие" }
+    ];
+
+    const categoryColors = { time: "#d4a017", action: "#c75c3a", people: "#4f8a5e", places: "#8f6ca3", food: "#e67e22", question: "#3987c4", evaluation: "#b88b4a", phrase: "#4f9e9e", grammar: "#aa9f7c" };
+    const categoryNames = { time: "🟡 Время", action: "🔴 Действия", people: "🟢 Люди", places: "🟣 Места", food: "🟠 Еда", question: "💙 Вопросы", evaluation: "🟤 Оценка", phrase: "💬 Фразы", grammar: "🧩 Грамматика" };
+
+    let currentCategory = "all", searchQuery = "", globalPinyinVisible = false, globalTransVisible = false, currentModalData = null, modalPinyinVisible = false, modalTransVisible = false;
+
+    function getFilteredWords() { return vocabulary.filter(item => { if (currentCategory !== "all" && item.category !== currentCategory) return false; if (searchQuery.trim()) { const q = searchQuery.trim().toLowerCase(); return item.word.toLowerCase().includes(q) || item.pinyin.toLowerCase().includes(q) || item.translation.toLowerCase().includes(q) || (item.comments && item.comments.toLowerCase().includes(q)) || (item.grammar && item.grammar.toLowerCase().includes(q)); } return true; }); }
+    function renderBalls() { const filtered = getFilteredWords(); const grid = document.getElementById("cardsGrid"); const noMsg = document.getElementById("noResultsMsg"); if (filtered.length === 0) { grid.innerHTML = ""; noMsg.style.display = "block"; return; } noMsg.style.display = "none"; grid.innerHTML = filtered.map(item => { const bgColor = categoryColors[item.category] || "#99946e"; return `<div class="word-ball" style="background: radial-gradient(circle at 30% 30%, ${bgColor}cc, ${bgColor});" data-word='${JSON.stringify(item)}'><div class="ball-emoji">${item.emoji || "🔖"}</div><div class="ball-chinese">${item.word.length > 10 ? item.word.slice(0,10) : item.word}</div></div>`; }).join(''); document.querySelectorAll('.word-ball').forEach(el => { el.addEventListener('click', () => { const raw = el.getAttribute('data-word'); if (raw) openModal(JSON.parse(raw)); }); }); }
+    function openModal(wordObj) { currentModalData = wordObj; modalPinyinVisible = globalPinyinVisible; modalTransVisible = globalTransVisible; updateModalContent(); document.getElementById("wordModal").classList.add("active"); }
+    function updateModalContent() { if (!currentModalData) return; const pinyinHtml = modalPinyinVisible ? `<div class="pinyin-area">🔊 ${currentModalData.pinyin}</div>` : `<div class="pinyin-area" style="filter: blur(4px); cursor: pointer;" onclick="window.toggleModalPinyin()">🔒 пиньинь скрыт (нажмите кнопку)</div>`; const transHtml = modalTransVisible ? `<div class="trans-area">🌍 ${currentModalData.translation}</div>` : `<div class="trans-area" style="filter: blur(4px); cursor: pointer;" onclick="window.toggleModalTrans()">🔒 перевод скрыт (нажмите кнопку)</div>`; const commentsHtml = currentModalData.comments ? `<div class="comment-area">💬 ${currentModalData.comments}</div>` : ""; const grammarHtml = currentModalData.grammar ? `<div class="grammar-note">📐 Грамматика: ${currentModalData.grammar}</div>` : ""; document.getElementById("modalContent").innerHTML = `<div class="modal-emoji">${currentModalData.emoji || "📘"}</div><div class="modal-word">${currentModalData.word}</div><div class="detail-row"><div class="detail-label">📖 Пиньинь</div>${pinyinHtml}</div><div class="detail-row"><div class="detail-label">🇷🇺 Перевод</div>${transHtml}</div>${commentsHtml}${grammarHtml}<div class="modal-buttons"><button class="modal-btn" id="modalTogglePinyinBtn">🔊 Показать/скрыть пиньинь</button><button class="modal-btn" id="modalToggleTransBtn">🌐 Показать/скрыть перевод</button></div>`; document.getElementById("modalTogglePinyinBtn")?.addEventListener('click', (e) => { e.stopPropagation(); window.toggleModalPinyin(); }); document.getElementById("modalToggleTransBtn")?.addEventListener('click', (e) => { e.stopPropagation(); window.toggleModalTrans(); }); }
+    window.toggleModalPinyin = function() { modalPinyinVisible = !modalPinyinVisible; updateModalContent(); }; window.toggleModalTrans = function() { modalTransVisible = !modalTransVisible; updateModalContent(); };
+    function renderFilters() { const container = document.getElementById("categoryFilters"); const cats = ["all", "time", "action", "people", "places", "food", "question", "evaluation", "phrase", "grammar"]; container.innerHTML = cats.map(cat => { const display = cat === "all" ? "🏔️ Все категории" : categoryNames[cat]; const bg = cat === "all" ? "#5a6e4a" : categoryColors[cat]; return `<button class="cat-btn ${currentCategory === cat ? 'active' : ''}" style="background: ${bg};" data-cat="${cat}">${display}</button>`; }).join(''); document.querySelectorAll('.cat-btn').forEach(btn => { btn.addEventListener('click', () => { currentCategory = btn.dataset.cat; renderFilters(); renderBalls(); }); }); }
+    document.getElementById("globalHidePinyinBtn").addEventListener('click', () => { globalPinyinVisible = false; if (currentModalData) { modalPinyinVisible = false; updateModalContent(); } }); document.getElementById("globalShowPinyinBtn").addEventListener('click', () => { globalPinyinVisible = true; if (currentModalData) { modalPinyinVisible = true; updateModalContent(); } }); document.getElementById("globalHideTransBtn").addEventListener('click', () => { globalTransVisible = false; if (currentModalData) { modalTransVisible = false; updateModalContent(); } }); document.getElementById("globalShowTransBtn").addEventListener('click', () => { globalTransVisible = true; if (currentModalData) { modalTransVisible = true; updateModalContent(); } }); document.getElementById("searchInput").addEventListener('input', (e) => { searchQuery = e.target.value; renderBalls(); }); document.getElementById("closeModalBtn").addEventListener('click', () => { document.getElementById("wordModal").classList.remove("active"); }); document.getElementById("wordModal").addEventListener('click', (e) => { if (e.target === document.getElementById("wordModal")) document.getElementById("wordModal").classList.remove("active"); });
+    renderFilters(); renderBalls();
+</script>
+</body>
+</html>
