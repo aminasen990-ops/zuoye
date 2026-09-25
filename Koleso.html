@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🎡 Колесо лотереи · Разговорная практика HSK 1-2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #2d4a2a 0%, #1a3a1a 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .game-container {
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 253, 245, 0.97);
+            border-radius: 3rem;
+            box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.4);
+            padding: 1.8rem;
+            backdrop-filter: blur(2px);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #e6a817, #f5c542);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .sub {
+            text-align: center;
+            color: #8b7652;
+            margin-bottom: 1.8rem;
+            font-size: 0.85rem;
+        }
+
+        /* КОЛЕСО */
+        .wheel-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 550px) {
+            .wheel-container {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 50%;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 0 8px #faf0cf, 0 0 0 12px #e6a817;
+            transition: all 0.2s;
+        }
+
+        .spin-btn {
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, #e6a817, #f5c542);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #3d2b1a;
+            box-shadow: 0 6px 0 #a05e15;
+            transition: 0.07s linear;
+            font-family: inherit;
+        }
+
+        .spin-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #a05e15;
+        }
+
+        /* ВЫПАВШАЯ ТЕМА */
+        .result-card {
+            background: #fff8e8;
+            border-radius: 2rem;
+            padding: 1rem 1.5rem;
+            margin: 1.2rem 0;
+            text-align: center;
+            border-left: 8px solid #e6a817;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .topic-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #a05e15;
+            margin-bottom: 0.3rem;
+        }
+
+        .topic-emoji {
+            font-size: 2rem;
+        }
+
+        /* ВОПРОСЫ */
+        .questions-area {
+            background: #fefaf0;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .question-item {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #f0dbc0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #3a2c1f;
+            flex: 3;
+        }
+
+        .question-pinyin {
+            font-size: 0.7rem;
+            color: #9b8e72;
+            font-family: monospace;
+        }
+
+        .show-answer-btn {
+            background: #e2ecd9;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .answer-box {
+            display: none;
+            background: #eef3e6;
+            padding: 0.5rem;
+            border-radius: 0.8rem;
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+
+        .answer-box.show {
+            display: block;
+        }
+
+        .answer-text {
+            color: #2a7a3a;
+            font-weight: 500;
+        }
+
+        .help-text {
+            background: #f0e8d8;
+            border-radius: 1rem;
+            padding: 0.6rem 1rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            text-align: center;
+            color: #6b5a3e;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #9b8a6a;
+        }
+
+        @media (max-width: 550px) {
+            .game-container {
+                padding: 1rem;
+            }
+            .topic-name {
+                font-size: 1.3rem;
+            }
+            .question-text {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div style="text-align: center;">
+        <h1>🎡 Колесо лотереи <span style="font-size: 1rem;">🗣️ Разговорная практика</span></h1>
+        <div class="sub">✨ Нажми на колесо или на кнопку — выбери тему. Отвечай на вопросы вслух. ✨</div>
+    </div>
+
+    <div class="wheel-section">
+        <div class="wheel-container">
+            <canvas id="wheelCanvas" width="500" height="500"></canvas>
+        </div>
+        <button class="spin-btn" id="spinBtn">🎲 КРУТИТЬ КОЛЕСО 🎲</button>
+    </div>
+
+    <!-- Результат и вопросы -->
+    <div id="resultArea" style="min-height: 300px;">
+        <div class="result-card">
+            <div class="topic-emoji" id="topicEmoji">🎲</div>
+            <div class="topic-name" id="topicName">Нажми на колесо!</div>
+            <div style="font-size: 0.8rem; color:#a05e15;">⬇️ Ниже — вопросы для обсуждения ⬇️</div>
+        </div>
+        <div id="questionsContainer" class="questions-area">
+            <div style="text-align: center; padding: 1.5rem; color: #9b8a6a;">
+                🎡 Покрутите колесо, чтобы начать разговорную практику!
+            </div>
+        </div>
+        <div class="help-text">
+            💡 Совет: говори полными предложениями. Не бойся ошибаться — главное говорить!
+        </div>
+    </div>
+    <footer>
+        ⭐ Каждая тема — реальные разговоры из жизни. Жми на вопросы, чтобы увидеть подсказку-ответ.
+    </footer>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // ТЕМЫ И ВОПРОСЫ (только то, что ученики реально могут сказать)
+    // --------------------------------------------------------------
+    const topics = [
+        {
+            name: "🗓️ Время и планы",
+            emoji: "⏰",
+            questions: [
+                { q: "现在几点？", hint: "Сейчас 12 часов дня.", pinyin: "xiànzài jǐ diǎn?" },
+                { q: "你今天几点起床？", hint: "Я встал в 7 утра.", pinyin: "nǐ jīntiān jǐ diǎn qǐchuáng?" },
+                { q: "你晚上几点睡觉？", hint: "Я ложусь спать в 11 вечера.", pinyin: "nǐ wǎnshang jǐ diǎn shuìjiào?" },
+                { q: "你周末打算做什么？", hint: "В выходные я иду в кино.", pinyin: "nǐ zhōumò dǎsuàn zuò shénme?" },
+                { q: "你每天工作/学习几个小时？", hint: "Я работаю 8 часов в день.", pinyin: "nǐ měitiān gōngzuò/xuéxí jǐ gè xiǎoshí?" }
+            ]
+        },
+        {
+            name: "🍜 Еда и рестораны",
+            emoji: "🍚",
+            questions: [
+                { q: "你想吃什么？", hint: "Я хочу рис и курицу.", pinyin: "nǐ xiǎng chī shénme?" },
+                { q: "你最喜欢什么菜？", hint: "Моё любимое блюдо — пельмени.", pinyin: "nǐ zuì xǐhuān shénme cài?" },
+                { q: "你妈妈做的菜好吃吗？", hint: "Да, мамины блюда очень вкусные.", pinyin: "nǐ māma zuò de cài hǎochī ma?" },
+                { q: "这个菜辣不辣？", hint: "Немного остро, но очень вкусно.", pinyin: "zhège cài là bù là?" },
+                { q: "你能吃辣吗？", hint: "Я могу есть острое, но не очень сильно.", pinyin: "nǐ néng chī là ma?" }
+            ]
+        },
+        {
+            name: "🏠 Дом и город",
+            emoji: "🏙️",
+            questions: [
+                { q: "你住在哪儿？", hint: "Я живу в Пекине.", pinyin: "nǐ zhù zài nǎr?" },
+                { q: "你家有几口人？", hint: "В моей семье 4 человека.", pinyin: "nǐ jiā yǒu jǐ kǒu rén?" },
+                { q: "你住在哪个城市？", hint: "Я живу в Санкт-Петербурге.", pinyin: "nǐ zhù zài nǎge chéngshì?" },
+                { q: "你家附近有超市吗？", hint: "Да, рядом есть маленький магазин.", pinyin: "nǐ jiā fùjìn yǒu chāoshì ma?" },
+                { q: "你喜欢你的城市吗？", hint: "Да, мой город очень красивый.", pinyin: "nǐ xǐhuān nǐ de chéngshì ma?" }
+            ]
+        },
+        {
+            name: "👨‍👩‍👧 Семья и друзья",
+            emoji: "💕",
+            questions: [
+                { q: "你有哥哥或妹妹吗？", hint: "У меня есть старший брат.", pinyin: "nǐ yǒu gēge huò mèimei ma?" },
+                { q: "你爸爸在哪儿工作？", hint: "Мой папа работает в больнице.", pinyin: "nǐ bàba zài nǎr gōngzuò?" },
+                { q: "你最好的朋友叫什么？", hint: "Моего лучшего друга зовут Сяо Мин.", pinyin: "nǐ zuì hǎo de péngyou jiào shénme?" },
+                { q: "你周末和家人一起做什么？", hint: "Я гуляю с семьёй в парке.", pinyin: "nǐ zhōumò hé jiārén yīqǐ zuò shénme?" },
+                { q: "你妈妈会做中国菜吗？", hint: "Да, она хорошо готовит.", pinyin: "nǐ māma huì zuò Zhōngguó cài ma?" }
+            ]
+        },
+        {
+            name: "📱 Свободное время",
+            emoji: "🎬",
+            questions: [
+                { q: "你喜欢看电影吗？", hint: "Да, я люблю смотреть комедии.", pinyin: "nǐ xǐhuān kàn diànyǐng ma?" },
+                { q: "你周末喜欢做什么？", hint: "Я люблю читать книги.", pinyin: "nǐ zhōumò xǐhuān zuò shénme?" },
+                { q: "你会说几种语言？", hint: "Я говорю на двух языках.", pinyin: "nǐ huì shuō jǐ zhǒng yǔyán?" },
+                { q: "你喜欢运动吗？", hint: "Да, я люблю играть в футбол.", pinyin: "nǐ xǐhuān yùndòng ma?" },
+                { q: "你最近在读什么书？", hint: "Я читаю 'Гарри Поттера'.", pinyin: "nǐ zuìjìn zài dú shénme shū?" }
+            ]
+        },
+        {
+            name: "🛒 Покупки и цены",
+            emoji: "💰",
+            questions: [
+                { q: "这个杯子多少钱？", hint: "Эта чашка стоит 15 юаней.", pinyin: "zhège bēizi duōshǎo qián?" },
+                { q: "你觉得这件衣服太贵吗？", hint: "Да, это очень дорого.", pinyin: "nǐ juéde zhè jiàn yīfu tài guì ma?" },
+                { q: "你平时去哪儿买东西？", hint: "Я обычно хожу в супермаркет рядом с домом.", pinyin: "nǐ píngshí qù nǎr mǎi dōngxi?" },
+                { q: "你喜欢网上购物吗？", hint: "Да, это удобно.", pinyin: "nǐ xǐhuān wǎngshàng gòuwù ma?" },
+                { q: "你昨天买了什么？", hint: "Я купил молоко и хлеб.", pinyin: "nǐ zuótiān mǎi le shénme?" }
+            ]
+        },
+        {
+            name: "🚕 Транспорт",
+            emoji: "🚗",
+            questions: [
+                { q: "你平时怎么去上班/学校？", hint: "Я езжу на метро.", pinyin: "nǐ píngshí zěnme qù shàngbān/xuéxiào?" },
+                { q: "从你家到学校要多久？", hint: "Нужно 30 минут.", pinyin: "cóng nǐ jiā dào xuéxiào yào duōjiǔ?" },
+                { q: "你喜欢坐出租车还是地铁？", hint: "Я люблю метро, это быстрее.", pinyin: "nǐ xǐhuān zuò chūzūchē háishì dìtiě?" },
+                { q: "你坐过飞机吗？", hint: "Да, я летал в Пекин.", pinyin: "nǐ zuò guo fēijī ma?" },
+                { q: "昨天你为什么迟到了？", hint: "Потому что я проспал.", pinyin: "zuótiān nǐ wèishénme chídào le?" }
+            ]
+        },
+        {
+            name: "🏥 Здоровье",
+            emoji: "💊",
+            questions: [
+                { q: "你最近身体怎么样？", hint: "Нормально, спасибо.", pinyin: "nǐ zuìjìn shēntǐ zěnme yàng?" },
+                { q: "你生病的时候吃什么药？", hint: "Я пью таблетки от головы.", pinyin: "nǐ shēngbìng de shíhou chī shénme yào?" },
+                { q: "你去过医院吗？", hint: "Да, я был в больнице два раза.", pinyin: "nǐ qù guo yīyuàn ma?" },
+                { q: "你每天运动吗？", hint: "Да, я хожу пешком 30 минут.", pinyin: "nǐ měitiān yùndòng ma?" },
+                { q: "你觉得跑步累不累？", hint: "Немного устаю, но это полезно.", pinyin: "nǐ juéde pǎobù lèi bù lèi?" }
+            ]
+        },
+        {
+            name: "🌤️ Погода",
+            emoji: "☀️",
+            questions: [
+                { q: "今天天气怎么样？", hint: "Сегодня солнечно и жарко.", pinyin: "jīntiān tiānqì zěnme yàng?" },
+                { q: "你最喜欢什么季节？", hint: "Я люблю осень, не жарко и не холодно.", pinyin: "nǐ zuì xǐhuān shénme jìjié?" },
+                { q: "你们那儿冬天下雪吗？", hint: "Да, зимой часто идёт снег.", pinyin: "nǐmen nàr dōngtiān xiàxuě ma?" },
+                { q: "下雨的时候你喜欢做什么？", hint: "Я люблю читать дома.", pinyin: "xiàyǔ de shíhou nǐ xǐhuān zuò shénme?" },
+                { q: "今天热不热？", hint: "Да, очень жарко.", pinyin: "jīntiān rè bù rè?" }
+            ]
+        },
+        {
+            name: "🎓 Учёба и работа",
+            emoji: "📚",
+            questions: [
+                { q: "你是学生还是工作？", hint: "Я студент.", pinyin: "nǐ shì xuéshēng háishì gōngzuò?" },
+                { q: "你学中文多长时间了？", hint: "Я учу китайский 1 год.", pinyin: "nǐ xué Zhōngwén duō cháng shíjiān le?" },
+                { q: "你的专业是什么？", hint: "Моя специальность — экономика.", pinyin: "nǐ de zhuānyè shì shénme?" },
+                { q: "你觉得中文难吗？", hint: "Да, иероглифы сложные.", pinyin: "nǐ juéde Zhōngwén nán ma?" },
+                { q: "你每天学几个小时？", hint: "Я учу 2 часа каждый день.", pinyin: "nǐ měitiān xué jǐ gè xiǎoshí?" }
+            ]
+        }
+    ];
+
+    // Цвета для сегментов колеса
+    const segmentColors = [
+        "#FDE2B5", "#E8D5B7", "#F5E2C8", "#F0DDB5", "#FCE4C0", "#F5DEB3",
+        "#F3D9B1", "#FAE4C4", "#F1DBB8", "#FBE5C2", "#F0D9AE", "#F9E1BB"
+    ];
+
+    let currentTopicIndex = 0;
+    let wheelCanvas = null;
+    let ctx = null;
+    let animationId = null;
+    let spinning = false;
+    let currentAngle = 0;
+
+    function initWheel() {
+        wheelCanvas = document.getElementById("wheelCanvas");
+        ctx = wheelCanvas.getContext("2d");
+        drawWheel();
+    }
+
+    function drawWheel() {
+        const size = wheelCanvas.width;
+        const centerX = size / 2;
+        const centerY = size / 2;
+        const radius = size / 2 - 5;
+        const angleStep = (Math.PI * 2) / topics.length;
+
+        ctx.clearRect(0, 0, size, size);
+        for (let i = 0; i < topics.length; i++) {
+            const startAngle = currentAngle + i * angleStep;
+            const endAngle = startAngle + angleStep;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.lineTo(centerX, centerY);
+            ctx.fillStyle = segmentColors[i % segmentColors.length];
+            ctx.fill();
+            ctx.strokeStyle = "#dbb46a";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(startAngle + angleStep / 2);
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = "bold 14px 'Segoe UI', 'Noto Sans'";
+            ctx.fillStyle = "#6b4c2c";
+            const shortName = topics[i].emoji;
+            ctx.fillText(shortName, radius * 0.65, 8);
+            ctx.restore();
+        }
+
+        // стрелка
+        ctx.beginPath();
+        ctx.moveTo(centerX - 12, centerY - radius - 8);
+        ctx.lineTo(centerX, centerY - radius - 22);
+        ctx.lineTo(centerX + 12, centerY - radius - 8);
+        ctx.fillStyle = "#e6a817";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(centerX - 8, centerY - radius - 10);
+        ctx.lineTo(centerX, centerY - radius - 20);
+        ctx.lineTo(centerX + 8, centerY - radius - 10);
+        ctx.fillStyle = "#fff3d1";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 20, 0, Math.PI * 2);
+        ctx.fillStyle = "#f5c542";
+        ctx.fill();
+        ctx.fillStyle = "#8b5a2b";
+        ctx.font = "bold 14px monospace";
+        ctx.fillText("🎡", centerX - 10, centerY + 5);
+    }
+
+    function spinWheel() {
+        if (spinning) return;
+        spinning = true;
+        const spinAngle = Math.random() * Math.PI * 2 + Math.PI * 8;
+        const startTime = performance.now();
+        const startAngle = currentAngle;
+        const duration = 1500;
+
+        function animateSpin(now) {
+            const elapsed = now - startTime;
+            const t = Math.min(1, elapsed / duration);
+            const easeOut = 1 - Math.pow(1 - t, 3);
+            currentAngle = startAngle + spinAngle * easeOut;
+            drawWheel();
+            if (t < 1) {
+                requestAnimationFrame(animateSpin);
+            } else {
+                // нормализация угла
+                currentAngle = currentAngle % (Math.PI * 2);
+                drawWheel();
+                // определяем выпавший индекс
+                const angleStep = (Math.PI * 2) / topics.length;
+                let pointerAngle = (Math.PI * 2 - (currentAngle % (Math.PI * 2))) % (Math.PI * 2);
+                let rawIndex = Math.floor(pointerAngle / angleStep) % topics.length;
+                if (rawIndex < 0) rawIndex += topics.length;
+                currentTopicIndex = rawIndex % topics.length;
+                spinning = false;
+                showTopic(currentTopicIndex);
+            }
+        }
+
+        requestAnimationFrame(animateSpin);
+    }
+
+    function showTopic(index) {
+        const topic = topics[index];
+        document.getElementById("topicEmoji").innerHTML = topic.emoji;
+        document.getElementById("topicName").innerHTML = topic.name;
+        renderQuestions(topic.questions);
+    }
+
+    function renderQuestions(questions) {
+        const container = document.getElementById("questionsContainer");
+        if (!container) return;
+        let html = '';
+        questions.forEach((item, idx) => {
+            html += `
+                <div class="question-item">
+                    <div style="flex:1;">
+                        <div class="question-text">❓ ${item.q}</div>
+                        <div class="question-pinyin">${item.pinyin}</div>
+                    </div>
+                    <button class="show-answer-btn" data-idx="${idx}">💡 Подсказка</button>
+                    <div class="answer-box" id="answer-${idx}">
+                        <div class="answer-text">💬 ${item.hint}</div>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        // вешаем события
+        document.querySelectorAll('.show-answer-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = btn.getAttribute('data-idx');
+                const ansBox = document.getElementById(`answer-${idx}`);
+                if (ansBox) {
+                    ansBox.classList.toggle('show');
+                    btn.textContent = ansBox.classList.contains('show') ? '🔒 Скрыть' : '💡 Подсказка';
+                }
+            });
+        });
+    }
+
+    // инициализация
+    initWheel();
+
+    const spinBtn = document.getElementById("spinBtn");
+    spinBtn.addEventListener("click", () => {
+        spinWheel();
+    });
+    // клик по canvas тоже крутит
+    const canvasEl = document.getElementById("wheelCanvas");
+    canvasEl.addEventListener("click", () => {
+        spinWheel();
+    });
+
+    // случайная тема при загрузке
+    setTimeout(() => {
+        const randomIdx = Math.floor(Math.random() * topics.length);
+        currentTopicIndex = randomIdx;
+        // подгоняем угол, чтобы стрелка указывала примерно на неё (необязательно, просто показываем тему)
+        showTopic(randomIdx);
+        drawWheel();
+    }, 100);
+</script>
+</body>
+</html>
