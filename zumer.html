@@ -1,0 +1,3334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时代的决斗：冲突、美学与Z世代哲学 | DUEL OF ERAS</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap');
+
+    :root {
+      --bg-cream: #F9F8F3;
+      --surface-white: #FFFFFF;
+      --surface-border: #E8E3DA;
+      --surface-subtle: #F3EFE6;
+
+      --accent-terracotta: #E05A47;
+      --accent-terracotta-light: #FDF0EE;
+      --accent-sage: #2EB886;
+      --accent-sage-light: #E8F8F3;
+      --accent-yellow: #FFB800;
+      --accent-yellow-light: #FFF8E6;
+      --accent-blue: #5B8DB8;
+      --accent-blue-light: #EEF4F9;
+
+      --amber: #D4A574;
+      --amber-light: #F5EBDD;
+      --mint: #4ECDC4;
+      --mint-light: #E4F6F4;
+      --lavender: #B5A8D8;
+      --lavender-light: #EFEBF7;
+      --soviet-red: #B22222;
+
+      --text-main: #22252A;
+      --text-sub: #6C727E;
+      --text-muted: #9DA3AF;
+
+      --lex-bg: rgba(255, 255, 255, 0.92);
+      --transition-smooth: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: "PingFang SC", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
+      height: 100vh;
+      height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .deck-container {
+      position: relative;
+      width: 100%;
+      max-width: 1920px;
+      height: 100dvh;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-cream);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    @media (min-aspect-ratio: 16/9) {
+      .deck-container {
+        height: 100dvh;
+        width: calc(100dvh * 16 / 9);
+      }
+    }
+
+    /* ═══ СЛАЙДЫ ═══ */
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: clamp(32px, 4vw, 80px);
+      padding-bottom: clamp(290px, 30vh, 350px);
+      padding-right: clamp(180px, 15vw, 240px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px) scale(0.99);
+      transition: opacity var(--transition-smooth), transform var(--transition-smooth), visibility var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 1.3rem;
+      z-index: 1;
+      overflow-y: auto;
+    }
+
+    .slide > * {
+      max-width: 1700px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(46, 184, 134, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 184, 134, 0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      z-index: 2;
+    }
+
+    /* ═══ ПРОГРЕСС ═══ */
+    .progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0;
+      background: linear-gradient(90deg, var(--amber), var(--mint));
+      transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 20;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* ═══ ТИТУЛ БЛОКА ═══ */
+    .slide--block-title {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px !important;
+      gap: 0;
+    }
+
+    .block-dots {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      align-items: center;
+    }
+
+    .block-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2.5px solid var(--text-muted);
+      background: transparent;
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    .slide--block-title.active .block-dot:nth-child(1) {
+      animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+    }
+    .slide--block-title.active .block-dot:nth-child(2) {
+      animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.65s forwards;
+    }
+    .slide--block-title.active .block-dot:nth-child(3) {
+      animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.0s forwards;
+    }
+    .slide--block-title.active .block-dot:nth-child(4) {
+      animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.35s forwards;
+    }
+
+    .block-dot--active { background: var(--mint); border-color: var(--mint); }
+    .block-dot--past { background: var(--amber); border-color: var(--amber); }
+
+    @keyframes dotPop {
+      0%   { opacity: 0; transform: scale(0.3); }
+      60%  { opacity: 1; transform: scale(1.3); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .block-title {
+      font-size: clamp(58px, 6.5vw, 110px);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+    }
+
+    .block-subtitle {
+      font-size: clamp(20px, 1.7vw, 30px);
+      font-weight: 500;
+      color: var(--text-sub);
+      letter-spacing: 0.5px;
+      opacity: 0;
+    }
+
+    .slide--block-title.active .block-title {
+      animation: blockReveal 0.9s cubic-bezier(0.25, 1, 0.5, 1) 1.6s forwards;
+    }
+    .slide--block-title.active .block-subtitle {
+      animation: blockFade 0.7s ease-out 2.2s forwards;
+    }
+
+    @keyframes blockReveal {
+      from { opacity: 0; transform: scale(0.95); filter: blur(6px); }
+      to   { opacity: 1; transform: scale(1); filter: blur(0); }
+    }
+    @keyframes blockFade {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide--title-block-1 { background: linear-gradient(135deg, #F5EBDD 0%, #FBF6EC 100%); }
+    .slide--title-block-2 { background: linear-gradient(135deg, #F5EBDD 0%, #E4F6F4 100%); }
+    .slide--title-block-3 { background: linear-gradient(135deg, #E4F6F4 0%, #F5EBDD 100%); }
+    .slide--title-block-4 { background: linear-gradient(135deg, #EFEBF7 0%, #F5EBDD 100%); }
+
+    .slide--title-block-2::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0%, transparent 50%, rgba(78, 205, 196, 0.15) 100%);
+      background-size: 200% 200%;
+      animation: gradientFlow 8s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes gradientFlow {
+      0%   { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+
+    /* ═══ ЗАГОЛОВКИ ═══ */
+    .slide-header { position: relative; margin-bottom: 0.5rem; }
+
+    .slide-header::before {
+      content: attr(data-num);
+      position: absolute;
+      top: -44px;
+      left: -20px;
+      font-size: clamp(130px, 14vw, 240px);
+      font-weight: 900;
+      color: rgba(46, 184, 134, 0.065);
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+      letter-spacing: -0.05em;
+    }
+
+    .slide-header > * { position: relative; z-index: 1; }
+
+    .slide-title {
+      font-size: clamp(38px, 4vw, 66px);
+      font-weight: 800;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+    }
+
+    .slide-title.has-emoji::before {
+      content: attr(data-emoji);
+      display: inline-block;
+      font-size: 1.05em;
+      margin-right: 16px;
+      vertical-align: -0.08em;
+    }
+
+    .sub-title {
+      font-size: clamp(19px, 1.55vw, 26px);
+      font-weight: 500;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border-radius: 30px;
+      font-size: clamp(14px, 1vw, 17px);
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      background: var(--surface-subtle);
+      color: var(--text-sub);
+      border: 1px dashed #D0C8B8;
+      width: fit-content;
+      margin-bottom: 0.9rem;
+    }
+
+    .tag-amber { background: var(--amber-light); color: #A47530; border-color: rgba(212, 165, 116, 0.4); }
+    .tag-mint { background: var(--mint-light); color: #2A9A92; border-color: rgba(78, 205, 196, 0.4); }
+    .tag-lavender { background: var(--lavender-light); color: #6B5B95; border-color: rgba(181, 168, 216, 0.4); }
+    .tag-terracotta { background: var(--accent-terracotta-light); color: var(--accent-terracotta); border-color: rgba(224, 90, 71, 0.3); }
+    .tag-blue { background: var(--accent-blue-light); color: var(--accent-blue); border-color: rgba(91, 141, 184, 0.3); }
+
+    .highlight-yellow {
+      background: linear-gradient(120deg, rgba(255, 184, 0, 0.3) 0%, rgba(255, 184, 0, 0.3) 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 40%;
+      background-position: 0 88%;
+      padding: 0 5px;
+    }
+
+    /* ═══ КАРТОЧКИ ═══ */
+    .card {
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      border-radius: 22px;
+      padding: clamp(22px, 2vw, 34px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.035);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .card--amber { border-left: 5px solid var(--amber); background: linear-gradient(90deg, var(--amber-light) 0%, var(--surface-white) 45%); }
+    .card--mint { border-left: 5px solid var(--mint); background: linear-gradient(90deg, var(--mint-light) 0%, var(--surface-white) 45%); }
+    .card--lavender { border-left: 5px solid var(--lavender); background: linear-gradient(90deg, var(--lavender-light) 0%, var(--surface-white) 45%); }
+    .card--terracotta { border-left: 5px solid var(--accent-terracotta); background: linear-gradient(90deg, var(--accent-terracotta-light) 0%, var(--surface-white) 45%); }
+    .card--blue { border-left: 5px solid var(--accent-blue); background: linear-gradient(90deg, var(--accent-blue-light) 0%, var(--surface-white) 45%); }
+
+    .card-title {
+      font-size: clamp(22px, 1.85vw, 30px);
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .card-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      color: var(--mint);
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .card-icon--amber { color: var(--amber); }
+    .card-icon--terracotta { color: var(--accent-terracotta); }
+    .card-icon--blue { color: var(--accent-blue); }
+    .card-icon--lavender { color: var(--lavender); }
+
+    .card-body {
+      font-size: clamp(18px, 1.4vw, 24px);
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--text-sub);
+    }
+
+    .key {
+      background: linear-gradient(180deg, transparent 62%, rgba(255, 184, 0, 0.5) 62%);
+      padding: 0 5px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .slide.active .key { animation: keyPulse 2s ease-in-out 1; }
+
+    @keyframes keyPulse {
+      0%   { background-color: transparent; }
+      50%  { background-color: rgba(255, 184, 0, 0.18); }
+      100% { background-color: transparent; }
+    }
+
+    .term {
+      font-weight: 600;
+      color: var(--text-main);
+      border-bottom: 2px solid rgba(78, 205, 196, 0.5);
+      padding-bottom: 1px;
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--accent-terracotta-light);
+      color: var(--accent-terracotta);
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 7px;
+      font-size: 0.85em;
+    }
+    .chip--mint { background: var(--mint-light); color: #2A9A92; }
+    .chip--amber { background: var(--amber-light); color: #A47530; }
+    .chip--lavender { background: var(--lavender-light); color: #6B5B95; }
+    .chip--terracotta { background: var(--accent-terracotta-light); color: var(--accent-terracotta); }
+    .chip--blue { background: var(--accent-blue-light); color: var(--accent-blue); }
+
+    .speakable { cursor: pointer; transition: color 0.2s; }
+    .speakable:hover { color: var(--mint); }
+
+    .grid-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.2rem;
+      align-items: center;
+    }
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+      align-items: stretch;
+    }
+
+    .character-avatar {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ═══ FACT CARDS (слайды 3-4) ═══ */
+    .fact-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .fact-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      border-radius: 18px;
+      padding: 18px 22px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .fact-card:hover {
+      transform: translateX(4px);
+      border-color: var(--amber);
+    }
+    .fact-card--mint:hover { border-color: var(--mint); }
+
+    .fact-card__icon {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: var(--amber-light);
+      font-size: 22px;
+    }
+    .fact-card--mint .fact-card__icon { background: var(--mint-light); }
+
+    .fact-card__content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .fact-card__title {
+      font-size: clamp(18px, 1.35vw, 23px);
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+    .fact-card__title small {
+      display: block;
+      font-size: 0.7em;
+      font-weight: 600;
+      color: var(--amber);
+      margin-top: 2px;
+      letter-spacing: 0.5px;
+    }
+    .fact-card--mint .fact-card__title small { color: #2A9A92; }
+
+    .fact-card__desc {
+      font-size: clamp(15px, 1.1vw, 19px);
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+
+    /* ═══ ТАБЛИЦА ═══ */
+    .compare-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 2px solid var(--surface-border);
+      background: var(--surface-white);
+      position: relative;
+    }
+
+    .compare-table::after {
+      content: "";
+      position: absolute;
+      top: 5%; bottom: 5%; left: 50%;
+      width: 2px;
+      background: repeating-linear-gradient(to bottom, var(--text-main) 0px, var(--text-main) 8px, transparent 8px, transparent 16px);
+      transform: translateX(-50%);
+      opacity: 0.35;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .compare-col {
+      padding: clamp(24px, 2.2vw, 36px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    .compare-col:first-child { background: linear-gradient(180deg, var(--amber-light) 0%, rgba(245, 235, 221, 0.4) 100%); }
+    .compare-col:last-child { background: linear-gradient(180deg, var(--mint-light) 0%, rgba(228, 246, 244, 0.4) 100%); }
+
+    .compare-header {
+      font-size: clamp(22px, 1.7vw, 28px);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .compare-col:first-child .compare-header { color: #A47530; }
+    .compare-col:last-child .compare-header { color: #2A9A92; }
+
+    .compare-row {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      font-size: clamp(17px, 1.3vw, 22px);
+      line-height: 1.5;
+    }
+
+    .compare-label { font-weight: 700; color: var(--text-main); flex-shrink: 0; min-width: 70px; }
+    .compare-value { color: var(--text-sub); }
+
+    .figure-scene { display: flex; align-items: flex-end; gap: 12px; margin-top: 8px; }
+    .factory-icon { width: 100px; height: 80px; }
+
+    .factory-smoke {
+      animation: smokeUp 3s ease-in-out infinite;
+      transform-origin: center bottom;
+    }
+    .factory-smoke:nth-child(2) { animation-delay: 0.8s; }
+    .factory-smoke:nth-child(3) { animation-delay: 1.6s; }
+
+    @keyframes smokeUp {
+      0%   { opacity: 0.2; transform: translateY(0) scale(0.8); }
+      50%  { opacity: 0.7; transform: translateY(-12px) scale(1); }
+      100% { opacity: 0; transform: translateY(-24px) scale(1.2); }
+    }
+
+    .traveler-icon { width: 100px; height: 110px; }
+    .traveler-step {
+      animation: travelerStep 2s ease-in-out infinite;
+      transform-origin: center bottom;
+    }
+    @keyframes travelerStep {
+      0%, 100% { transform: translateX(0); }
+      50%      { transform: translateX(6px); }
+    }
+
+    /* ═══ ТАЙМЛАЙН ═══ */
+    .timeline-eras {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 1rem;
+      padding: 20px 0;
+    }
+
+    .era-point {
+      flex: 1;
+      padding: 22px;
+      border-radius: 18px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .slide.active .era-point {
+      animation: flowIn 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    .slide.active .era-point:nth-child(1) { animation-delay: 0.2s; }
+    .slide.active .era-point:nth-child(2) { animation-delay: 0.55s; }
+    .slide.active .era-point:nth-child(3) { animation-delay: 0.9s; }
+
+    @keyframes flowIn { to { opacity: 1; transform: translateY(0); } }
+
+    .era-point--1960 { background: var(--amber-light); border: 2px solid rgba(212, 165, 116, 0.4); }
+    .era-point--1990 { background: var(--surface-subtle); border: 2px solid var(--surface-border); }
+    .era-point--2026 { background: var(--mint-light); border: 2px solid rgba(78, 205, 196, 0.4); }
+
+    .era-point__year { font-size: clamp(18px, 1.4vw, 24px); font-weight: 800; margin-bottom: 10px; color: var(--text-main); }
+    .era-point__icon-wrap { height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+    .era-point__icon { width: 90px; height: 90px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .era-point--1960 .era-point__icon { color: #A47530; }
+    .era-point--1990 .era-point__icon { color: var(--text-muted); }
+    .era-point--2026 .era-point__icon { color: #2A9A92; }
+
+    .era-point__words { font-size: clamp(17px, 1.25vw, 21px); font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
+    .era-point__sub { font-size: clamp(14px, 1vw, 17px); color: var(--text-muted); }
+
+    .stat-big { font-size: clamp(34px, 3vw, 48px); font-weight: 900; color: var(--mint); line-height: 1; }
+    .stat-big--amber { color: var(--amber); }
+
+    /* ═══ ВЕСЫ ═══ */
+    .scales-big {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.2rem;
+      align-items: stretch;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+
+    .scale-big-side {
+      padding: clamp(22px, 2vw, 30px);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .scale-big-side--heavy {
+      background: var(--accent-terracotta-light);
+      border: 2.5px solid rgba(224, 90, 71, 0.5);
+      animation: tiltHeavy 6s ease-in-out infinite;
+    }
+    .scale-big-side--balance {
+      background: var(--mint-light);
+      border: 2.5px solid rgba(78, 205, 196, 0.5);
+      animation: tiltBalance 6s ease-in-out infinite;
+    }
+
+    @keyframes tiltHeavy {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      50%      { transform: rotate(-1.5deg) translateY(5px); }
+    }
+    @keyframes tiltBalance {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      50%      { transform: rotate(1.5deg) translateY(-5px); }
+    }
+
+    .scale-big-title {
+      font-size: clamp(21px, 1.6vw, 27px);
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .scale-big-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: clamp(16px, 1.2vw, 20px);
+      color: var(--text-sub);
+    }
+    .scale-big-list li::before { content: "· "; color: var(--text-muted); font-weight: 900; }
+
+    .scales-big-symbol { font-size: clamp(32px, 2.6vw, 46px); font-weight: 900; color: var(--text-muted); align-self: center; }
+
+    .kick-scene-big { width: 100%; max-width: 260px; height: 150px; margin: 0 auto; }
+    .kick-leg-big { transform-origin: 78% 30%; animation: kickMoveBig 1.2s ease-in-out infinite; }
+    @keyframes kickMoveBig {
+      0%, 100% { transform: rotate(0deg); }
+      40%      { transform: rotate(-28deg); }
+      60%      { transform: rotate(0deg); }
+    }
+
+    .calm-exit-big { width: 100%; max-width: 260px; height: 150px; margin: 0 auto; }
+    .calm-walker-big { transform-origin: center bottom; animation: calmBobBig 2s ease-in-out infinite; }
+    @keyframes calmBobBig {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-4px); }
+    }
+
+    /* ═══ ЧАСЫ ═══ */
+    .clock-face { width: 130px; height: 130px; margin: 0 auto; display: block; }
+    .slide.active .clock-hand-rotor { transform-origin: 50% 50%; animation: clockTick 20s linear infinite; }
+    @keyframes clockTick { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* ═══ ХОМЯК ═══ */
+    .hamster-wheel { width: 170px; height: 170px; margin: 0 auto; display: block; }
+    .wheel-rotor { transform-origin: 50% 50%; animation: wheelSpin 2s linear infinite; }
+    @keyframes wheelSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .hamster-legs { animation: hamsterLegs 0.4s linear infinite; transform-origin: center bottom; }
+    @keyframes hamsterLegs {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-2px); }
+    }
+
+    /* ═══ ЧАШКИ ═══ */
+    .cups-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+    .cup-card {
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      border-radius: 22px;
+      padding: clamp(22px, 2vw, 30px);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+      text-align: center;
+    }
+    .cup-card__svg { width: 120px; height: 120px; }
+    .cup-card__title { font-size: clamp(20px, 1.5vw, 26px); font-weight: 800; }
+    .cup-card__body { font-size: clamp(16px, 1.15vw, 20px); color: var(--text-sub); line-height: 1.55; }
+
+    .bubble { animation: bubbleUp 2.5s ease-in infinite; transform-origin: center bottom; }
+    .bubble:nth-child(2) { animation-delay: 0.8s; }
+    .bubble:nth-child(3) { animation-delay: 1.6s; }
+    @keyframes bubbleUp {
+      0%   { transform: translateY(0); opacity: 0.8; }
+      100% { transform: translateY(-24px); opacity: 0; }
+    }
+
+    .tea-branch { transform-origin: 20% 80%; animation: branchSway 3s ease-in-out infinite; }
+    @keyframes branchSway {
+      0%, 100% { transform: rotate(-2deg); }
+      50%      { transform: rotate(2deg); }
+    }
+
+    /* ═══ ВЕНН ═══ */
+    .venn-wrap { display: flex; justify-content: center; align-items: center; padding: 20px 0; width: 100%; }
+    .venn-wrap svg { width: 100%; max-width: 500px; height: auto; }
+    .slide.active .venn-overlap { animation: vennPulse 3s ease-in-out infinite; transform-origin: 200px 150px; }
+    @keyframes vennPulse {
+      0%, 100% { opacity: 0.9; }
+      50%      { opacity: 1; }
+    }
+
+    /* ═══ ВОРОНКА ═══ */
+    .funnel-wrap { display: flex; justify-content: center; align-items: center; padding: 20px 0; width: 100%; }
+    .funnel-wrap svg { width: 100%; max-width: 560px; height: auto; }
+    .funnel-icon { opacity: 0; animation: funnelDrop 6s ease-in infinite; }
+    .funnel-icon:nth-child(1) { animation-delay: 0s; }
+    .funnel-icon:nth-child(2) { animation-delay: 0.4s; }
+    .funnel-icon:nth-child(3) { animation-delay: 0.8s; }
+    .funnel-icon:nth-child(4) { animation-delay: 1.2s; }
+    .funnel-icon:nth-child(5) { animation-delay: 1.6s; }
+    .funnel-icon:nth-child(6) { animation-delay: 2.0s; }
+    .funnel-icon:nth-child(7) { animation-delay: 2.4s; }
+    .funnel-icon:nth-child(8) { animation-delay: 2.8s; }
+
+    @keyframes funnelDrop {
+      0%   { opacity: 0; transform: translateY(-20px); }
+      20%  { opacity: 0.8; transform: translateY(0); }
+      60%  { opacity: 0.8; transform: translateY(0); }
+      80%  { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+
+    .funnel-heart { transform-origin: center; animation: heartPulse 2s ease-in-out infinite; }
+    @keyframes heartPulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.08); }
+    }
+
+    /* ═══ ПАЙПЛАЙН ═══ */
+    .pipeline { display: flex; justify-content: center; align-items: center; gap: 20px; width: 100%; max-width: 1100px; margin: 0 auto; padding: 20px 0; flex-wrap: wrap; }
+    .pipeline__node {
+      flex: 1;
+      min-width: 200px;
+      padding: clamp(20px, 2vw, 30px);
+      border-radius: 20px;
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+    .slide.active .pipeline__node:nth-of-type(1) { animation: nodeGlow 4s ease-in-out infinite; }
+    .slide.active .pipeline__node:nth-of-type(2) { animation: nodeGlow 4s ease-in-out infinite; animation-delay: 1.3s; }
+    .slide.active .pipeline__node:nth-of-type(3) { animation: nodeGlow 4s ease-in-out infinite; animation-delay: 2.6s; }
+    @keyframes nodeGlow {
+      0%, 60%, 100% { border-color: var(--surface-border); box-shadow: 0 0 0 0 transparent; }
+      20%, 40% { border-color: var(--mint); box-shadow: 0 0 0 6px var(--mint-light); }
+    }
+    .pipeline__icon { width: 44px; height: 44px; color: var(--mint); stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .pipeline__title { font-size: clamp(18px, 1.3vw, 23px); font-weight: 700; color: var(--text-main); }
+    .pipeline__sub { font-size: clamp(14px, 1vw, 17px); color: var(--text-sub); line-height: 1.5; }
+    .pipeline__arrow { font-size: 30px; color: var(--text-muted); flex-shrink: 0; }
+
+    /* ═══ ВИДЕО-PLACEHOLDER ═══ */
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #1A1D22 0%, #2C3040 100%);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      border: 2px solid var(--surface-border);
+      cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .video-frame:hover { transform: scale(1.01); border-color: var(--mint); }
+
+    .video-frame__title-card {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #FFFFFF;
+      font-size: clamp(12px, 0.9vw, 15px);
+      opacity: 0.85;
+      font-weight: 500;
+    }
+    .video-frame__title-card span:first-child { font-weight: 700; letter-spacing: 0.5px; }
+
+    .video-frame__play {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+      animation: playPulse 1.8s ease-in-out infinite;
+    }
+    .video-frame__play::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 22px solid var(--text-main);
+      border-top: 13px solid transparent;
+      border-bottom: 13px solid transparent;
+      margin-left: 6px;
+    }
+    @keyframes playPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35); }
+      50%      { transform: scale(1.06); box-shadow: 0 12px 32px rgba(78, 205, 196, 0.5); }
+    }
+    .video-frame__hint {
+      color: #FFFFFF;
+      font-size: clamp(14px, 1.05vw, 18px);
+      font-weight: 500;
+      opacity: 0.9;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .video-frame__hint strong {
+      display: block;
+      font-size: 1.15em;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: var(--mint);
+    }
+
+    /* ═══ СЦЕНА ИНТЕРВЬЮ (слайд 5) ═══ */
+    .interview-scene {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(180deg, #FFF8F0 0%, #F5EBDD 100%);
+      border-radius: 22px;
+      border: 2px solid var(--surface-border);
+      overflow: hidden;
+      padding: 20px;
+    }
+    .interview-scene svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Кандидаты в очереди — ИСПРАВЛЕНО: классы --1…--7 */
+    .queue-person {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .slide.active .queue-person {
+      animation: queueIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    .slide.active .queue-person--1 { animation-delay: 1.2s; }
+    .slide.active .queue-person--2 { animation-delay: 1.4s; }
+    .slide.active .queue-person--3 { animation-delay: 1.6s; }
+    .slide.active .queue-person--4 { animation-delay: 1.8s; }
+    .slide.active .queue-person--5 { animation-delay: 2.0s; }
+    .slide.active .queue-person--6 { animation-delay: 2.2s; }
+    .slide.active .queue-person--7 { animation-delay: 2.4s; }
+
+    @keyframes queueIn {
+      0%   { opacity: 0; transform: translateY(10px) scale(0.8); }
+      60%  { opacity: 1; transform: translateY(-3px) scale(1.05); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .entering-candidate {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    .slide.active .entering-candidate {
+      animation: candidateEnter 1.4s cubic-bezier(0.25, 1, 0.5, 1) 0.6s forwards;
+    }
+    @keyframes candidateEnter {
+      0%   { opacity: 0; transform: translateX(-20px); }
+      40%  { opacity: 1; }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ═══ РЕАКЦИИ (слайд 8) ═══ */
+    .reaction {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      font-size: 22px;
+    }
+    .reaction--heart { animation: heartFloat 3s ease-out infinite; }
+    .reaction--fire { animation: firePulse 1.6s ease-out infinite; }
+    .reaction--sparkle { animation: sparkleFloat 2.6s ease-out infinite; }
+
+    @keyframes heartFloat {
+      0%   { opacity: 0; transform: translateY(20px) scale(0.6); }
+      30%  { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-40px) scale(1.1); }
+    }
+    @keyframes firePulse {
+      0%   { opacity: 0; transform: scale(0.7); }
+      40%  { opacity: 1; transform: scale(1.15); }
+      100% { opacity: 0; transform: scale(1.3); }
+    }
+    @keyframes sparkleFloat {
+      0%   { opacity: 0; transform: translateY(10px); }
+      50%  { opacity: 1; transform: translateY(-10px); }
+      100% { opacity: 0; transform: translateY(-30px); }
+    }
+
+    /* ═══ АВАТАРЫ-ГИДЫ ═══ */
+    .hero-avatars {
+      position: absolute;
+      top: clamp(16px, 2vw, 32px);
+      right: clamp(16px, 2vw, 32px);
+      display: flex;
+      gap: 12px;
+      z-index: 15;
+    }
+
+    .hero-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--surface-white);
+      border: 3px solid var(--surface-border);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-avatar svg { width: 100%; height: 100%; }
+    .hero-avatar--sobchak { border-color: var(--amber); }
+    .hero-avatar--lutchek { border-color: var(--mint); }
+
+    .hero-avatar.is-speaking { transform: scale(1.12); z-index: 2; }
+    .hero-avatar--sobchak.is-speaking { animation: heroPulseAmber 2s ease-in-out infinite; }
+    @keyframes heroPulseAmber {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212, 165, 116, 0.5); }
+      50%      { box-shadow: 0 0 0 12px rgba(212, 165, 116, 0); }
+    }
+    .hero-avatar--lutchek.is-speaking { animation: heroPulseMint 2s ease-in-out infinite; }
+    @keyframes heroPulseMint {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(78, 205, 196, 0.5); }
+      50%      { box-shadow: 0 0 0 12px rgba(78, 205, 196, 0); }
+    }
+
+    .hero-avatar::after {
+      content: attr(data-name);
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: var(--text-main);
+      color: #FFFFFF;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      font-family: inherit;
+      max-width: 260px;
+      white-space: normal;
+      text-align: left;
+      line-height: 1.35;
+    }
+    .hero-avatar:hover::after { opacity: 1; }
+
+    /* ═══ ОБЛАЧКО ═══ */
+    .slide-replica {
+      position: absolute;
+      bottom: 110px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 620px;
+      width: calc(100% - 500px);
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 2px solid var(--surface-border);
+      border-radius: 20px 20px 20px 6px;
+      padding: 14px 22px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      z-index: 6;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      pointer-events: auto;
+    }
+
+    .slide-replica__avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 2px solid var(--mint);
+      overflow: hidden;
+      background: var(--surface-white);
+    }
+    .slide-replica__avatar--amber { border-color: var(--amber); }
+    .slide-replica__avatar svg { width: 100%; height: 100%; }
+
+    .slide-replica__content { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+    .slide-replica__text {
+      font-size: clamp(15px, 1.05vw, 18px);
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    /* ═══ ЛЕКСИКА ═══ */
+    .lex-panel {
+      position: absolute;
+      bottom: 20px;
+      left: clamp(24px, 3.5vw, 70px);
+      right: clamp(220px, 17vw, 260px);
+      display: flex;
+      gap: 24px;
+      padding: 14px 24px;
+      background: var(--lex-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--surface-border);
+      border-left: 4px solid var(--mint);
+      border-radius: 16px;
+      opacity: 0.97;
+      z-index: 5;
+      max-height: 200px;
+      overflow: hidden;
+    }
+
+    .lex-panel__label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--text-muted);
+      border-right: 1px dashed var(--surface-border);
+      padding-right: 14px;
+      padding-left: 4px;
+      font-weight: 600;
+    }
+
+    .lex-item { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .lex-item__head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; }
+    .lex-item__zh { font-size: 1.35em; font-weight: 700; color: var(--text-main); }
+    .lex-item__py { font-size: 0.95em; color: var(--mint); font-weight: 600; }
+    .lex-item__def { font-size: 0.95em; line-height: 1.45; color: var(--text-sub); font-weight: 500; margin-bottom: 3px; }
+    .lex-item__en { font-size: 0.88em; color: var(--text-muted); font-style: italic; line-height: 1.3; }
+
+    /* ═══ НАВИГАЦИЯ ═══ */
+    .nav-bar {
+      position: absolute;
+      bottom: 24px;
+      left: clamp(24px, 3.5vw, 70px);
+      right: clamp(24px, 3.5vw, 70px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .nav-controls { display: flex; gap: 12px; pointer-events: auto; }
+    .nav-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 1.3rem;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: all var(--transition-smooth);
+      font-family: inherit;
+    }
+    .nav-btn:hover { border-color: var(--mint); color: var(--mint); transform: translateY(-2px); }
+    .nav-btn.is-disabled { opacity: 0.3; pointer-events: none; cursor: not-allowed; }
+
+    .slide-indicator {
+      font-size: 15px;
+      color: var(--text-sub);
+      font-weight: 600;
+      background: var(--surface-white);
+      padding: 10px 22px;
+      border-radius: 30px;
+      border: 2px solid var(--surface-border);
+      pointer-events: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    /* ═══ ВОПРОС-КНОПКИ ═══ */
+    .question-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+      max-width: 1000px;
+      margin: 1.5rem auto 0;
+    }
+
+    .question-btn {
+      background: var(--surface-white);
+      border: 2px solid var(--surface-border);
+      border-radius: 18px;
+      padding: 20px 28px;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      font-size: clamp(17px, 1.3vw, 22px);
+      font-weight: 700;
+      color: var(--text-main);
+      transition: all 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .question-btn:hover { border-color: var(--mint); background: var(--mint-light); transform: translateX(4px); }
+    .question-btn__arrow { font-size: 1.4em; color: var(--mint); transition: transform 0.3s; flex-shrink: 0; }
+    .question-btn.is-open .question-btn__arrow { transform: rotate(90deg); }
+
+    .question-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1), padding 0.3s, opacity 0.3s;
+      background: var(--surface-subtle);
+      border-radius: 0 0 18px 18px;
+      margin-top: -6px;
+      padding: 0 28px;
+      opacity: 0;
+      font-size: clamp(15px, 1.1vw, 19px);
+      line-height: 1.7;
+      color: var(--text-sub);
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .question-answer.is-open { max-height: 500px; padding: 20px 28px 24px; opacity: 1; }
+
+    .question-answer__text { flex: 1; }
+    .question-answer__text strong { color: var(--text-main); font-weight: 800; }
+
+    .question-answer__orb {
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 30px;
+      transform-origin: center;
+      animation: orbitSpin 6s linear infinite;
+    }
+    .question-answer__orb--medium { font-size: 34px; animation-duration: 8s; }
+    .question-answer__orb--large { font-size: 40px; animation-duration: 10s; }
+
+    @keyframes orbitSpin {
+      0%   { transform: rotate(0deg) translateY(0); }
+      25%  { transform: rotate(90deg) translateY(-3px); }
+      50%  { transform: rotate(180deg) translateY(0); }
+      75%  { transform: rotate(270deg) translateY(-3px); }
+      100% { transform: rotate(360deg) translateY(0); }
+    }
+
+    /* ═══ ФОНОВЫЕ ЭМОДЗИ ═══ */
+    .bg-emoji {
+      position: absolute;
+      z-index: 0;
+      opacity: 0.35;
+      pointer-events: none;
+      animation: bgOrbit linear infinite;
+    }
+    @keyframes bgOrbit {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      25%  { transform: translate(10px, -10px) rotate(90deg); }
+      50%  { transform: translate(0, -20px) rotate(180deg); }
+      75%  { transform: translate(-10px, -10px) rotate(270deg); }
+      100% { transform: translate(0, 0) rotate(360deg); }
+    }
+    .bg-emoji--1 { font-size: 44px; top: 20%; left: 12%; animation-duration: 14s; }
+    .bg-emoji--2 { font-size: 62px; top: 65%; right: 14%; animation-duration: 18s; }
+    .bg-emoji--3 { font-size: 32px; bottom: 18%; left: 22%; animation-duration: 22s; }
+
+    /* ═══ ФИНАЛЬНЫЕ ЧАШКИ ═══ */
+    .final-cups {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 60px;
+      padding: 20px 0 0;
+    }
+    .final-cup { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .final-cup svg { width: 90px; height: 100px; }
+    .slide.active .final-cup:nth-child(1) { animation: cupToast 5s ease-in-out infinite; }
+    .slide.active .final-cup:nth-child(2) { animation: cupToast 5s ease-in-out infinite; animation-delay: 0.3s; }
+
+    @keyframes cupToast {
+      0%, 100% { transform: rotate(-2deg); }
+      50%      { transform: rotate(2deg); }
+    }
+    .final-cup__label { font-size: clamp(15px, 1.05vw, 18px); font-weight: 700; color: var(--text-main); }
+
+    /* ═══ СЛАЙД «СПАСИБО» ═══ */
+    .slide--thanks {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px !important;
+    }
+
+    .thanks-title {
+      font-size: clamp(64px, 7vw, 120px);
+      font-weight: 900;
+      color: var(--text-main);
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+    }
+    .thanks-dove {
+      font-size: clamp(60px, 6vw, 90px);
+      opacity: 0;
+    }
+    .slide--thanks.active .thanks-title {
+      animation: blockReveal 0.9s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+    }
+    .slide--thanks.active .thanks-dove {
+      animation: blockFade 0.8s ease-out 1.2s forwards;
+    }
+
+    /* ═══ АДАПТИВ ═══ */
+    @media (max-width: 1024px) {
+      .hero-avatar { width: 60px; height: 60px; border-width: 2px; }
+      .slide-replica { width: calc(100% - 200px); bottom: 130px; }
+      .slide { padding-right: clamp(150px, 14vw, 190px); padding-bottom: clamp(310px, 34vh, 400px); }
+    }
+
+    @media (max-width: 768px) {
+      .deck-container { aspect-ratio: auto; height: 100dvh; }
+      .slide { padding: 24px 18px 340px 18px; }
+      .grid-split, .grid-3col, .cups-pair, .timeline-eras, .compare-table, .scales-big { grid-template-columns: 1fr; gap: 1.2rem; }
+      .scales-big-symbol { justify-self: center; }
+      .hero-avatars { top: 12px; right: 12px; gap: 6px; }
+      .hero-avatar { width: 44px; height: 44px; border-width: 2px; }
+      .slide-replica {
+        width: calc(100% - 24px);
+        bottom: 90px;
+        padding: 12px 16px;
+        border-radius: 16px;
+      }
+      .lex-panel {
+        position: static;
+        margin-top: 1rem;
+        flex-direction: column;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        max-height: none;
+      }
+      .lex-panel__label {
+        writing-mode: horizontal-tb;
+        border-right: none;
+        border-bottom: 1px dashed var(--surface-border);
+        padding-right: 0;
+        padding-bottom: 8px;
+        padding-left: 0;
+        justify-content: flex-start;
+      }
+      .slide-header::before { font-size: 90px; top: -18px; }
+      .nav-bar { left: 16px; right: 16px; bottom: 16px; }
+      .bg-emoji { display: none; }
+      .question-answer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<main class="deck-container" id="deck">
+
+  <div class="progress" id="progress"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SVG DEFS
+       ═══════════════════════════════════════════════════════════ -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;"
+       aria-hidden="true" focusable="false">
+    <defs>
+
+      <g id="boy-base">
+        <rect x="85" y="110" width="30" height="25" fill="#F0C8B0" rx="5"/>
+        <ellipse cx="100" cy="85" rx="32" ry="35" fill="#FCD3B8"/>
+        <ellipse cx="80" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <ellipse cx="120" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <path d="M 62 75 C 55 60, 65 40, 80 42 C 85 30, 105 28, 115 38 C 128 32, 142 45, 138 60 C 145 72, 135 88, 132 88 C 130 75, 126 65, 120 60 C 110 50, 90 50, 80 62 C 72 65, 68 70, 62 75 Z" fill="#D99B4E"/>
+        <circle cx="70" cy="52" r="13" fill="#D99B4E"/>
+        <circle cx="85" cy="40" r="14" fill="#E2A85C"/>
+        <circle cx="103" cy="38" r="15" fill="#D99B4E"/>
+        <circle cx="122" cy="45" r="13" fill="#E2A85C"/>
+        <circle cx="132" cy="60" r="11" fill="#D99B4E"/>
+        <circle cx="68" cy="66" r="10" fill="#E2A85C"/>
+      </g>
+
+      <g id="face-calm">
+        <circle cx="88" cy="82" r="4.5" fill="#22252A"/>
+        <circle cx="112" cy="82" r="4.5" fill="#22252A"/>
+        <path d="M 92 98 Q 100 105 108 98" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+      <g id="face-warm">
+        <path d="M 83 82 Q 88 78 93 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 107 82 Q 112 78 117 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 90 97 Q 100 108 110 97" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="78" cy="92" rx="7" ry="4" fill="#FF9E9E" opacity="0.7"/>
+        <ellipse cx="122" cy="92" rx="7" ry="4" fill="#FF9E9E" opacity="0.7"/>
+      </g>
+
+      <g id="hoodie-sage"><path d="M 45 135 Q 100 120 155 135 L 165 200 L 35 200 Z" fill="#2EB886"/></g>
+
+      <g id="boy-full">
+        <rect x="88" y="165" width="9" height="55" fill="#D4C9AE" rx="2"/>
+        <rect x="103" y="165" width="9" height="55" fill="#D4C9AE" rx="2"/>
+        <path d="M 84 218 L 100 218 Q 102 226 96 226 L 84 226 Z" fill="#22252A"/>
+        <path d="M 100 218 L 116 218 Q 118 226 112 226 L 100 226 Z" fill="#22252A"/>
+        <path d="M 45 135 Q 100 120 155 135 L 160 185 L 40 185 Z" fill="#2EB886"/>
+        <path d="M 75 155 Q 100 148 125 155 L 120 180 L 80 180 Z" fill="#1F9B70" opacity="0.6"/>
+        <rect x="85" y="110" width="30" height="25" fill="#F0C8B0" rx="5"/>
+        <ellipse cx="100" cy="85" rx="32" ry="35" fill="#FCD3B8"/>
+        <ellipse cx="80" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <ellipse cx="120" cy="90" rx="6" ry="3" fill="#FF9E9E" opacity="0.5"/>
+        <path d="M 62 75 C 55 60, 65 40, 80 42 C 85 30, 105 28, 115 38 C 128 32, 142 45, 138 60 C 145 72, 135 88, 132 88 C 130 75, 126 65, 120 60 C 110 50, 90 50, 80 62 C 72 65, 68 70, 62 75 Z" fill="#D99B4E"/>
+        <circle cx="70" cy="52" r="13" fill="#D99B4E"/>
+        <circle cx="85" cy="40" r="14" fill="#E2A85C"/>
+        <circle cx="103" cy="38" r="15" fill="#D99B4E"/>
+        <circle cx="122" cy="45" r="13" fill="#E2A85C"/>
+        <circle cx="132" cy="60" r="11" fill="#D99B4E"/>
+        <circle cx="68" cy="66" r="10" fill="#E2A85C"/>
+        <path d="M 83 82 Q 88 78 93 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 107 82 Q 112 78 117 82" stroke="#22252A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 90 97 Q 100 108 110 97" stroke="#22252A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="woman-full">
+        <rect x="88" y="180" width="9" height="40" fill="#F5D5C0" rx="2"/>
+        <rect x="103" y="180" width="9" height="40" fill="#F5D5C0" rx="2"/>
+        <path d="M 82 218 L 100 218 Q 104 226 96 226 L 82 226 Z" fill="#22252A"/>
+        <path d="M 100 218 L 118 218 Q 122 226 114 226 L 100 226 Z" fill="#22252A"/>
+        <path d="M 62 165 L 138 165 L 142 195 L 58 195 Z" fill="#1A1D22"/>
+        <path d="M 50 135 Q 100 118 150 135 L 148 168 L 52 168 Z" fill="#22252A"/>
+        <path d="M 85 138 L 100 168 L 115 138" stroke="#3A3E45" stroke-width="2.5" fill="none"/>
+        <path d="M 90 138 L 100 175 L 110 138 Z" fill="#FFFFFF" opacity="0.95"/>
+        <rect x="85" y="110" width="30" height="25" fill="#F5D5C0" rx="5"/>
+        <ellipse cx="100" cy="85" rx="30" ry="33" fill="#FCE0CC"/>
+        <path d="M 68 88 C 60 70, 66 48, 82 42 C 92 32, 112 32, 122 42 C 138 48, 144 70, 136 88 C 140 100, 142 112, 138 118 C 132 112, 128 100, 126 92 C 122 82, 118 76, 110 74 C 100 70, 92 72, 86 78 C 82 84, 78 92, 74 100 C 72 108, 70 114, 66 118 C 60 112, 62 100, 68 88 Z" fill="#E8C77A"/>
+        <path d="M 76 60 Q 88 50 100 50 Q 112 50 122 60" stroke="#F4D89A" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <path d="M 92 100 Q 100 104 108 100 Q 100 103 92 100 Z" fill="#E05A47"/>
+      </g>
+
+      <g id="woman-face-calm">
+        <circle cx="85" cy="82" r="10" fill="none" stroke="#22252A" stroke-width="2.5"/>
+        <circle cx="115" cy="82" r="10" fill="none" stroke="#22252A" stroke-width="2.5"/>
+        <line x1="95" y1="82" x2="105" y2="82" stroke="#22252A" stroke-width="2.5"/>
+        <circle cx="85" cy="82" r="3.5" fill="#22252A"/>
+        <circle cx="115" cy="82" r="3.5" fill="#22252A"/>
+        <path d="M 93 100 Q 100 105 107 100" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="avatar-sobchak">
+        <circle cx="50" cy="50" r="50" fill="#F5EBDD"/>
+        <ellipse cx="50" cy="48" rx="20" ry="22" fill="#FCE0CC"/>
+        <path d="M 30 50 C 26 38, 30 24, 40 20 C 46 14, 58 14, 64 20 C 72 24, 76 38, 72 50 C 74 58, 75 66, 73 70 C 69 66, 67 58, 66 52 C 64 46, 62 42, 57 41 C 52 39, 48 40, 45 44 C 43 47, 42 51, 40 56 C 39 62, 38 66, 36 70 C 32 66, 33 58, 30 50 Z" fill="#E8C77A"/>
+        <circle cx="43" cy="48" r="7" fill="none" stroke="#22252A" stroke-width="2"/>
+        <circle cx="57" cy="48" r="7" fill="none" stroke="#22252A" stroke-width="2"/>
+        <line x1="50" y1="48" x2="50" y2="48" stroke="#22252A" stroke-width="2"/>
+        <circle cx="43" cy="48" r="2.2" fill="#22252A"/>
+        <circle cx="57" cy="48" r="2.2" fill="#22252A"/>
+        <path d="M 46 58 Q 50 61 54 58" stroke="#E05A47" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="avatar-lutchek">
+        <circle cx="50" cy="50" r="50" fill="#E4F6F4"/>
+        <ellipse cx="50" cy="48" rx="20" ry="22" fill="#FCD3B8"/>
+        <path d="M 30 48 C 26 38, 30 22, 40 18 C 48 14, 58 16, 66 24 C 71 30, 71 38, 70 46 C 67 40, 64 34, 58 32 C 50 30, 44 34, 40 40 C 36 44, 33 50, 30 48 Z" fill="#D99B4E"/>
+        <circle cx="42" cy="47" r="12" fill="#D99B4E" opacity="0.85"/>
+        <circle cx="60" cy="43" r="13" fill="#E2A85C"/>
+        <circle cx="43" cy="48" r="2.2" fill="#22252A"/>
+        <circle cx="57" cy="48" r="2.2" fill="#22252A"/>
+        <path d="M 46 58 Q 50 62 54 58" stroke="#22252A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="round-table">
+        <ellipse cx="400" cy="320" rx="260" ry="16" fill="#22252A" opacity="0.06"/>
+        <ellipse cx="400" cy="300" rx="280" ry="42" fill="#E8DCC4"/>
+        <ellipse cx="400" cy="294" rx="280" ry="42" fill="#F3EFE6"/>
+        <path d="M 120 294 Q 120 322 400 322 Q 680 322 680 294" fill="none" stroke="#D4C9AE" stroke-width="2"/>
+      </g>
+
+      <g id="table-laptop">
+        <rect x="345" y="262" width="48" height="30" rx="3" fill="#22252A"/>
+        <rect x="348" y="265" width="42" height="24" rx="2" fill="#3A3E45"/>
+        <rect x="342" y="292" width="54" height="3" rx="1" fill="#22252A"/>
+      </g>
+
+      <g id="table-coffee">
+        <ellipse cx="300" cy="288" rx="14" ry="4" fill="#FFFFFF" stroke="#22252A" stroke-width="1.5"/>
+        <path d="M 286 288 Q 286 302 300 302 Q 314 302 314 288" fill="#FFFFFF" stroke="#22252A" stroke-width="1.5"/>
+        <path d="M 314 290 Q 322 290 322 296 Q 322 300 314 300" stroke="#22252A" stroke-width="1.5" fill="none"/>
+      </g>
+
+      <g id="table-notebook">
+        <rect x="440" y="278" width="38" height="24" rx="2" fill="#FFB800" stroke="#22252A" stroke-width="1.5"/>
+        <line x1="445" y1="284" x2="473" y2="284" stroke="#22252A" stroke-width="1"/>
+        <line x1="445" y1="290" x2="473" y2="290" stroke="#22252A" stroke-width="1"/>
+      </g>
+
+      <g id="dog-chihuahua">
+        <ellipse cx="145" cy="175" rx="14" ry="10" fill="#E8C77A"/>
+        <circle cx="152" cy="163" r="9" fill="#E8C77A"/>
+        <path d="M 146 157 L 144 149 L 150 155 Z" fill="#D4AF5E"/>
+        <path d="M 158 157 L 160 149 L 154 155 Z" fill="#D4AF5E"/>
+        <circle cx="150" cy="163" r="1.5" fill="#22252A"/>
+        <circle cx="155" cy="163" r="1.5" fill="#22252A"/>
+        <circle cx="153" cy="167" r="1" fill="#22252A"/>
+      </g>
+
+      <g id="acc-coffee">
+        <rect x="120" y="140" width="22" height="28" rx="4" fill="#FFFFFF" stroke="#22252A" stroke-width="2"/>
+        <path d="M 142 146 C 148 146, 148 160, 142 160" stroke="#22252A" stroke-width="2" fill="none"/>
+      </g>
+
+      <g id="acc-phone">
+        <rect x="130" y="110" width="30" height="50" rx="5" fill="#22252A"/>
+        <circle cx="145" cy="125" r="6" fill="#2EB886"/>
+      </g>
+
+      <symbol id="icon-target" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+      </symbol>
+      <symbol id="icon-scales" viewBox="0 0 24 24">
+        <line x1="12" y1="4" x2="12" y2="20"/>
+        <line x1="6" y1="8" x2="18" y2="8"/>
+        <path d="M 6 8 L 3 14 L 9 14 Z"/>
+        <path d="M 18 8 L 15 14 L 21 14 Z"/>
+      </symbol>
+      <symbol id="icon-lock" viewBox="0 0 24 24">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M 9 11 V 7 A 3 3 0 0 1 15 7 V 11"/>
+      </symbol>
+      <symbol id="icon-unlock" viewBox="0 0 24 24">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M 9 11 V 7 A 3 3 0 0 1 15 4"/>
+      </symbol>
+      <symbol id="icon-bulb" viewBox="0 0 24 24">
+        <path d="M 12 4 A 6 6 0 0 1 15 15 L 15 18 L 9 18 L 9 15 A 6 6 0 0 1 12 4 Z"/>
+        <line x1="10" y1="20" x2="14" y2="20"/>
+      </symbol>
+      <symbol id="icon-door" viewBox="0 0 24 24">
+        <rect x="5" y="4" width="14" height="17" rx="1"/>
+        <circle cx="15" cy="12.5" r="1" fill="currentColor" stroke="none"/>
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <line x1="4" y1="20" x2="20" y2="20"/>
+        <rect x="6" y="14" width="3" height="6" fill="currentColor" stroke="none"/>
+        <rect x="11" y="10" width="3" height="10" fill="currentColor" stroke="none"/>
+        <rect x="16" y="6" width="3" height="14" fill="currentColor" stroke="none"/>
+      </symbol>
+      <symbol id="icon-video" viewBox="0 0 24 24">
+        <rect x="3" y="6" width="12" height="12" rx="2"/>
+        <path d="M 15 10 L 21 7 L 21 17 L 15 14 Z"/>
+      </symbol>
+      <symbol id="icon-eye" viewBox="0 0 24 24">
+        <path d="M 2 12 C 6 6, 18 6, 22 12 C 18 18, 6 18, 2 12 Z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </symbol>
+      <symbol id="icon-phone" viewBox="0 0 24 24">
+        <rect x="7" y="3" width="10" height="18" rx="2"/>
+        <line x1="11" y1="18" x2="13" y2="18"/>
+      </symbol>
+      <symbol id="icon-brain" viewBox="0 0 24 24">
+        <path d="M 9 4 A 3 3 0 0 0 6 7 A 3 3 0 0 0 5 12 A 3 3 0 0 0 7 17 A 3 3 0 0 0 12 19 L 12 5 A 3 3 0 0 0 9 4 Z"/>
+        <path d="M 15 4 A 3 3 0 0 1 18 7 A 3 3 0 0 1 19 12 A 3 3 0 0 1 17 17 A 3 3 0 0 1 12 19"/>
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="M 4 12 L 10 18 L 20 6"/>
+      </symbol>
+      <symbol id="icon-spark" viewBox="0 0 24 24">
+        <path d="M 12 2 L 13.5 9 L 21 10.5 L 13.5 12 L 12 19 L 10.5 12 L 3 10.5 L 10.5 9 Z"/>
+      </symbol>
+      <symbol id="icon-ai" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="12" cy="12" r="3"/>
+        <line x1="12" y1="3" x2="12" y2="6"/>
+        <line x1="12" y1="18" x2="12" y2="21"/>
+        <line x1="3" y1="12" x2="6" y2="12"/>
+        <line x1="18" y1="12" x2="21" y2="12"/>
+      </symbol>
+      <symbol id="icon-question" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M 9 9 A 3 3 0 0 1 15 10 C 15 12 12 12 12 15"/>
+        <circle cx="12" cy="18" r="0.8" fill="currentColor" stroke="none"/>
+      </symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M 12 3 L 20 6 L 20 13 Q 20 19 12 21 Q 4 19 4 13 L 4 6 Z"/>
+        <path d="M 8 12 L 11 15 L 16 9"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 1 — ОБЛОЖКА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide active" id="slide-1">
+    <div class="slide-header" style="text-align: center;">
+      <div class="tag-badge tag-mint speakable" onclick="speakZH('文化解析与代际对话')">文化解析｜代际对话</div>
+      <h1 class="slide-title has-emoji speakable" data-emoji="🎭" style="font-size: clamp(42px, 4.4vw, 72px); text-align:center;" onclick="speakZH('时代的决斗：冲突、美学与Z世代哲学')">
+        时代的决斗：冲突、美学与 <span class="highlight-yellow">Z世代哲学</span>
+      </h1>
+      <p class="sub-title" style="text-align:center;">DUEL OF ERAS: CONFLICT, AESTHETICS &amp; GEN Z PHILOSOPHY</p>
+    </div>
+
+    <div class="title-scene" style="display:flex;justify-content:center;align-items:flex-end;margin:1.2rem 0;width:100%;">
+      <svg viewBox="0 0 800 400" style="width:100%;max-width:800px;height:auto;display:block;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <use href="#round-table"/>
+        <use href="#table-notebook"/>
+        <use href="#table-laptop"/>
+        <use href="#table-coffee"/>
+
+        <g transform="translate(180, 100) scale(0.95)">
+          <g class="scene-boy">
+            <use href="#boy-full"/>
+          </g>
+        </g>
+
+        <g transform="translate(430, 100) scale(0.95)">
+          <g class="scene-woman">
+            <use href="#woman-full"/>
+            <use href="#woman-face-calm"/>
+            <use href="#dog-chihuahua"/>
+          </g>
+        </g>
+
+        <text x="270" y="390" text-anchor="middle" font-size="16" font-weight="800" fill="#6C727E" font-family="sans-serif" letter-spacing="2">GEN Z</text>
+        <text x="520" y="390" text-anchor="middle" font-size="16" font-weight="800" fill="#6C727E" font-family="sans-serif" letter-spacing="2">MILLENNIAL</text>
+      </svg>
+    </div>
+
+    <div style="text-align: center; color: var(--text-muted); font-size: 0.95rem;">
+      💡 点击任意文字可朗读中文
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ксения Собчак · 44 года">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek" data-name="Максим Лутчак · 24 года">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 2 — ТИТУЛ БЛОКА 1
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--block-title slide--title-block-1" id="slide-2">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🎤</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">💼</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">🎙</div>
+
+    <div class="block-dots">
+      <span class="block-dot block-dot--active"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+    </div>
+
+    <div class="block-title speakable" onclick="speakZH('谁在对话？')">谁在对话？</div>
+    <div class="block-subtitle">两位主角 · 两种人生</div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ксения Собчак">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 3 — СОБЧАК (ИСПРАВЛЕНА РАЗМЕТКА)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header" data-num="01">
+      <div class="tag-badge tag-amber">第一部分 · 01</div>
+      <h2 class="slide-title speakable" onclick="speakZH('Ксения Собчак · 俄罗斯的 Paris Hilton')">Ксения Собчак</h2>
+      <p class="sub-title">俄罗斯的 Paris Hilton · 44 岁 · 千禧一代</p>
+    </div>
+
+    <div class="grid-split">
+      <div style="text-align: center;">
+        <svg viewBox="0 0 200 200" class="character-avatar" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <use href="#woman-full"/>
+          <use href="#woman-face-calm"/>
+        </svg>
+      </div>
+
+      <div class="fact-stack">
+        <div class="fact-card">
+          <div class="fact-card__icon">👑</div>
+          <div class="fact-card__content">
+            <div class="fact-card__title speakable" onclick="speakZH('俄罗斯的 Paris Hilton')">
+              俄罗斯的 Paris Hilton
+              <small>千禧年代的时尚偶像 · 零年代的象征</small>
+            </div>
+            <div class="fact-card__desc">那个时代最闪亮的女孩。金光闪闪，永远在镜头里。</div>
+          </div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-card__icon">🏛</div>
+          <div class="fact-card__content">
+            <div class="fact-card__title speakable" onclick="speakZH('名门之后 · 记者出身')">
+              名门之后 · 记者出身
+              <small>父亲是知名政治家 · 毕业于俄罗斯顶尖国际关系学院</small>
+            </div>
+            <div class="fact-card__desc">不是花瓶。她学过新闻，做过深度采访，现在做自己的节目。</div>
+          </div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-card__icon">🔥</div>
+          <div class="fact-card__content">
+            <div class="fact-card__title speakable" onclick="speakZH('直言不讳 · Z 世代也爱她')">
+              直言不讳 · Z 世代也爱她
+              <small>性格强硬 · 说话不绕弯 · 现在的时尚立法者</small>
+            </div>
+            <div class="fact-card__desc">很多人说她脾气不好。但年轻人喜欢她的诚实和不装。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">时尚偶像</span>
+          <span class="lex-item__py">shí shàng ǒu xiàng</span>
+        </div>
+        <div class="lex-item__def">大家都学她的穿衣和风格。</div>
+        <div class="lex-item__en">Fashion icon.</div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">直言不讳</span>
+          <span class="lex-item__py">zhí yán bù huì</span>
+        </div>
+        <div class="lex-item__def">说话很直接，不拐弯。</div>
+        <div class="lex-item__en">Outspoken.</div>
+      </div>
+    </div>
+
+    <div class="slide-replica">
+      <div class="slide-replica__avatar slide-replica__avatar--amber" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="slide-replica__content">
+        <div class="slide-replica__text speakable" onclick="speakZH('我年轻的时候，全俄罗斯都知道我的包。')">
+          我年轻的时候，全俄罗斯都知道我的包。
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ксения Собчак · Миллениал">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek" data-name="Максим Лутчак · Gen Z">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 4 — ЛУТЧАК
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header" data-num="02">
+      <div class="tag-badge tag-mint">第一部分 · 02</div>
+      <h2 class="slide-title speakable" onclick="speakZH('Максим Лутчак · 从小城市到 Forbes')">Максим Лутчак</h2>
+      <p class="sub-title">从小城市到 Forbes · 24 岁 · Z世代</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="fact-stack">
+        <div class="fact-card fact-card--mint">
+          <div class="fact-card__icon">🏆</div>
+          <div class="fact-card__content">
+            <div class="fact-card__title speakable" onclick="speakZH('23 岁 · Forbes 30 Under 30')">
+              23 岁 · Forbes 30 Under 30
+              <small>年轻，但已经上榜</small>
+            </div>
+            <div class="fact-card__desc">来自小城市，四年没人看他的视频。然后突然火了。</div>
+          </div>
+        </div>
+
+        <div class="fact-card fact-card--mint">
+          <div class="fact-card__icon">🎬</div>
+          <div class="fact-card__content">
+            <div class="fact-card__title speakable" onclick="speakZH('办公室短剧作者')">
+              办公室短剧作者
+              <small>从 Z 世代角度看办公室生活</small>
+            </div>
+            <div class="fact-card__desc">他不是搞笑博主。他是把办公室的真相撕开给人看。</div>
+          </div>
+        </div>
+
+        <div class="fact-card fact-card--mint">
+          <div class="fact-card__icon">🎵</div>
+          <div class="fact-card__content">
+            <div class="fact-card__title speakable" onclick="speakZH('前 VK 员工 · 现在独立创作')">
+              前 VK 员工 · 现在独立创作
+              <small>在俄罗斯最大的社交平台工作过 · 现在写歌、做音乐</small>
+            </div>
+            <div class="fact-card__desc">他不只拍视频。他也在做自己的音乐和创作。</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <svg viewBox="0 0 200 200" class="character-avatar" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <use href="#boy-base"/>
+          <use href="#face-warm"/>
+          <use href="#hoodie-sage"/>
+          <use href="#acc-phone"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">短剧</span>
+          <span class="lex-item__py">duǎn jù</span>
+        </div>
+        <div class="lex-item__def">很短的小系列视频，一集几分钟。</div>
+        <div class="lex-item__en">Mini-series.</div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">独立创作</span>
+          <span class="lex-item__py">dú lì chuàng zuò</span>
+        </div>
+        <div class="lex-item__def">自己做内容，不属于公司。</div>
+        <div class="lex-item__en">Independent creation.</div>
+      </div>
+    </div>
+
+    <div class="slide-replica">
+      <div class="slide-replica__avatar" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+      <div class="slide-replica__content">
+        <div class="slide-replica__text speakable" onclick="speakZH('我没有改掉我的口音。这就是我。')">
+          我没有改掉我的口音。这就是我。
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ксения Собчак · Миллениал">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак · Gen Z">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 5 — ИНТЕРВЬЮ (ИСПРАВЛЕНЫ КЛАССЫ ОЧЕРЕДИ)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header" data-num="03">
+      <div class="tag-badge tag-amber">第一部分 · 03</div>
+      <h2 class="slide-title speakable" onclick="speakZH('一场 2.5 小时的对话')">一场 2.5 小时的对话</h2>
+      <p class="sub-title">Собчак × Лутчак · 面试助理的一天</p>
+    </div>
+
+    <div class="interview-scene">
+      <svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+
+        <rect x="0" y="0" width="1000" height="380" fill="#FBF6EC"/>
+        <rect x="0" y="380" width="1000" height="180" fill="#F5EBDD"/>
+
+        <rect x="40" y="140" width="90" height="240" fill="#E8DCC4" stroke="#A47530" stroke-width="2"/>
+        <rect x="50" y="152" width="70" height="216" fill="#F5EBDD" stroke="#D4C9AE" stroke-width="1"/>
+        <circle cx="112" cy="262" r="4" fill="#A47530"/>
+        <text x="85" y="135" text-anchor="middle" font-size="14" fill="#A47530" font-family="sans-serif" font-weight="700">门</text>
+
+        <rect x="900" y="140" width="60" height="240" fill="#E4F6F4" stroke="#4ECDC4" stroke-width="2" opacity="0.7"/>
+        <line x1="930" y1="140" x2="930" y2="380" stroke="#4ECDC4" stroke-width="1" opacity="0.7"/>
+
+        <g class="entering-candidate" transform="translate(90, 200)">
+          <circle cx="0" cy="0" r="14" fill="#FCD3B8"/>
+          <path d="M -12 -4 C -12 -14, 12 -14, 12 -4 L 12 2 L -12 2 Z" fill="#D99B4E"/>
+          <rect x="-12" y="14" width="24" height="34" rx="3" fill="#5B8DB8"/>
+          <rect x="-12" y="48" width="6" height="20" fill="#22252A"/>
+          <rect x="6" y="48" width="6" height="20" fill="#22252A"/>
+        </g>
+
+        <ellipse cx="500" cy="400" rx="260" ry="60" fill="#E8DCC4"/>
+        <ellipse cx="500" cy="390" rx="260" ry="60" fill="#F3EFE6"/>
+        <path d="M 240 390 Q 240 450 500 450 Q 760 450 760 390" fill="none" stroke="#D4C9AE" stroke-width="2"/>
+
+        <rect x="360" y="395" width="60" height="40" rx="2" fill="#FFFFFF" stroke="#9DA3AF" stroke-width="1.5"/>
+        <line x1="365" y1="405" x2="415" y2="405" stroke="#9DA3AF" stroke-width="1"/>
+        <line x1="365" y1="412" x2="415" y2="412" stroke="#9DA3AF" stroke-width="1"/>
+        <line x1="365" y1="419" x2="410" y2="419" stroke="#9DA3AF" stroke-width="1"/>
+
+        <rect x="580" y="395" width="60" height="40" rx="2" fill="#FFFFFF" stroke="#9DA3AF" stroke-width="1.5"/>
+        <line x1="585" y1="405" x2="635" y2="405" stroke="#9DA3AF" stroke-width="1"/>
+        <line x1="585" y1="412" x2="635" y2="412" stroke="#9DA3AF" stroke-width="1"/>
+        <line x1="585" y1="419" x2="630" y2="419" stroke="#9DA3AF" stroke-width="1"/>
+
+        <rect x="470" y="388" width="60" height="38" rx="3" fill="#22252A"/>
+        <rect x="474" y="392" width="52" height="30" rx="2" fill="#3A3E45"/>
+
+        <ellipse cx="450" cy="410" rx="12" ry="4" fill="#FFFFFF" stroke="#22252A" stroke-width="1.5"/>
+        <path d="M 438 410 Q 438 422 450 422 Q 462 422 462 410" fill="#FFFFFF" stroke="#22252A" stroke-width="1.5"/>
+
+        <g transform="translate(340, 240)">
+          <path d="M -40 120 Q 0 90 40 120 L 45 160 L -45 160 Z" fill="#22252A"/>
+          <path d="M -40 120 L 0 155 L 40 120" stroke="#3A3E45" stroke-width="2" fill="none"/>
+          <ellipse cx="0" cy="50" rx="35" ry="40" fill="#FCE0CC"/>
+          <path d="M -40 60 C -45 30, -35 10, -15 5 C 5 0, 25 5, 35 15 C 45 25, 45 55, 42 70 C 40 50, 35 40, 25 40 C 10 40, -10 42, -20 50 C -30 60, -35 70, -40 60 Z" fill="#E8C77A"/>
+          <path d="M -40 60 C -45 100, -42 130, -38 130 C -35 120, -33 100, -32 85 C -30 75, -28 70, -25 65" fill="#E8C77A"/>
+          <path d="M 42 70 C 45 100, 42 130, 38 130 C 35 120, 33 100, 32 85 C 30 75, 28 70, 25 65" fill="#E8C77A"/>
+          <circle cx="-10" cy="52" r="11" fill="none" stroke="#22252A" stroke-width="2.5"/>
+          <circle cx="15" cy="52" r="11" fill="none" stroke="#22252A" stroke-width="2.5"/>
+          <line x1="1" y1="52" x2="4" y2="52" stroke="#22252A" stroke-width="2.5"/>
+          <circle cx="-10" cy="52" r="3.5" fill="#22252A"/>
+          <circle cx="15" cy="52" r="3.5" fill="#22252A"/>
+          <path d="M -8 75 Q 0 82 8 75" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M -5 78 Q 0 82 5 78 Q 0 80 -5 78 Z" fill="#E05A47"/>
+          <rect x="-60" y="140" width="30" height="20" rx="3" fill="#FCE0CC" transform="rotate(-15)"/>
+        </g>
+
+        <g transform="translate(660, 240)">
+          <path d="M -40 120 Q 0 95 40 120 L 45 160 L -45 160 Z" fill="#2EB886"/>
+          <ellipse cx="0" cy="50" rx="33" ry="38" fill="#FCD3B8"/>
+          <path d="M -35 45 C -38 20, -25 5, -5 2 C 15 -2, 30 8, 35 22 C 38 35, 35 50, 32 55 C 28 42, 22 34, 10 32 C -5 30, -18 35, -25 45 C -30 50, -33 55, -35 45 Z" fill="#D99B4E"/>
+          <circle cx="-22" cy="30" r="12" fill="#D99B4E"/>
+          <circle cx="15" cy="22" r="13" fill="#E2A85C"/>
+          <path d="M -32 42 C -32 22, 32 22, 32 42" stroke="#22252A" stroke-width="3.5" fill="none"/>
+          <rect x="-38" y="38" width="10" height="20" rx="4" fill="#FFB800"/>
+          <rect x="28" y="38" width="10" height="20" rx="4" fill="#FFB800"/>
+          <circle cx="-12" cy="52" r="3" fill="#22252A"/>
+          <circle cx="12" cy="52" r="3" fill="#22252A"/>
+          <path d="M -8 72 Q 0 80 8 72" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <rect x="30" y="140" width="30" height="20" rx="3" fill="#FCD3B8" transform="rotate(15)"/>
+        </g>
+
+        <g transform="translate(340, 190)">
+          <ellipse cx="0" cy="0" rx="70" ry="22" fill="#FFFFFF" stroke="#D4A574" stroke-width="2"/>
+          <text x="0" y="6" text-anchor="middle" font-size="15" fill="#A47530" font-family="sans-serif" font-weight="700">你的优点是什么？</text>
+        </g>
+
+        <g transform="translate(660, 190)">
+          <ellipse cx="0" cy="0" rx="60" ry="22" fill="#FFFFFF" stroke="#4ECDC4" stroke-width="2"/>
+          <text x="0" y="6" text-anchor="middle" font-size="15" fill="#2A9A92" font-family="sans-serif" font-weight="700">为什么想换工作？</text>
+        </g>
+
+        <!-- 7 кандидатов — ИСПРАВЛЕНО: классы --1…--7 -->
+        <g class="queue-person queue-person--1" transform="translate(60, 440)">
+          <circle cx="0" cy="0" r="10" fill="#FCD3B8"/>
+          <path d="M -9 -3 C -9 -12, 9 -12, 9 -3 L 9 3 L -9 3 Z" fill="#E8A0C8"/>
+          <rect x="-8" y="10" width="16" height="24" rx="3" fill="#22252A"/>
+          <rect x="-8" y="34" width="5" height="14" fill="#22252A"/>
+          <rect x="3" y="34" width="5" height="14" fill="#22252A"/>
+        </g>
+
+        <g class="queue-person queue-person--2" transform="translate(110, 440)">
+          <circle cx="0" cy="0" r="10" fill="#F0C8B0"/>
+          <path d="M -10 -5 C -12 -18, 12 -18, 10 -5 L 10 20 L -10 20 Z" fill="#3A3E45"/>
+          <rect x="-8" y="10" width="16" height="24" rx="3" fill="#8B2635"/>
+          <rect x="-8" y="34" width="5" height="14" fill="#22252A"/>
+          <rect x="3" y="34" width="5" height="14" fill="#22252A"/>
+        </g>
+
+        <g class="queue-person queue-person--3" transform="translate(160, 440)">
+          <circle cx="0" cy="0" r="10" fill="#FCE0CC"/>
+          <path d="M -9 -3 C -9 -13, 9 -13, 9 -3 L 9 3 L -9 3 Z" fill="#C4A878"/>
+          <rect x="-8" y="10" width="16" height="24" rx="3" fill="#EFEBF7"/>
+          <path d="M -10 22 L 10 22 L 12 36 L -12 36 Z" fill="#B5A8D8"/>
+          <rect x="-8" y="36" width="5" height="12" fill="#F5D5C0"/>
+          <rect x="3" y="36" width="5" height="12" fill="#F5D5C0"/>
+        </g>
+
+        <g class="queue-person queue-person--4" transform="translate(210, 440)">
+          <circle cx="0" cy="0" r="10" fill="#FCD3B8"/>
+          <path d="M -9 -3 C -9 -13, 9 -13, 9 -3 L 9 3 L -9 3 Z" fill="#E17A3D"/>
+          <rect x="-8" y="10" width="16" height="24" rx="3" fill="#4ECDC4"/>
+          <rect x="-8" y="34" width="5" height="14" fill="#22252A"/>
+          <rect x="3" y="34" width="5" height="14" fill="#22252A"/>
+        </g>
+
+        <g class="queue-person queue-person--5" transform="translate(260, 440)">
+          <circle cx="0" cy="0" r="10" fill="#FCE0CC"/>
+          <path d="M -10 -5 C -12 -15, 12 -15, 10 -5 L 10 8 L -10 8 Z" fill="#F4D89A"/>
+          <rect x="-8" y="10" width="16" height="24" rx="3" fill="#FFB800"/>
+          <rect x="-8" y="34" width="5" height="14" fill="#22252A"/>
+          <rect x="3" y="34" width="5" height="14" fill="#22252A"/>
+        </g>
+
+        <g class="queue-person queue-person--6" transform="translate(310, 440)">
+          <circle cx="0" cy="0" r="10" fill="#FCD3B8"/>
+          <path d="M -10 -2 C -10 -8, 10 -8, 10 -2 L 10 0 L -10 0 Z" fill="#5B8DB8"/>
+          <rect x="-14" y="-2" width="28" height="4" rx="2" fill="#5B8DB8"/>
+          <rect x="-8" y="10" width="16" height="24" rx="3" fill="#22252A"/>
+          <rect x="-8" y="34" width="5" height="14" fill="#22252A"/>
+          <rect x="3" y="34" width="5" height="14" fill="#22252A"/>
+          <line x1="0" y1="10" x2="0" y2="18" stroke="#22252A" stroke-width="1"/>
+          <circle cx="0" cy="19" r="2" fill="#FFB800"/>
+        </g>
+
+        <g class="queue-person queue-person--7" transform="translate(360, 440)">
+          <circle cx="0" cy="0" r="10" fill="#F5D5C0"/>
+          <path d="M -9 -3 C -9 -12, 9 -12, 9 -3 L 9 3 L -9 3 Z" fill="#6C727E"/>
+          <rect x="-8" y="10" width="16" height="24" rx="3" fill="#2EB886"/>
+          <rect x="-8" y="34" width="5" height="14" fill="#22252A"/>
+          <rect x="3" y="34" width="5" height="14" fill="#22252A"/>
+          <circle cx="-4" cy="0" r="3" fill="none" stroke="#22252A" stroke-width="1.5"/>
+          <circle cx="4" cy="0" r="3" fill="none" stroke="#22252A" stroke-width="1.5"/>
+          <line x1="-1" y1="0" x2="1" y2="0" stroke="#22252A" stroke-width="1.5"/>
+        </g>
+
+        <text x="210" y="510" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif" font-weight="600">7 位候选人在排队</text>
+
+        <text x="510" y="60" text-anchor="middle" font-size="22" fill="#A47530" font-family="sans-serif" font-weight="800">面试中</text>
+        <text x="510" y="88" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif">2.5 小时 · 1 个职位</text>
+
+      </svg>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">候选人</span>
+          <span class="lex-item__py">hòu xuǎn rén</span>
+        </div>
+        <div class="lex-item__def">来面试的人。</div>
+        <div class="lex-item__en">Candidate.</div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">职位</span>
+          <span class="lex-item__py">zhí wèi</span>
+        </div>
+        <div class="lex-item__def">工作岗位。</div>
+        <div class="lex-item__en">Position.</div>
+      </div>
+    </div>
+
+    <div class="slide-replica">
+      <div class="slide-replica__avatar" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+      <div class="slide-replica__content">
+        <div class="slide-replica__text speakable" onclick="speakZH('她问我：你为什么这么说话？我说：因为这就是我。')">
+          她问我：你为什么这么说话？我说：因为这就是我。
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ксения Собчак · Миллениал">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак · Gen Z">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+<!-- ═══════════════════════════════════════════════════════════
+     СЛАЙД 6 — ТИТУЛ БЛОКА 2
+     ═══════════════════════════════════════════════════════════ -->
+<section class="slide slide--block-title slide--title-block-2" id="slide-6">
+  <div class="bg-emoji bg-emoji--1" aria-hidden="true">🎨</div>
+  <div class="bg-emoji bg-emoji--2" aria-hidden="true">⚖️</div>
+  <div class="bg-emoji bg-emoji--3" aria-hidden="true">🖌</div>
+
+  <div class="block-dots">
+    <span class="block-dot block-dot--past"></span>
+    <span class="block-dot block-dot--active"></span>
+    <span class="block-dot"></span>
+    <span class="block-dot"></span>
+  </div>
+
+  <div class="block-title speakable" onclick="speakZH('两种美学')">两种美学</div>
+  <div class="block-subtitle">控制 · 边界 · 观察</div>
+
+  <aside class="hero-avatars" aria-label="Герои">
+    <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ксения Собчак">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     СЛАЙД 7 — ЭСКАПИЗМ + ВИДЕО «想找爸爸妈妈»
+     ═══════════════════════════════════════════════════════════ -->
+<section class="slide" id="slide-7">
+  <div class="slide-header" data-num="04">
+    <div class="tag-badge tag-lavender">第二部分 · 04</div>
+    <h2 class="slide-title speakable" onclick="speakZH('避世：不是逃避，是自保')">避世：不是逃避，是自保</h2>
+  </div>
+
+  <div class="grid-split">
+    <div>
+      <div class="video-frame" role="button" tabindex="0" aria-label="Видео Максима Лутчака «想找爸爸妈妈»">
+        <div class="video-frame__title-card">
+          <span>Максим Лутчак</span>
+          <span>🎬 想找爸爸妈妈</span>
+        </div>
+        <div class="video-frame__play" aria-hidden="true"></div>
+        <div class="video-frame__hint">
+          <strong>🎬 现在看视频</strong>
+          想找爸爸妈妈 · Escapism
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 1.5rem; align-items: center; text-align: center;">
+      <div class="speakable" onclick="speakZH('避世')" style="font-size: clamp(58px, 5vw, 84px); font-weight: 900; color: #6B5B95; line-height: 1;">避世</div>
+      <div style="font-size: clamp(16px, 1.2vw, 21px); color: var(--text-sub); font-weight: 500;">不是逃避，是自保</div>
+
+      <svg class="hamster-wheel" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g class="wheel-rotor">
+          <circle cx="80" cy="80" r="60" fill="none" stroke="#B5A8D8" stroke-width="3"/>
+          <circle cx="80" cy="80" r="55" fill="none" stroke="#B5A8D8" stroke-width="1" opacity="0.5"/>
+          <line x1="80" y1="20" x2="80" y2="140" stroke="#B5A8D8" stroke-width="1.5" opacity="0.4"/>
+          <line x1="20" y1="80" x2="140" y2="80" stroke="#B5A8D8" stroke-width="1.5" opacity="0.4"/>
+          <line x1="37" y1="37" x2="123" y2="123" stroke="#B5A8D8" stroke-width="1.5" opacity="0.4"/>
+          <line x1="123" y1="37" x2="37" y2="123" stroke="#B5A8D8" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="80" cy="20" r="3" fill="#B5A8D8"/>
+          <circle cx="80" cy="140" r="3" fill="#B5A8D8"/>
+          <circle cx="20" cy="80" r="3" fill="#B5A8D8"/>
+          <circle cx="140" cy="80" r="3" fill="#B5A8D8"/>
+        </g>
+        <g class="hamster-legs">
+          <ellipse cx="80" cy="95" rx="20" ry="15" fill="#D4A574"/>
+          <ellipse cx="80" cy="85" rx="22" ry="17" fill="#D4A574"/>
+          <circle cx="70" cy="80" r="2" fill="#22252A"/>
+          <circle cx="90" cy="80" r="2" fill="#22252A"/>
+          <ellipse cx="80" cy="88" rx="3" ry="2" fill="#E05A47"/>
+          <ellipse cx="66" cy="78" rx="4" ry="5" fill="#D4A574" opacity="0.9"/>
+          <ellipse cx="94" cy="78" rx="4" ry="5" fill="#D4A574" opacity="0.9"/>
+        </g>
+      </svg>
+      <div style="font-size: clamp(13px, 0.95vw, 16px); color: var(--text-muted); font-style: italic;">跑得很快，但原地不动</div>
+    </div>
+  </div>
+
+  <div class="lex-panel">
+    <div class="lex-panel__label">关键术语</div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">避世</span>
+        <span class="lex-item__py">bì shì</span>
+      </div>
+      <div class="lex-item__def">不是懒，是保护自己。</div>
+      <div class="lex-item__en">Escapism.</div>
+    </div>
+  </div>
+
+  <div class="slide-replica">
+    <div class="slide-replica__avatar" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+    <div class="slide-replica__content">
+      <div class="slide-replica__text speakable" onclick="speakZH('我不是不想努力。我是不想假装努力。')">
+        我不是不想努力。我是不想假装努力。
+      </div>
+    </div>
+  </div>
+
+  <aside class="hero-avatars" aria-label="Герои">
+    <div class="hero-avatar hero-avatar--sobchak" data-name="Ксения Собчак · Миллениал">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак · Gen Z">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     СЛАЙД 8 — ВИРУСНЫЙ КОНТЕНТ (с реакциями)
+     ═══════════════════════════════════════════════════════════ -->
+<section class="slide" id="slide-8">
+  <div class="slide-header" data-num="05">
+    <div class="tag-badge tag-mint">第二部分 · 05</div>
+    <h2 class="slide-title speakable" onclick="speakZH('三个爆款视频')">三个爆款视频</h2>
+    <p class="sub-title">为什么这么多人看他的视频</p>
+  </div>
+
+  <div class="flow-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;align-items:stretch;">
+    <div class="flow-card" style="position: relative; overflow: hidden; background: var(--surface-white); border: 2px solid var(--surface-border); border-radius: 22px; padding: clamp(24px, 2.2vw, 34px); display: flex; flex-direction: column; gap: 14px; opacity: 0; transform: translateY(10px);">
+      <span class="reaction reaction--heart" style="top: 20%; left: 15%;">❤️</span>
+      <span class="reaction reaction--fire" style="top: 30%; right: 20%;">🔥</span>
+      <span class="reaction reaction--sparkle" style="top: 60%; left: 25%;">✨</span>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <svg viewBox="0 0 60 100" style="width: 60px; height: 100px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="2" width="56" height="96" rx="8" fill="#22252A"/>
+          <rect x="6" y="8" width="48" height="84" rx="4" fill="#3A3E45"/>
+          <circle cx="30" cy="95" r="2" fill="#6C727E"/>
+          <rect x="20" y="85" width="20" height="3" rx="1.5" fill="#6C727E"/>
+        </svg>
+        <div class="stat-big stat-big--amber" style="font-size: clamp(28px, 2.4vw, 40px);">23.4M</div>
+      </div>
+      <div class="flow-card__title speakable" onclick="speakZH('科学省钱')" style="font-size: clamp(19px, 1.4vw, 24px); font-weight: 700; color: var(--text-main);">《科学省钱》</div>
+      <div class="flow-card__body speakable" onclick="speakZH('用买咖啡的快乐对抗三十年房贷的沉重，选择即时满足。')" style="font-size: clamp(16px, 1.15vw, 20px); color: var(--text-sub); line-height: 1.55;">
+        用咖啡的快乐对抗 <span class="chip chip--amber">30 年</span> 房贷，选择 <span class="key">即时满足</span>。
+      </div>
+    </div>
+
+    <div class="flow-card" style="position: relative; overflow: hidden; background: var(--surface-white); border: 2px solid var(--surface-border); border-radius: 22px; padding: clamp(24px, 2.2vw, 34px); display: flex; flex-direction: column; gap: 14px; opacity: 0; transform: translateY(10px);">
+      <span class="reaction reaction--heart" style="top: 25%; right: 18%;">💗</span>
+      <span class="reaction reaction--fire" style="top: 55%; left: 20%;">🔥</span>
+      <span class="reaction reaction--sparkle" style="top: 70%; right: 25%;">✨</span>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <svg viewBox="0 0 60 100" style="width: 60px; height: 100px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="2" width="56" height="96" rx="8" fill="#22252A"/>
+          <rect x="6" y="8" width="48" height="84" rx="4" fill="#3A3E45"/>
+          <circle cx="30" cy="95" r="2" fill="#6C727E"/>
+          <rect x="20" y="85" width="20" height="3" rx="1.5" fill="#6C727E"/>
+        </svg>
+        <div class="stat-big" style="font-size: clamp(28px, 2.4vw, 40px);">12.1M</div>
+      </div>
+      <div class="flow-card__title speakable" onclick="speakZH('结束远程')" style="font-size: clamp(19px, 1.4vw, 24px); font-weight: 700; color: var(--text-main);">《结束远程》</div>
+      <div class="flow-card__body speakable" onclick="speakZH('描述重返办公室后的文化休克，习惯自主控制生活节奏。')" style="font-size: clamp(16px, 1.15vw, 20px); color: var(--text-sub); line-height: 1.55;">
+        重返办公室后的 <span class="key">文化休克</span>，习惯自主掌控节奏。
+      </div>
+    </div>
+
+    <div class="flow-card" style="position: relative; overflow: hidden; background: var(--surface-white); border: 2px solid var(--surface-border); border-radius: 22px; padding: clamp(24px, 2.2vw, 34px); display: flex; flex-direction: column; gap: 14px; opacity: 0; transform: translateY(10px);">
+      <span class="reaction reaction--heart" style="top: 30%; left: 18%;">❤️</span>
+      <span class="reaction reaction--fire" style="top: 50%; right: 22%;">🔥</span>
+      <span class="reaction reaction--sparkle" style="top: 75%; left: 30%;">💫</span>
+
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <svg viewBox="0 0 60 100" style="width: 60px; height: 100px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="2" width="56" height="96" rx="8" fill="#22252A"/>
+          <rect x="6" y="8" width="48" height="84" rx="4" fill="#3A3E45"/>
+          <circle cx="30" cy="95" r="2" fill="#6C727E"/>
+          <rect x="20" y="85" width="20" height="3" rx="1.5" fill="#6C727E"/>
+        </svg>
+        <div class="stat-big stat-big--amber" style="font-size: clamp(28px, 2.4vw, 40px);">8.7M</div>
+      </div>
+      <div class="flow-card__title speakable" onclick="speakZH('职场午休')" style="font-size: clamp(19px, 1.4vw, 24px); font-weight: 700; color: var(--text-main);">《职场午休》</div>
+      <div class="flow-card__body speakable" onclick="speakZH('用童趣和幽默解构严肃的职场规则，缓解工作压力。')" style="font-size: clamp(16px, 1.15vw, 20px); color: var(--text-sub); line-height: 1.55;">
+        用童趣解构严肃规则，<span class="key">缓解工作压力</span>。
+      </div>
+    </div>
+  </div>
+
+  <div class="lex-panel">
+    <div class="lex-panel__label">关键术语</div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">内卷</span>
+        <span class="lex-item__py">nèi juǎn</span>
+      </div>
+      <div class="lex-item__def">大家越拼越累，但谁也没赢。</div>
+      <div class="lex-item__en">Rat race.</div>
+    </div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">即时满足</span>
+        <span class="lex-item__py">jí shí mǎn zú</span>
+      </div>
+      <div class="lex-item__def">不要等，现在就要快乐。</div>
+      <div class="lex-item__en">Instant gratification.</div>
+    </div>
+  </div>
+
+  <div class="slide-replica">
+    <div class="slide-replica__avatar" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+    <div class="slide-replica__content">
+      <div class="slide-replica__text speakable" onclick="speakZH('为什么火？因为太真实了。')">
+        为什么火？因为太真实了。
+      </div>
+    </div>
+  </div>
+
+  <aside class="hero-avatars" aria-label="Герои">
+    <div class="hero-avatar hero-avatar--sobchak" data-name="Ксения Собчак · Миллениал">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак · Gen Z">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     СЛАЙД 9 — ПИРАМИДА «СТАРШИЙ БРАТ»
+     ═══════════════════════════════════════════════════════════ -->
+<section class="slide" id="slide-9">
+  <div class="slide-header" data-num="06">
+    <div class="tag-badge tag-amber">第二部分 · 06</div>
+    <h2 class="slide-title speakable" onclick="speakZH('代际关系：长兄模型')">代际关系：“长兄”模型</h2>
+    <p class="sub-title">两代人不是敌人，而是家庭中的兄长与晚辈</p>
+  </div>
+
+  <div class="pyramid">
+    <div class="pyramid__layer pyramid__layer--top">
+      <svg style="width: 80px; height: 80px; flex-shrink: 0;" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="20" r="12" fill="#FCE0CC"/>
+        <path d="M 30 12 C 32 6, 48 6, 50 12 L 50 16 L 30 16 Z" fill="#8B6B3D"/>
+        <rect x="30" y="32" width="20" height="26" rx="3" fill="#22252A"/>
+        <path d="M 38 32 L 40 40 L 42 32 Z" fill="#FFFFFF"/>
+        <line x1="40" y1="40" x2="40" y2="55" stroke="#E05A47" stroke-width="2"/>
+        <rect x="30" y="58" width="7" height="14" fill="#22252A"/>
+        <rect x="43" y="58" width="7" height="14" fill="#22252A"/>
+        <circle cx="35" cy="22" r="1.5" fill="#22252A"/>
+        <circle cx="45" cy="22" r="1.5" fill="#22252A"/>
+      </svg>
+
+      <div>
+        <div style="font-size: clamp(20px, 1.55vw, 26px); font-weight: 800; color: #A47530; margin-bottom: 6px;" class="speakable" onclick="speakZH('千禧一代：兄长角色')">千禧一代 · 兄长</div>
+        <div style="font-size: clamp(16px, 1.2vw, 21px); color: var(--text-sub); line-height: 1.6;" class="speakable" onclick="speakZH('开辟了心理边界，承载了过去的牺牲，因此容易产生保护执念与说教欲望。')">
+          开辟心理边界 <span style="color: var(--text-muted);">·</span> 承载过去的牺牲 <span style="color: var(--text-muted);">·</span> 产生 <span class="term">保护执念</span> 与 <span class="term">说教</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pyramid__connector">
+      <div class="pyramid__connector-line"></div>
+      <div class="pyramid__connector-arrow"></div>
+    </div>
+
+    <div class="pyramid__layer pyramid__layer--bottom">
+      <svg style="width: 80px; height: 80px; flex-shrink: 0;" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="40" cy="22" r="12" fill="#FCD3B8"/>
+        <path d="M 28 20 C 28 10, 52 10, 52 20 L 52 26 L 28 26 Z" fill="#D99B4E"/>
+        <rect x="28" y="34" width="24" height="26" rx="4" fill="#4ECDC4"/>
+        <rect x="30" y="60" width="7" height="14" fill="#22252A"/>
+        <rect x="43" y="60" width="7" height="14" fill="#22252A"/>
+        <circle cx="35" cy="20" r="1.5" fill="#22252A"/>
+        <circle cx="45" cy="20" r="1.5" fill="#22252A"/>
+      </svg>
+
+      <div>
+        <div style="font-size: clamp(20px, 1.55vw, 26px); font-weight: 800; color: #2A9A92; margin-bottom: 6px;" class="speakable" onclick="speakZH('Z世代：享受红利者')">Z世代 · 晚辈</div>
+        <div style="font-size: clamp(16px, 1.2vw, 21px); color: var(--text-sub); line-height: 1.6;" class="speakable" onclick="speakZH('享受了前人争取来的边界红利，用幽默解构严肃，寻求更平等的对话。')">
+          享受 <span class="key">边界红利</span> <span style="color: var(--text-muted);">·</span> 幽默解构 <span style="color: var(--text-muted);">·</span> 寻求平等对话
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lex-panel">
+    <div class="lex-panel__label">关键术语</div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">保护执念</span>
+        <span class="lex-item__py">bǎo hù zhí niàn</span>
+      </div>
+      <div class="lex-item__def">想保护别人，但过了头。</div>
+      <div class="lex-item__en">Protective obsession.</div>
+    </div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">说教</span>
+        <span class="lex-item__py">shuō jiào</span>
+      </div>
+      <div class="lex-item__def">用道理压人，而不是商量。</div>
+      <div class="lex-item__en">Preaching.</div>
+    </div>
+  </div>
+
+  <div class="slide-replica">
+    <div class="slide-replica__avatar slide-replica__avatar--amber" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="slide-replica__content">
+      <div class="slide-replica__text speakable" onclick="speakZH('我是为你好。')">
+        我是为你好。
+      </div>
+    </div>
+  </div>
+
+  <aside class="hero-avatars" aria-label="Герои">
+    <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ксения Собчак · Миллениал">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="hero-avatar hero-avatar--lutchek" data-name="Максим Лутчак · Gen Z">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     СЛАЙД 10 — ТИТУЛ БЛОКА 3
+     ═══════════════════════════════════════════════════════════ -->
+<section class="slide slide--block-title slide--title-block-3" id="slide-10">
+  <div class="bg-emoji bg-emoji--1" aria-hidden="true">💼</div>
+  <div class="bg-emoji bg-emoji--2" aria-hidden="true">⏰</div>
+  <div class="bg-emoji bg-emoji--3" aria-hidden="true">🚪</div>
+
+  <div class="block-dots">
+    <span class="block-dot block-dot--past"></span>
+    <span class="block-dot block-dot--past"></span>
+    <span class="block-dot block-dot--active"></span>
+    <span class="block-dot"></span>
+  </div>
+
+  <div class="block-title speakable" onclick="speakZH('工作与边界')">工作与边界</div>
+  <div class="block-subtitle">稳定 · 流动 · 新的选择</div>
+
+  <aside class="hero-avatars" aria-label="Герои">
+    <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ксения Собчак">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+  </aside>
+</section>
+<!-- ═══════════════════════════════════════════════════════════
+     СЛАЙД 11 — ТАЙМЛАЙН СССР → 1990 → 2026
+     ═══════════════════════════════════════════════════════════ -->
+<section class="slide" id="slide-11">
+  <div class="slide-header" data-num="07">
+    <div class="tag-badge tag-mint">第三部分 · 07</div>
+    <h2 class="slide-title speakable" onclick="speakZH('为什么两年就换工作？')">为什么两年就换工作？</h2>
+    <p class="sub-title">从苏联的「单位」到今天的流动</p>
+  </div>
+
+  <div class="timeline-eras">
+    <!-- 1960–1991: завод с серпом и молотом -->
+    <div class="era-point era-point--1960">
+      <div class="era-point__year">1960 – 1991</div>
+      <div class="era-point__icon-wrap">
+        <svg viewBox="0 0 100 90" class="era-point__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g>
+            <rect x="30" y="14" width="6" height="48" fill="#D4A574"/>
+            <rect x="36" y="12" width="34" height="20" fill="#B22222"/>
+            <g transform="translate(44, 18) scale(0.55)">
+              <path d="M 0 14 C 0 8, 5 3, 12 3" stroke="#FFD700" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 0 14 L 12 3" stroke="#FFD700" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 12 3 L 18 -3" stroke="#FFD700" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <rect x="9" y="0" width="12" height="5" fill="#FFD700" transform="rotate(-45 15 2.5)"/>
+            </g>
+            <circle class="factory-smoke" cx="33" cy="10" r="5" fill="#9DA3AF" opacity="0.5"/>
+            <circle class="factory-smoke" cx="33" cy="10" r="6" fill="#9DA3AF" opacity="0.4"/>
+            <circle class="factory-smoke" cx="33" cy="10" r="5" fill="#9DA3AF" opacity="0.5"/>
+            <path d="M 8 62 L 8 40 L 70 40 L 70 62 Z" fill="#F5EBDD" stroke="#D4A574" stroke-width="1.5"/>
+            <rect x="16" y="48" width="6" height="6" fill="#D4A574"/>
+            <rect x="28" y="48" width="6" height="6" fill="#D4A574"/>
+            <rect x="40" y="48" width="6" height="6" fill="#D4A574"/>
+            <rect x="52" y="48" width="6" height="6" fill="#D4A574"/>
+            <line x1="4" y1="62" x2="76" y2="62" stroke="#D4A574" stroke-width="2"/>
+          </g>
+        </svg>
+      </div>
+      <div class="era-point__words">稳定 · 保障</div>
+      <div class="era-point__sub">工厂 = 家</div>
+    </div>
+
+    <!-- 1991–2000s: обломки -->
+    <div class="era-point era-point--1990">
+      <div class="era-point__year">1991 – 2000s</div>
+      <div class="era-point__icon-wrap">
+        <svg viewBox="0 0 100 90" class="era-point__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M 12 60 L 12 38 L 22 38 L 22 34 L 30 34 L 30 42 L 40 42 L 40 30 L 50 30 L 50 44 L 60 44 L 60 38 L 68 38 L 68 60 Z" fill="#E8E3DA" stroke="#9DA3AF" stroke-width="1.5"/>
+          <line x1="4" y1="60" x2="76" y2="60" stroke="#9DA3AF" stroke-width="2"/>
+          <path d="M 40 32 L 42 40 L 38 48 L 42 56" stroke="#9DA3AF" stroke-width="1.5" fill="none"/>
+          <rect x="20" y="58" width="6" height="4" fill="#9DA3AF" opacity="0.7"/>
+          <rect x="58" y="58" width="8" height="3" fill="#9DA3AF" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="era-point__words">动荡 · 未知</div>
+      <div class="era-point__sub">一切崩塌</div>
+    </div>
+
+    <!-- 2026: человек с чемоданом -->
+    <div class="era-point era-point--2026">
+      <div class="era-point__year">2026</div>
+      <div class="era-point__icon-wrap">
+        <svg viewBox="0 0 100 90" class="era-point__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M 6 78 Q 50 72 94 50" stroke="#9DA3AF" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+          <g class="traveler-step">
+            <circle cx="58" cy="26" r="8" fill="#4ECDC4"/>
+            <rect x="52" y="34" width="12" height="20" rx="3" fill="#4ECDC4"/>
+            <rect x="52" y="54" width="4" height="14" rx="2" fill="#4ECDC4"/>
+            <rect x="60" y="54" width="4" height="14" rx="2" fill="#4ECDC4"/>
+            <rect x="68" y="38" width="12" height="18" rx="2" fill="#2A9A92"/>
+            <path d="M 71 38 V 34 A 1 1 0 0 1 72 33 H 76 A 1 1 0 0 1 77 34 V 38" stroke="#2A9A92" stroke-width="1.5" fill="none"/>
+          </g>
+        </svg>
+      </div>
+      <div class="era-point__words">流动 · 选择</div>
+      <div class="era-point__sub"><span class="stat-big">1.8 年</span></div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.5rem; max-width: 1000px; margin-left: auto; margin-right: auto;">
+    <div class="card" style="text-align: center; padding: 20px;">
+      <div class="stat-big stat-big--amber">1.8 年</div>
+      <div style="font-size: clamp(13px, 0.95vw, 16px); color: var(--text-sub); margin-top: 8px;">平均在一家公司待的时长</div>
+    </div>
+    <div class="card" style="text-align: center; padding: 20px;">
+      <div class="stat-big">57%</div>
+      <div style="font-size: clamp(13px, 0.95vw, 16px); color: var(--text-sub); margin-top: 8px;">计划今年换工作</div>
+    </div>
+    <div class="card" style="text-align: center; padding: 20px;">
+      <div class="stat-big stat-big--amber">80%</div>
+      <div style="font-size: clamp(13px, 0.95vw, 16px); color: var(--text-sub); margin-top: 8px;">18个月没晋升就离职</div>
+    </div>
+  </div>
+
+  <div class="lex-panel">
+    <div class="lex-panel__label">关键术语</div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">跳槽</span>
+        <span class="lex-item__py">tiào cáo</span>
+      </div>
+      <div class="lex-item__def">换工作，不是背叛，是重新选择。</div>
+      <div class="lex-item__en">Job-hopping.</div>
+    </div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">天花板</span>
+        <span class="lex-item__py">tiān huā bǎn</span>
+      </div>
+      <div class="lex-item__def">再努力也升不上去的那道线。</div>
+      <div class="lex-item__en">Ceiling.</div>
+    </div>
+  </div>
+
+  <div class="slide-replica">
+    <div class="slide-replica__avatar" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+    <div class="slide-replica__content">
+      <div class="slide-replica__text speakable" onclick="speakZH('忠诚没有回报，那就不是忠诚。')">
+        忠诚没有回报，那就不是忠诚。
+      </div>
+    </div>
+  </div>
+
+  <aside class="hero-avatars" aria-label="Герои">
+    <div class="hero-avatar hero-avatar--sobchak" data-name="Ксения Собчак · Миллениал">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак · Gen Z">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     СЛАЙД 12 — ТОКСИЧНАЯ ЗАРПЛАТА
+     ═══════════════════════════════════════════════════════════ -->
+<section class="slide" id="slide-12">
+  <div class="slide-header" data-num="08">
+    <div class="tag-badge tag-terracotta">第三部分 · 08</div>
+    <h2 class="slide-title speakable" onclick="speakZH('拒绝毒性高薪')">拒绝“毒性高薪”</h2>
+    <p class="sub-title">心理安全 > 高薪</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: stretch;">
+    <div class="video-frame" role="button" tabindex="0" aria-label="Видео «Шесть вечера — и домой»">
+      <div class="video-frame__title-card">
+        <span>Максим Лутчак</span>
+        <span>🎬 六点就走</span>
+      </div>
+      <div class="video-frame__play" aria-hidden="true"></div>
+      <div class="video-frame__hint">
+        <strong>🎬 现在看视频</strong>
+        六点就走 · Work-Life Boundaries
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 1.2rem; justify-content: center;">
+      <div class="card card--terracotta">
+        <strong class="card-title speakable" onclick="speakZH('毒性高薪')">
+          <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-lock"/></svg>
+          毒性高薪 <span class="chip chip--terracotta">98%</span>
+        </strong>
+        <p class="card-body speakable" onclick="speakZH('钱多，但代价是精神和健康。98% 的年轻人都出现了过劳的迹象。')">
+          钱多，但代价是精神和健康。98% 的年轻人已经出现 <span class="key">过劳</span> 迹象。
+        </p>
+      </div>
+
+      <div class="card card--mint">
+        <strong class="card-title speakable" onclick="speakZH('心理安全')">
+          <svg class="card-icon card-icon--mint" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-shield"/></svg>
+          心理安全 <span class="chip chip--mint">65%</span>
+        </strong>
+        <p class="card-body speakable" onclick="speakZH('错了也不会被羞辱，可以放心说话。65% 的年轻人因为缺乏弹性而离职。')">
+          错了也不会被羞辱，可以放心说话。65% 的年轻人因为 <span class="key">缺乏弹性</span> 而离职。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scales-big">
+    <div class="scale-big-side scale-big-side--heavy">
+      <div class="scale-big-title speakable" onclick="speakZH('毒性高薪')">
+        <svg class="card-icon card-icon--terracotta" style="width:30px;height:30px;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-lock"/></svg>
+        高薪 + 极致加班
+      </div>
+
+      <svg class="kick-scene-big" viewBox="0 0 260 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="190" y="20" width="55" height="90" fill="#FDF0EE" stroke="#E05A47" stroke-width="2.5"/>
+        <circle cx="210" cy="65" r="2.5" fill="#E05A47"/>
+        <text x="217" y="72" font-size="12" text-anchor="middle" fill="#E05A47" font-family="sans-serif" font-weight="700">OFFICE</text>
+
+        <g>
+          <circle cx="80" cy="45" r="14" fill="#FCE0CC"/>
+          <rect x="70" y="60" width="20" height="30" rx="4" fill="#6C727E"/>
+          <rect x="70" y="90" width="8" height="18" fill="#22252A"/>
+          <rect x="82" y="90" width="8" height="18" fill="#22252A"/>
+        </g>
+
+        <g class="kick-leg-big">
+          <rect x="100" y="68" width="60" height="14" rx="7" fill="#22252A"/>
+          <path d="M 160 65 L 185 65 L 185 85 L 160 85 Z" fill="#E05A47"/>
+          <circle cx="175" cy="75" r="3" fill="#FFD8D1"/>
+        </g>
+      </svg>
+
+      <ul class="scale-big-list" style="text-align: center;">
+        <li>表面光鲜</li>
+        <li>Burnout 风险</li>
+        <li>长期消耗</li>
+      </ul>
+    </div>
+
+    <div class="scales-big-symbol">&lt;</div>
+
+    <div class="scale-big-side scale-big-side--balance">
+      <div class="scale-big-title speakable" onclick="speakZH('心理安全')">
+        <svg class="card-icon card-icon--mint" style="width:30px;height:30px;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-shield"/></svg>
+        合理薪资 + 心理安全
+      </div>
+
+      <svg class="calm-exit-big" viewBox="0 0 260 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="20" y="20" width="55" height="90" fill="#E4F6F4" stroke="#4ECDC4" stroke-width="2.5"/>
+        <line x1="47" y1="20" x2="47" y2="110" stroke="#4ECDC4" stroke-width="1.5"/>
+        <circle cx="67" cy="65" r="2.5" fill="#4ECDC4"/>
+
+        <g class="calm-walker-big">
+          <circle cx="140" cy="45" r="14" fill="#FCD3B8"/>
+          <rect x="130" y="60" width="20" height="30" rx="4" fill="#4ECDC4"/>
+          <rect x="130" y="90" width="8" height="18" fill="#22252A"/>
+          <rect x="142" y="90" width="8" height="18" fill="#22252A"/>
+          <rect x="156" y="68" width="14" height="16" rx="2" fill="#FFFFFF" stroke="#22252A" stroke-width="1.5"/>
+          <path d="M 170 72 C 174 72, 174 80, 170 80" stroke="#22252A" stroke-width="1.5" fill="none"/>
+          <path d="M 160 62 Q 162 56 160 52" stroke="#9DA3AF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M 136 48 Q 140 52 144 48" stroke="#22252A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+
+      <ul class="scale-big-list" style="text-align: center;">
+        <li>弹性工时</li>
+        <li>不羞辱错误</li>
+        <li>可持续状态</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lex-panel">
+    <div class="lex-panel__label">关键术语</div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">毒性高薪</span>
+        <span class="lex-item__py">dú xìng gāo xīn</span>
+      </div>
+      <div class="lex-item__def">钱多，但人废了。</div>
+      <div class="lex-item__en">Toxic high pay.</div>
+    </div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">心理安全</span>
+        <span class="lex-item__py">xīn lǐ ān quán</span>
+      </div>
+      <div class="lex-item__def">错了不会挨骂。</div>
+      <div class="lex-item__en">Psychological safety.</div>
+    </div>
+  </div>
+
+  <div class="slide-replica">
+    <div class="slide-replica__avatar slide-replica__avatar--amber" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="slide-replica__content">
+      <div class="slide-replica__text speakable" onclick="speakZH('我们那一代，觉得这样才是敬业。')">
+        我们那一代，觉得这样才是敬业。
+      </div>
+    </div>
+  </div>
+
+  <aside class="hero-avatars" aria-label="Герои">
+    <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ксения Собчак · Миллениал">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="hero-avatar hero-avatar--lutchek" data-name="Максим Лутчак · Gen Z">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     СЛАЙД 13 — ЖИЛЬЁ
+     ═══════════════════════════════════════════════════════════ -->
+<section class="slide" id="slide-13">
+  <div class="slide-header" data-num="09">
+    <div class="tag-badge tag-amber">第三部分 · 09</div>
+    <h2 class="slide-title speakable" onclick="speakZH('住房：枷锁还是自由？')">住房：枷锁还是自由？</h2>
+  </div>
+
+  <div class="grid-split">
+    <div class="card card--terracotta" style="text-align: center;">
+      <svg class="clock-face" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="#22252A" stroke-width="3"/>
+        <circle cx="50" cy="50" r="2.5" fill="#22252A"/>
+        <line x1="50" y1="10" x2="50" y2="16" stroke="#22252A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="84" x2="50" y2="90" stroke="#22252A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="10" y1="50" x2="16" y2="50" stroke="#22252A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="84" y1="50" x2="90" y2="50" stroke="#22252A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="50" x2="68" y2="50" stroke="#22252A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+        <g class="clock-hand-rotor" style="transform-origin: 50px 50px;">
+          <line x1="50" y1="50" x2="50" y2="22" stroke="#E05A47" stroke-width="3.5" stroke-linecap="round"/>
+        </g>
+      </svg>
+
+      <h3 class="card-title speakable" onclick="speakZH('三十年的枷锁')" style="justify-content: center; margin-top: 12px;">
+        <svg class="card-icon card-icon--terracotta" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-lock"/></svg>
+        传统 <span class="chip chip--terracotta">30 年</span> 债务
+      </h3>
+      <p class="card-body speakable" onclick="speakZH('大都市高昂的房价脱离了薪资现实，长期的贷款限制了职业选择自由。')">
+        高昂房价脱离薪资现实，长期的债务剥夺了人生的 <span class="key">流动性</span>。
+      </p>
+    </div>
+
+    <div class="card card--mint" style="text-align: center;">
+      <svg viewBox="0 0 120 120" style="width: 130px; height: 130px; margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 20 110 Q 60 80 60 40 Q 60 20 70 10" stroke="#9DA3AF" stroke-width="2" stroke-dasharray="5 5" fill="none"/>
+        <g style="transform-origin: 70px 30px; animation: clockTick 8s linear infinite;">
+          <circle cx="70" cy="20" r="8" fill="none" stroke="#4ECDC4" stroke-width="3"/>
+          <line x1="70" y1="28" x2="70" y2="48" stroke="#4ECDC4" stroke-width="3"/>
+          <line x1="70" y1="40" x2="78" y2="40" stroke="#4ECDC4" stroke-width="3"/>
+          <line x1="70" y1="46" x2="76" y2="46" stroke="#4ECDC4" stroke-width="3"/>
+        </g>
+      </svg>
+
+      <h3 class="card-title speakable" onclick="speakZH('灵活的品质租居')" style="justify-content: center; margin-top: 12px;">
+        <svg class="card-icon card-icon--mint" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#icon-unlock"/></svg>
+        品质租居与自由
+      </h3>
+      <p class="card-body speakable" onclick="speakZH('保持生活的流动性，将资金投入到体验、学习与能带来即时快乐的地方。')">
+        保持生活的流动性，将资金投入到 <span class="key">体验与能带来快乐的地方</span>。
+      </p>
+    </div>
+  </div>
+
+  <div class="lex-panel">
+    <div class="lex-panel__label">关键术语</div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">流动性</span>
+        <span class="lex-item__py">liú dòng xìng</span>
+      </div>
+      <div class="lex-item__def">不被绑住。</div>
+      <div class="lex-item__en">Mobility.</div>
+    </div>
+
+    <div class="lex-item">
+      <div class="lex-item__head">
+        <span class="lex-item__zh">枷锁</span>
+        <span class="lex-item__py">jiā suǒ</span>
+      </div>
+      <div class="lex-item__def">看起来自愿，其实是束缚。</div>
+      <div class="lex-item__en">Shackles.</div>
+    </div>
+  </div>
+
+  <div class="slide-replica">
+    <div class="slide-replica__avatar" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+    <div class="slide-replica__content">
+      <div class="slide-replica__text speakable" onclick="speakZH('别为了一套水泥，把自己钉死三十年。')">
+        别为了一套水泥，把自己钉死三十年。
+      </div>
+    </div>
+  </div>
+
+  <aside class="hero-avatars" aria-label="Герои">
+    <div class="hero-avatar hero-avatar--sobchak" data-name="Ксения Собчак · Миллениал">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак · Gen Z">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     СЛАЙД 14 — ТИТУЛ БЛОКА 4
+     ═══════════════════════════════════════════════════════════ -->
+<section class="slide slide--block-title slide--title-block-4" id="slide-14">
+  <div class="bg-emoji bg-emoji--1" aria-hidden="true">❤️</div>
+  <div class="bg-emoji bg-emoji--2" aria-hidden="true">🍵</div>
+  <div class="bg-emoji bg-emoji--3" aria-hidden="true">🧘</div>
+
+  <div class="block-dots">
+    <span class="block-dot block-dot--past"></span>
+    <span class="block-dot block-dot--past"></span>
+    <span class="block-dot block-dot--past"></span>
+    <span class="block-dot block-dot--active"></span>
+  </div>
+
+  <div class="block-title speakable" onclick="speakZH('私人空间')">私人空间</div>
+  <div class="block-subtitle">感情 · 清醒 · 新的亲密</div>
+
+  <aside class="hero-avatars" aria-label="Герои">
+    <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ксения Собчак">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+    </div>
+    <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+    </div>
+  </aside>
+</section>
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 15 — ОТНОШЕНИЯ + ТРЕЗВОСТЬ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-15">
+    <div class="slide-header" data-num="10">
+      <div class="tag-badge tag-lavender">第四部分 · 10</div>
+      <h2 class="slide-title speakable" onclick="speakZH('拒绝凑合 · 选择清醒')">拒绝凑合 · 选择清醒</h2>
+    </div>
+
+    <div class="grid-split" style="align-items: stretch;">
+      <!-- Венн-диаграмма -->
+      <div class="venn-wrap">
+        <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="150" cy="150" r="95" fill="#E05A47" opacity="0.15" stroke="#E05A47" stroke-width="3"/>
+          <text x="115" y="130" text-anchor="middle" font-size="32" font-weight="800" fill="#E05A47" font-family="sans-serif">凑合</text>
+          <text x="115" y="162" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif">将就</text>
+          <text x="115" y="184" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif">避免孤独</text>
+
+          <circle cx="250" cy="150" r="95" fill="#4ECDC4" opacity="0.18" stroke="#4ECDC4" stroke-width="3"/>
+          <text x="285" y="130" text-anchor="middle" font-size="32" font-weight="800" fill="#2A9A92" font-family="sans-serif">共情</text>
+          <text x="285" y="162" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif">理解</text>
+          <text x="285" y="184" text-anchor="middle" font-size="15" fill="#6C727E" font-family="sans-serif">共同成长</text>
+
+          <ellipse class="venn-overlap" cx="200" cy="150" rx="22" ry="70" fill="#FFB800" opacity="0.4" stroke="#B37E00" stroke-width="2" stroke-dasharray="4 4"/>
+
+          <text x="200" y="290" text-anchor="middle" font-size="15" fill="#9DA3AF" font-family="sans-serif">重叠区 = 真正的亲密</text>
+        </svg>
+      </div>
+
+      <!-- Две чашки -->
+      <div class="cups-pair" style="grid-template-columns: 1fr; gap: 1rem;">
+        <div class="cup-card" style="flex-direction: row; align-items: center; text-align: left; gap: 18px;">
+          <svg class="cup-card__svg" viewBox="0 0 120 120" style="width: 80px; height: 80px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 30 45 L 90 45 L 84 95 L 36 95 Z" fill="#FFFFFF" stroke="#22252A" stroke-width="2.5" stroke-linejoin="round"/>
+            <line x1="60" y1="95" x2="60" y2="107" stroke="#22252A" stroke-width="2.5"/>
+            <line x1="46" y1="110" x2="74" y2="110" stroke="#22252A" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 33 52 L 87 52 L 82 92 L 38 92 Z" fill="#E05A47" opacity="0.4"/>
+            <circle class="bubble" cx="50" cy="82" r="3.5" fill="#E05A47" opacity="0.75"/>
+            <circle class="bubble" cx="66" cy="76" r="3" fill="#E05A47" opacity="0.75"/>
+            <circle class="bubble" cx="58" cy="86" r="2.5" fill="#E05A47" opacity="0.75"/>
+          </svg>
+          <div>
+            <div class="cup-card__title speakable" onclick="speakZH('传统饮酒')" style="color: var(--accent-terracotta); text-align: left;">传统饮酒</div>
+            <div class="cup-card__body" style="text-align: left;">
+              <span style="font-weight: 700; color: var(--text-main);">饮酒 = 成年</span><br>
+              社交必备 · 推杯换盏
+            </div>
+          </div>
+        </div>
+
+        <div class="cup-card" style="flex-direction: row; align-items: center; text-align: left; gap: 18px; border-color: var(--mint);">
+          <svg class="cup-card__svg" viewBox="0 0 120 120" style="width: 80px; height: 80px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 30 38 L 90 38 L 84 95 L 36 95 Z" fill="#E8F8F3" stroke="#22252A" stroke-width="2.5" stroke-linejoin="round"/>
+            <circle cx="60" cy="52" r="10" fill="#FFB800" stroke="#B37E00" stroke-width="1.5"/>
+            <line x1="52" y1="52" x2="68" y2="52" stroke="#FFF" stroke-width="1.2"/>
+            <line x1="60" y1="44" x2="60" y2="60" stroke="#FFF" stroke-width="1.2"/>
+            <path class="tea-branch" d="M 72 48 Q 80 40 86 42" stroke="#2EB886" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="84" cy="41" rx="5" ry="2.5" fill="#2EB886" transform="rotate(-30 84 41)"/>
+            <circle cx="48" cy="70" r="2" fill="#2EB886" opacity="0.7"/>
+            <circle cx="70" cy="76" r="1.5" fill="#2EB886" opacity="0.7"/>
+          </svg>
+          <div>
+            <div class="cup-card__title speakable" onclick="speakZH('清醒选择')" style="color: #2A9A92; text-align: left;">清醒选择</div>
+            <div class="cup-card__body" style="text-align: left;">
+              <span style="font-weight: 700; color: var(--text-main);">清醒 = 掌控</span><br>
+              自律 · 对身体负责
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">凑合</span>
+          <span class="lex-item__py">còu he</span>
+        </div>
+        <div class="lex-item__def">不合适也将就。</div>
+        <div class="lex-item__en">Settling.</div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">共情</span>
+          <span class="lex-item__py">gòng qíng</span>
+        </div>
+        <div class="lex-item__def">站在对方的位置上感受。</div>
+        <div class="lex-item__en">Empathy.</div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">清醒</span>
+          <span class="lex-item__py">qīng xǐng</span>
+        </div>
+        <div class="lex-item__def">不靠酒精也能放松。</div>
+        <div class="lex-item__en">Sober.</div>
+      </div>
+    </div>
+
+    <div class="slide-replica">
+      <div class="slide-replica__avatar" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+      <div class="slide-replica__content">
+        <div class="slide-replica__text speakable" onclick="speakZH('单身不是缺口，是完整。')">
+          单身不是缺口，是完整。
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ксения Собчак · Миллениал">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак · Gen Z">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 16 — ВОРОНКА + AI
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-16">
+    <div class="slide-header" data-num="11">
+      <div class="tag-badge tag-blue">第四部分 · 11</div>
+      <h2 class="slide-title speakable" onclick="speakZH('信息筛选 · 智力杠杆')">信息筛选 · 智力杠杆</h2>
+    </div>
+
+    <div class="grid-split">
+      <div class="funnel-wrap">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g>
+            <circle class="funnel-icon" cx="60" cy="60" r="12" fill="#E8E3DA" stroke="#9DA3AF" stroke-width="1.5"/>
+            <circle class="funnel-icon" cx="120" cy="45" r="12" fill="#FFD8D1" stroke="#E05A47" stroke-width="1.5"/>
+            <circle class="funnel-icon" cx="185" cy="55" r="12" fill="#DDEEE9" stroke="#2EB886" stroke-width="1.5"/>
+            <circle class="funnel-icon" cx="245" cy="42" r="12" fill="#F5EBDD" stroke="#D4A574" stroke-width="1.5"/>
+            <circle class="funnel-icon" cx="305" cy="58" r="12" fill="#DCE6F0" stroke="#5B8DB8" stroke-width="1.5"/>
+            <circle class="funnel-icon" cx="345" cy="90" r="12" fill="#E8E3DA" stroke="#9DA3AF" stroke-width="1.5"/>
+            <circle class="funnel-icon" cx="90" cy="105" r="12" fill="#FFD8D1" stroke="#E05A47" stroke-width="1.5"/>
+            <circle class="funnel-icon" cx="285" cy="105" r="12" fill="#DDEEE9" stroke="#2EB886" stroke-width="1.5"/>
+          </g>
+
+          <path d="M 60 140 L 340 140 L 240 260 L 240 340 L 160 340 L 160 260 Z" fill="#EEF4F9" stroke="#5B8DB8" stroke-width="3" stroke-linejoin="round"/>
+
+          <line x1="110" y1="215" x2="290" y2="215" stroke="#4ECDC4" stroke-width="4" stroke-dasharray="8 6"/>
+          <g transform="translate(105, 215)">
+            <circle cx="0" cy="0" r="14" fill="#FFFFFF" stroke="#E05A47" stroke-width="2"/>
+            <text x="0" y="5" text-anchor="middle" font-size="16" fill="#E05A47" font-weight="700" font-family="sans-serif">✕</text>
+          </g>
+          <g transform="translate(295, 215)">
+            <circle cx="0" cy="0" r="14" fill="#FFFFFF" stroke="#2EB886" stroke-width="2"/>
+            <text x="0" y="5" text-anchor="middle" font-size="16" fill="#2EB886" font-weight="700" font-family="sans-serif">✓</text>
+          </g>
+
+          <g class="funnel-heart" transform="translate(200, 380)">
+            <path d="M 0 -18 C -6 -26, -18 -26, -18 -14 C -18 -4, 0 10, 0 10 C 0 10, 18 -4, 18 -14 C 18 -26, 6 -26, 0 -18 Z" fill="#4ECDC4" stroke="#2A9A92" stroke-width="2"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="pipeline" style="flex-direction: column; padding: 0;">
+        <div class="pipeline__node" style="width: 100%; min-width: 0; padding: 16px 22px; flex-direction: row; text-align: left; gap: 14px;">
+          <svg class="pipeline__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 32px; height: 32px;"><use href="#icon-question"/></svg>
+          <div>
+            <div class="pipeline__title speakable" onclick="speakZH('问题')" style="text-align: left;">问题</div>
+            <div class="pipeline__sub">清晰 · 具体 · 结构化</div>
+          </div>
+        </div>
+
+        <div class="pipeline__arrow" style="transform: rotate(90deg); margin: -6px 0;">→</div>
+
+        <div class="pipeline__node" style="width: 100%; min-width: 0; padding: 16px 22px; flex-direction: row; text-align: left; gap: 14px;">
+          <svg class="pipeline__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 32px; height: 32px;"><use href="#icon-ai"/></svg>
+          <div>
+            <div class="pipeline__title speakable" onclick="speakZH('人工智能')" style="text-align: left;">AI</div>
+            <div class="pipeline__sub">智力杠杆 · 秒级响应</div>
+          </div>
+        </div>
+
+        <div class="pipeline__arrow" style="transform: rotate(90deg); margin: -6px 0;">→</div>
+
+        <div class="pipeline__node" style="width: 100%; min-width: 0; padding: 16px 22px; flex-direction: row; text-align: left; gap: 14px;">
+          <svg class="pipeline__icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 32px; height: 32px;"><use href="#icon-check"/></svg>
+          <div>
+            <div class="pipeline__title speakable" onclick="speakZH('答案')" style="text-align: left;">答案</div>
+            <div class="pipeline__sub">逻辑解构 · 可执行</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lex-panel">
+      <div class="lex-panel__label">关键术语</div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">信息筛选</span>
+          <span class="lex-item__py">xìn xī shāi xuǎn</span>
+        </div>
+        <div class="lex-item__def">一秒判断值不值得看。</div>
+        <div class="lex-item__en">Info filtering.</div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">元讽刺</span>
+          <span class="lex-item__py">yuán fěng cì</span>
+        </div>
+        <div class="lex-item__def">连讽刺本身也一起讽刺。</div>
+        <div class="lex-item__en">Meta-irony.</div>
+      </div>
+
+      <div class="lex-item">
+        <div class="lex-item__head">
+          <span class="lex-item__zh">智力杠杆</span>
+          <span class="lex-item__py">zhì lì gàng gǎn</span>
+        </div>
+        <div class="lex-item__def">用工具放大自己的思考。</div>
+        <div class="lex-item__en">Intellectual lever.</div>
+      </div>
+    </div>
+
+    <div class="slide-replica">
+      <div class="slide-replica__avatar" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+      <div class="slide-replica__content">
+        <div class="slide-replica__text speakable" onclick="speakZH('问题问得好，答案自然来。')">
+          问题问得好，答案自然来。
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ксения Собчак · Миллениал">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак · Gen Z">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 17 — ФИНАЛ (вопросы)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-17">
+    <div class="slide-header" style="text-align: center;">
+      <div class="tag-badge tag-mint speakable" onclick="speakZH('结语')">结语 · Conclusion</div>
+      <h2 class="slide-title has-emoji speakable" data-emoji="🕊️" style="text-align: center; font-size: clamp(40px, 4vw, 64px);" onclick="speakZH('经验与自由的交融')">
+        经验与自由的交融
+      </h2>
+      <p class="sub-title speakable" style="text-align: center;" onclick="speakZH('不是谁战胜谁，而是互相学习。')">不是谁战胜谁，而是互相学习。</p>
+    </div>
+
+    <div class="final-cups">
+      <div class="final-cup">
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="20" y="38" width="55" height="52" rx="8" fill="#FFFFFF" stroke="#22252A" stroke-width="2.5"/>
+          <path d="M 75 52 Q 88 52 88 62 Q 88 72 75 72" stroke="#22252A" stroke-width="2.5" fill="none"/>
+          <path d="M 36 28 Q 38 20 36 12" stroke="#9DA3AF" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M 50 28 Q 52 20 50 12" stroke="#9DA3AF" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M 64 28 Q 66 20 64 12" stroke="#9DA3AF" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="47" cy="96" rx="38" ry="5" fill="#F3EFE6" stroke="#22252A" stroke-width="2"/>
+        </svg>
+        <div class="final-cup__label">经验 · 千禧</div>
+      </div>
+
+      <div class="final-cup">
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M 20 38 L 75 38 L 70 92 L 25 92 Z" fill="#E8F8F3" stroke="#22252A" stroke-width="2.5"/>
+          <path d="M 75 52 Q 88 52 88 62 Q 88 72 75 72" stroke="#22252A" stroke-width="2.5" fill="none"/>
+          <circle cx="47" cy="56" r="9" fill="#FFB800"/>
+          <line x1="40" y1="56" x2="54" y2="56" stroke="#FFF" stroke-width="1"/>
+          <line x1="47" y1="49" x2="47" y2="63" stroke="#FFF" stroke-width="1"/>
+          <path d="M 60 50 Q 68 44 74 47" stroke="#2EB886" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="47" cy="96" rx="38" ry="5" fill="#F3F0E6" stroke="#22252A" stroke-width="2"/>
+        </svg>
+        <div class="final-cup__label">自由 · Z世代</div>
+      </div>
+    </div>
+
+    <div class="question-buttons">
+      <button class="question-btn" type="button" onclick="toggleQuestion(this)" aria-expanded="false">
+        <span>1 · 千禧一代和 Z 世代，谁更"对"？</span>
+        <span class="question-btn__arrow">›</span>
+      </button>
+      <div class="question-answer">
+        <div class="question-answer__text">
+          没有"对"。千禧一代用 <strong>掌控</strong> 换来了稳定；Z 世代用 <strong>边界</strong> 换来了自由。两个世代，都在自己的世界里，做了最优的选择。
+        </div>
+        <div class="question-answer__orb question-answer__orb--medium" aria-hidden="true">🌍</div>
+      </div>
+
+      <button class="question-btn" type="button" onclick="toggleQuestion(this)" aria-expanded="false">
+        <span>2 · 拒绝"内卷"是不是放弃努力？</span>
+        <span class="question-btn__arrow">›</span>
+      </button>
+      <div class="question-answer">
+        <div class="question-answer__text">
+          不是。我们拒绝的是 <strong>无意义的努力</strong>。当努力换不到回报、换不到成长、换不到尊重时，继续坚持不是美德，是消耗。
+        </div>
+        <div class="question-answer__orb question-answer__orb--large" aria-hidden="true">⚖️</div>
+      </div>
+
+      <button class="question-btn" type="button" onclick="toggleQuestion(this)" aria-expanded="false">
+        <span>3 · Z 世代真的"只为自己活"吗？</span>
+        <span class="question-btn__arrow">›</span>
+      </button>
+      <div class="question-answer">
+        <div class="question-answer__text">
+          我们在乎心理健康、在乎边界、在乎真正的连接。这不是自私，这是 <strong>自我觉察</strong>。也许，这本就是每一代人都应该做的事。
+        </div>
+        <div class="question-answer__orb" aria-hidden="true">💡</div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ксения Собчак · Миллениал">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Максим Лутчак · Gen Z">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 18 — СПАСИБО
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--thanks" id="slide-18">
+    <div class="thanks-title speakable" onclick="speakZH('谢谢大家的关注')">
+      谢谢大家的关注
+    </div>
+    <div class="thanks-dove" aria-hidden="true">🕊️</div>
+
+    <div class="final-cups" style="margin-top: 3rem; gap: 80px;">
+      <div class="final-cup">
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 70px; height: 80px;" aria-hidden="true">
+          <rect x="20" y="38" width="55" height="52" rx="8" fill="#FFFFFF" stroke="#22252A" stroke-width="2.5"/>
+          <path d="M 75 52 Q 88 52 88 62 Q 88 72 75 72" stroke="#22252A" stroke-width="2.5" fill="none"/>
+          <ellipse cx="47" cy="96" rx="38" ry="5" fill="#F3EFE6" stroke="#22252A" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <div class="final-cup">
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 70px; height: 80px;" aria-hidden="true">
+          <path d="M 20 38 L 75 38 L 70 92 L 25 92 Z" fill="#E8F8F3" stroke="#22252A" stroke-width="2.5"/>
+          <path d="M 75 52 Q 88 52 88 62 Q 88 72 75 72" stroke="#22252A" stroke-width="2.5" fill="none"/>
+          <circle cx="47" cy="56" r="9" fill="#FFB800"/>
+          <ellipse cx="47" cy="96" rx="38" ry="5" fill="#F3F0E6" stroke="#22252A" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ксения Собчак · Миллениал">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek" data-name="Максим Лутчак · Gen Z">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       НАВИГАЦИЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="nav-bar">
+    <div class="slide-indicator" id="slide-indicator">第 1 页 / 共 18 页</div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prev-btn" aria-label="Previous Slide">←</button>
+      <button class="nav-btn" id="next-btn" aria-label="Next Slide">→</button>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  class SlideDeck {
+    constructor() {
+      this.slides = Array.from(document.querySelectorAll('.slide'));
+      this.indicator = document.getElementById('slide-indicator');
+      this.prevBtn = document.getElementById('prev-btn');
+      this.nextBtn = document.getElementById('next-btn');
+      this.progressBar = document.getElementById('progress');
+
+      const savedSlide = parseInt(localStorage.getItem('active_slide_v12'), 10);
+      this.currentIdx = (!isNaN(savedSlide) && savedSlide >= 0 && savedSlide < this.slides.length)
+        ? savedSlide
+        : 0;
+
+      this.init();
+    }
+
+    init() {
+      this.updateSlides();
+
+      this.prevBtn.addEventListener('click', () => this.prev());
+      this.nextBtn.addEventListener('click', () => this.next());
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          e.preventDefault();
+          this.next();
+        }
+        if (e.key === 'ArrowLeft') this.prev();
+      });
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) this.next();
+        if (touchEndX - touchStartX > 50) this.prev();
+      }, { passive: true });
+    }
+
+    goTo(index) {
+      if (index < 0 || index >= this.slides.length) return;
+      this.currentIdx = index;
+      this.updateSlides();
+      localStorage.setItem('active_slide_v12', this.currentIdx);
+    }
+
+    next() {
+      if (this.currentIdx < this.slides.length - 1) this.goTo(this.currentIdx + 1);
+    }
+
+    prev() {
+      if (this.currentIdx > 0) this.goTo(this.currentIdx - 1);
+    }
+
+    updateSlides() {
+      this.slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === this.currentIdx);
+      });
+
+      this.indicator.textContent = `第 ${this.currentIdx + 1} 页 / 共 ${this.slides.length} 页`;
+      this.prevBtn.classList.toggle('is-disabled', this.currentIdx === 0);
+      this.nextBtn.classList.toggle('is-disabled', this.currentIdx === this.slides.length - 1);
+
+      if (this.progressBar) {
+        const percent = ((this.currentIdx + 1) / this.slides.length) * 100;
+        this.progressBar.style.width = percent + '%';
+      }
+    }
+  }
+
+  function speakZH(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-CN';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+
+  function toggleQuestion(btn) {
+    btn.classList.toggle('is-open');
+    const answer = btn.nextElementSibling;
+    if (answer && answer.classList.contains('question-answer')) {
+      answer.classList.toggle('is-open');
+    }
+    btn.setAttribute('aria-expanded', btn.classList.contains('is-open') ? 'true' : 'false');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    window.deck = new SlideDeck();
+  });
+</script>
+</body>
+  </html>
