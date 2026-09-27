@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поступление в Чунцин — Весна 2027 · Полный конспект</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+        :root {
+            --bg: #0b0d10;
+            --bg-elevated: #111418;
+            --bg-card: #15191f;
+            --bg-card-hover: #1a1f26;
+            --text-primary: #f2f4f7;
+            --text-secondary: #a8b0bc;
+            --text-muted: #6b7480;
+            --text-faint: #4a515a;
+            --line: #232a33;
+            --line-strong: #36404c;
+            --gold: #c9a96a;
+            --gold-soft: #a88d52;
+            --gold-pale: #e2c995;
+            --accent-blue: #7a9bb5;
+            --accent-red: #b5786b;
+            --accent-green: #8aa98a;
+            --accent-violet: #9b8fb5;
+            --glow-gold: rgba(201, 169, 106, 0.12);
+            --glow-blue: rgba(122, 155, 181, 0.1);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+            --slide-width: min(92vw, 1200px);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition: 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            background: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            height: 100%;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .slider { position: relative; width: 100%; height: 100vh; overflow: hidden; touch-action: pan-y pinch-zoom; }
+        .slides-track { display: flex; height: 100%; transition: transform var(--transition); will-change: transform; }
+        .slide {
+            flex: 0 0 100vw;
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 32px 40px 80px;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: relative;
+            opacity: 0.35;
+            transition: opacity 0.65s ease;
+        }
+        .slide::-webkit-scrollbar { display: none; }
+        .slide.active { opacity: 1; }
+        .slide-inner {
+            max-width: var(--slide-width);
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        .eyebrow::after {
+            content: "";
+            display: block;
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            flex-shrink: 0;
+        }
+        .slide-title {
+            font-size: clamp(26px, 4vw, 44px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .slide-title .highlight { color: var(--gold); font-weight: 800; }
+        .slide-subtitle {
+            font-size: clamp(13px, 1.4vw, 15px);
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            letter-spacing: 0.01em;
+            max-width: 720px;
+        }
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-label::before { content: "◆"; color: var(--gold); font-size: 8px; }
+        .text-block {
+            font-size: 13.5px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            letter-spacing: 0.01em;
+        }
+        .text-block strong { color: var(--text-primary); font-weight: 600; }
+        .text-block .gold { color: var(--gold); font-weight: 600; }
+        .mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--text-muted); }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            border-color: var(--line-strong);
+            background: var(--bg-card-hover);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+        }
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .card:hover::before { opacity: 0.6; }
+        .card-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .card-title .tag {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: 0.08em;
+            margin-left: 6px;
+        }
+        .card-body { font-size: 12.5px; line-height: 1.65; color: var(--text-secondary); }
+        .card-body strong { color: var(--text-primary); font-weight: 600; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        @media (max-width: 720px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--line);
+            background: var(--bg-card);
+            scrollbar-width: thin;
+            scrollbar-color: var(--line-strong) transparent;
+        }
+        .table-wrap::-webkit-scrollbar { height: 4px; }
+        .table-wrap::-webkit-scrollbar-track { background: transparent; }
+        .table-wrap::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; font-size: 11.5px; min-width: 680px; }
+        table th {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--line-strong);
+            white-space: nowrap;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--line);
+            color: var(--text-secondary);
+            vertical-align: top;
+            line-height: 1.55;
+        }
+        table tr:last-child td { border-bottom: none; }
+        table td:first-child { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+        table tr:hover td { background: rgba(255, 255, 255, 0.015); }
+        .highlight-cell { color: var(--gold) !important; font-weight: 600; }
+        .pill {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid var(--line-strong);
+            color: var(--text-secondary);
+            white-space: nowrap;
+            margin: 2px 2px 2px 0;
+        }
+        .pill.gold { border-color: var(--gold); color: var(--gold); background: var(--glow-gold); }
+        .pill.blue { border-color: var(--accent-blue); color: var(--accent-blue); }
+        .pill.green { border-color: var(--accent-green); color: var(--accent-green); }
+        .checklist { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 12.5px;
+            line-height: 1.55;
+            color: var(--text-secondary);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            transition: border-color 0.3s ease;
+        }
+        .checklist li:hover { border-color: var(--line-strong); }
+        .checklist li .box {
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid var(--gold);
+            border-radius: 3px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            position: relative;
+            background: rgba(201, 169, 106, 0.06);
+        }
+        .checklist li .box::after {
+            content: "✓";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 9px;
+            color: var(--gold);
+            opacity: 0.5;
+        }
+        .checklist li strong { color: var(--text-primary); font-weight: 600; }
+        .roadmap { display: flex; flex-direction: column; gap: 0; position: relative; padding-left: 28px; }
+        .roadmap::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: linear-gradient(180deg, var(--gold), var(--line-strong), transparent);
+        }
+        .roadmap-item { position: relative; padding: 14px 0; display: flex; gap: 16px; align-items: flex-start; }
+        .roadmap-item::before {
+            content: "";
+            position: absolute;
+            left: -24px;
+            top: 20px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 12px var(--glow-gold);
+        }
+        .roadmap-period {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            min-width: 90px;
+            padding-top: 2px;
+        }
+        .roadmap-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; }
+        .roadmap-text strong { color: var(--text-primary); font-weight: 600; }
+        .name-card {
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 28px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .name-card:hover {
+            border-color: var(--gold-soft);
+            box-shadow: 0 0 50px var(--glow-gold);
+        }
+        .name-card .cn-char {
+            font-size: clamp(42px, 6vw, 56px);
+            font-weight: 800;
+            color: var(--gold-pale);
+            letter-spacing: 0.08em;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(201, 169, 106, 0.25);
+        }
+        .name-card .pinyin {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .name-card .desc { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; }
+        .name-card .rec-badge {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-family: var(--font-mono);
+            font-size: 8px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 20px;
+            padding: 4px 10px;
+            background: var(--glow-gold);
+        }
+        .script-quote {
+            border-left: 2px solid var(--gold);
+            padding: 16px 20px;
+            background: var(--bg-card);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin: 8px 0;
+        }
+        .script-quote .cn { font-style: normal; color: var(--gold-pale); font-weight: 500; }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px;
+            background: linear-gradient(180deg, transparent, rgba(11, 13, 16, 0.92));
+            z-index: 100;
+            pointer-events: none;
+        }
+        .nav-bar button {
+            pointer-events: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--line-strong);
+            color: var(--text-primary);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-family: var(--font-sans);
+        }
+        .nav-bar button:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 24px var(--glow-gold);
+        }
+        .nav-bar button:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+            border-color: var(--line);
+            color: var(--text-muted);
+            box-shadow: none;
+        }
+        .dots { display: flex; gap: 6px; pointer-events: auto; }
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--text-faint);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+        .dot.active {
+            background: var(--gold);
+            box-shadow: 0 0 10px var(--glow-gold);
+            width: 22px;
+            border-radius: 4px;
+        }
+        .counter { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.12em; pointer-events: none; }
+        .counter .current { color: var(--gold); font-weight: 600; }
+        @media (max-width: 720px) {
+            .slide { padding: 20px 18px 70px; }
+            .nav-bar { padding: 12px 16px; }
+            .nav-bar button { width: 36px; height: 36px; font-size: 13px; }
+            .name-card .rec-badge { position: static; align-self: flex-start; margin-top: 8px; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-pale) 25%, var(--gold) 50%, var(--gold-pale) 75%, var(--gold) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px var(--glow-gold); }
+            50% { box-shadow: 0 0 40px rgba(201, 169, 106, 0.22); }
+        }
+        .pulse-card { animation: pulse-glow 3.5s ease-in-out infinite; }
+        @keyframes arrow-move {
+            0%, 100% { transform: translateX(0); opacity: 0.7; }
+            50% { transform: translateX(4px); opacity: 1; }
+        }
+        .arrow-hint { animation: arrow-move 2.2s ease-in-out infinite; display: inline-block; }
+        /* plan-map */
+        .plan-map {
+            position: relative;
+            width: 100%;
+            min-height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .plan-core {
+            position: relative;
+            z-index: 2;
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            width: 130px;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            box-shadow: 0 0 50px var(--glow-gold);
+            flex-shrink: 0;
+        }
+        .plan-branch {
+            position: absolute;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .plan-branch .line-h {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold));
+        }
+        .plan-branch .node {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            white-space: nowrap;
+            padding: 6px 12px;
+            border: 1px solid var(--line-strong);
+            border-radius: 20px;
+            background: var(--bg-card);
+        }
+        .plan-branch .node.gold {
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 20px var(--glow-gold);
+        }
+        .plan-branch .sub {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider" id="slider">
+        <div class="slides-track" id="slidesTrack">
+
+            <!-- SLIDE 1: TITLE -->
+            <section class="slide active" data-index="0">
+                <div class="slide-inner" style="justify-content:center;">
+                    <div class="eyebrow">Chongqing · Spring 2027 · Language Program</div>
+                    <h1 class="slide-title" style="font-size:clamp(36px,6vw,72px);max-width:900px;">ПОСТУПЛЕНИЕ<br>В <span class="highlight shimmer-text">ЧУНЦИН</span></h1>
+                    <p class="slide-subtitle" style="margin-top:16px;max-width:560px;">Полный конспект: выбор вуза · финансы · документы · подача · виза · имя</p>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
+                        <span class="pill gold">OTAKHONOV NURBEK</span>
+                        <span class="pill">17.06.2005</span>
+                        <span class="pill">Uzbekistan → SPb</span>
+                        <span class="pill">Spring 2027</span>
+                    </div>
+                    <div style="margin-top:48px;border-top:1px solid var(--line);padding-top:16px;display:flex;justify-content:space-between;align-items:center;">
+                        <span class="mono">Бюджет: ~$1200–1500 / сем</span>
+                        <span class="mono" style="color:var(--gold);">→ листайте вправо</span>
+                        <span class="mono arrow-hint" style="color:var(--gold);">→</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: PLAN MAP -->
+            <section class="slide" data-index="1">
+                <div class="slide-inner">
+                    <div class="eyebrow">00 · План презентации</div>
+                    <h2 class="slide-title">Карта <span class="highlight">конспекта</span></h2>
+                    <div class="plan-map">
+                        <div class="plan-core">ПОСТУПЛЕНИЕ<br>В ЧУНЦИН</div>
+                        <div class="plan-branch" style="top:8%;left:50%;transform:translateX(-50%);flex-direction:column-reverse;">
+                            <div class="node gold">КАЧЕСТВО ОБРАЗОВАНИЯ</div>
+                            <div class="line-h" style="width:1px;height:30px;background:linear-gradient(180deg,var(--gold),transparent);"></div>
+                        </div>
+                        <div class="plan-branch" style="top:28%;right:8%;flex-direction:row-reverse;">
+                            <div class="node">УСЛОВИЯ ЖИЗНИ</div>
+                            <div class="line-h"></div>
+                            <div class="sub">доступность общежитий,<br>ремонт в комнатах</div>
+                        </div>
+                        <div class="plan-branch" style="bottom:24%;right:10%;flex-direction:row-reverse;">
+                            <div class="node">ДЕДЛАЙНЫ</div>
+                            <div class="line-h"></div>
+                            <div class="sub">+ стоимость обучения</div>
+                        </div>
+                        <div class="plan-branch" style="bottom:8%;left:50%;transform:translateX(-50%);flex-direction:column;">
+                            <div class="line-h" style="width:1px;height:30px;background:linear-gradient(0deg,var(--gold),transparent);"></div>
+                            <div class="node">РАСПОЛОЖЕНИЕ</div>
+                            <div class="sub">отдалённость от молодёжной среды,<br>центра, метро, движухи</div>
+                        </div>
+                        <div class="plan-branch" style="top:28%;left:6%;">
+                            <div class="node">АКАДЕМИЧЕСКИЙ ПРОФИЛЬ</div>
+                            <div class="line-h"></div>
+                            <div class="sub" style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+                                <span>документы<br><span style="color:var(--text-faint);">(сборы, беготня)</span></span>
+                                <span>письма<br><span style="color:var(--text-faint);">(создание, рефлексия)</span></span>
+                                <span>общие достижения<br><span style="color:var(--text-faint);">(выделяют среди других)</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: СРАВНИТЕЛЬНАЯ ТАБЛИЦА -->
+            <section class="slide" data-index="2">
+                <div class="slide-inner">
+                    <div class="eyebrow">01 · Выбор вуза</div>
+                    <h2 class="slide-title">Сравнение <span class="highlight">трёх университетов</span></h2>
+                    <div class="table-wrap" style="margin-top:20px;">
+                        <table>
+                            <thead><tr><th>Параметр</th><th>CQU · 重庆大学 <span class="pill gold">Приоритет №1</span></th><th>SWU · 西南大学 <span class="pill blue">Запасной №1</span></th><th>CNU · 重庆师范大学 <span class="pill green">Запасной №2</span></th></tr></thead>
+                            <tbody>
+                                <tr><td>Статус</td><td class="highlight-cell">985/211, топ-34 КНР</td><td>211, топ-2 Чунцина</td><td>Педагогический, сильный методически</td></tr>
+                                <tr><td>Район</td><td>Shapingba (центр / Daxuecheng)</td><td>Beibei (парковый кампус)</td><td>Shapingba, Daxuecheng</td></tr>
+                                <tr><td>Портал</td><td class="mono">cqu.17gz.org</td><td class="mono">swu.17gz.org</td><td class="mono">cnu.17gz.org</td></tr>
+                                <tr><td>Email</td><td class="mono">admissions@cqu.edu.cn</td><td class="mono">fao@swu.edu.cn</td><td class="mono">уточнять на сайте</td></tr>
+                                <tr><td>Рег. сбор</td><td>600 RMB</td><td>400–500 RMB</td><td>~400 RMB</td></tr>
+                                <tr><td>Обучение</td><td>8 000 RMB/сем</td><td>8 000 RMB/сем</td><td>~7 000–8 000 RMB/сем</td></tr>
+                                <tr><td>Дедлайн</td><td class="highlight-cell">1 сент — 30 ноября</td><td>1 сент — 15 дек</td><td>1 сент — 30 ноября</td></tr>
+                                <tr><td>Входной тест</td><td>Онлайн + очное собеседование</td><td>Онлайн-распределение</td><td>Распределение без стресса</td></tr>
+                                <tr><td>Финансы</td><td class="highlight-cell">Выписка $4 200+</td><td>$2 500–3 000</td><td>Минимальные</td></tr>
+                                <tr><td>Общага</td><td>Дефицит, старый фонд</td><td>Отличные комнаты</td><td>Одни из лучших</td></tr>
+                                <tr><td>Аренда</td><td>Трешка 1 400 RMB/мес + депозит 1+3</td><td>Квартира 1 200–1 500 RMB/мес</td><td>Уточнять на месте</td></tr>
+                                <tr><td>Итого/сем</td><td>~$1 430–1 450</td><td>~$1 380–1 440</td><td>~$1 350–1 400</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: CQU -->
+            <section class="slide" data-index="3">
+                <div class="slide-inner">
+                    <div class="eyebrow">01 · Выбор вуза · CQU</div>
+                    <h2 class="slide-title">Чунцинский университет <span class="highlight">重庆大学</span></h2>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div class="card pulse-card" style="border-top:2px solid var(--gold);">
+                            <div class="card-title">Репутация и рейтинги</div>
+                            <div class="card-body">
+                                Флагман города. «Я учусь в 重大 (Chóngdà)» = уважение. «985» / «Double First Class». ~#465 QS 2027, Топ-35 КНР, Топ-200 ARWU. Выпускники: Ren Zhengfei (Huawei), топ-менеджеры Changan и Lifan.
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Жильё и быт</div>
+                            <div class="card-body">
+                                Общежития: <strong>острый дефицит</strong>, старый фонд, бронь разбирают за минуты. Аренда: трешка 1 400 RMB/мес (по ~460 RMB с человека), депозит 1+3. Международный отдел даёт контакты проверенных агентов.
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Преподавание языка</div>
+                            <div class="card-body">
+                                Международный институт (School of International Education). Жёсткий контроль посещаемости, сильная фонетика, регулярные тесты. <strong>Это интенсив, не «лёгкий обмен».</strong>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Стоимость и условия</div>
+                            <div class="card-body">
+                                Обучение: 8 000 RMB/сем. Рег. сбор: 600 RMB. Финансовая выписка: $4 200+. Дедлайн: 1 сент — 30 ноября. Входной тест: онлайн + очное собеседование.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5: SWU -->
+            <section class="slide" data-index="4">
+                <div class="slide-inner">
+                    <div class="eyebrow">01 · Выбор вуза · SWU</div>
+                    <h2 class="slide-title">Юго-Западный университет <span class="highlight">西南大学</span></h2>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div class="card" style="border-top:2px solid var(--accent-blue);">
+                            <div class="card-title">Репутация и рейтинги</div>
+                            <div class="card-body">
+                                «Зелёный гигант» Чунцина. Проект 211. Топ-60 КНР, Топ-200 Азии по гуманитарным направлениям. Выпускники: Юань Лунпин — «отец гибридного риса», методисты китаеведения.
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Жильё и быт</div>
+                            <div class="card-body">
+                                Общежития: корпуса №22 и №24 (留学生公寓). 2-местные номера, кондиционер, личный санузел, балкон. <strong>Места есть почти всегда.</strong> Кампус Beibei — «город в городе», быт 9/10.
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Преподавание языка</div>
+                            <div class="card-body">
+                                Приём иностранцев с 1950-х. Одна из старейших баз на юго-западе КНР. Профильный педагогический и гуманитарный центр. Методика сильная, темп мягче, чем в CQU.
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Стоимость и условия</div>
+                            <div class="card-body">
+                                Обучение: 8 000 RMB/сем. Рег. сбор: 400–500 RMB. Финансовая выписка: $2 500–3 000. Дедлайн: 1 сент — 15 декабря. Входной тест: онлайн-распределение без стресса.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 6: CNU -->
+            <section class="slide" data-index="5">
+                <div class="slide-inner">
+                    <div class="eyebrow">01 · Выбор вуза · CNU</div>
+                    <h2 class="slide-title">Чунцинский педагогический <span class="highlight">重庆师范大学</span></h2>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div class="card" style="border-top:2px solid var(--accent-green);">
+                            <div class="card-title">Репутация и рейтинги</div>
+                            <div class="card-body">
+                                Кузница кадров для образования. Нет 985/211, но лучшие учителя и методисты — отсюда. Топ-200 КНР, региональный лидер по «Международному китайскому образованию» (汉语国际教育).
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Жильё и быт</div>
+                            <div class="card-body">
+                                Общежития: <strong>одни из лучших</strong> среди педвузов региона. Комнаты на 2 человек, кондиционер, санузел, блочная кухня. Новый кампус в Daxuecheng. Бронировать сразу после JW202/Admission Notice.
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Преподавание языка</div>
+                            <div class="card-body">
+                                College of International Chinese Education. Узкие специалисты по HSK/HSKK. Партнёр десятков Институтов Конфуция. Методика «развязывания языка» у иностранцев с нуля проработана лучше всего.
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Стоимость и условия</div>
+                            <div class="card-body">
+                                Обучение: ~7 000–8 000 RMB/сем. Рег. сбор: ~400 RMB. Финансовые требования минимальные. Дедлайн: 1 сент — 30 ноября. Входной тест: распределение без стресса.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7: ВЕРДИКТ + РЕСЕРЧ -->
+            <section class="slide" data-index="6">
+                <div class="slide-inner">
+                    <div class="eyebrow">01 · Выбор вуза</div>
+                    <h2 class="slide-title">Вердикт и <span class="highlight">честный ресерч</span></h2>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div>
+                            <div class="section-label">Вердикт</div>
+                            <div class="card" style="margin-bottom:10px;"><div class="card-body"><strong style="color:var(--gold);">1. CQU</strong> — подаём первым. <strong>Не рассчитываем на общагу</strong> — сразу готовим аренду.</div></div>
+                            <div class="card" style="margin-bottom:10px;"><div class="card-body"><strong style="color:var(--accent-blue);">2. SWU</strong> — страховка. Жильё надёжнее, требования мягче, дедлайн позже.</div></div>
+                            <div class="card" style="margin-bottom:10px;"><div class="card-body"><strong style="color:var(--accent-green);">3. CNU</strong> — аварийный. Обрабатывает быстрее всех, лоялен.</div></div>
+                            <div class="card" style="border-color:var(--accent-red);"><div class="card-body"><strong style="color:var(--accent-red);">Особый риск:</strong> Гражданин Узбекистана + регистрация/ВНЖ в РФ. Подтверждать документально.</div></div>
+                        </div>
+                        <div>
+                            <div class="section-label">Честный ресерч</div>
+                            <div class="card" style="margin-bottom:10px;"><div class="card-title">HR-аналитик</div><div class="card-body">Работодатели <strong>почти не смотрят на бренд</strong> для краткосрочных курсов. Главное — HSK 4/5 и беглость. CQU — небольшой плюс, не решающий.</div></div>
+                            <div class="card" style="margin-bottom:10px;"><div class="card-title">Студент-старшекурсник</div><div class="card-body"><strong>CQU:</strong> бренд, но быт средний, строгие преподаватели.<br><strong>SWU:</strong> недооценён, тихо, зелено.<br><strong>CNU:</strong> лучший баланс, методика под HSK.</div></div>
+                            <div class="card"><div class="card-title">Где копать глубже</div><div class="card-body">Reddit (r/China, r/ChineseLanguage), объективные форумы, соцсети преподавателей. Искать не «нахваливание», а факты: какие педагоги, условия, реальные отзывы. <strong>Проверенные источники, а не рекламные буклеты.</strong></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 8: ФИНАНСЫ -->
+            <section class="slide" data-index="7">
+                <div class="slide-inner">
+                    <div class="eyebrow">02 · Финансы</div>
+                    <h2 class="slide-title">Cash Flow: <span class="highlight">до вылета и по приезде</span></h2>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div>
+                            <div class="section-label">До вылета (РФ)</div>
+                            <div class="table-wrap"><table style="min-width:auto;"><thead><tr><th>Статья</th><th>Сумма</th></tr></thead><tbody>
+                                <tr><td>Нотариальные переводы (справка, выписка, несудимость)</td><td>~$165</td></tr>
+                                <tr><td>Медосмотр в СПб</td><td>~$65</td></tr>
+                                <tr><td>Рег. сбор CQU</td><td>600 RMB (~$85)</td></tr>
+                                <tr><td>Визовый сбор X2</td><td>~$110</td></tr>
+                                <tr><td class="highlight-cell">Итого до вылета</td><td class="highlight-cell">~$425 + 600 RMB</td></tr>
+                            </tbody></table></div>
+                        </div>
+                        <div>
+                            <div class="section-label">По приезде</div>
+                            <div class="table-wrap"><table style="min-width:auto;"><thead><tr><th>Статья</th><th>Сумма</th></tr></thead><tbody>
+                                <tr><td>Обучение</td><td>8 000 RMB</td></tr>
+                                <tr><td>Страховка</td><td>400 RMB</td></tr>
+                                <tr><td>Верификация медосмотра</td><td>400–500 RMB</td></tr>
+                                <tr><td>Жильё (депозит + 3 мес)</td><td>1 866 RMB (CQU) / 2 400 RMB (SWU)</td></tr>
+                                <tr><td class="highlight-cell">Итого по приезде</td><td class="highlight-cell">~10 700 RMB (~$1 480)</td></tr>
+                            </tbody></table></div>
+                        </div>
+                    </div>
+                    <div class="grid-2" style="margin-top:16px;">
+                        <div class="card" style="border-color:var(--accent-red);"><div class="card-title">Точка невозврата</div><div class="card-body">Рег. сбор CQU, визовый сбор, переводы + медосмотр — не возвращаются. <strong style="color:var(--accent-red);">Итого безвозвратно: ~$425.</strong></div></div>
+                        <div class="card" style="border-color:var(--gold);"><div class="card-title">Важно</div><div class="card-body">Лимит $1200–1500 — стоимость <strong>семестра</strong>. Стартовый бюджет — <strong style="color:var(--gold);">~$1 820–1 900</strong>.</div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 9: ДОКУМЕНТЫ -->
+            <section class="slide" data-index="8">
+                <div class="slide-inner">
+                    <div class="eyebrow">03 · Документы</div>
+                    <h2 class="slide-title">Полный чек-лист <span class="highlight">в Санкт-Петербурге</span></h2>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div>
+                            <div class="section-label">Базовый пакет</div>
+                            <ul class="checklist">
+                                <li><span class="box"></span><span><strong>Справка о несудимости</strong> — бумажная, синяя печать МВД, через Госуслуги. Срок < 6 месяцев. Нотариальный перевод.</span></li>
+                                <li><span class="box"></span><span><strong>Справка с места учёбы</strong> — Certificate of Enrollment. Нотариальный перевод.</span></li>
+                                <li><span class="box"></span><span><strong>Транскрипт</strong> — выписка оценок. Нотариальный перевод.</span></li>
+                                <li><span class="box"></span><span><strong>Банковская выписка</strong> — на английском. $4 200+ для CQU, $2 500–3 000 для SWU. Спонсорское письмо + перевод свидетельства о рождении, если счёт родителя.</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="section-label">Медосмотр: оригиналы</div>
+                            <div class="card"><div class="card-body"><strong>Снимки грудной клетки:</strong> отдельный распечатанный снимок/заключение рентгенолога (оригинал с печатью).<br><br><strong>ЭКГ:</strong> оригинал ленты + расшифровка врача с печатью.<br><br><strong style="color:var(--accent-red);">Критично:</strong> CQU отклоняет заявки без сканов анализов, снимка и ЭКГ.<br><br><strong>Две печати:</strong> одна мокрая <strong style="color:var(--gold);">строго на угол фото</strong>.</div></div>
+                            <div style="margin-top:12px;"><div class="section-label">Рекомендательные письма</div><div class="card"><div class="card-body"><strong>CQU:</strong> 2 письма с синими печатями и подписями.<br><strong>CNU / SWU:</strong> достаточно 1 письма или справки с места учёбы/работы.</div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 10: STUDY PLAN -->
+            <section class="slide" data-index="9">
+                <div class="slide-inner">
+                    <div class="eyebrow">03 · Документы</div>
+                    <h2 class="slide-title">Study Plan / Personal Statement <span class="highlight">усиленный</span></h2>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div>
+                            <div class="section-label">Контекст: Чунцин и диалект</div>
+                            <div class="card"><div class="card-body">
+                                <strong>Чунцин</strong> — крупнейший мегаполис и экономический центр Юго-Западного Китая, город с населением более 30 млн. Это не просто «большой город», а ключевой узел инициативы «Пояс и путь», где сходятся логистика, производство и бизнес.
+                                <br><br>
+                                <strong>Диалект:</strong> Чунцинский говор относится к юго-западной ветви северокитайского (西南官话). Он близок к путунхуа, но имеет свои тональные и лексические особенности. Погружение в среду, где говорят на местном варианте, тренирует слух и адаптивность — именно это ценится в деловых переговорах.
+                                <br><br>
+                                <strong>Почему 1 семестр:</strong> в 21 год нужен концентрированный рывок, а не длительное академическое откладывание. Один семестр — это реалистичный срок, чтобы сломать барьер, закрепить базу и не выпасть из текущего учебного/карьерного трека.
+                            </div></div>
+                            <div class="card" style="margin-top:10px;border-color:var(--gold);"><div class="card-body">
+                                <strong style="color:var(--gold);">Комментарий:</strong> Комиссия очень любит педантичность в документах. Где надо — нотариальный перевод. Где надо — везде нормальные, адекватные, понятные подписи к документам. Никакого «сойдёт и так».
+                            </div></div>
+                        </div>
+                        <div>
+                            <div class="section-label">План-вопросник · 300–500 слов</div>
+                            <ol style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+                                <li class="card"><div class="card-body"><strong style="color:var(--gold);">1. Кто вы?</strong><br>«Я — Нурбек, 21 год, студент из Санкт-Петербурга. Сфера — международные коммуникации/бизнес. Китайский — не хобби, а рабочий инструмент».</div></li>
+                                <li class="card"><div class="card-body"><strong style="color:var(--gold);">2. Зачем 1 семестр?</strong><br>«Концентрированный рывок в разговорной речи. Переход от теории к практике. Без выпадения из текущего трека».</div></li>
+                                <li class="card"><div class="card-body"><strong style="color:var(--gold);">3. Почему Чунцин и вуз?</strong><br>«Экономический центр Юго-Запада. Сильная языковая методика. Реальная языковая среда с юго-западным диалектом».</div></li>
+                                <li class="card"><div class="card-body"><strong style="color:var(--gold);">4. Цели?</strong><br>«За 4–5 месяцев — уверенный HSK 4, 1000+ лексических единиц бизнес-китайского. Ежедневная практика в городской среде».</div></li>
+                                <li class="card"><div class="card-body"><strong style="color:var(--gold);">5. Будущее?</strong><br>«База для работы над проектами между СНГ и Китаем».</div></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 11: ВИДЕОВИЗИТКА -->
+            <section class="slide" data-index="10">
+                <div class="slide-inner">
+                    <div class="eyebrow">03 · Документы</div>
+                    <h2 class="slide-title">Видеовизитка <span class="highlight">Self-Introduction Video</span></h2>
+                    <p class="slide-subtitle">1.5–2 минуты · хорошая петличка/звук · опрятный вид · уверенный взгляд</p>
+                    <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
+                        <div class="script-quote"><strong style="color:var(--gold);font-style:normal;">[0:00–0:20] Приветствие</strong><br>"Hello! My name is Nurbeck Otakhonov. I am currently a student residing in Saint Petersburg.<br><span class="cn">您好！我叫 努尔贝克 (Nǔ'ěrbèikè)。很高兴认识您！</span>"</div>
+                        <div class="script-quote"><strong style="color:var(--gold);font-style:normal;">[0:20–0:55] Цель и мотивация</strong><br>"My main goal is to break the language barrier, practice real spoken Chinese, and master business vocabulary.<br><span class="cn">我想提高我的汉语口语水平，了解中国的文化和商业。</span>"</div>
+                        <div class="script-quote"><strong style="color:var(--gold);font-style:normal;">[0:55–1:25] Почему Чунцин</strong><br>"I chose Chongqing because it is a dynamic metropolis. Your university offers an outstanding academic program with high-level teaching standards."</div>
+                        <div class="script-quote"><strong style="color:var(--gold);font-style:normal;">[1:25–1:40] Готовность участвовать</strong><br>"I am active in student life and cultural events. I would be happy to represent the university."</div>
+                        <div class="script-quote"><strong style="color:var(--gold);font-style:normal;">[1:40–1:50] Завершение</strong><br>"Thank you for your time. I look forward to studying at your university!<br><span class="cn">谢谢老师！重庆见！</span>"</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 12: ДОСТИЖЕНИЯ -->
+            <section class="slide" data-index="11">
+                <div class="slide-inner">
+                    <div class="eyebrow">03 · Документы</div>
+                    <h2 class="slide-title">Общие достижения <span class="highlight">и рекомендация репетитора</span></h2>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div>
+                            <div class="section-label">Как оформить</div>
+                            <div class="card"><div class="card-body">
+                                <strong>Объединить все грамоты и сертификаты в один PDF-файл.</strong> Не загружать россыпью. Название файла: <span class="mono">Achievements_Otakhonov_Nurbek.pdf</span>.
+                                <br><br>
+                                Комиссия любит порядок. Один файл — одна проверка — меньше шансов, что что-то потеряется.
+                            </div></div>
+                            <div class="card" style="margin-top:10px;border-color:var(--gold);"><div class="card-body">
+                                <strong style="color:var(--gold);">Приоритет — языковые достижения.</strong> Даже месяц занятий с репетитором + рекомендательное письмо от него — это гораздо уместнее, чем грамота за футбол. Вы едете на языковые курсы.
+                            </div></div>
+                        </div>
+                        <div>
+                            <div class="section-label">Репетитор и рекомендация</div>
+                            <div class="card"><div class="card-body">
+                                <strong>Идеально:</strong> Институт Конфуция (курсы обычно от 2 месяцев, но можно ознакомиться и посмотреть, как работает).
+                                <br><br>
+                                <strong>Реалистично:</strong> онлайн-школа или преподаватель, работающий при университете/организации. Месяц занятий → просьба написать рекомендательное письмо.
+                                <br><br>
+                                <strong>Почему это работает:</strong> сейчас большой бум на языковые курсы, мест реально не хватает, особенно в не нишевых университетах. Рекомендация от учителя китайского — это доказательство вашей мотивации, а не «рандомного» выбора.
+                            </div></div>
+                            <div class="card" style="margin-top:10px;"><div class="card-body">
+                                <strong>Спортивные и культурные достижения</strong> тоже добавляем — в тот же PDF. Китайские вузы любят активных студентов для фестивалей и межвузовских игр. Но языковой акцент — сильнее.
+                            </div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 13: КИТАЙСКОЕ ИМЯ -->
+            <section class="slide" data-index="12">
+                <div class="slide-inner">
+                    <div class="eyebrow">04 · Культурная интеграция</div>
+                    <h2 class="slide-title">Китайское <span class="highlight">имя</span></h2>
+                    <p class="slide-subtitle">Зачем нужно: пригождается на уроках, чтобы решение не было рандомным. Лучше заранее подумать, на какое имя вы действительно хотите отзываться.</p>
+                    <div class="grid-3" style="margin-top:24px;gap:14px;">
+                        <div class="name-card">
+                            <span class="rec-badge">Рекомендация</span>
+                            <div class="cn-char">奥立安</div>
+                            <div class="pinyin">Ào Lì'ān</div>
+                            <div class="desc"><strong>奥</strong> — созвучно с «Ота», глубокий, изысканный.<br><strong>立</strong> — стоять, утверждаться. Твёрдость.<br><strong>安</strong> — спокойствие, надёжность.<br><br><strong style="color:var(--gold);">Итог:</strong> деловое, не пафосное. Целеустремлённость + устойчивость.</div>
+                        </div>
+                        <div class="name-card">
+                            <div class="cn-char">奥明远</div>
+                            <div class="pinyin">Ào Míngyuǎn</div>
+                            <div class="desc"><strong>奥</strong> — как выше.<br><strong>明</strong> — ясный, умный.<br><strong>远</strong> — далеко идущий, стратегический.<br><br><strong style="color:var(--gold);">Итог:</strong> для карьеры в бизнесе. «Видит дальше».</div>
+                        </div>
+                        <div class="name-card">
+                            <div class="cn-char">奥思远</div>
+                            <div class="pinyin">Ào Sīyuǎn</div>
+                            <div class="desc"><strong>奥</strong> — как выше.<br><strong>思</strong> — мыслить, размышлять.<br><strong>远</strong> — далёкий.<br><br><strong style="color:var(--gold);">Итог:</strong> мягче, подчёркивает аналитический ум.</div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top:16px;"><div class="card-body">
+                        <strong>Практика:</strong> Выберите имя до приезда. Отзывайтесь на него. Так знакомство с группой и преподавателями пройдёт естественно, а не как запоздалое «придумайте мне что-нибудь».
+                    </div></div>
+                </div>
+            </section>
+
+            <!-- SLIDE 14: ТЕХНИЧЕСКИЙ РЕГЛАМЕНТ -->
+            <section class="slide" data-index="13">
+                <div class="slide-inner">
+                    <div class="eyebrow">05 · Техника</div>
+                    <h2 class="slide-title">17GZ + Виза X2</h2>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div>
+                            <div class="section-label">Система 17GZ</div>
+                            <ul class="checklist">
+                                <li><span class="box"></span><span><strong>Почта:</strong> только Gmail. Mail.ru и Yandex блокируют письма.</span></li>
+                                <li><span class="box"></span><span><strong>Маршрут:</strong> Apply Online → Self-Sponsored → General Visiting Student → Chinese Language Program.</span></li>
+                                <li><span class="box"></span><span><strong>Файлы:</strong> каждый скан ≤ 1.5 МБ. Больше — Upload Failed.</span></li>
+                                <li><span class="box"></span><span><strong>Поручитель:</strong> данные международного офиса выбранного вуза.</span></li>
+                                <li><span class="box"></span><span><strong>Оплата сбора:</strong> только через систему. Без чека заявку не рассматривают.</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="section-label">Виза X2 в СПб</div>
+                            <ul class="checklist">
+                                <li><span class="box"></span><span>Загранпаспорт (срок до марта 2028+).</span></li>
+                                <li><span class="box"></span><span>Admission Notice + JW202/DQ.</span></li>
+                                <li><span class="box"></span><span><strong style="color:var(--accent-red);">Критично:</strong> документ о легальном проживании в РФ (ВНЖ, РВП или временная регистрация) + справка из вуза СПб.</span></li>
+                                <li><span class="box"></span><span>Визовый сбор ~$110.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 15: ROADMAP -->
+            <section class="slide" data-index="14">
+                <div class="slide-inner">
+                    <div class="eyebrow">06 · Дорожная карта</div>
+                    <h2 class="slide-title">Roadmap: <span class="highlight">от сегодня до прилёта</span></h2>
+                    <div class="roadmap" style="margin-top:20px;">
+                        <div class="roadmap-item"><span class="roadmap-period">Сентябрь</span><span class="roadmap-text">Несудимость. Справка из вуза. Транскрипт. Медосмотр. <strong>Начать переводы.</strong></span></div>
+                        <div class="roadmap-item"><span class="roadmap-period">Октябрь</span><span class="roadmap-text">Рекомендации. Выписка из банка. Study Plan. <strong>Сжать сканы.</strong></span></div>
+                        <div class="roadmap-item"><span class="roadmap-period">Ноябрь</span><span class="roadmap-text"><strong style="color:var(--gold);">Подача в CQU (до 30.11).</strong> Оплатить 600 RMB. Подача в SWU (до 15.12). CNU — резерв.</span></div>
+                        <div class="roadmap-item"><span class="roadmap-period">Декабрь</span><span class="roadmap-text">Получить JW202/DQ. <strong>Подать на визу X2.</strong></span></div>
+                        <div class="roadmap-item"><span class="roadmap-period">Январь</span><span class="roadmap-text">Виза. Бронь жилья. Билеты.</span></div>
+                        <div class="roadmap-item"><span class="roadmap-period">Фев–Март</span><span class="roadmap-text">Прилёт. Собеседование (CQU). Заселение. Оплата обучения. <strong style="color:var(--gold);">Старт.</strong></span></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <button id="prevBtn" aria-label="Назад">←</button>
+        <div class="dots" id="dotsContainer"></div>
+        <button id="nextBtn" aria-label="Вперёд">→</button>
+        <span class="counter"><span class="current" id="currentSlide">01</span> / <span id="totalSlides">15</span></span>
+    </nav>
+
+    <script>
+        (function() {
+            const track = document.getElementById('slidesTrack');
+            const slides = Array.from(document.querySelectorAll('.slide'));
+            const dotsContainer = document.getElementById('dotsContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const currentSlideEl = document.getElementById('currentSlide');
+            const totalSlidesEl = document.getElementById('totalSlides');
+            let currentIndex = 0;
+            const total = slides.length;
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.classList.add('dot');
+                dot.setAttribute('aria-label', `Слайд ${i + 1}`);
+                dot.addEventListener('click', () => goTo(i));
+                dotsContainer.appendChild(dot);
+            });
+            const dots = Array.from(document.querySelectorAll('.dot'));
+            totalSlidesEl.textContent = String(total).padStart(2, '0');
+            function updateUI() {
+                track.style.transform = `translateX(-${currentIndex * 100}vw)`;
+                slides.forEach((s, i) => s.classList.toggle('active', i === currentIndex));
+                dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+                currentSlideEl.textContent = String(currentIndex + 1).padStart(2, '0');
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === total - 1;
+                slides[currentIndex].scrollTop = 0;
+            }
+            function goTo(index) {
+                if (index < 0 || index >= total) return;
+                currentIndex = index;
+                updateUI();
+            }
+            function next() { if (currentIndex < total - 1) goTo(currentIndex + 1); }
+            function prev() { if (currentIndex > 0) goTo(currentIndex - 1); }
+            prevBtn.addEventListener('click', prev);
+            nextBtn.addEventListener('click', next);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+                if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+                if (e.key === 'PageDown') { e.preventDefault(); next(); }
+                if (e.key === 'PageUp') { e.preventDefault(); prev(); }
+            });
+            let touchStartX = 0;
+            let touchStartY = 0;
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            }, { passive: true });
+            document.addEventListener('touchend', (e) => {
+                const dx = e.changedTouches[0].screenX - touchStartX;
+                const dy = e.changedTouches[0].screenY - touchStartY;
+                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+                    if (dx < 0) next();
+                    else prev();
+                }
+            }, { passive: true });
+            let wheelTimeout = null;
+            document.addEventListener('wheel', (e) => {
+                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                    e.preventDefault();
+                    if (wheelTimeout) return;
+                    if (e.deltaX > 30) next();
+                    else if (e.deltaX < -30) prev();
+                    wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 500);
+                }
+            }, { passive: false });
+            updateUI();
+        })();
+    </script>
+</body>
+                          </html>
