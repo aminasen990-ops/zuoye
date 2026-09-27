@@ -1,0 +1,3037 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поступление в Китай 2027–2028 | Егор Шипицин · 叶信安</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800;900&family=Noto+Serif:wght@400;600;700&display=swap');
+
+  :root {
+    --bg-cream: #F9F8F3;
+    --surface-white: #FFFFFF;
+    --surface-border: #E8E3DA;
+    --surface-subtle: #F3EFE6;
+
+    /* Маршрут — синий */
+    --route: #2A5C8A;
+    --route-light: #E8F0F8;
+    --route-mid: #5B8DB8;
+
+    /* Готово — зелёный */
+    --done: #2EB886;
+    --done-light: #E8F8F3;
+
+    /* Дедлайн — красный */
+    --deadline: #B23A3A;
+    --deadline-light: #F7E8E8;
+
+    /* Ожидание — амбер */
+    --wait: #D4A574;
+    --wait-light: #F5EBDD;
+
+    /* Нейтральный */
+    --muted: #6C727E;
+    --muted-light: #EFF1F4;
+
+    --text-main: #22252A;
+    --text-sub: #6C727E;
+    --text-muted: #9DA3AF;
+
+    --transition-smooth: 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background-color: var(--bg-cream);
+    color: var(--text-main);
+    font-family: "Noto Sans", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .deck-container {
+    position: relative;
+    width: 100%;
+    max-width: 1920px;
+    height: 100dvh;
+    aspect-ratio: 16 / 9;
+    background: var(--bg-cream);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  @media (min-aspect-ratio: 16/9) {
+    .deck-container {
+      height: 100dvh;
+      width: calc(100dvh * 16 / 9);
+    }
+  }
+
+  /* ═══ СЛАЙДЫ ═══ */
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: clamp(28px, 3.5vw, 70px);
+    padding-bottom: clamp(230px, 25vh, 300px);
+    padding-right: clamp(180px, 15vw, 240px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px) scale(0.99);
+    transition: opacity var(--transition-smooth), transform var(--transition-smooth), visibility var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+    z-index: 1;
+    overflow-y: auto;
+  }
+
+  .slide > * {
+    max-width: 1700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(42, 92, 138, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(42, 92, 138, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    z-index: 2;
+  }
+
+  .slide--centered {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px !important;
+    gap: 0;
+  }
+
+  /* ═══ ПРОГРЕСС ═══ */
+  .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0;
+    background: linear-gradient(90deg, var(--route), var(--done));
+    transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 20;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ═══ ЗАГОЛОВКИ ═══ */
+  .slide-header { position: relative; margin-bottom: 0.4rem; }
+
+  .slide-header::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -40px;
+    left: -20px;
+    font-size: clamp(110px, 12vw, 200px);
+    font-weight: 900;
+    color: rgba(42, 92, 138, 0.06);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+    letter-spacing: -0.05em;
+  }
+
+  .slide-header > * { position: relative; z-index: 1; }
+
+  .slide-title {
+    font-size: clamp(32px, 3.4vw, 56px);
+    font-weight: 800;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+  }
+
+  .sub-title {
+    font-size: clamp(17px, 1.4vw, 23px);
+    font-weight: 500;
+    color: var(--text-sub);
+    line-height: 1.5;
+    margin-top: 0.4rem;
+  }
+
+  .tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: clamp(13px, 0.95vw, 16px);
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    background: var(--surface-subtle);
+    color: var(--text-sub);
+    border: 1px dashed #D0C8B8;
+    width: fit-content;
+    margin-bottom: 0.8rem;
+  }
+
+  .tag-route { background: var(--route-light); color: var(--route); border-color: rgba(42, 92, 138, 0.4); border-style: solid; }
+  .tag-done { background: var(--done-light); color: #1F8B67; border-color: rgba(46, 184, 134, 0.4); border-style: solid; }
+  .tag-deadline { background: var(--deadline-light); color: var(--deadline); border-color: rgba(178, 58, 58, 0.4); border-style: solid; }
+  .tag-wait { background: var(--wait-light); color: #A47530; border-color: rgba(212, 165, 116, 0.4); border-style: solid; }
+  .tag-muted { background: var(--muted-light); color: var(--muted); border-color: rgba(108, 114, 126, 0.4); border-style: solid; }
+
+  /* ═══ ТИТУЛ БЛОКА ═══ */
+  .slide--block-title {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px !important;
+    gap: 0;
+  }
+
+  .block-dots {
+    display: flex;
+    gap: 22px;
+    justify-content: center;
+    margin-bottom: 2.4rem;
+    align-items: center;
+  }
+
+  .block-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2.5px solid var(--text-muted);
+    background: transparent;
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  .slide--block-title.active .block-dot:nth-child(1) { animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; }
+  .slide--block-title.active .block-dot:nth-child(2) { animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.65s forwards; }
+  .slide--block-title.active .block-dot:nth-child(3) { animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.0s forwards; }
+  .slide--block-title.active .block-dot:nth-child(4) { animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.35s forwards; }
+  .slide--block-title.active .block-dot:nth-child(5) { animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.7s forwards; }
+  .slide--block-title.active .block-dot:nth-child(6) { animation: dotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 2.05s forwards; }
+
+  .block-dot--active { background: var(--route); border-color: var(--route); }
+  .block-dot--past { background: var(--done); border-color: var(--done); }
+
+  @keyframes dotPop {
+    0%   { opacity: 0; transform: scale(0.3); }
+    60%  { opacity: 1; transform: scale(1.3); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .block-title {
+    font-size: clamp(48px, 5.5vw, 96px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+    opacity: 0;
+  }
+
+  .block-subtitle {
+    font-size: clamp(18px, 1.5vw, 26px);
+    font-weight: 500;
+    color: var(--text-sub);
+    letter-spacing: 0.5px;
+    opacity: 0;
+  }
+
+  .slide--block-title.active .block-title { animation: blockReveal 0.9s cubic-bezier(0.25, 1, 0.5, 1) 1.6s forwards; }
+  .slide--block-title.active .block-subtitle { animation: blockFade 0.7s ease-out 2.2s forwards; }
+
+  @keyframes blockReveal {
+    from { opacity: 0; transform: scale(0.95); filter: blur(6px); }
+    to   { opacity: 1; transform: scale(1); filter: blur(0); }
+  }
+  @keyframes blockFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide--title-block-1 { background: linear-gradient(135deg, #E8F0F8 0%, #FBF6EC 100%); }
+  .slide--title-block-2 { background: linear-gradient(135deg, #F5EBDD 0%, #E8F0F8 100%); }
+  .slide--title-block-3 { background: linear-gradient(135deg, #E8F0F8 0%, #F7E8E8 100%); }
+  .slide--title-block-4 { background: linear-gradient(135deg, #E8F8F3 0%, #E8F0F8 100%); }
+  .slide--title-block-5 { background: linear-gradient(135deg, #E8F0F8 0%, #E8F8F3 100%); }
+  .slide--title-block-6 { background: linear-gradient(135deg, #F7E8E8 0%, #F5EBDD 100%); }
+
+  /* ═══ КАРТОЧКИ ═══ */
+  .card {
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-radius: 20px;
+    padding: clamp(18px, 1.8vw, 30px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+  }
+
+  .card--route { border-left: 5px solid var(--route); background: linear-gradient(90deg, var(--route-light) 0%, var(--surface-white) 45%); }
+  .card--done { border-left: 5px solid var(--done); background: linear-gradient(90deg, var(--done-light) 0%, var(--surface-white) 45%); }
+  .card--deadline { border-left: 5px solid var(--deadline); background: linear-gradient(90deg, var(--deadline-light) 0%, var(--surface-white) 45%); }
+  .card--wait { border-left: 5px solid var(--wait); background: linear-gradient(90deg, var(--wait-light) 0%, var(--surface-white) 45%); }
+
+  .card-title {
+    font-size: clamp(19px, 1.6vw, 26px);
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .card-body {
+    font-size: clamp(15px, 1.2vw, 20px);
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--text-sub);
+  }
+
+  .key {
+    background: linear-gradient(180deg, transparent 62%, rgba(42, 92, 138, 0.35) 62%);
+    padding: 0 5px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .key--red {
+    background: linear-gradient(180deg, transparent 62%, rgba(178, 58, 58, 0.35) 62%);
+  }
+
+  .chip {
+    display: inline-block;
+    background: var(--route-light);
+    color: var(--route);
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 7px;
+    font-size: 0.85em;
+  }
+  .chip--done { background: var(--done-light); color: #1F8B67; }
+  .chip--deadline { background: var(--deadline-light); color: var(--deadline); }
+  .chip--wait { background: var(--wait-light); color: #A47530; }
+  .chip--muted { background: var(--muted-light); color: var(--muted); }
+
+  .speakable { cursor: pointer; transition: color 0.2s; pointer-events: auto; }
+  .speakable:hover { color: var(--route); }
+
+  .grid-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  /* ═══ ССЫЛКИ ═══ */
+  .ext-link {
+    color: var(--route);
+    text-decoration: none;
+    font-weight: 700;
+    border-bottom: 1.5px dashed rgba(42, 92, 138, 0.4);
+    padding-bottom: 1px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .ext-link:hover {
+    color: var(--done);
+    border-bottom-color: var(--done);
+    border-bottom-style: solid;
+  }
+  .ext-link::after {
+    content: "↗";
+    font-size: 0.75em;
+    opacity: 0.7;
+    font-weight: 900;
+  }
+
+  /* ═══ ТАБЛИЦА ═══ */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 18px;
+    border: 2px solid var(--surface-border);
+    background: var(--surface-white);
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: clamp(13px, 1.05vw, 17px);
+    line-height: 1.5;
+  }
+
+  table.data-table th {
+    background: var(--route-light);
+    color: var(--route);
+    font-weight: 800;
+    text-align: left;
+    padding: 14px 16px;
+    border-bottom: 2px solid var(--surface-border);
+    font-size: clamp(12px, 0.95vw, 15px);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  table.data-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--surface-border);
+    color: var(--text-sub);
+    vertical-align: top;
+  }
+
+  table.data-table tr:last-child td { border-bottom: none; }
+  table.data-table tr:hover td { background: rgba(42, 92, 138, 0.03); }
+
+  table.data-table td strong { color: var(--text-main); font-weight: 800; }
+  table.data-table td .prio-1 { color: var(--done); font-weight: 800; }
+  table.data-table td .prio-2 { color: var(--route); font-weight: 800; }
+  table.data-table td .prio-3 { color: var(--wait); font-weight: 700; }
+  table.data-table td .no { color: var(--done); font-weight: 800; }
+  table.data-table td .maybe { color: var(--wait); font-weight: 800; }
+
+  /* ═══ ЧЕК-ЛИСТ ═══ */
+  .checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .checklist__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: clamp(14px, 1.05vw, 18px);
+    line-height: 1.55;
+    color: var(--text-sub);
+    cursor: pointer;
+    transition: all 0.25s;
+    user-select: none;
+  }
+
+  .checklist__item:hover {
+    border-color: var(--route-mid);
+    transform: translateX(3px);
+  }
+
+  .checklist__box {
+    width: 24px;
+    height: 24px;
+    border: 2.5px solid var(--route-mid);
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s;
+    position: relative;
+  }
+
+  .checklist__box::after {
+    content: "✓";
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 900;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .checklist__item.is-checked .checklist__box {
+    background: var(--done);
+    border-color: var(--done);
+  }
+
+  .checklist__item.is-checked .checklist__box::after { opacity: 1; }
+
+  .checklist__item.is-checked {
+    background: var(--done-light);
+    border-color: var(--done);
+  }
+
+  .checklist__item.is-checked .checklist__text {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  .checklist__text {
+    flex: 1;
+    font-weight: 500;
+  }
+
+  .checklist__text strong { color: var(--text-main); font-weight: 800; }
+
+  /* ═══ ТАЙМЛАЙН ═══ */
+  .timeline-h {
+    position: relative;
+    padding: 60px 20px 40px;
+    margin: 1rem 0;
+  }
+
+  .timeline-h__line {
+    position: absolute;
+    top: 78px;
+    left: 5%;
+    right: 5%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--route) 0%, var(--route-mid) 50%, var(--done) 100%);
+    border-radius: 2px;
+  }
+
+  .timeline-h__points {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-h__point {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .timeline-h__dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--surface-white);
+    border: 4px solid var(--route);
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s;
+  }
+
+  .timeline-h__point:hover .timeline-h__dot {
+    transform: scale(1.2);
+    border-color: var(--done);
+    box-shadow: 0 0 0 8px rgba(46, 184, 134, 0.15);
+  }
+
+  .timeline-h__date {
+    font-size: clamp(12px, 0.95vw, 15px);
+    font-weight: 800;
+    color: var(--route);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .timeline-h__label {
+    font-size: clamp(11px, 0.85vw, 14px);
+    color: var(--text-sub);
+    line-height: 1.4;
+    max-width: 130px;
+  }
+
+  /* ═══ РАСШИФРОВКА ИМЕНИ ═══ */
+  .name-tree {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+
+  .name-char {
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-top: 5px solid var(--route);
+    border-radius: 18px;
+    padding: 22px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .name-char__glyph {
+    font-size: clamp(48px, 5vw, 80px);
+    font-weight: 900;
+    color: var(--route);
+    line-height: 1;
+    font-family: "Noto Serif", "Songti SC", serif;
+  }
+
+  .name-char__pinyin {
+    font-size: clamp(16px, 1.3vw, 22px);
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: 1px;
+  }
+
+  .name-char__desc {
+    font-size: clamp(13px, 1vw, 16px);
+    color: var(--text-sub);
+    line-height: 1.55;
+    font-weight: 500;
+  }
+
+  /* ═══ ИЕРОГЛИФЫ БОЛЬШИЕ ═══ */
+  .hieroglyph-hero {
+    font-family: "Noto Serif", "Songti SC", serif;
+    font-size: clamp(72px, 8vw, 140px);
+    font-weight: 900;
+    color: var(--route);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  /* ═══ ФИНАНСОВАЯ ДИАГРАММА ═══ */
+  .fin-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-radius: 18px;
+    padding: 22px;
+  }
+
+  .fin-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--surface-border);
+    font-size: clamp(14px, 1.05vw, 18px);
+  }
+
+  .fin-row:last-child { border-bottom: none; }
+
+  .fin-row__label {
+    color: var(--text-sub);
+    font-weight: 500;
+  }
+
+  .fin-row__value {
+    font-weight: 800;
+    color: var(--text-main);
+    white-space: nowrap;
+  }
+
+  .fin-row--total {
+    border-top: 2px solid var(--route);
+    border-bottom: none;
+    margin-top: 8px;
+    padding-top: 14px;
+    font-size: clamp(16px, 1.2vw, 21px);
+  }
+
+  .fin-row--total .fin-row__label { color: var(--route); font-weight: 800; }
+  .fin-row--total .fin-row__value { color: var(--route); font-size: 1.15em; }
+
+  /* ═══ ПИСЬМО ═══ */
+  .email-block {
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-left: 6px solid var(--route);
+    border-radius: 18px;
+    padding: clamp(20px, 1.8vw, 30px);
+    font-family: "Noto Sans", sans-serif;
+    font-size: clamp(13px, 1vw, 17px);
+    line-height: 1.7;
+    color: var(--text-main);
+    max-height: 65vh;
+    overflow-y: auto;
+  }
+
+  .email-block__subject {
+    font-weight: 800;
+    color: var(--route);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--surface-border);
+    display: block;
+    font-size: 1.05em;
+  }
+
+  .email-block p { margin-bottom: 12px; }
+  .email-block p:last-child { margin-bottom: 0; }
+  .email-block strong { color: var(--text-main); font-weight: 800; }
+  .email-block em { color: var(--text-sub); font-style: italic; }
+
+  .email-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: clamp(13px, 1vw, 16px);
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.25s;
+  }
+
+  .btn--primary {
+    background: var(--route);
+    color: #FFFFFF;
+    border-color: var(--route);
+  }
+  .btn--primary:hover {
+    background: #1E4A6F;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(42, 92, 138, 0.25);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--route);
+    border-color: var(--route);
+  }
+  .btn--ghost:hover {
+    background: var(--route-light);
+    transform: translateY(-2px);
+  }
+
+  /* ═══ КАЛЕНДАРНЫЕ ЭТАПЫ ═══ */
+  .stage-card {
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-radius: 18px;
+    padding: clamp(18px, 1.6vw, 26px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 5px solid var(--route);
+  }
+
+  .stage-card--deadline { border-top-color: var(--deadline); }
+  .stage-card--wait { border-top-color: var(--wait); }
+  .stage-card--done { border-top-color: var(--done); }
+
+  .stage-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .stage-card__title {
+    font-size: clamp(17px, 1.3vw, 22px);
+    font-weight: 800;
+    color: var(--text-main);
+  }
+
+  .stage-card__date {
+    font-size: clamp(13px, 1vw, 16px);
+    font-weight: 800;
+    color: var(--route);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .stage-card--deadline .stage-card__date { color: var(--deadline); }
+  .stage-card--wait .stage-card__date { color: #A47530; }
+  .stage-card--done .stage-card__date { color: #1F8B67; }
+
+  .stage-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: clamp(14px, 1.05vw, 17px);
+    line-height: 1.55;
+    color: var(--text-sub);
+  }
+
+  .stage-list li {
+    list-style: none;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .stage-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--route);
+    font-weight: 900;
+  }
+
+  .stage-card--deadline .stage-list li::before { color: var(--deadline); }
+  .stage-card--wait .stage-list li::before { color: var(--wait); }
+  .stage-card--done .stage-list li::before { color: var(--done); }
+
+  .stage-list strong { color: var(--text-main); font-weight: 800; }
+
+  /* ═══ ПРОГРЕСС-БАР ПУТИ ═══ */
+  .journey {
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-radius: 20px;
+    padding: clamp(24px, 2.2vw, 36px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .journey__track {
+    position: relative;
+    height: 12px;
+    background: var(--surface-subtle);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .journey__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--route), var(--done));
+    border-radius: 6px;
+    animation: journeyFill 2s ease-out 0.5s forwards;
+  }
+
+  @keyframes journeyFill {
+    from { width: 0; }
+    to { width: 3%; }
+  }
+
+  .journey__milestones {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    position: relative;
+  }
+
+  .journey__ms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    font-size: clamp(11px, 0.85vw, 14px);
+    color: var(--text-sub);
+    line-height: 1.4;
+  }
+
+  .journey__ms-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--surface-white);
+    border: 3px solid var(--route-mid);
+  }
+
+  .journey__ms--now .journey__ms-dot {
+    background: var(--route);
+    border-color: var(--route);
+    box-shadow: 0 0 0 6px rgba(42, 92, 138, 0.15);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(42, 92, 138, 0.15); }
+    50%      { box-shadow: 0 0 0 12px rgba(42, 92, 138, 0); }
+  }
+
+  .journey__ms-label {
+    font-weight: 700;
+    color: var(--text-main);
+    font-size: clamp(12px, 0.95vw, 15px);
+  }
+
+  .journey__ms-pct {
+    font-weight: 800;
+    color: var(--route);
+  }
+
+  /* ═══ РИСКИ ═══ */
+  .risk-card {
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-left: 5px solid var(--deadline);
+    border-radius: 16px;
+    padding: clamp(16px, 1.4vw, 22px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .risk-card__title {
+    font-size: clamp(16px, 1.25vw, 21px);
+    font-weight: 800;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .risk-card__title::before {
+    content: "⚠";
+    color: var(--deadline);
+    font-size: 1.2em;
+  }
+
+  .risk-card__body {
+    font-size: clamp(14px, 1.05vw, 17px);
+    line-height: 1.6;
+    color: var(--text-sub);
+  }
+
+  .risk-card__body strong { color: var(--text-main); font-weight: 800; }
+  .risk-card__body .arrow { color: var(--done); font-weight: 900; }
+
+  /* ═══ ФИНАЛ ═══ */
+  .final-hero {
+    font-size: clamp(36px, 4vw, 72px);
+    font-weight: 900;
+    color: var(--text-main);
+    text-align: center;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .final-hero--route { color: var(--route); }
+
+  .final-sub {
+    font-size: clamp(18px, 1.5vw, 26px);
+    color: var(--text-sub);
+    text-align: center;
+    margin-top: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .final-quote {
+    font-family: "Noto Serif", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(20px, 1.7vw, 30px);
+    color: var(--text-main);
+    text-align: center;
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem 2rem;
+    border-left: 4px solid var(--route);
+    border-right: 4px solid var(--route);
+  }
+
+  /* ═══ НАВИГАЦИЯ ═══ */
+  .nav-bar {
+    position: absolute;
+    bottom: 20px;
+    left: clamp(24px, 3.5vw, 70px);
+    right: clamp(24px, 3.5vw, 70px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .nav-controls { display: flex; gap: 10px; pointer-events: auto; }
+  .nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all var(--transition-smooth);
+    font-family: inherit;
+  }
+  .nav-btn:hover { border-color: var(--route); color: var(--route); transform: translateY(-2px); }
+  .nav-btn.is-disabled { opacity: 0.3; pointer-events: none; cursor: not-allowed; }
+
+  .slide-indicator {
+    font-size: 14px;
+    color: var(--text-sub);
+    font-weight: 600;
+    background: var(--surface-white);
+    padding: 9px 20px;
+    border-radius: 30px;
+    border: 2px solid var(--surface-border);
+    pointer-events: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  }
+
+  /* ═══ ФОНОВЫЕ ЭЛЕМЕНТЫ ═══ */
+  .bg-emoji {
+    position: absolute;
+    z-index: 0;
+    opacity: 0.22;
+    pointer-events: none;
+    animation: bgOrbit linear infinite;
+  }
+  @keyframes bgOrbit {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    25%  { transform: translate(10px, -10px) rotate(90deg); }
+    50%  { transform: translate(0, -20px) rotate(180deg); }
+    75%  { transform: translate(-10px, -10px) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+  }
+  .bg-emoji--1 { font-size: 44px; top: 18%; left: 10%; animation-duration: 16s; }
+  .bg-emoji--2 { font-size: 58px; top: 62%; right: 12%; animation-duration: 20s; }
+  .bg-emoji--3 { font-size: 30px; bottom: 20%; left: 20%; animation-duration: 24s; }
+
+  /* ═══ КАРТА МАРШРУТА ═══ */
+  .map-route {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .route-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawRoute 3s ease-out forwards;
+  }
+
+  @keyframes drawRoute {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .route-dot {
+    opacity: 0;
+    animation: dotAppear 0.5s ease-out forwards;
+  }
+
+  .route-dot--1 { animation-delay: 0.5s; }
+  .route-dot--2 { animation-delay: 1.2s; }
+  .route-dot--3 { animation-delay: 1.9s; }
+
+  @keyframes dotAppear {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ═══ ПРАВИЛА ═══ */
+  .rule-card {
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-radius: 18px;
+    padding: clamp(18px, 1.6vw, 26px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    border-left: 5px solid var(--deadline);
+  }
+
+  .rule-card--wait { border-left-color: var(--wait); }
+  .rule-card--route { border-left-color: var(--route); }
+
+  .rule-card__num {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    font-size: clamp(36px, 3vw, 54px);
+    font-weight: 900;
+    color: var(--deadline);
+    opacity: 0.15;
+    line-height: 1;
+  }
+
+  .rule-card--wait .rule-card__num { color: var(--wait); }
+  .rule-card--route .rule-card__num { color: var(--route); }
+
+  .rule-card__title {
+    font-size: clamp(16px, 1.25vw, 21px);
+    font-weight: 800;
+    color: var(--text-main);
+    padding-right: 60px;
+  }
+
+  .rule-card__body {
+    font-size: clamp(14px, 1.05vw, 18px);
+    line-height: 1.6;
+    color: var(--text-sub);
+  }
+
+  .rule-card__body strong { color: var(--text-main); font-weight: 800; }
+
+  /* ═══ АДАПТИВ ═══ */
+  @media (max-width: 1024px) {
+    .slide-replica { width: calc(100% - 200px); bottom: 120px; }
+    .slide { padding-right: clamp(150px, 14vw, 190px); padding-bottom: clamp(270px, 30vh, 360px); }
+    .grid-split, .grid-3col { grid-template-columns: 1fr; }
+    .name-tree { grid-template-columns: 1fr; }
+    .journey__milestones { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  }
+
+  @media (max-width: 768px) {
+    .deck-container { aspect-ratio: auto; height: 100dvh; }
+    .slide { padding: 20px 14px 280px 14px; }
+    .grid-split, .grid-3col, .name-tree { grid-template-columns: 1fr; gap: 1rem; }
+    .slide-replica { width: calc(100% - 20px); bottom: 80px; padding: 10px 14px; }
+    .slide-header::before { font-size: 80px; top: -16px; }
+    .nav-bar { left: 12px; right: 12px; bottom: 12px; }
+    .bg-emoji { display: none; }
+    .journey__milestones { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main class="deck-container" id="deck">
+  <div class="progress" id="progress"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SVG DEFS
+       ═══════════════════════════════════════════════════════════ -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+        <path d="M 4 12 L 20 12 M 13 5 L 20 12 L 13 19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-arrow-down" viewBox="0 0 24 24">
+        <path d="M 12 4 L 12 20 M 5 13 L 12 20 L 19 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24">
+        <rect x="3" y="6" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M 3 7 L 12 13 L 21 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-link" viewBox="0 0 24 24">
+        <path d="M 10 14 A 4 4 0 0 1 10 8 L 14 4 A 4 4 0 0 1 20 10 L 17 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M 14 10 A 4 4 0 0 1 14 16 L 10 20 A 4 4 0 0 1 4 14 L 7 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-doc" viewBox="0 0 24 24">
+        <path d="M 6 3 L 14 3 L 20 9 L 20 21 L 6 21 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M 14 3 L 14 9 L 20 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="9" y1="13" x2="17" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="9" y1="17" x2="15" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="M 4 12 L 10 18 L 20 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-flag" viewBox="0 0 24 24">
+        <path d="M 5 21 L 5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M 5 4 L 19 4 L 15 8 L 19 12 L 5 12 Z" fill="currentColor" opacity="0.7"/>
+      </symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M 12 7 L 12 12 L 15 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-bank" viewBox="0 0 24 24">
+        <path d="M 3 10 L 12 4 L 21 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="3" y1="20" x2="21" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="6" y1="20" x2="6" y2="11" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="12" y1="20" x2="12" y2="11" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="18" y1="20" x2="18" y2="11" stroke="currentColor" stroke-width="1.5"/>
+      </symbol>
+      <symbol id="icon-passport" viewBox="0 0 24 24">
+        <rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="11" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="9" y1="17" x2="15" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-translate" viewBox="0 0 24 24">
+        <path d="M 4 5 L 12 5 M 8 3 L 8 5 M 6 5 L 6 10 Q 6 13 3 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M 8 5 Q 10 11 15 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M 13 21 L 17 13 L 21 21 M 14 18 L 20 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-medical" viewBox="0 0 24 24">
+        <rect x="4" y="7" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M 9 7 L 9 5 Q 9 3 12 3 Q 15 3 15 5 L 15 7" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="12" y1="11" x2="12" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="9" y1="14" x2="15" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-plane" viewBox="0 0 24 24">
+        <path d="M 3 12 L 21 4 L 18 12 L 21 20 Z M 3 12 L 18 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24">
+        <path d="M 12 3 L 14.5 9 L 21 9.5 L 16 14 L 17.5 21 L 12 17 L 6.5 21 L 8 14 L 3 9.5 L 9.5 9 Z" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-warning" viewBox="0 0 24 24">
+        <path d="M 12 3 L 22 20 L 2 20 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="12" y1="9" x2="12" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="17" r="1.2" fill="currentColor"/>
+      </symbol>
+      <symbol id="icon-target" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+      </symbol>
+      <symbol id="icon-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M 4 21 Q 4 15 12 15 Q 20 15 20 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 1 — ОБЛОЖКА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--centered active" id="slide-1">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🎯</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🚀</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">🇨🇳</div>
+
+    <div class="tag-badge tag-route" style="margin: 0 auto 1.5rem;">Персональная дорожная карта · 2027–2028</div>
+
+    <h1 class="slide-title speakable" style="font-size: clamp(38px, 4.2vw, 72px); text-align: center; line-height: 1.15;" onclick="speakRU('Поступление в Китай. Генеральный мастер-конспект.')">
+      Поступление в Китай
+    </h1>
+
+    <div style="font-size: clamp(24px, 2.2vw, 40px); font-weight: 800; color: var(--route); margin-top: 1rem; letter-spacing: 0.02em;">
+      2027 – 2028
+    </div>
+
+    <p class="sub-title" style="text-align: center; max-width: 800px; margin: 1.5rem auto 0;">
+      Генеральный мастер-конспект<br>
+      Персональная дорожная карта
+    </p>
+
+    <div style="margin-top: 2rem; text-align: center;">
+      <div style="font-size: clamp(18px, 1.5vw, 24px); font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
+        Егор Шипицин
+      </div>
+      <div class="hieroglyph-hero" style="font-size: clamp(48px, 4.5vw, 80px); margin: 0.5rem 0;">
+        叶信安
+      </div>
+      <div style="font-size: clamp(14px, 1.1vw, 18px); color: var(--text-sub); letter-spacing: 1px;">
+        Yè Xìn'ān
+      </div>
+    </div>
+
+    <div class="final-quote" style="margin-top: 2rem; font-size: clamp(16px, 1.2vw, 21px); border-left-color: var(--route); border-right-color: var(--route);">
+      Не план. Маршрут. С точками, сроками и планом Б.
+    </div>
+
+    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+      Стрелки ← → или свайп. Все ссылки — кликабельны.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 2 — ТИТУЛ БЛОКА I: КУДА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--block-title slide--title-block-1" id="slide-2">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🏛️</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🗺️</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">📍</div>
+
+    <div class="block-dots">
+      <span class="block-dot block-dot--active"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+    </div>
+
+    <div class="block-title speakable" onclick="speakRU('Куда')">Куда</div>
+    <div class="block-subtitle">4 вуза · 2 локации · 1 специальность</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 3 — КАРТА ВУЗОВ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header" data-num="01">
+      <div class="tag-badge tag-route">Куда · 01</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Карта вузов')">Карта вузов</h2>
+      <p class="sub-title">Приоритеты · профили · почему именно эти</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 60px;">№</th>
+            <th>Вуз</th>
+            <th>Город / Район</th>
+            <th>Приоритет</th>
+            <th>CSCA</th>
+            <th>Почему именно этот вуз</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td>
+              <strong>NJUPT</strong><br>
+              <span style="font-size: 0.9em;">Nanjing University of Posts and Telecommunications</span>
+            </td>
+            <td>Нанкин<br>Гулоу / Сяньлинь</td>
+            <td><span class="prio-1">Приоритет №1</span></td>
+            <td><span class="no">❌ Не нужен</span></td>
+            <td><strong>Столица кибербезопасности Китая.</strong> Профиль = твоя специальность.</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td>
+              <strong>ZJUT</strong><br>
+              <span style="font-size: 0.9em;">Zhejiang University of Technology</span>
+            </td>
+            <td>Ханчжоу<br>Чжаохой</td>
+            <td><span class="prio-2">Приоритет №2</span></td>
+            <td><span class="no">❌ Не нужен</span></td>
+            <td><strong>Кластер Hikvision и Dahua</strong> — видеонаблюдение, твоя ниша. 10 мин до Сиху.</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td>
+              <strong>BUPT</strong><br>
+              <span style="font-size: 0.9em;">Beijing University of Posts and Telecommunications</span>
+            </td>
+            <td>Пекин<br>Хайдянь (3-е кольцо)</td>
+            <td><span class="prio-3">Академ. резерв</span></td>
+            <td><span class="maybe">🟡 Иногда</span></td>
+            <td><strong>Топ-1 по телекоммуникациям</strong>, если NJUPT / ZJUT не сработают.</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td>
+              <strong>BLCU</strong><br>
+              <span style="font-size: 0.9em;">Beijing Language and Culture University</span>
+            </td>
+            <td>Пекин<br>Удаокоу</td>
+            <td><span class="prio-3">Языковой резерв</span></td>
+            <td><span class="no">❌ Не нужен</span></td>
+            <td><strong>Только если язык не дотянет</strong> до английского бакалавриата.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card card--route" style="margin-top: 1rem;">
+      <strong class="card-title">🎯 Стратегия выбора</strong>
+      <p class="card-body">
+        Подаёмся <strong>в NJUPT и ZJUT параллельно</strong>. BUPT — на случай, если оба отказа. BLCU — только если <strong>языковой барьер</strong> окажется выше, чем IELTS 5.5.
+      </p>
+    </div>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 4 — ЛОКАЦИИ И ТРАНСПОРТ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header" data-num="02">
+      <div class="tag-badge tag-route">Куда · 02</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Локации и транспорт')">Локации и транспорт</h2>
+      <p class="sub-title">Почему важно не «где учиться», а «что рядом»</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="card card--done">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--done);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-target"/></svg>
+          Нанкин · NJUPT
+        </strong>
+        <p class="card-body">
+          <strong>20 минут на метро до центра.</strong> Столица кибербезопасности Китая. Метро Сяньлинь.
+        </p>
+        <p class="card-body">
+          <strong>Почему важно:</strong> рядом — IT-компании и профильные стажировки. Твоя специальность = Information Security. Здесь их <strong>больше всего в стране</strong>.
+        </p>
+      </div>
+
+      <div class="card card--route">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--route);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-target"/></svg>
+          Ханчжоу · ZJUT
+        </strong>
+        <p class="card-body">
+          <strong>Центр города, 10 минут до Сиху.</strong> Район Чжаохой. Развитая молодёжная инфраструктура.
+        </p>
+        <p class="card-body">
+          <strong>Почему важно:</strong> рядом — <strong>кластер Hikvision и Dahua</strong> (мировые лидеры видеонаблюдения). Прямой работодатель по твоему направлению.
+        </p>
+      </div>
+    </div>
+
+    <div class="card card--wait" style="margin-top: 1rem;">
+      <strong class="card-title">🎓 Что это значит для тебя</strong>
+      <p class="card-body">
+        Ты выбираешь <strong>не «вуз»</strong>. Ты выбираешь <strong>среду</strong>: с кем рядом будешь стажироваться, где будешь искать первую работу, куда пойдёшь на практику. Оба города — <strong>хабы индустрии</strong>, в которой ты хочешь работать.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 5 — КОНТАКТЫ И ПОРТАЛЫ (все ссылки в одном месте)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header" data-num="03">
+      <div class="tag-badge tag-route">Куда · 03</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Контакты и порталы')">Контакты и порталы</h2>
+      <p class="sub-title">Все ссылки в одном месте · открываются в новой вкладке</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 140px;">Вуз</th>
+            <th>Сайт ISO</th>
+            <th>Email приёмной</th>
+            <th>Портал подачи</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>NJUPT</strong></td>
+            <td>
+              <a class="ext-link" href="https://is.njupt.edu.cn" target="_blank" rel="noopener">is.njupt.edu.cn</a>
+            </td>
+            <td>
+              <a class="ext-link" href="mailto:jiayc@njupt.edu.cn">jiayc@njupt.edu.cn</a>
+            </td>
+            <td>
+              <a class="ext-link" href="https://admission.njupt.edu.cn" target="_blank" rel="noopener">admission.njupt.edu.cn</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>ZJUT</strong></td>
+            <td>
+              <a class="ext-link" href="https://ic.zjut.edu.cn" target="_blank" rel="noopener">ic.zjut.edu.cn</a>
+            </td>
+            <td>
+              <a class="ext-link" href="mailto:iec@zjut.edu.cn">iec@zjut.edu.cn</a>
+            </td>
+            <td>
+              <a class="ext-link" href="https://zjut.17gz.org" target="_blank" rel="noopener">zjut.17gz.org</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>BUPT</strong></td>
+            <td>
+              <a class="ext-link" href="https://ois.bupt.edu.cn" target="_blank" rel="noopener">ois.bupt.edu.cn</a>
+            </td>
+            <td>
+              <a class="ext-link" href="mailto:admissions@bupt.edu.cn">admissions@bupt.edu.cn</a>
+            </td>
+            <td>
+              <a class="ext-link" href="https://bupt.17gz.org" target="_blank" rel="noopener">bupt.17gz.org</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>BLCU</strong></td>
+            <td>
+              <a class="ext-link" href="https://admission.blcu.edu.cn" target="_blank" rel="noopener">admission.blcu.edu.cn</a>
+            </td>
+            <td>
+              <a class="ext-link" href="mailto:zhaosh1@blcu.edu.cn">zhaosh1@blcu.edu.cn</a>
+            </td>
+            <td>
+              <a class="ext-link" href="https://blcu.17gz.org" target="_blank" rel="noopener">blcu.17gz.org</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-split" style="margin-top: 1rem;">
+      <div class="card card--done">
+        <strong class="card-title">✅ Что уже можно сделать</strong>
+        <p class="card-body">
+          Открыть сайты NJUPT и ZJUT. Посмотреть программы, требования, дедлайны. <strong>Не откладывать.</strong>
+        </p>
+      </div>
+
+      <div class="card card--deadline">
+        <strong class="card-title">⚠️ Что нельзя делать</strong>
+        <p class="card-body">
+          Писать на все 4 адреса одновременно. <strong>Сначала NJUPT и ZJUT.</strong> Остальные — только если первые двое откажут.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 6 — ТИТУЛ БЛОКА II: ГДЕ Я СТОЮ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--block-title slide--title-block-2" id="slide-6">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🧭</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">📍</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">🧩</div>
+
+    <div class="block-dots">
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--active"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+    </div>
+
+    <div class="block-title speakable" onclick="speakRU('Где я стою')">Где я стою</div>
+    <div class="block-subtitle">Аудит · имя · позиционирование</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 7 — КРИТИЧЕСКИЕ КОРРЕКТИРОВКИ ПЛАНА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header" data-num="04">
+      <div class="tag-badge tag-deadline">Аудит · 04</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Критические корректировки плана')">Критические корректировки плана</h2>
+      <p class="sub-title">Что изменилось после прямого аудита ISO-порталов</p>
+    </div>
+
+    <div class="grid-split" style="gap: 1.2rem;">
+      <div class="rule-card">
+        <div class="rule-card__num">01</div>
+        <div class="rule-card__title speakable" onclick="speakRU('CSCA не универсальный закон')">CSCA — не универсальный закон КНР</div>
+        <div class="rule-card__body">
+          Это <strong>локальный инструмент отбора</strong> конкретных вузов. NJUPT и ZJUT <strong>не требуют</strong> CSCA ни на языковой год (2027), ни на англоязычный бакалавриат CS / InfoSec (2028).
+          <br><br>
+          <span class="chip chip--done">Экономия: ~9 000 ₽</span>
+          <span class="chip chip--done" style="margin-left: 6px;">Отмена стресса: физика + математика</span>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-card__num">02</div>
+        <div class="rule-card__title speakable" onclick="speakRU('Банковская выписка, порог повышен')">Банковская выписка — порог повышен</div>
+        <div class="rule-card__body">
+          Старое значение ($3 500–$4 200) — <strong>недостаточно</strong>.
+          <br><br>
+          <strong>NJUPT:</strong> 40 000 RMB (~5 500 USD / ~510 000 ₽).<br>
+          <strong>ZJUT:</strong> 30 000 RMB.<br>
+          <strong>Универсальный остаток:</strong> 40 000 RMB.
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-card__num">03</div>
+        <div class="rule-card__title speakable" onclick="speakRU('Справка о несудимости, тайминг критичен')">Справка о несудимости — тайминг критичен</div>
+        <div class="rule-card__body">
+          Действительна <strong>ровно 6 месяцев</strong>.
+          <br><br>
+          Закажешь в <strong>январе 2027</strong> — к июлю 2027 она <strong>юридически просрочена</strong>.
+          <br><br>
+          <strong>Оптимальный срок заказа с апостилем: МАРТ 2027.</strong>
+        </div>
+      </div>
+
+      <div class="rule-card rule-card--wait">
+        <div class="rule-card__num">04</div>
+        <div class="rule-card__title speakable" onclick="speakRU('CSC не финансирует языковой год')">CSC — НЕ финансирует языковой год</div>
+        <div class="rule-card__body">
+          Стипендия Правительства КНР выдаётся <strong>только на программы со степенью</strong> (бакалавриат / магистратура / PhD).
+          <br><br>
+          <strong>Языковой год — самостоятельное финансирование.</strong> Планируй бюджет так.
+        </div>
+      </div>
+
+      <div class="rule-card rule-card--route" style="grid-column: 1 / -1;">
+        <div class="rule-card__num">05</div>
+        <div class="rule-card__title speakable" onclick="speakRU('Стратегия двойной подачи')">Стратегия двойной подачи: 17gz + прямой Email</div>
+        <div class="rule-card__body">
+          <strong>17gz.org — агрегатор.</strong> Если портал сломается, заявка может потеряться.
+          <br><br>
+          Надёжная схема: <strong>заявка через официальный портал вуза / 17gz.org + дубль единым PDF-пакетом на Email ISO</strong>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 8 — КИТАЙСКОЕ ИМЯ И БРЕНД
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header" data-num="05">
+      <div class="tag-badge tag-route">Аудит · 05</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Китайское имя и персональный бренд')">Китайское имя и персональный бренд</h2>
+      <p class="sub-title">叶信安 · надёжность и безопасность информации</p>
+    </div>
+
+    <div style="text-align: center; margin: 0.5rem 0 1.5rem;">
+      <div class="hieroglyph-hero">叶信安</div>
+      <div style="font-size: clamp(20px, 1.7vw, 30px); font-weight: 700; color: var(--route); letter-spacing: 2px; margin-top: 0.5rem;">
+        Yè Xìn'ān
+      </div>
+    </div>
+
+    <div class="name-tree">
+      <div class="name-char">
+        <div class="name-char__glyph">叶</div>
+        <div class="name-char__pinyin">Yè</div>
+        <div class="name-char__desc">
+          <strong>Традиционная китайская фамилия</strong>, созвучная с «Егор».
+        </div>
+      </div>
+
+      <div class="name-char">
+        <div class="name-char__glyph">信</div>
+        <div class="name-char__pinyin">Xìn</div>
+        <div class="name-char__desc">
+          Из слова <strong>信息</strong> (Xīnxī — <em>информация</em>). Также — <strong>「доверие」</strong>.
+        </div>
+      </div>
+
+      <div class="name-char">
+        <div class="name-char__glyph">安</div>
+        <div class="name-char__pinyin">Ān</div>
+        <div class="name-char__desc">
+          Из слова <strong>安全</strong> (Ānquán — <em>безопасность</em>). Также — <strong>「защита」</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="card card--done" style="margin-top: 1.5rem;">
+      <strong class="card-title">🎯 Смысл имени</strong>
+      <p class="card-body">
+        <strong>«Надёжность и безопасность информации».</strong> Идеально отражает твою будущую профессию в сфере информационной безопасности и систем видеонаблюдения.
+      </p>
+    </div>
+
+    <div class="grid-split" style="margin-top: 1rem; gap: 1.2rem;">
+      <div class="card card--route">
+        <strong class="card-title">📍 Где использовать имя</strong>
+        <p class="card-body">
+          • В анкетах<br>
+          • В Study Plan<br>
+          • В видеовизитке<br>
+          • При общении с деканатом<br>
+          • В подписи Email: <strong>Egor Shipitsin (叶信安)</strong>
+        </p>
+      </div>
+
+      <div class="card card--deadline">
+        <strong class="card-title">⚠️ Как нельзя</strong>
+        <p class="card-body">
+          <strong>Никаких вариантов.</strong> Имя фиксируется <strong>во всех документах одинаково</strong>. Опечатка в одном месте — вопрос о подлинности во всех остальных.
+        </p>
+      </div>
+    </div>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 9 — ТИТУЛ БЛОКА III: ЧТО ДОБРАТЬ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--block-title slide--title-block-3" id="slide-9">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">📋</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🔏</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">💰</div>
+
+    <div class="block-dots">
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--active"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+    </div>
+
+    <div class="block-title speakable" onclick="speakRU('Что добрать')">Что добрать</div>
+    <div class="block-subtitle">Документы · легализация · банк</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 10 — МАТРИЦА ЛЕГАЛИЗАЦИИ: 3 КАТЕГОРИИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header" data-num="06">
+      <div class="tag-badge tag-route">Что добрать · 06</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Матрица легализации: три категории')">Матрица легализации: 3 категории</h2>
+      <p class="sub-title">Нельзя путать апостиль, нотариальный перевод и оригиналы</p>
+    </div>
+
+    <div class="grid-3col">
+      <div class="card card--deadline">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--deadline);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-doc"/></svg>
+          1. АПОСТИЛЬ + ПЕРЕВОД
+        </strong>
+        <p class="card-body">
+          <strong>Зачем:</strong> документ, выданный в РФ, <span class="key key--red">не имеет силы в КНР</span> без апостиля.
+        </p>
+        <p class="card-body">
+          <strong>Что:</strong><br>
+          • Аттестат — 2 500 ₽<br>
+          • Справка о несудимости — 2 500 ₽ <em>(в марте 2027)</em>
+        </p>
+        <p class="card-body" style="color: var(--deadline); font-weight: 700;">
+          Итого: 5 000 ₽ + нотариальный перевод
+        </p>
+      </div>
+
+      <div class="card card--wait">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--wait);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-translate"/></svg>
+          2. НОТАРИАЛЬНЫЙ ПЕРЕВОД
+        </strong>
+        <p class="card-body">
+          <strong>Зачем:</strong> китайская сторона должна <span class="key">прочитать документ</span>. Без перевода — не примут.
+        </p>
+        <p class="card-body">
+          <strong>Что:</strong><br>
+          • Выписка оценок<br>
+          • Свидетельство о рождении
+        </p>
+        <p class="card-body" style="color: #A47530; font-weight: 700;">
+          Итого: ~7 000 ₽ за 3–4 документа
+        </p>
+      </div>
+
+      <div class="card card--done">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--done);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-check"/></svg>
+          3. ОРИГИНАЛЫ И СПРАВКИ
+        </strong>
+        <p class="card-body">
+          <strong>Зачем:</strong> документы, которые оформляются <span class="key">сразу в финальном виде</span> — их не нужно легализовать.
+        </p>
+        <p class="card-body">
+          <strong>Что:</strong><br>
+          • Медосмотр (форма КНР)<br>
+          • Справка из банка<br>
+          • Рекомендации
+        </p>
+        <p class="card-body" style="color: #1F8B67; font-weight: 700;">
+          Оформляются сразу на английском
+        </p>
+      </div>
+    </div>
+
+    <div class="card card--route" style="margin-top: 1rem;">
+      <strong class="card-title">🧠 Ключевое правило</strong>
+      <p class="card-body">
+        <strong>Апостиль ≠ перевод.</strong> Апостиль — это международное признание печати. Перевод — это язык. Нужны <strong>оба</strong>. Одно без другого — не работает.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 11 — ПОШАГОВЫЙ РЕГЛАМЕНТ ПО КАЖДОМУ ДОКУМЕНТУ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-11">
+    <div class="slide-header" data-num="07">
+      <div class="tag-badge tag-deadline">Что добрать · 07</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Пошаговый регламент по каждому документу')">Пошаговый регламент по каждому документу</h2>
+      <p class="sub-title">С порядком, сроками и стоимостью</p>
+    </div>
+
+    <div class="card card--deadline">
+      <strong class="card-title">
+        <svg style="width: 26px; height: 26px; color: var(--deadline);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-passport"/></svg>
+        1. Аттестат за 11 класс · Июнь 2027
+      </strong>
+      <p class="card-body">
+        Подача заявления на <strong>Госуслуги</strong> → Госпошлина <strong>2 500 ₽</strong> → Получение оригинала со штампом <strong>«Апостиль»</strong> → Нотариальный перевод на английский или китайский.
+      </p>
+    </div>
+
+    <div class="card card--deadline" style="margin-top: 1rem; border-left-color: var(--deadline); background: linear-gradient(90deg, var(--deadline-light) 0%, var(--surface-white) 45%);">
+      <strong class="card-title">
+        <svg style="width: 26px; height: 26px; color: var(--deadline);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-warning"/></svg>
+        2. Справка об отсутствии судимости · МАРТ 2027 — критично!
+      </strong>
+      <p class="card-body">
+        Заказ на <strong>Госуслугах с Апостилем</strong> → Госпошлина <strong>2 500 ₽</strong> → Нотариальный перевод.
+      </p>
+      <p class="card-body" style="color: var(--deadline); font-weight: 800;">
+        ⚠️ Действительна ровно 6 месяцев. Заказ в январе → к июлю просрочена → отказ в визе.
+      </p>
+    </div>
+
+    <div class="card card--wait" style="margin-top: 1rem;">
+      <strong class="card-title">
+        <svg style="width: 26px; height: 26px; color: var(--wait);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-doc"/></svg>
+        3. Выписка оценок за 10–11 классы
+      </strong>
+      <p class="card-body">
+        Справка из школы с <strong>печатью</strong> → Нотариальный перевод на <strong>английский язык</strong>.
+      </p>
+    </div>
+
+    <div class="card card--done" style="margin-top: 1rem;">
+      <strong class="card-title">
+        <svg style="width: 26px; height: 26px; color: var(--done);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-medical"/></svg>
+        4. Медосмотр (Foreigner Physical Exam) · Январь — Февраль 2027
+      </strong>
+      <p class="card-body">
+        Заполняется в <strong>аккредитованной клинике</strong>. <strong>Две печати клиники:</strong> одна на фото, вторая на итоговом заключении. <strong>+ оригиналы</strong> снимка ФЛГ и ЭКГ.
+      </p>
+      <p class="card-body" style="color: #1F8B67; font-weight: 700;">
+        Стоимость: ~5 000 ₽
+      </p>
+    </div>
+
+    <div class="card card--done" style="margin-top: 1rem;">
+      <strong class="card-title">
+        <svg style="width: 26px; height: 26px; color: var(--done);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-bank"/></svg>
+        5. Справка из банка
+      </strong>
+      <p class="card-body">
+        Оригинал справки на <strong>английском языке</strong> из банка об остатке не менее <strong>40 000 RMB (~5 500 USD / ~510 000 ₽)</strong>.
+      </p>
+      <p class="card-body" style="color: #1F8B67; font-weight: 700;">
+        На счёте Егора или опекуна (отец / бабушка).
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 12 — ФИНАНСОВАЯ АРХИТЕКТУРА: СТАРТОВЫЙ БЮДЖЕТ (РФ, 2027)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-12">
+    <div class="slide-header" data-num="08">
+      <div class="tag-badge tag-deadline">Что добрать · 08</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Финансовая архитектура: стартовый бюджет')">Стартовый бюджет (РФ, 2027)</h2>
+      <p class="sub-title">Что нужно потратить до вылета</p>
+    </div>
+
+    <div class="fin-bar">
+      <div class="fin-row">
+        <div class="fin-row__label">Апостили (Госуслуги): аттестат + несудимость</div>
+        <div class="fin-row__value">5 000 ₽</div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-row__label">Нотариальные переводы (3–4 документа)</div>
+        <div class="fin-row__value">~7 000 ₽</div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-row__label">Медицинский осмотр по форме КНР</div>
+        <div class="fin-row__value">~5 000 ₽</div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-row__label">Регистрационные сборы вузов (3 заявки)</div>
+        <div class="fin-row__value">~15 600 ₽ <span style="font-size: 0.85em; color: var(--text-muted); font-weight: 500;">(1 200 RMB)</span></div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-row__label">Визовый сбор (Консульство КНР, виза X1)</div>
+        <div class="fin-row__value">~4 500 ₽</div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-row__label">Авиабилеты (РФ → КНР)</div>
+        <div class="fin-row__value">~40 000 – 55 000 ₽</div>
+      </div>
+      <div class="fin-row fin-row--total">
+        <div class="fin-row__label">ИТОГО СТАРТОВЫХ РАСХОДОВ</div>
+        <div class="fin-row__value">~80 000 – 92 000 ₽</div>
+      </div>
+    </div>
+
+    <div class="card card--route" style="margin-top: 1rem;">
+      <strong class="card-title">💡 Что видно по цифрам</strong>
+      <p class="card-body">
+        <strong>Авиабилеты — самая крупная статья.</strong> Если покупать заранее (март–апрель 2027), можно снизить до ~35 000 ₽. Разница окупает <strong>весь апостиль + переводы</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 13 — ФИНАНСОВАЯ АРХИТЕКТУРА: ПЛАТЕЖИ В КНР (1 СЕМЕСТР)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-13">
+    <div class="slide-header" data-num="09">
+      <div class="tag-badge tag-route">Что добрать · 09</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Финансовая архитектура: платежи по прибытии в КНР')">Платежи в КНР (1-й семестр)</h2>
+      <p class="sub-title">Что нужно потратить уже на месте</p>
+    </div>
+
+    <div class="fin-bar">
+      <div class="fin-row">
+        <div class="fin-row__label">Обучение (языковой семестр)</div>
+        <div class="fin-row__value">~8 000 RMB <span style="font-size: 0.85em; color: var(--text-muted); font-weight: 500;">(~104 000 ₽)</span></div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-row__label">Общежитие (за весь учебный год)</div>
+        <div class="fin-row__value">~4 000 RMB <span style="font-size: 0.85em; color: var(--text-muted); font-weight: 500;">(~52 000 ₽)</span></div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-row__label">Страховка + медосмотр в КНР + ВНЖ</div>
+        <div class="fin-row__value">~1 300 RMB <span style="font-size: 0.85em; color: var(--text-muted); font-weight: 500;">(~16 900 ₽)</span></div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-row__label">Учебники и бытовой старт</div>
+        <div class="fin-row__value">~800 RMB <span style="font-size: 0.85em; color: var(--text-muted); font-weight: 500;">(~10 400 ₽)</span></div>
+      </div>
+      <div class="fin-row">
+        <div class="fin-row__label">Ежемесячные расходы на жизнь</div>
+        <div class="fin-row__value">~2 500 RMB / мес <span style="font-size: 0.85em; color: var(--text-muted); font-weight: 500;">(~32 500 ₽)</span></div>
+      </div>
+      <div class="fin-row fin-row--total">
+        <div class="fin-row__label">ТРЕБУЕМЫЙ БАНКОВСКИЙ БАЛАНС</div>
+        <div class="fin-row__value">40 000 RMB <span style="font-size: 0.8em; font-weight: 600;">(~5 500 USD / ~510 000 ₽)</span></div>
+      </div>
+    </div>
+
+    <div class="card card--done" style="margin-top: 1rem;">
+      <strong class="card-title">🎯 Почему именно 40 000 RMB, а не «сколько хватит»</strong>
+      <p class="card-body">
+        Китайская сторона <strong>не проверяет реальные расходы</strong>. Она проверяет <strong>способность обеспечить себя</strong> на год. 40 000 RMB = <strong>прожиточный минимум + запас</strong>. Меньше — риск отказа.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 14 — ТИТУЛ БЛОКА IV: КАК
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--block-title slide--title-block-4" id="slide-14">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">✉️</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">📨</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">🎯</div>
+
+    <div class="block-dots">
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--active"></span>
+      <span class="block-dot"></span>
+      <span class="block-dot"></span>
+    </div>
+
+    <div class="block-title speakable" onclick="speakRU('Как')">Как</div>
+    <div class="block-subtitle">Стратегия · письма · усиление анкеты</div>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 15 — СТРАТЕГИЯ ДУБЛИРОВАНИЯ ЗАЯВКИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-15">
+    <div class="slide-header" data-num="10">
+      <div class="tag-badge tag-route">Как · 10</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Стратегия дублирования заявки')">Стратегия дублирования заявки</h2>
+      <p class="sub-title">Почему одного канала недостаточно</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="card card--wait">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--wait);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-link"/></svg>
+          Канал 1 · Портал
+        </strong>
+        <p class="card-body">
+          Загрузка формы на <strong>17gz.org</strong> или <strong>admission.njupt.edu.cn</strong>.
+        </p>
+        <p class="card-body" style="color: var(--text-muted); font-size: 0.92em; font-style: italic;">
+          Риск: если портал сломается — заявка может потеряться.
+        </p>
+      </div>
+
+      <div class="card card--done">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--done);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-mail"/></svg>
+          Канал 2 · Прямой Email ISO
+        </strong>
+        <p class="card-body">
+          Отправка <strong>единого сжатого PDF-пакета</strong> на почту приёмной комиссии.
+        </p>
+        <p class="card-body" style="color: var(--text-muted); font-size: 0.92em; font-style: italic;">
+          Плюс: живой человек видит письмо. Страховка.
+        </p>
+      </div>
+    </div>
+
+    <div class="card card--route" style="margin-top: 1rem;">
+      <strong class="card-title">🎯 Почему дублировать</strong>
+      <p class="card-body">
+        <strong>17gz.org — агрегатор.</strong> Если портал сломается, заявка может потеряться. Прямой Email ISO — <strong>человек</strong>, который видит письмо и может ответить. Дубль = <strong>страховка</strong> от сбоя системы.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 16 — УСИЛЕНИЕ АНКЕТЫ: 3 ИНСТРУМЕНТА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-16">
+    <div class="slide-header" data-num="11">
+      <div class="tag-badge tag-done">Как · 11</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Усиление анкеты: три инструмента')">Усиление анкеты: 3 инструмента</h2>
+      <p class="sub-title">Что делает заявку сильнее в глазах ISO</p>
+    </div>
+
+    <div class="grid-3col">
+      <div class="card card--route">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--route);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-doc"/></svg>
+          1. Рекомендательное письмо от отца
+        </strong>
+        <p class="card-body">
+          На <strong>английском языке</strong> на фирменном бланке <strong>ИП / ООО отца</strong>.
+        </p>
+        <p class="card-body">
+          <strong>Должность Егора:</strong> <span class="key">Media Content &amp; IT Assistant</span>.
+        </p>
+        <p class="card-body">
+          Подпись директора + <strong>синяя печать компании</strong>.
+        </p>
+      </div>
+
+      <div class="card card--done">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--done);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-star"/></svg>
+          2. Единый PDF внеучебных достижений
+        </strong>
+        <p class="card-body">
+          Файл: <code style="background: var(--surface-subtle); padding: 2px 8px; border-radius: 6px; font-size: 0.9em; color: var(--deadline);">SHIPITSIN_Egor_Extracurricular_Activities.pdf</code>
+        </p>
+        <p class="card-body">
+          Всё в одном: спорт, волонтёрство, грамоты за видеомонтаж.
+        </p>
+        <p class="card-body">
+          <strong>+ Тезис в Study Plan</strong> о готовности выступать за сборные университета.
+        </p>
+      </div>
+
+      <div class="card card--deadline">
+        <strong class="card-title">
+          <svg style="width: 26px; height: 26px; color: var(--deadline);" xmlns="http://www.w3.org/2000/svg"><use href="#icon-doc"/></svg>
+          3. Технический регламент файлов
+        </strong>
+        <p class="card-body">
+          Все PDF — <strong>строго до 3 МБ</strong>.
+        </p>
+        <p class="card-body">
+          Почта регистрации — <strong>Yandex / Outlook</strong>. <span class="key key--red">НЕ Gmail.</span>
+        </p>
+        <p class="card-body" style="color: var(--deadline); font-weight: 700;">
+          Одно имя файла = один документ. Без пробелов, без русских букв.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 17 — СПИСОК ФАЙЛОВ (ЧЕК-ЛИСТ)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-17">
+    <div class="slide-header" data-num="12">
+      <div class="tag-badge tag-done">Как · 12</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Список файлов. Чек-лист.')">Список файлов · чек-лист</h2>
+      <p class="sub-title">Кликай по строкам — отмечай сделанное</p>
+    </div>
+
+    <div class="checklist">
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text"><strong>SHIPITSIN_Egor_Passport.pdf</strong> — загранпаспорт</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text"><strong>SHIPITSIN_Egor_HighSchool_Transcript.pdf</strong> — выписка оценок</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text"><strong>SHIPITSIN_Egor_Study_Plan.pdf</strong> — мотивационное письмо</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text"><strong>SHIPITSIN_Egor_Physical_Exam.pdf</strong> — медосмотр</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text"><strong>SHIPITSIN_Egor_Non_Criminal_Record.pdf</strong> — справка о несудимости</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text"><strong>SHIPITSIN_Egor_Bank_Statement.pdf</strong> — выписка из банка</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text"><strong>SHIPITSIN_Egor_Extracurricular_Activities.pdf</strong> — внеучебные достижения</div>
+      </div>
+    </div>
+
+    <div class="card card--deadline" style="margin-top: 1rem;">
+      <strong class="card-title">⚠️ Правило</strong>
+      <p class="card-body">
+        <strong>Один файл — одно имя.</strong> Без пробелов, без русских букв. Если PDF больше 3 МБ — <strong>сжать</strong> (использовать iLovePDF или Smallpdf).
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 18 — ШАБЛОН ПИСЬМА №1: NJUPT
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-18">
+    <div class="slide-header" data-num="13">
+      <div class="tag-badge tag-route">Как · 13</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Шаблон письма в NJUPT')">Шаблон письма №1 · NJUPT</h2>
+      <p class="sub-title">Запрос о CSCA и банковской выписке</p>
+    </div>
+
+    <div class="email-block">
+      <span class="email-block__subject">Subject: Inquiry regarding CSCA Requirement and Admissions for Intake 2027/2028 (Bachelor of CS / InfoSec)</span>
+
+      <p>Dear Admissions Officer,</p>
+
+      <p>My name is Egor Shipitsin, an applicant from Russia planning to apply for the Chinese Language Program (Intake September 2027) and subsequently the English-taught Bachelor's Degree Program in Computer Science / Information Security (Intake 2028) at Nanjing University of Posts and Telecommunications.</p>
+
+      <p>Could you please clarify two questions regarding your admission policy:</p>
+
+      <p>
+        • Is the CSCA (China Scholastic Competency Assessment) required for international students applying to the English-taught Bachelor's program in Computer Science / Information Security for Intake 2028?<br>
+        • What is the current required minimum amount for the Bank Statement for the English-taught Bachelor's application?
+      </p>
+
+      <p>Thank you for your time and assistance.</p>
+
+      <p>Best regards,<br>
+      <strong>Egor Shipitsin (叶信安)</strong><br>
+      Email: <a class="ext-link" href="mailto:shipitsin_egor@yandex.ru" style="font-size: 0.95em;">shipitsin_egor@yandex.ru</a></p>
+    </div>
+
+    <div class="email-actions">
+      <button class="btn btn--primary" onclick="copyEmail('njupt')">
+        <svg style="width: 18px; height: 18px;" xmlns="http://www.w3.org/2000/svg"><use href="#icon-doc"/></svg>
+        Скопировать текст
+      </button>
+      <a class="btn btn--ghost" href="mailto:jiayc@njupt.edu.cn?subject=Inquiry%20regarding%20CSCA%20Requirement%20and%20Admissions%20for%20Intake%202027%2F2028" target="_blank" rel="noopener">
+        <svg style="width: 18px; height: 18px;" xmlns="http://www.w3.org/2000/svg"><use href="#icon-mail"/></svg>
+        Открыть почту → jiayc@njupt.edu.cn
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 19 — ШАБЛОН ПИСЬМА №2: ZJUT
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-19">
+    <div class="slide-header" data-num="14">
+      <div class="tag-badge tag-route">Как · 14</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Шаблон письма в ZJUT')">Шаблон письма №2 · ZJUT</h2>
+      <p class="sub-title">Запрос о CSCA и банковской выписке</p>
+    </div>
+
+    <div class="email-block">
+      <span class="email-block__subject">Subject: Admission Inquiry: Language Program 2027 &amp; English-taught Bachelor 2028</span>
+
+      <p>Dear Admissions Team of ZJUT,</p>
+
+      <p>I hope this email finds you well.</p>
+
+      <p>I am a high school student from Russia preparing my application for Zhejiang University of Technology. I plan to enroll in the Chinese Language Preparatory Program in September 2027 and then proceed to an English-taught Bachelor's Degree in Software Engineering / Computer Science in 2028.</p>
+
+      <p>I would be very grateful if you could confirm:</p>
+
+      <p>
+        • Does ZJUT require international applicants to take the CSCA examination for English-taught Bachelor's degree programs?<br>
+        • Is a bank statement of 40,000 RMB sufficient for both the Language Program and Bachelor's degree admission?
+      </p>
+
+      <p>Thank you very much for your guidance.</p>
+
+      <p>Yours sincerely,<br>
+      <strong>Egor Shipitsin (叶信安)</strong></p>
+    </div>
+
+    <div class="email-actions">
+      <button class="btn btn--primary" onclick="copyEmail('zjut')">
+        <svg style="width: 18px; height: 18px;" xmlns="http://www.w3.org/2000/svg"><use href="#icon-doc"/></svg>
+        Скопировать текст
+      </button>
+      <a class="btn btn--ghost" href="mailto:iec@zjut.edu.cn?subject=Admission%20Inquiry%3A%20Language%20Program%202027%20%26%20English-taught%20Bachelor%202028" target="_blank" rel="noopener">
+        <svg style="width: 18px; height: 18px;" xmlns="http://www.w3.org/2000/svg"><use href="#icon-mail"/></svg>
+        Открыть почту → iec@zjut.edu.cn
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 20 — ТИТУЛ БЛОКА V: КОГДА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--block-title slide--title-block-5" id="slide-20">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🗓️</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">⏳</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">📅</div>
+
+    <div class="block-dots">
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--active"></span>
+      <span class="block-dot"></span>
+    </div>
+
+    <div class="block-title speakable" onclick="speakRU('Когда')">Когда</div>
+    <div class="block-subtitle">Календарь · точки контроля · дедлайны</div>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 21 — ОБЩИЙ ТАЙМЛАЙН
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-21">
+    <div class="slide-header" data-num="15">
+      <div class="tag-badge tag-route">Когда · 15</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Общий таймлайн')">Общий таймлайн</h2>
+      <p class="sub-title">От медосмотра до бакалавриата — 6 ключевых точек</p>
+    </div>
+
+    <div class="timeline-h">
+      <div class="timeline-h__line"></div>
+      <div class="timeline-h__points">
+        <div class="timeline-h__point">
+          <div class="timeline-h__dot"></div>
+          <div class="timeline-h__date">Янв–Фев 2027</div>
+          <div class="timeline-h__label">Медосмотр</div>
+        </div>
+        <div class="timeline-h__point">
+          <div class="timeline-h__dot"></div>
+          <div class="timeline-h__date">Март 2027</div>
+          <div class="timeline-h__label">Справка МВД<br>+ апостиль<br>+ выписка 40k</div>
+        </div>
+        <div class="timeline-h__point">
+          <div class="timeline-h__dot"></div>
+          <div class="timeline-h__date">Апр–Май 2027</div>
+          <div class="timeline-h__label">Подача<br>17gz + Email</div>
+        </div>
+        <div class="timeline-h__point">
+          <div class="timeline-h__dot"></div>
+          <div class="timeline-h__date">Июн–Июл 2027</div>
+          <div class="timeline-h__label">Аттестат<br>+ апостиль<br>+ виза X1</div>
+        </div>
+        <div class="timeline-h__point">
+          <div class="timeline-h__dot"></div>
+          <div class="timeline-h__date">Сен 2027</div>
+          <div class="timeline-h__label">Старт<br>языкового года</div>
+        </div>
+        <div class="timeline-h__point">
+          <div class="timeline-h__dot"></div>
+          <div class="timeline-h__date">Сен 2028</div>
+          <div class="timeline-h__label">Старт<br>бакалавриата</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-split" style="margin-top: 1rem;">
+      <div class="card card--deadline">
+        <strong class="card-title">🔥 Критичные месяцы</strong>
+        <p class="card-body">
+          <strong>Март 2027</strong> — справка МВД + выписка 40k. Пропустишь — сдвинется всё.<br>
+          <strong>Апрель–Май 2027</strong> — подача. Пропустишь — ждёшь год.
+        </p>
+      </div>
+
+      <div class="card card--route">
+        <strong class="card-title">🧭 Спокойные месяцы</strong>
+        <p class="card-body">
+          <strong>Январь–Февраль</strong> — медосмотр.<br>
+          <strong>Июнь–Июль</strong> — аттестат и виза.<br>
+          <strong>Сентябрь 2027</strong> — прилёт.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 22 — ЭТАП 1: ПОДГОТОВКА ПАКЕТА (ЯНВАРЬ — МАРТ 2027)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-22">
+    <div class="slide-header" data-num="16">
+      <div class="tag-badge tag-deadline">Когда · 16</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Этап 1: подготовка пакета')">Этап 1 · Подготовка пакета</h2>
+      <p class="sub-title">Январь — Март 2027</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="stage-card stage-card--wait">
+        <div class="stage-card__header">
+          <div class="stage-card__title">Январь — Февраль 2027</div>
+          <div class="stage-card__date">2 месяца</div>
+        </div>
+        <ul class="stage-list">
+          <li>Прохождение <strong>медосмотра</strong> по форме КНР в аккредитованной клинике</li>
+          <li>Сдача базового экзамена <strong>HSK 2</strong> — для портфолио</li>
+          <li>Начало работы над <strong>Study Plan</strong> (мотивационное письмо)</li>
+          <li>Сбор <strong>внеучебных достижений</strong>: спорт, волонтёрство, видеомонтаж</li>
+        </ul>
+      </div>
+
+      <div class="stage-card stage-card--deadline">
+        <div class="stage-card__header">
+          <div class="stage-card__title">Март 2027 — критично!</div>
+          <div class="stage-card__date">1 месяц</div>
+        </div>
+        <ul class="stage-list">
+          <li>Заказ <strong>справки об отсутствии судимости</strong> с апостилем (Госуслуги)</li>
+          <li>Получение <strong>выписки из банка на 40 000 RMB</strong> (~5 500 USD)</li>
+          <li>Оформление <strong>рекомендательного письма</strong> от отца на английском с печатью</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card card--deadline" style="margin-top: 1rem;">
+      <strong class="card-title">⚠️ Почему март — критично</strong>
+      <p class="card-body">
+        Справка о несудимости <strong>действительна ровно 6 месяцев</strong>. Заказ в марте → действует до сентября 2027. Заказ в январе → к июлю <strong>уже просрочена</strong> → отказ в визе X1.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 23 — ЭТАП 2 И 3: ПОДАЧА И ЛЕГАЛИЗАЦИЯ (АПРЕЛЬ — АВГУСТ 2027)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-23">
+    <div class="slide-header" data-num="17">
+      <div class="tag-badge tag-route">Когда · 17</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Этапы 2 и 3: подача и легализация')">Этапы 2 и 3 · Подача и легализация</h2>
+      <p class="sub-title">Апрель — Август 2027</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="stage-card stage-card--deadline">
+        <div class="stage-card__header">
+          <div class="stage-card__title">Апрель — Май 2027</div>
+          <div class="stage-card__date">Подача заявок</div>
+        </div>
+        <ul class="stage-list">
+          <li>Подача через <strong>admission.njupt.edu.cn</strong> и <strong>zjut.17gz.org</strong></li>
+          <li>Дублирование PDF-пакета на <strong>jiayc@njupt.edu.cn</strong> и <strong>iec@zjut.edu.cn</strong></li>
+          <li>Отправка письма-запроса о CSCA и банковской выписке (шаблоны выше)</li>
+        </ul>
+      </div>
+
+      <div class="stage-card stage-card--wait">
+        <div class="stage-card__header">
+          <div class="stage-card__title">Июнь 2027</div>
+          <div class="stage-card__date">Аттестат</div>
+        </div>
+        <ul class="stage-list">
+          <li>Получение <strong>школьного аттестата</strong></li>
+          <li>Подача на <strong>Апостиль</strong> через Госуслуги (2 500 ₽)</li>
+          <li><strong>Нотариальный перевод</strong> аттестата</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage-card stage-card--done" style="margin-top: 1rem;">
+      <div class="stage-card__header">
+        <div class="stage-card__title">Июль — Август 2027</div>
+        <div class="stage-card__date">Виза и отъезд</div>
+      </div>
+      <ul class="stage-list">
+        <li>Получение <strong>Admission Notice</strong> + <strong>JW202</strong> (из вуза)</li>
+        <li>Подача на визу <strong>X1</strong> в Консульстве КНР (сбор ~4 500 ₽)</li>
+        <li>Бронирование <strong>общежития</strong></li>
+        <li>Покупка <strong>авиабилетов</strong> РФ → КНР (~40 000 – 55 000 ₽)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 24 — ЭТАП 4: ЯЗЫКОВОЙ ГОД И ПЕРЕХОД (СЕНТЯБРЬ 2027 — СЕНТЯБРЬ 2028)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-24">
+    <div class="slide-header" data-num="18">
+      <div class="tag-badge tag-done">Когда · 18</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Этап 4: языковой год и переход на бакалавриат')">Этап 4 · Языковой год и переход</h2>
+      <p class="sub-title">Сентябрь 2027 — Сентябрь 2028</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="stage-card stage-card--route">
+        <div class="stage-card__header">
+          <div class="stage-card__title">Сентябрь 2027</div>
+          <div class="stage-card__date">Старт</div>
+        </div>
+        <ul class="stage-list">
+          <li>Прилёт в КНР</li>
+          <li>Оформление <strong>ВНЖ (Residence Permit)</strong> на месте</li>
+          <li>Старт <strong>языкового года</strong> в NJUPT или ZJUT</li>
+          <li>Заселение в общежитие, покупка учебников</li>
+        </ul>
+      </div>
+
+      <div class="stage-card stage-card--done">
+        <div class="stage-card__header">
+          <div class="stage-card__title">Март — Апрель 2028</div>
+          <div class="stage-card__date">Переход</div>
+        </div>
+        <ul class="stage-list">
+          <li><strong>Бесшовное продление</strong> документов в ISO</li>
+          <li>Зачисление на англоязычный бакалавриат <strong>Computer Science / Information Security</strong></li>
+          <li>Старт: <strong>Сентябрь 2028</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card card--done" style="margin-top: 1rem;">
+      <strong class="card-title">🎯 Что значит «бесшовно»</strong>
+      <p class="card-body">
+        Языковой год <strong>не заканчивается</strong> выдачей сертификата и «пока». Он <strong>перетекает</strong> в бакалавриат. ВНЖ продлевается на месте. Никаких новых виз, никаких поездок в Россию.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 25 — ТИТУЛ БЛОКА VI: ЕСЛИ ЧТО-ТО ПОЙДЁТ НЕ ТАК
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--block-title slide--title-block-6" id="slide-25">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🛟</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🧯</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">🧭</div>
+
+    <div class="block-dots">
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--past"></span>
+      <span class="block-dot block-dot--active"></span>
+    </div>
+
+    <div class="block-title speakable" onclick="speakRU('Если что-то пойдёт не так')">Если что-то пойдёт не так</div>
+    <div class="block-subtitle">План Б · риски · что делать</div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 26 — 4 СЦЕНАРИЯ РИСКА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-26">
+    <div class="slide-header" data-num="19">
+      <div class="tag-badge tag-deadline">План Б · 19</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Четыре сценария риска')">4 сценария риска</h2>
+      <p class="sub-title">Что делать, если не сложилось</p>
+    </div>
+
+    <div class="grid-split" style="gap: 1.2rem;">
+      <div class="risk-card">
+        <div class="risk-card__title">Не сдал английский (IELTS &lt; 5.5)</div>
+        <div class="risk-card__body">
+          <span class="arrow">→</span> <strong>BLCU</strong> — языковой резерв. Год дополнительного языка. Подача на бакалавриат через год.
+        </div>
+      </div>
+
+      <div class="risk-card">
+        <div class="risk-card__title">Отказ NJUPT</div>
+        <div class="risk-card__body">
+          <span class="arrow">→</span> <strong>ZJUT</strong> — приоритет №2. Заявка уже подана параллельно. Ждём ответ.
+        </div>
+      </div>
+
+      <div class="risk-card">
+        <div class="risk-card__title">Отказ всех 4 вузов</div>
+        <div class="risk-card__body">
+          <span class="arrow">→</span> Пересмотр стратегии. <strong>Языковой год</strong> — вход. Затем — подача в менее конкурентные вузы.
+        </div>
+      </div>
+
+      <div class="risk-card">
+        <div class="risk-card__title">Не хватило денег на выписку 40 000 RMB</div>
+        <div class="risk-card__body">
+          <span class="arrow">→</span> Счёт <strong>опекуна</strong> (отец / бабушка). Справка от <strong>их</strong> имени. Китайская сторона <strong>принимает</strong>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 27 — ЧТО ДЕЛАТЬ, ЕСЛИ ДЕДЛАЙН ПРОПУЩЕН
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-27">
+    <div class="slide-header" data-num="20">
+      <div class="tag-badge tag-deadline">План Б · 20</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Что делать, если дедлайн пропущен')">Что делать, если дедлайн пропущен</h2>
+      <p class="sub-title">3 сценария · 3 решения</p>
+    </div>
+
+    <div class="stage-card stage-card--deadline">
+      <div class="stage-card__header">
+        <div class="stage-card__title">Пропустил подачу (апрель — май)</div>
+        <div class="stage-card__date">Сценарий 1</div>
+      </div>
+      <ul class="stage-list">
+        <li>Срочный <strong>Email в ISO</strong> с объяснением ситуации</li>
+        <li>Возможно <strong>позднее зачисление</strong> (до августа)</li>
+        <li>Если нет — <strong>подача на следующий год</strong> с уже готовым пакетом</li>
+      </ul>
+    </div>
+
+    <div class="stage-card stage-card--wait" style="margin-top: 1rem;">
+      <div class="stage-card__header">
+        <div class="stage-card__title">Не успел с апостилем</div>
+        <div class="stage-card__date">Сценарий 2</div>
+      </div>
+      <ul class="stage-list">
+        <li>Подача <strong>без апостиля</strong> — иногда принимают с пометкой «донести»</li>
+        <li><strong>Донесение</strong> после получения</li>
+      </ul>
+    </div>
+
+    <div class="stage-card stage-card--route" style="margin-top: 1rem;">
+      <div class="stage-card__header">
+        <div class="stage-card__title">Не получил визу X1</div>
+        <div class="stage-card__date">Сценарий 3</div>
+      </div>
+      <ul class="stage-list">
+        <li>Обращение в <strong>консульство</strong> с разъяснением ситуации</li>
+        <li>Подача на <strong>X2</strong> (краткосрочная) как временная мера</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 28 — ЧЕК-ЛИСТ ПЕРВОГО ШАГА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-28">
+    <div class="slide-header" data-num="21">
+      <div class="tag-badge tag-done">Финал · 21</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Чек-лист первого шага')">Чек-лист первого шага</h2>
+      <p class="sub-title">Не «когда-то». Сейчас. Кликай по строкам.</p>
+    </div>
+
+    <div class="checklist">
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text">Отправить письмо в <strong>NJUPT</strong> (Шаблон 1, слайд 18)</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text">Отправить письмо в <strong>ZJUT</strong> (Шаблон 2, слайд 19)</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text">Записаться на <strong>медосмотр</strong> по форме КНР (январь)</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text">Сдать пробный <strong>HSK 2</strong> (для портфолио)</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text">Открыть счёт с <strong>40 000 RMB</strong> (или договориться с отцом)</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text">Создать папку <strong>SHIPITSIN_Egor_Applications/</strong> на Яндекс.Диске</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text">Завести почту <strong>shipitsin_egor@yandex.ru</strong> (если ещё нет)</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text">Начать писать <strong>Study Plan</strong> (мотивационное письмо)</div>
+      </div>
+
+      <div class="checklist__item" onclick="toggleCheck(this)">
+        <div class="checklist__box"></div>
+        <div class="checklist__text">Собрать <strong>внеучебные достижения</strong>: спорт, волонтёрство, видеомонтаж</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 29 — ПРОГРЕСС-БАР ПУТИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-29">
+    <div class="slide-header" data-num="22">
+      <div class="tag-badge tag-route">Финал · 22</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Прогресс-бар пути')">Прогресс-бар пути</h2>
+      <p class="sub-title">Где ты сейчас — и сколько осталось</p>
+    </div>
+
+    <div class="journey">
+      <div class="journey__track">
+        <div class="journey__fill"></div>
+      </div>
+
+      <div class="journey__milestones">
+        <div class="journey__ms journey__ms--now">
+          <div class="journey__ms-dot"></div>
+          <div class="journey__ms-label">Сейчас</div>
+          <div class="journey__ms-pct">0%</div>
+        </div>
+        <div class="journey__ms">
+          <div class="journey__ms-dot"></div>
+          <div class="journey__ms-label">Март 2027</div>
+          <div class="journey__ms-pct">15%</div>
+        </div>
+        <div class="journey__ms">
+          <div class="journey__ms-dot"></div>
+          <div class="journey__ms-label">Май 2027</div>
+          <div class="journey__ms-pct">35%</div>
+        </div>
+        <div class="journey__ms">
+          <div class="journey__ms-dot"></div>
+          <div class="journey__ms-label">Авг 2027</div>
+          <div class="journey__ms-pct">55%</div>
+        </div>
+        <div class="journey__ms">
+          <div class="journey__ms-dot"></div>
+          <div class="journey__ms-label">Сен 2027</div>
+          <div class="journey__ms-pct">70%</div>
+        </div>
+        <div class="journey__ms">
+          <div class="journey__ms-dot"></div>
+          <div class="journey__ms-label">Март 2028</div>
+          <div class="journey__ms-pct">85%</div>
+        </div>
+        <div class="journey__ms">
+          <div class="journey__ms-dot"></div>
+          <div class="journey__ms-label">Сен 2028</div>
+          <div class="journey__ms-pct">100%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card--route" style="margin-top: 1.5rem;">
+      <strong class="card-title">🎯 Что видно</strong>
+      <p class="card-body">
+        <strong>Март 2027 — точка 15%.</strong> К этому моменту должны быть готовы: медосмотр, справка МВД с апостилем, выписка 40k. Всё остальное — <strong>следствие</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 30 — ГЛУБИНА ПОГРУЖЕНИЯ: ЧТО ЗНАЧИТ «УЧИТЬ ГОД»
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-30">
+    <div class="slide-header" data-num="23">
+      <div class="tag-badge tag-route">Контекст · 23</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Глубина погружения: что значит учить год')">Что значит «учить год»</h2>
+      <p class="sub-title">Реальность языкового года — без иллюзий</p>
+    </div>
+
+    <div class="grid-3col">
+      <div class="card card--route">
+        <strong class="card-title">📖 Уровень</strong>
+        <p class="card-body">
+          Китайский = <strong>9 уровней</strong>, а не 6, как в английском.
+        </p>
+        <p class="card-body">
+          Языковой год = <strong>с HSK 1–2 до HSK 4–5</strong>. Достаточно для бакалавриата.
+        </p>
+      </div>
+
+      <div class="card card--deadline">
+        <strong class="card-title">⏰ Реальность</strong>
+        <p class="card-body">
+          <strong>2 раза в неделю без практики</strong> = не хватит. <strong>Каждый день по 30–60 минут</strong> = норма.
+        </p>
+        <p class="card-body">
+          Без <strong>контента и окружения</strong> — уровень «детсадовца» за 6–7 лет.
+        </p>
+      </div>
+
+      <div class="card card--done">
+        <strong class="card-title">✅ Что реально</strong>
+        <p class="card-body">
+          С <strong>3–4 занятиями в неделю + сам работа</strong> за год — уровень «детсадовца» (HSK 4).
+        </p>
+        <p class="card-body">
+          Этого <strong>достаточно</strong> для поступления на англоязычный бакалавриат.
+        </p>
+      </div>
+    </div>
+
+    <div class="card card--wait" style="margin-top: 1rem;">
+      <strong class="card-title">🧠 Ключевое правило</strong>
+      <p class="card-body">
+        Языковой год — <strong>не «познакомиться с языком»</strong>. Это <strong>фундамент</strong>, на котором строится бакалавриат. Не закладываешь фундамент — рассыпется всё.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 31 — 3 ПРАВИЛА CSC, HSK И МЕДОСМОТРА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-31">
+    <div class="slide-header" data-num="24">
+      <div class="tag-badge tag-deadline">Контекст · 24</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Три правила CSC, HSK и медосмотра')">3 правила · CSC, HSK, медосмотр</h2>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card__num">01</div>
+      <div class="rule-card__title speakable" onclick="speakRU('Правило CSC')">CSC — только на программы со степенью</div>
+      <div class="rule-card__body">
+        <strong>Языковой год — самостоятельно.</strong> Не пытайся подать CSC на подготовительный курс. Откажут. Финансирование — за свой счёт до старта бакалавриата.
+      </div>
+    </div>
+
+    <div class="rule-card rule-card--route" style="margin-top: 1rem;">
+      <div class="rule-card__num">02</div>
+      <div class="rule-card__title speakable" onclick="speakRU('Правило HSK')">HSK — не «для галочки», а для реального уровня</div>
+      <div class="rule-card__body">
+        <strong>HSK 2 в портфолио = вход.</strong> HSK 4–5 = готовность к бакалавриату на китайском. Для англоязычного — <strong>IELTS 5.5–6.0</strong>.
+      </div>
+    </div>
+
+    <div class="rule-card rule-card--wait" style="margin-top: 1rem;">
+      <div class="rule-card__num">03</div>
+      <div class="rule-card__title speakable" onclick="speakRU('Правило медосмотра')">Медосмотр — 6 месяцев действительности</div>
+      <div class="rule-card__body">
+        Оформляется в <strong>январе–феврале 2027</strong>. Действителен до июля–августа 2027. Подача в апреле–мае — <strong>с запасом</strong>. Просроченный медосмотр = отказ.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 32 — ПРАВИЛА 17gz + EMAIL: КАК ПИСАТЬ, ЧТОБЫ ОТВЕТИЛИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-32">
+    <div class="slide-header" data-num="25">
+      <div class="tag-badge tag-done">Контекст · 25</div>
+      <h2 class="slide-title speakable" onclick="speakRU('Правила 17gz и Email: как писать, чтобы ответили')">Как писать, чтобы ответили</h2>
+      <p class="sub-title">Правила деловой переписки с ISO</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="card card--done">
+        <strong class="card-title">✅ Что делать</strong>
+        <p class="card-body">
+          • Писать на <strong>английском</strong><br>
+          • В <strong>Subject</strong> указывать цель + intake<br>
+          • Обращение <strong>Dear Admissions Officer</strong> или <strong>Dear Admissions Team</strong><br>
+          • Подпись: имя + китайское имя + email<br>
+          • Формулировать <strong>2 чётких вопроса</strong>, не больше<br>
+          • Отвечать в течение <strong>24–48 часов</strong>, если ответили
+        </p>
+      </div>
+
+      <div class="card card--deadline">
+        <strong class="card-title">❌ Что нельзя</strong>
+        <p class="card-body">
+          • Писать с <strong>Gmail</strong> — иногда попадает в спам<br>
+          • Задавать 10 вопросов в одном письме<br>
+          • Использовать <strong>переводчик Google</strong> без правки<br>
+          • Отправлять <strong>большие вложения</strong> (> 5 МБ)<br>
+          • Писать на <strong>русском</strong> — не поймут<br>
+          • Ждать <strong>мгновенного ответа</strong> — 3–7 дней норма
+        </p>
+      </div>
+    </div>
+
+    <div class="card card--route" style="margin-top: 1rem;">
+      <strong class="card-title">🎯 Как читать молчание</strong>
+      <p class="card-body">
+        Если не ответили <strong>через 7 дней</strong> — вежливое напоминание. Если снова молчат — попробуй <strong>через другой канал</strong> (например, официальный сайт → форма обратной связи).
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 33 — ФИНАЛ: ПРОГРЕСС-БАР 0% → 100%
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--centered" id="slide-33">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🚀</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🎯</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">🇨🇳</div>
+
+    <div class="tag-badge tag-done" style="margin: 0 auto 1.5rem;">Финал · 26</div>
+
+    <div class="final-hero final-hero--route speakable" onclick="speakRU('Маршрут построен.')">
+      Маршрут построен
+    </div>
+
+    <p class="final-sub speakable" style="max-width: 800px; margin: 1.5rem auto 0;" onclick="speakRU('Сорок тысяч рублей на счёте. Апостиль в марте. Письма — сегодня.')">
+      40 000 RMB на счёте. Апостиль в марте.<br>
+      Письма — <strong>сегодня</strong>.
+    </p>
+
+    <div class="final-quote speakable" onclick="speakRU('Ты не думаешь о поступлении. Ты идёшь по маршруту.')">
+      Ты не «думаешь о поступлении».<br>
+      Ты <strong>идёшь по маршруту</strong>.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 34 — СПАСИБО / КОНТАКТЫ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--centered" id="slide-34">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">📩</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🗂️</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">🌏</div>
+
+    <div class="tag-badge tag-route" style="margin: 0 auto 1.5rem;">Контакты · 27</div>
+
+    <h2 class="slide-title speakable" style="font-size: clamp(32px, 3.5vw, 56px); text-align: center;" onclick="speakRU('Все ссылки и контакты')">
+      Все ссылки и контакты
+    </h2>
+
+    <div style="max-width: 900px; margin: 2rem auto 0;">
+      <div class="card card--done" style="text-align: left;">
+        <strong class="card-title">📧 Твоя почта для регистрации</strong>
+        <p class="card-body" style="font-size: 1.1em;">
+          <a class="ext-link" href="mailto:shipitsin_egor@yandex.ru">shipitsin_egor@yandex.ru</a>
+        </p>
+        <p class="card-body" style="color: var(--text-muted); font-size: 0.92em;">
+          Именно на неё регистрируйся на всех порталах. НЕ Gmail.
+        </p>
+      </div>
+
+      <div class="card card--route" style="margin-top: 1rem; text-align: left;">
+        <strong class="card-title">📮 Emails приёмных комиссий</strong>
+        <p class="card-body">
+          <strong>NJUPT:</strong> <a class="ext-link" href="mailto:jiayc@njupt.edu.cn">jiayc@njupt.edu.cn</a><br>
+          <strong>ZJUT:</strong> <a class="ext-link" href="mailto:iec@zjut.edu.cn">iec@zjut.edu.cn</a><br>
+          <strong>BUPT:</strong> <a class="ext-link" href="mailto:admissions@bupt.edu.cn">admissions@bupt.edu.cn</a><br>
+          <strong>BLCU:</strong> <a class="ext-link" href="mailto:zhaosh1@blcu.edu.cn">zhaosh1@blcu.edu.cn</a>
+        </p>
+      </div>
+
+      <div class="card card--wait" style="margin-top: 1rem; text-align: left;">
+        <strong class="card-title">🌐 Портал подачи</strong>
+        <p class="card-body">
+          <a class="ext-link" href="https://admission.njupt.edu.cn" target="_blank" rel="noopener">admission.njupt.edu.cn</a><br>
+          <a class="ext-link" href="https://zjut.17gz.org" target="_blank" rel="noopener">zjut.17gz.org</a><br>
+          <a class="ext-link" href="https://bupt.17gz.org" target="_blank" rel="noopener">bupt.17gz.org</a><br>
+          <a class="ext-link" href="https://blcu.17gz.org" target="_blank" rel="noopener">blcu.17gz.org</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 35 — ФИНАЛЬНАЯ ПЕЧАТЬ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--centered" id="slide-35">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🕊️</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🌱</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">🏛️</div>
+
+    <div class="final-hero speakable" style="font-size: clamp(40px, 5vw, 88px);" onclick="speakRU('Егор Шипицин. 叶信安. Поступление 2027 — 2028.')">
+      Егор Шипицин
+    </div>
+
+    <div class="hieroglyph-hero" style="font-size: clamp(60px, 7vw, 120px); margin: 1.5rem 0;">
+      叶信安
+    </div>
+
+    <div style="font-size: clamp(18px, 1.6vw, 26px); font-weight: 700; color: var(--route); letter-spacing: 2px; margin-top: 0.5rem;">
+      Yè Xìn'ān
+    </div>
+
+    <p class="final-sub speakable" style="max-width: 800px; margin: 3rem auto 0;" onclick="speakRU('Надёжность и безопасность информации.')">
+      Надёжность и безопасность информации
+    </p>
+
+    <div style="margin-top: 4rem; font-size: clamp(14px, 1.05vw, 18px); color: var(--text-muted); font-style: italic;">
+      Генеральный мастер-конспект · 2027–2028
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       НАВИГАЦИЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="nav-bar">
+    <div class="slide-indicator" id="slide-indicator">Слайд 1 / 35</div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prev-btn" aria-label="Предыдущий слайд">←</button>
+      <button class="nav-btn" id="next-btn" aria-label="Следующий слайд">→</button>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  class SlideDeck {
+    constructor() {
+      this.slides = Array.from(document.querySelectorAll('.slide'));
+      this.indicator = document.getElementById('slide-indicator');
+      this.prevBtn = document.getElementById('prev-btn');
+      this.nextBtn = document.getElementById('next-btn');
+      this.progressBar = document.getElementById('progress');
+
+      let saved = 0;
+      try {
+        const raw = localStorage.getItem('deck_postuplenie_v1');
+        const parsed = parseInt(raw, 10);
+        if (!isNaN(parsed) && parsed >= 0 && parsed < this.slides.length) {
+          saved = parsed;
+        }
+      } catch (e) { saved = 0; }
+      this.currentIdx = saved;
+
+      this.init();
+    }
+
+    init() {
+      this.update();
+      this.prevBtn.addEventListener('click', () => this.prev());
+      this.nextBtn.addEventListener('click', () => this.next());
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+          e.preventDefault();
+          this.next();
+        }
+        if (e.key === 'ArrowLeft') this.prev();
+      });
+
+      let startX = 0;
+      document.addEventListener('touchstart', (e) => { startX = e.changedTouches[0].screenX; }, { passive: true });
+      document.addEventListener('touchend', (e) => {
+        const endX = e.changedTouches[0].screenX;
+        if (startX - endX > 50) this.next();
+        if (endX - startX > 50) this.prev();
+      }, { passive: true });
+    }
+
+    goTo(i) {
+      if (i < 0 || i >= this.slides.length) return;
+      this.currentIdx = i;
+      this.update();
+      try { localStorage.setItem('deck_postuplenie_v1', this.currentIdx); } catch (e) {}
+    }
+
+    next() { if (this.currentIdx < this.slides.length - 1) this.goTo(this.currentIdx + 1); }
+    prev() { if (this.currentIdx > 0) this.goTo(this.currentIdx - 1); }
+
+    update() {
+      this.slides.forEach((s, i) => s.classList.toggle('active', i === this.currentIdx));
+      this.indicator.textContent = `Слайд ${this.currentIdx + 1} / ${this.slides.length}`;
+      this.prevBtn.classList.toggle('is-disabled', this.currentIdx === 0);
+      this.nextBtn.classList.toggle('is-disabled', this.currentIdx === this.slides.length - 1);
+      if (this.progressBar) {
+        this.progressBar.style.width = ((this.currentIdx + 1) / this.slides.length * 100) + '%';
+      }
+    }
+  }
+
+  function speakRU(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'ru-RU';
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+  }
+
+  function toggleCheck(el) {
+    el.classList.toggle('is-checked');
+  }
+
+  function copyEmail(which) {
+    let text = '';
+    if (which === 'njupt') {
+      text = `Subject: Inquiry regarding CSCA Requirement and Admissions for Intake 2027/2028 (Bachelor of CS / InfoSec)
+
+Dear Admissions Officer,
+
+My name is Egor Shipitsin, an applicant from Russia planning to apply for the Chinese Language Program (Intake September 2027) and subsequently the English-taught Bachelor's Degree Program in Computer Science / Information Security (Intake 2028) at Nanjing University of Posts and Telecommunications.
+
+Could you please clarify two questions regarding your admission policy:
+
+- Is the CSCA (China Scholastic Competency Assessment) required for international students applying to the English-taught Bachelor's program in Computer Science / Information Security for Intake 2028?
+- What is the current required minimum amount for the Bank Statement for the English-taught Bachelor's application?
+
+Thank you for your time and assistance.
+
+Best regards,
+Egor Shipitsin (叶信安)
+Email: shipitsin_egor@yandex.ru`;
+    } else if (which === 'zjut') {
+      text = `Subject: Admission Inquiry: Language Program 2027 & English-taught Bachelor 2028
+
+Dear Admissions Team of ZJUT,
+
+I hope this email finds you well.
+
+I am a high school student from Russia preparing my application for Zhejiang University of Technology. I plan to enroll in the Chinese Language Preparatory Program in September 2027 and then proceed to an English-taught Bachelor's Degree in Software Engineering / Computer Science in 2028.
+
+I would be very grateful if you could confirm:
+
+- Does ZJUT require international applicants to take the CSCA examination for English-taught Bachelor's degree programs?
+- Is a bank statement of 40,000 RMB sufficient for both the Language Program and Bachelor's degree admission?
+
+Thank you very much for your guidance.
+
+Yours sincerely,
+Egor Shipitsin (叶信安)`;
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btns = document.querySelectorAll('.btn--primary');
+        btns.forEach((b) => {
+          if (b.textContent.includes('Скопировать')) {
+            const original = b.innerHTML;
+            b.innerHTML = '✓ Скопировано';
+            setTimeout(() => { b.innerHTML = original; }, 1500);
+          }
+        });
+      }).catch(() => {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => { window.deck = new SlideDeck(); });
+</script>
+</body>
+</html>
