@@ -1,0 +1,3848 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时代的决斗：冲突、美学与Z世代哲学</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800;900&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+  :root {
+    /* Базовая палитра */
+    --bg-cream: #FAF8F4;
+    --surface-white: #FFFFFF;
+    --surface-border: #E8E3DA;
+    --surface-subtle: #F3EFE6;
+
+    /* Блок 1 — 人物: роза / гламур */
+    --rose: #C97B84;
+    --rose-light: #F7E5E7;
+    --rose-deep: #A85862;
+
+    /* Блок 2 — 兄弟: изумруд / доверие */
+    --jade: #2EB886;
+    --jade-light: #E4F5EE;
+    --jade-deep: #1F8B67;
+
+    /* Блок 3 — 工作: терракота / боль */
+    --terracotta: #E05A47;
+    --terracotta-light: #FCE8E4;
+    --terracotta-deep: #B23A3A;
+
+    /* Блок 4 — 生活: лаванда / нежность */
+    --lavender: #B5A8D8;
+    --lavender-light: #EFEBF7;
+    --lavender-deep: #6B5B95;
+
+    /* Блок 5 — 能力: синий / ясность */
+    --blue: #2A5C8A;
+    --blue-light: #E4EDF5;
+    --blue-deep: #1A3D5C;
+
+    /* Универсальные */
+    --amber: #D4A574;
+    --amber-light: #F5EBDD;
+    --mint: #4ECDC4;
+    --mint-light: #E4F6F4;
+
+    --text-main: #22252A;
+    --text-sub: #6C727E;
+    --text-muted: #9DA3AF;
+
+    --lex-bg: rgba(255, 255, 255, 0.94);
+    --transition-smooth: 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg-cream);
+    color: var(--text-main);
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .deck-container {
+    position: relative;
+    width: 100%;
+    max-width: 1920px;
+    height: 100dvh;
+    aspect-ratio: 16 / 9;
+    background: var(--bg-cream);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  @media (min-aspect-ratio: 16/9) {
+    .deck-container {
+      height: 100dvh;
+      width: calc(100dvh * 16 / 9);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     СЛАЙДЫ
+     ═══════════════════════════════════════════════════════════ */
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: clamp(28px, 3.5vw, 60px);
+    padding-bottom: clamp(220px, 24vh, 290px);
+    padding-right: clamp(170px, 14vw, 220px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px) scale(0.99);
+    transition: opacity var(--transition-smooth), transform var(--transition-smooth), visibility var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+    z-index: 1;
+    overflow-y: auto;
+  }
+
+  .slide > * {
+    max-width: 1700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(46, 184, 134, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46, 184, 134, 0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    z-index: 2;
+  }
+
+  .slide--centered {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px !important;
+    gap: 0;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ПРОГРЕСС
+     ═══════════════════════════════════════════════════════════ */
+  .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 0;
+    background: linear-gradient(90deg, var(--rose), var(--jade), var(--terracotta), var(--lavender), var(--blue));
+    transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 20;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ЗАГОЛОВКИ
+     ═══════════════════════════════════════════════════════════ */
+  .slide-header { position: relative; margin-bottom: 0.4rem; }
+
+  .slide-header::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -40px;
+    left: -20px;
+    font-size: clamp(110px, 12vw, 200px);
+    font-weight: 900;
+    color: rgba(46, 184, 134, 0.05);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+    letter-spacing: -0.05em;
+  }
+
+  .slide-header > * { position: relative; z-index: 1; }
+
+  .slide-title {
+    font-size: clamp(30px, 3.2vw, 52px);
+    font-weight: 800;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+  }
+
+  .slide-title.has-emoji::before {
+    content: attr(data-emoji);
+    display: inline-block;
+    font-size: 1.05em;
+    margin-right: 14px;
+    vertical-align: -0.08em;
+  }
+
+  .sub-title {
+    font-size: clamp(16px, 1.35vw, 22px);
+    font-weight: 500;
+    color: var(--text-sub);
+    line-height: 1.5;
+    margin-top: 0.4rem;
+  }
+
+  .tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: clamp(12px, 0.9vw, 15px);
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    background: var(--surface-subtle);
+    color: var(--text-sub);
+    border: 1px dashed #D0C8B8;
+    width: fit-content;
+    margin-bottom: 0.8rem;
+  }
+
+  .tag-rose { background: var(--rose-light); color: var(--rose-deep); border-color: rgba(201, 123, 132, 0.4); border-style: solid; }
+  .tag-jade { background: var(--jade-light); color: var(--jade-deep); border-color: rgba(46, 184, 134, 0.4); border-style: solid; }
+  .tag-terracotta { background: var(--terracotta-light); color: var(--terracotta-deep); border-color: rgba(224, 90, 71, 0.4); border-style: solid; }
+  .tag-lavender { background: var(--lavender-light); color: var(--lavender-deep); border-color: rgba(181, 168, 216, 0.4); border-style: solid; }
+  .tag-blue { background: var(--blue-light); color: var(--blue-deep); border-color: rgba(42, 92, 138, 0.4); border-style: solid; }
+
+  /* ═══════════════════════════════════════════════════════════
+     СЛАЙД-ОБЛОЖКА И ТИТУЛ БЛОКА
+     ═══════════════════════════════════════════════════════════ */
+  .slide--block-title {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px !important;
+    gap: 0;
+  }
+
+  .block-title {
+    font-size: clamp(48px, 5.5vw, 96px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+  }
+
+  .block-subtitle {
+    font-size: clamp(18px, 1.5vw, 26px);
+    font-weight: 500;
+    color: var(--text-sub);
+    letter-spacing: 0.5px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     КАРТОЧКИ
+     ═══════════════════════════════════════════════════════════ */
+  .card {
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-radius: 20px;
+    padding: clamp(18px, 1.8vw, 28px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+  }
+
+  .card--rose { border-left: 5px solid var(--rose); background: linear-gradient(90deg, var(--rose-light) 0%, var(--surface-white) 45%); }
+  .card--jade { border-left: 5px solid var(--jade); background: linear-gradient(90deg, var(--jade-light) 0%, var(--surface-white) 45%); }
+  .card--terracotta { border-left: 5px solid var(--terracotta); background: linear-gradient(90deg, var(--terracotta-light) 0%, var(--surface-white) 45%); }
+  .card--lavender { border-left: 5px solid var(--lavender); background: linear-gradient(90deg, var(--lavender-light) 0%, var(--surface-white) 45%); }
+  .card--blue { border-left: 5px solid var(--blue); background: linear-gradient(90deg, var(--blue-light) 0%, var(--surface-white) 45%); }
+
+  .card-title {
+    font-size: clamp(18px, 1.5vw, 24px);
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .card-body {
+    font-size: clamp(14px, 1.15vw, 19px);
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--text-sub);
+  }
+
+  .key {
+    background: linear-gradient(180deg, transparent 62%, rgba(255, 184, 0, 0.4) 62%);
+    padding: 0 5px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .chip {
+    display: inline-block;
+    background: var(--terracotta-light);
+    color: var(--terracotta-deep);
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 7px;
+    font-size: 0.85em;
+  }
+  .chip--jade { background: var(--jade-light); color: var(--jade-deep); }
+  .chip--rose { background: var(--rose-light); color: var(--rose-deep); }
+  .chip--lavender { background: var(--lavender-light); color: var(--lavender-deep); }
+  .chip--blue { background: var(--blue-light); color: var(--blue-deep); }
+
+  .speakable { cursor: pointer; transition: color 0.2s; }
+  .speakable:hover { color: var(--jade); }
+
+  .grid-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+    align-items: stretch;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ОБЛАЧКА С ЦИТАТАМИ
+     ═══════════════════════════════════════════════════════════ */
+  .quote-bubble {
+    position: relative;
+    display: inline-block;
+    max-width: 480px;
+    padding: 12px 20px 12px 18px;
+    border-radius: 18px 18px 18px 6px;
+    background: rgba(255, 255, 255, 0.97);
+    border: 2px solid var(--surface-border);
+    font-size: clamp(13px, 1vw, 17px);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--text-main);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    margin: 6px 0;
+  }
+
+  .quote-bubble::before {
+    content: "“";
+    position: absolute;
+    top: -14px;
+    left: 10px;
+    font-family: "Noto Serif SC", Georgia, serif;
+    font-size: 48px;
+    line-height: 1;
+    color: var(--amber);
+    opacity: 0.5;
+  }
+
+  .quote-bubble--rose { border-left: 5px solid var(--rose); }
+  .quote-bubble--jade { border-left: 5px solid var(--jade); }
+  .quote-bubble--terracotta { border-left: 5px solid var(--terracotta); }
+  .quote-bubble--lavender { border-left: 5px solid var(--lavender); }
+  .quote-bubble--blue { border-left: 5px solid var(--blue); }
+
+  .quote-bubble__author {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.85em;
+    font-style: normal;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ПАНЕЛЬ СЛОВ ВНИЗУ
+     ═══════════════════════════════════════════════════════════ */
+  .lex-panel {
+    position: absolute;
+    bottom: 76px;
+    left: clamp(24px, 3.5vw, 60px);
+    right: clamp(24px, 3.5vw, 60px);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    padding: 14px 20px;
+    background: var(--lex-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--surface-border);
+    border-left: 4px solid var(--jade);
+    border-radius: 14px;
+    z-index: 5;
+    max-height: 130px;
+    overflow: hidden;
+  }
+
+  .lex-panel--rose { border-left-color: var(--rose); }
+  .lex-panel--jade { border-left-color: var(--jade); }
+  .lex-panel--terracotta { border-left-color: var(--terracotta); }
+  .lex-panel--lavender { border-left-color: var(--lavender); }
+  .lex-panel--blue { border-left-color: var(--blue); }
+
+  .lex-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .lex-item__zh {
+    font-size: clamp(14px, 1.05vw, 17px);
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lex-item__def {
+    font-size: clamp(11px, 0.85vw, 13px);
+    line-height: 1.35;
+    color: var(--text-sub);
+    font-weight: 500;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .lex-item__en {
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     НАВИГАЦИЯ
+     ═══════════════════════════════════════════════════════════ */
+  .nav-bar {
+    position: absolute;
+    bottom: 18px;
+    left: clamp(24px, 3.5vw, 60px);
+    right: clamp(24px, 3.5vw, 60px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  .nav-controls { display: flex; gap: 10px; pointer-events: auto; }
+
+  .nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.15rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all var(--transition-smooth);
+    font-family: inherit;
+  }
+  .nav-btn:hover { border-color: var(--jade); color: var(--jade); transform: translateY(-2px); }
+  .nav-btn.is-disabled { opacity: 0.3; pointer-events: none; cursor: not-allowed; }
+
+  .slide-indicator {
+    font-size: 13px;
+    color: var(--text-sub);
+    font-weight: 600;
+    background: var(--surface-white);
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 2px solid var(--surface-border);
+    pointer-events: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     АВАТАРЫ
+     ═══════════════════════════════════════════════════════════ */
+  .hero-avatars {
+    position: absolute;
+    top: clamp(16px, 2vw, 28px);
+    right: clamp(16px, 2vw, 28px);
+    display: flex;
+    gap: 12px;
+    z-index: 15;
+  }
+
+  .hero-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--surface-white);
+    border: 3px solid var(--surface-border);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-avatar svg { width: 100%; height: 100%; }
+  .hero-avatar--sobchak { border-color: var(--rose); }
+  .hero-avatar--lutchek { border-color: var(--jade); }
+
+  .hero-avatar.is-speaking { transform: scale(1.1); z-index: 2; }
+  .hero-avatar--sobchak.is-speaking { animation: heroPulseRose 2s ease-in-out infinite; }
+  @keyframes heroPulseRose {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201, 123, 132, 0.5); }
+    50%      { box-shadow: 0 0 0 12px rgba(201, 123, 132, 0); }
+  }
+  .hero-avatar--lutchek.is-speaking { animation: heroPulseJade 2s ease-in-out infinite; }
+  @keyframes heroPulseJade {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(46, 184, 134, 0.5); }
+    50%      { box-shadow: 0 0 0 12px rgba(46, 184, 134, 0); }
+  }
+
+  .hero-avatar::after {
+    content: attr(data-name);
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: var(--text-main);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    max-width: 240px;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.35;
+  }
+  .hero-avatar:hover::after { opacity: 1; }
+
+  /* ═══════════════════════════════════════════════════════════
+     ОБЛАЧКО РЕПЛИКИ ВНИЗУ
+     ═══════════════════════════════════════════════════════════ */
+  .slide-replica {
+    position: absolute;
+    bottom: 210px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 560px;
+    width: calc(100% - 500px);
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid var(--surface-border);
+    border-radius: 18px 18px 18px 6px;
+    padding: 12px 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    z-index: 6;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .slide-replica__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid var(--jade);
+    overflow: hidden;
+    background: var(--surface-white);
+  }
+  .slide-replica__avatar--rose { border-color: var(--rose); }
+  .slide-replica__avatar--jade { border-color: var(--jade); }
+  .slide-replica__avatar svg { width: 100%; height: 100%; }
+
+  .slide-replica__content { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+  .slide-replica__text {
+    font-size: clamp(13px, 0.95vw, 16px);
+    font-weight: 600;
+    color: var(--text-main);
+    line-height: 1.45;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ВИДЕО-КАРТОЧКА
+     ═══════════════════════════════════════════════════════════ */
+  .video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #1A1D22 0%, #2C3040 100%);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    border: 2px solid var(--surface-border);
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .video-frame:hover { transform: scale(1.01); border-color: var(--jade); }
+
+  .video-frame__title-card {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    right: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: clamp(11px, 0.85vw, 14px);
+    opacity: 0.85;
+    font-weight: 500;
+  }
+  .video-frame__title-card span:first-child { font-weight: 700; letter-spacing: 0.5px; }
+
+  .video-frame__play {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+    animation: playPulse 1.8s ease-in-out infinite;
+  }
+  .video-frame__play::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 20px solid var(--text-main);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    margin-left: 5px;
+  }
+  @keyframes playPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35); }
+    50%      { transform: scale(1.06); box-shadow: 0 12px 32px rgba(78, 205, 196, 0.5); }
+  }
+  .video-frame__hint {
+    color: #FFFFFF;
+    font-size: clamp(13px, 1vw, 17px);
+    font-weight: 500;
+    opacity: 0.9;
+    text-align: center;
+    padding: 0 20px;
+  }
+  .video-frame__hint strong {
+    display: block;
+    font-size: 1.15em;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: var(--mint);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     АНИМАЦИИ — 20+ ДИНАМИЧНЫХ ВИЗУАЛОВ
+     ═══════════════════════════════════════════════════════════ */
+
+  /* 01. ОБЛОЖКА — кружки дышат */
+  .breathing-cups .final-cup { animation: cupBreathe 4s ease-in-out infinite; }
+  .breathing-cups .final-cup:nth-child(2) { animation-delay: 0.5s; }
+  @keyframes cupBreathe {
+    0%, 100% { transform: scale(1) rotate(-2deg); }
+    50%      { transform: scale(1.06) rotate(2deg); }
+  }
+
+  /* 02. СОДЕРЖАНИЕ — 5 стрелок вращаются вокруг шара */
+  .content-wheel {
+    position: relative;
+    width: clamp(420px, 42vw, 640px);
+    height: clamp(420px, 42vw, 640px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .content-wheel__center {
+    position: relative;
+    z-index: 10;
+    width: clamp(130px, 13vw, 190px);
+    height: clamp(130px, 13vw, 190px);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--jade) 0%, var(--jade-deep) 100%);
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    box-shadow: 0 12px 40px rgba(46, 184, 134, 0.4);
+    text-align: center;
+    padding: 16px;
+  }
+
+  .content-wheel__center-zh {
+    font-size: clamp(22px, 2vw, 32px);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+
+  .content-wheel__center-en {
+    font-size: clamp(10px, 0.8vw, 13px);
+    font-weight: 600;
+    opacity: 0.85;
+    letter-spacing: 1px;
+  }
+
+  .content-wheel__ring {
+    position: absolute;
+    inset: 0;
+    animation: wheelSpin 40s linear infinite;
+    transform-origin: center;
+    pointer-events: none;
+  }
+
+  @keyframes wheelSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .content-wheel__pointer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0 0;
+    pointer-events: auto;
+  }
+
+  .content-wheel__pointer--1 { transform: translate(-50%, -50%) rotate(0deg) translateY(clamp(-260px, -26vw, -180px)); }
+  .content-wheel__pointer--2 { transform: translate(-50%, -50%) rotate(72deg) translateY(clamp(-260px, -26vw, -180px)); }
+  .content-wheel__pointer--3 { transform: translate(-50%, -50%) rotate(144deg) translateY(clamp(-260px, -26vw, -180px)); }
+  .content-wheel__pointer--4 { transform: translate(-50%, -50%) rotate(216deg) translateY(clamp(-260px, -26vw, -180px)); }
+  .content-wheel__pointer--5 { transform: translate(-50%, -50%) rotate(288deg) translateY(clamp(-260px, -26vw, -180px)); }
+
+  /* Контр-вращение — текст остаётся ровным */
+  .content-wheel__pointer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 12px 16px;
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    min-width: 120px;
+    animation: wheelSpinReverse 40s linear infinite;
+    transform-origin: center;
+  }
+
+  @keyframes wheelSpinReverse {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+  }
+
+  .content-wheel__num {
+    font-size: clamp(11px, 0.9vw, 14px);
+    font-weight: 900;
+    color: var(--jade-deep);
+    letter-spacing: 1px;
+  }
+
+  .content-wheel__name {
+    font-size: clamp(14px, 1.15vw, 18px);
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .content-wheel__sub {
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  /* 03. СОБЧАК — блёстки падают + сумочка покачивается */
+  .glitter-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--rose-light) 0%, #FBF6EC 100%);
+    padding: 20px;
+  }
+
+  .glitter-sparkle {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0;
+    animation: sparkleFall 6s ease-in infinite;
+    pointer-events: none;
+  }
+
+  .glitter-sparkle:nth-child(1) { left: 10%; animation-delay: 0s; }
+  .glitter-sparkle:nth-child(2) { left: 25%; animation-delay: 1.2s; font-size: 14px; }
+  .glitter-sparkle:nth-child(3) { left: 42%; animation-delay: 2.4s; font-size: 24px; }
+  .glitter-sparkle:nth-child(4) { left: 58%; animation-delay: 0.7s; font-size: 18px; }
+  .glitter-sparkle:nth-child(5) { left: 72%; animation-delay: 3.6s; font-size: 22px; }
+  .glitter-sparkle:nth-child(6) { left: 88%; animation-delay: 1.9s; font-size: 16px; }
+
+  @keyframes sparkleFall {
+    0%   { top: -10%; opacity: 0; transform: rotate(0deg); }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: 110%; opacity: 0; transform: rotate(180deg); }
+  }
+
+  .handbag {
+    animation: handbagSwing 3s ease-in-out infinite;
+    transform-origin: center top;
+  }
+
+  @keyframes handbagSwing {
+    0%, 100% { transform: rotate(-3deg); }
+    50%      { transform: rotate(3deg); }
+  }
+
+  /* 04. ЛУТЧАК — кофе капает + лента скроллится + лайки всплывают */
+  .coffee-rain {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .coffee-drop {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0;
+    animation: coffeeFall 5s linear infinite;
+  }
+
+  .coffee-drop:nth-child(1) { left: 8%; animation-delay: 0s; }
+  .coffee-drop:nth-child(2) { left: 22%; animation-delay: 1s; font-size: 18px; }
+  .coffee-drop:nth-child(3) { left: 38%; animation-delay: 2s; font-size: 26px; }
+  .coffee-drop:nth-child(4) { left: 55%; animation-delay: 0.5s; font-size: 20px; }
+  .coffee-drop:nth-child(5) { left: 70%; animation-delay: 1.5s; font-size: 24px; }
+  .coffee-drop:nth-child(6) { left: 85%; animation-delay: 2.5s; font-size: 18px; }
+  .coffee-drop:nth-child(7) { left: 93%; animation-delay: 3.5s; font-size: 22px; }
+
+  @keyframes coffeeFall {
+    0%   { top: -10%; opacity: 0; }
+    10%  { opacity: 0.9; }
+    90%  { opacity: 0.9; }
+    100% { top: 110%; opacity: 0; }
+  }
+
+  .feed-scroll {
+    position: absolute;
+    right: 24px;
+    top: 20%;
+    width: 90px;
+    height: 60%;
+    overflow: hidden;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(6px);
+    border: 1.5px dashed var(--jade);
+    padding: 8px;
+  }
+
+  .feed-scroll__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: feedScrollUp 12s linear infinite;
+  }
+
+  .feed-scroll__card {
+    height: 50px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--jade-light) 0%, #FFFFFF 100%);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feed-scroll__card::after {
+    content: "❤️";
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  @keyframes feedScrollUp {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-50%); }
+  }
+
+  .like-float {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0;
+    animation: likeFloat 4s ease-out infinite;
+    pointer-events: none;
+  }
+
+  .like-float:nth-child(1) { left: 20%; bottom: 30%; animation-delay: 0s; }
+  .like-float:nth-child(2) { left: 45%; bottom: 25%; animation-delay: 1.3s; }
+  .like-float:nth-child(3) { left: 70%; bottom: 35%; animation-delay: 2.6s; }
+
+  @keyframes likeFloat {
+    0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+    20%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-120px) scale(1.1); }
+  }
+
+  /* 05. СОБЕСЕДОВАНИЕ — два эскиза проявляются */
+  .interview-sketch {
+    animation: sketchAppear 8s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes sketchAppear {
+    0%, 100% { opacity: 0.3; transform: scale(0.96); }
+    40%, 60% { opacity: 1; transform: scale(1); }
+  }
+
+  .interview-question {
+    animation: questionBounce 3s ease-in-out infinite;
+    transform-origin: center top;
+  }
+
+  @keyframes questionBounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+
+  /* 06. 大哥 — старший дышит + рука на плече */
+  .brother-older {
+    animation: brotherBreathe 4s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+
+  @keyframes brotherBreathe {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-3px) scale(1.01); }
+  }
+
+  .brother-hand {
+    animation: handOnShoulder 4s ease-in-out infinite;
+    transform-origin: left center;
+  }
+
+  @keyframes handOnShoulder {
+    0%, 100% { transform: rotate(-4deg); }
+    50%      { transform: rotate(2deg); }
+  }
+
+  /* 07. 掌控 vs 边界 — весы качаются */
+  .scale-balance {
+    animation: balanceTilt 6s ease-in-out infinite;
+    transform-origin: center 20px;
+  }
+
+  @keyframes balanceTilt {
+    0%, 100% { transform: rotate(-3deg); }
+    50%      { transform: rotate(3deg); }
+  }
+
+  .scale-pan-left {
+    animation: panLeftBounce 6s ease-in-out infinite;
+    transform-origin: top center;
+  }
+
+  @keyframes panLeftBounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(6px); }
+  }
+
+  .scale-pan-right {
+    animation: panRightBounce 6s ease-in-out infinite;
+    transform-origin: top center;
+  }
+
+  @keyframes panRightBounce {
+    0%, 100% { transform: translateY(6px); }
+    50%      { transform: translateY(0); }
+  }
+
+  /* 08. 90-Е — стена трескается */
+  .wall-crack {
+    animation: crackGrow 8s ease-in-out infinite;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+  }
+
+  @keyframes crackGrow {
+    0%, 20% { stroke-dashoffset: 200; opacity: 0.3; }
+    50%     { stroke-dashoffset: 0; opacity: 1; }
+    80%     { stroke-dashoffset: 0; opacity: 0.5; }
+    100%    { stroke-dashoffset: 200; opacity: 0.3; }
+  }
+
+  .wall-brick {
+    animation: brickFall 8s ease-in-out infinite;
+  }
+
+  .wall-brick:nth-child(2) { animation-delay: 0.5s; }
+  .wall-brick:nth-child(3) { animation-delay: 1s; }
+
+  @keyframes brickFall {
+    0%, 40% { transform: translateY(0); opacity: 1; }
+    60%     { transform: translateY(20px); opacity: 0.3; }
+    100%    { transform: translateY(0); opacity: 1; }
+  }
+
+  /* 09. 逃离 — йога + пузыри давления */
+  .yoga-figure {
+    animation: yogaBreathe 5s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+
+  @keyframes yogaBreathe {
+    0%, 100% { transform: scale(1) translateY(0); }
+    50%      { transform: scale(1.03) translateY(-3px); }
+  }
+
+  .pressure-bubble {
+    animation: bubbleRise 4s ease-out infinite;
+    pointer-events: none;
+  }
+
+  .pressure-bubble:nth-child(2) { animation-delay: 1.3s; }
+  .pressure-bubble:nth-child(3) { animation-delay: 2.6s; }
+  .pressure-bubble:nth-child(4) { animation-delay: 0.7s; }
+
+  @keyframes bubbleRise {
+    0%   { opacity: 0; transform: translateY(0) scale(0.6); }
+    20%  { opacity: 0.85; }
+    80%  { opacity: 0.6; }
+    100% { opacity: 0; transform: translateY(-90px) scale(1.1); }
+  }
+
+  /* 10. 拒绝 — контракт перечёркивается */
+  .contract-line {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: strikeThrough 6s ease-in-out infinite;
+  }
+
+  @keyframes strikeThrough {
+    0%, 20% { stroke-dashoffset: 400; opacity: 0; }
+    40%     { stroke-dashoffset: 0; opacity: 1; }
+    80%     { stroke-dashoffset: 0; opacity: 1; }
+    100%    { stroke-dashoffset: 400; opacity: 0; }
+  }
+
+  .free-figure {
+    animation: freeFloat 5s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+
+  @keyframes freeFloat {
+    0%, 100% { transform: translateX(-6px); }
+    50%      { transform: translateX(6px); }
+  }
+
+  /* 11. СССР — завод дымит */
+  .factory-smoke-anim {
+    animation: smokeUp 3s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+
+  .factory-smoke-anim:nth-child(2) { animation-delay: 0.8s; }
+  .factory-smoke-anim:nth-child(3) { animation-delay: 1.6s; }
+
+  @keyframes smokeUp {
+    0%   { opacity: 0.15; transform: translateY(0) scale(0.7); }
+    50%  { opacity: 0.65; transform: translateY(-14px) scale(1); }
+    100% { opacity: 0; transform: translateY(-28px) scale(1.3); }
+  }
+
+  /* 12. 1991→2026 — завод рассыпается, цифры проявляются */
+  .collapsing-factory {
+    animation: factoryCollapse 8s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+
+  @keyframes factoryCollapse {
+    0%, 20% { transform: scale(1) rotate(0deg); opacity: 1; }
+    60%     { transform: scale(0.95) rotate(-2deg); opacity: 0.6; }
+    100%    { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .stat-appears {
+    animation: statAppear 8s ease-in-out infinite;
+  }
+
+  @keyframes statAppear {
+    0%, 30% { opacity: 0; transform: translateY(10px); }
+    60%, 90% { opacity: 1; transform: translateY(0); }
+    100%    { opacity: 0; transform: translateY(10px); }
+  }
+
+  /* 13. ТОКСИЧНАЯ ЗАРПЛАТА — лампа гаснет + сердце трескается */
+  .office-lamp {
+    animation: lampFlicker 4s ease-in-out infinite;
+    transform-origin: center top;
+  }
+
+  @keyframes lampFlicker {
+    0%, 100% { opacity: 1; }
+    20%      { opacity: 1; }
+    25%      { opacity: 0.3; }
+    30%      { opacity: 1; }
+    60%      { opacity: 1; }
+    65%      { opacity: 0.15; }
+    70%      { opacity: 1; }
+  }
+
+  .heart-crack {
+    animation: heartCrack 4s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes heartCrack {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(0.94); }
+  }
+
+  /* 14. 大哥真相 — силуэты сближаются + печать проявляется */
+  .silhouette-left {
+    animation: silhouetteLeft 6s ease-in-out infinite;
+    transform-origin: right center;
+  }
+
+  @keyframes silhouetteLeft {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(8px); }
+  }
+
+  .silhouette-right {
+    animation: silhouetteRight 6s ease-in-out infinite;
+    transform-origin: left center;
+  }
+
+  @keyframes silhouetteRight {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(-8px); }
+  }
+
+  .seal-stamp {
+    animation: sealAppear 8s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes sealAppear {
+    0%, 20% { opacity: 0; transform: scale(1.4) rotate(-8deg); }
+    40%, 90% { opacity: 1; transform: scale(1) rotate(0deg); }
+    100%    { opacity: 0; transform: scale(1.4) rotate(-8deg); }
+  }
+
+  /* 15. AI — промпт печатается */
+  .prompt-typing {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid var(--blue);
+    animation: typing 6s steps(30) infinite, blinkCaret 0.75s step-end infinite;
+    max-width: 100%;
+  }
+
+  @keyframes typing {
+    0%, 10% { width: 0; }
+    70%     { width: 100%; }
+    90%     { width: 100%; }
+    100%    { width: 0; }
+  }
+
+  @keyframes blinkCaret {
+    from, to { border-color: transparent; }
+    50%      { border-color: var(--blue); }
+  }
+
+  .ai-pulse {
+    animation: aiPulse 3s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes aiPulse {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50%      { transform: scale(1.08); opacity: 1; }
+  }
+
+  /* 16. 住·花·爱 — три пульсации по очереди */
+  .flow-house { animation: pulseStep 6s ease-in-out infinite; animation-delay: 0s; transform-origin: center; }
+  .flow-coffee { animation: pulseStep 6s ease-in-out infinite; animation-delay: 2s; transform-origin: center; }
+  .flow-heart { animation: pulseStep 6s ease-in-out infinite; animation-delay: 4s; transform-origin: center; }
+
+  @keyframes pulseStep {
+    0%, 100% { transform: scale(1); }
+    33%      { transform: scale(1.12); }
+  }
+
+  /* 17. 清醒 — чай поднимается, рюмка опускается */
+  .tea-cup {
+    animation: teaRise 5s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+
+  @keyframes teaRise {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  .shot-glass {
+    animation: shotFall 5s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+
+  @keyframes shotFall {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(10px) rotate(-4deg); }
+  }
+
+  /* 18. 交融 — кольцо вращается */
+  .blend-ring {
+    animation: ringSpin 20s linear infinite;
+    transform-origin: center;
+  }
+
+  @keyframes ringSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* 19. ИНТЕРАКТИВ — кнопки дышат */
+  .question-btn-breathe {
+    animation: btnBreathe 4s ease-in-out infinite;
+  }
+
+  .question-btn-breathe:nth-child(2) { animation-delay: 0.6s; }
+  .question-btn-breathe:nth-child(3) { animation-delay: 1.2s; }
+
+  @keyframes btnBreathe {
+    0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    50%      { box-shadow: 0 8px 24px rgba(46, 184, 134, 0.15); }
+  }
+
+  .question-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.25, 1, 0.5, 1), padding 0.3s, opacity 0.3s;
+    background: var(--surface-subtle);
+    border-radius: 0 0 18px 18px;
+    margin-top: -6px;
+    padding: 0 26px;
+    opacity: 0;
+    font-size: clamp(14px, 1.05vw, 18px);
+    line-height: 1.7;
+    color: var(--text-sub);
+  }
+
+  .question-answer.is-open {
+    max-height: 400px;
+    padding: 18px 26px 22px;
+    opacity: 1;
+  }
+
+  .question-answer strong { color: var(--text-main); font-weight: 800; }
+
+  /* 20. 谢谢 — печать пульсирует */
+  .seal-final {
+    animation: sealPulse 4s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes sealPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(201, 123, 132, 0.4); }
+    50%      { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(201, 123, 132, 0); }
+  }
+
+  /* Кнопки */
+  .question-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+    max-width: 950px;
+    margin: 1.2rem auto 0;
+  }
+
+  .question-btn {
+    background: var(--surface-white);
+    border: 2px solid var(--surface-border);
+    border-radius: 16px;
+    padding: 18px 26px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    font-size: clamp(15px, 1.15vw, 20px);
+    font-weight: 700;
+    color: var(--text-main);
+    transition: all 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .question-btn:hover {
+    border-color: var(--jade);
+    background: var(--jade-light);
+    transform: translateX(4px);
+  }
+
+  .question-btn__arrow {
+    font-size: 1.4em;
+    color: var(--jade);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .question-btn.is-open .question-btn__arrow { transform: rotate(90deg); }
+
+  /* Финальные чашки */
+  .final-cups {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 60px;
+    padding: 20px 0 0;
+  }
+
+  .final-cup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .final-cup svg {
+    width: 90px;
+    height: 100px;
+  }
+
+  .final-cup__label {
+    font-size: clamp(14px, 1vw, 17px);
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  /* Финальный герой */
+  .final-hero {
+    font-size: clamp(34px, 3.8vw, 68px);
+    font-weight: 900;
+    color: var(--text-main);
+    text-align: center;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .final-hero--route { color: var(--jade); }
+
+  .final-sub {
+    font-size: clamp(16px, 1.4vw, 24px);
+    color: var(--text-sub);
+    text-align: center;
+    margin-top: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .final-quote {
+    font-family: "Noto Serif SC", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(18px, 1.55vw, 27px);
+    color: var(--text-main);
+    text-align: center;
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem 2rem;
+    border-left: 4px solid var(--jade);
+    border-right: 4px solid var(--jade);
+  }
+
+  /* Заголовок «спасибо» */
+  .thanks-title {
+    font-size: clamp(60px, 7vw, 120px);
+    font-weight: 900;
+    color: var(--text-main);
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+  }
+
+  .thanks-dove {
+    font-size: clamp(60px, 6vw, 90px);
+    opacity: 0;
+  }
+
+  .slide--thanks.active .thanks-title {
+    animation: blockReveal 0.9s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+  }
+
+  .slide--thanks.active .thanks-dove {
+    animation: blockFade 0.8s ease-out 1.2s forwards;
+  }
+
+  @keyframes blockReveal {
+    from { opacity: 0; transform: scale(0.95); filter: blur(6px); }
+    to   { opacity: 1; transform: scale(1); filter: blur(0); }
+  }
+
+  @keyframes blockFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide--thanks {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px !important;
+  }
+
+  /* Фоновые эмодзи */
+  .bg-emoji {
+    position: absolute;
+    z-index: 0;
+    opacity: 0.22;
+    pointer-events: none;
+    animation: bgOrbit linear infinite;
+  }
+
+  @keyframes bgOrbit {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    25%  { transform: translate(10px, -10px) rotate(90deg); }
+    50%  { transform: translate(0, -20px) rotate(180deg); }
+    75%  { transform: translate(-10px, -10px) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+  }
+
+  .bg-emoji--1 { font-size: 42px; top: 18%; left: 10%; animation-duration: 16s; }
+  .bg-emoji--2 { font-size: 54px; top: 62%; right: 12%; animation-duration: 20s; }
+  .bg-emoji--3 { font-size: 28px; bottom: 22%; left: 20%; animation-duration: 24s; }
+
+  /* ═══════════════════════════════════════════════════════════
+     АДАПТИВ
+     ═══════════════════════════════════════════════════════════ */
+  @media (max-width: 1200px) {
+    .content-wheel {
+      width: clamp(340px, 36vw, 500px);
+      height: clamp(340px, 36vw, 500px);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .hero-avatar { width: 56px; height: 56px; border-width: 2px; }
+    .slide-replica { width: calc(100% - 200px); bottom: 190px; }
+    .slide { padding-right: clamp(150px, 14vw, 190px); padding-bottom: clamp(280px, 32vh, 380px); }
+    .grid-split, .grid-3col { grid-template-columns: 1fr; }
+    .lex-panel { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .deck-container { aspect-ratio: auto; height: 100dvh; }
+    .slide { padding: 20px 14px 320px 14px; }
+    .grid-split, .grid-3col { grid-template-columns: 1fr; gap: 1rem; }
+    .hero-avatars { top: 10px; right: 10px; gap: 6px; }
+    .hero-avatar { width: 40px; height: 40px; }
+    .slide-replica { width: calc(100% - 20px); bottom: 240px; padding: 10px 14px; }
+    .lex-panel {
+      position: static;
+      margin-top: 1rem;
+      grid-template-columns: 1fr 1fr;
+      max-height: none;
+    }
+    .slide-header::before { font-size: 80px; top: -16px; }
+    .nav-bar { left: 12px; right: 12px; bottom: 12px; }
+    .bg-emoji { display: none; }
+    .content-wheel__pointer-inner { min-width: 90px; padding: 8px 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main class="deck-container" id="deck">
+  <div class="progress" id="progress"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SVG DEFS — все иконки и персонажи
+       ═══════════════════════════════════════════════════════════ -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Иконки -->
+      <symbol id="icon-mail" viewBox="0 0 24 24">
+        <rect x="3" y="6" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M 3 7 L 12 13 L 21 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-target" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+      </symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M 12 3 L 20 6 L 20 13 Q 20 19 12 21 Q 4 19 4 13 L 4 6 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M 8 12 L 11 15 L 16 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="icon-question" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M 9 9 A 3 3 0 0 1 15 10 C 15 12 12 12 12 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="18" r="1" fill="currentColor"/>
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="M 4 12 L 10 18 L 20 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-x" viewBox="0 0 24 24">
+        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      </symbol>
+
+      <!-- SVG персонажей (сохраняю из твоей версии) -->
+      <g id="avatar-sobchak">
+        <circle cx="50" cy="50" r="50" fill="#F7E5E7"/>
+        <ellipse cx="50" cy="48" rx="20" ry="22" fill="#FCE0CC"/>
+        <path d="M 30 50 C 26 38, 30 24, 40 20 C 46 14, 58 14, 64 20 C 72 24, 76 38, 72 50 C 74 58, 75 66, 73 70 C 69 66, 67 58, 66 52 C 64 46, 62 42, 57 41 C 52 39, 48 40, 45 44 C 43 47, 42 51, 40 56 C 39 62, 38 66, 36 70 C 32 66, 33 58, 30 50 Z" fill="#E8C77A"/>
+        <circle cx="43" cy="48" r="7" fill="none" stroke="#22252A" stroke-width="2"/>
+        <circle cx="57" cy="48" r="7" fill="none" stroke="#22252A" stroke-width="2"/>
+        <line x1="50" y1="48" x2="50" y2="48" stroke="#22252A" stroke-width="2"/>
+        <circle cx="43" cy="48" r="2.2" fill="#22252A"/>
+        <circle cx="57" cy="48" r="2.2" fill="#22252A"/>
+        <path d="M 46 58 Q 50 61 54 58" stroke="#E05A47" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <g id="avatar-lutchek">
+        <circle cx="50" cy="50" r="50" fill="#E4F5EE"/>
+        <ellipse cx="50" cy="48" rx="20" ry="22" fill="#FCD3B8"/>
+        <path d="M 30 48 C 26 38, 30 22, 40 18 C 48 14, 58 16, 66 24 C 71 30, 71 38, 70 46 C 67 40, 64 34, 58 32 C 50 30, 44 34, 40 40 C 36 44, 33 50, 30 48 Z" fill="#D99B4E"/>
+        <circle cx="42" cy="47" r="12" fill="#D99B4E" opacity="0.85"/>
+        <circle cx="60" cy="43" r="13" fill="#E2A85C"/>
+        <circle cx="43" cy="48" r="2.2" fill="#22252A"/>
+        <circle cx="57" cy="48" r="2.2" fill="#22252A"/>
+        <path d="M 46 58 Q 50 62 54 58" stroke="#22252A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <!-- Силуэты для сцен -->
+      <g id="silhouette-woman">
+        <path d="M 40 130 Q 50 90 60 90 Q 70 90 80 130 Z" fill="#22252A" opacity="0.85"/>
+        <circle cx="60" cy="75" r="14" fill="#22252A" opacity="0.85"/>
+      </g>
+      <g id="silhouette-man">
+        <path d="M 40 130 Q 50 90 60 90 Q 70 90 80 130 Z" fill="#22252A" opacity="0.85"/>
+        <circle cx="60" cy="75" r="14" fill="#22252A" opacity="0.85"/>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 1 — ОБЛОЖКА (сохраняю из твоей версии)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--centered active" id="slide-1">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🎭</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🌏</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">✨</div>
+
+    <div class="tag-badge tag-jade" style="margin: 0 auto 1rem;">文化解析｜代际对话</div>
+
+    <h1 class="slide-title has-emoji speakable" data-emoji="🎭" style="font-size: clamp(40px, 4.2vw, 68px); text-align:center; line-height:1.15;" onclick="speakZH('时代的决斗：冲突、美学与Z世代哲学')">
+      时代的决斗：冲突、美学与 <span class="key">Z世代哲学</span>
+    </h1>
+
+    <p class="sub-title" style="text-align:center; max-width: 800px; margin: 1rem auto 0;">
+      两代人之间的碰撞，还有和解
+    </p>
+
+    <div style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">
+      点击任意文字可朗读中文
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak · 千禧一代">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak · Z世代">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 2 — СОДЕРЖАНИЕ: 5 БЛОКОВ С ВРАЩАЮЩИМИСЯ СТРЕЛКАМИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header" style="text-align: center;">
+      <div class="tag-badge tag-jade" style="margin: 0 auto 1rem;">内容 · 五个部分</div>
+      <h2 class="slide-title speakable" style="text-align: center; font-size: clamp(32px, 3.4vw, 52px);" onclick="speakZH('今天的分享分为五个部分')">
+        今天的分享 · 五个部分
+      </h2>
+    </div>
+
+    <div class="content-wheel">
+      <div class="content-wheel__center">
+        <div class="content-wheel__center-zh">五个<br>部分</div>
+        <div class="content-wheel__center-en">5 PARTS</div>
+      </div>
+
+      <div class="content-wheel__ring">
+        <div class="content-wheel__pointer content-wheel__pointer--1">
+          <div class="content-wheel__pointer-inner">
+            <div class="content-wheel__num">01</div>
+            <div class="content-wheel__name">人物</div>
+            <div class="content-wheel__sub">两位主角</div>
+          </div>
+        </div>
+
+        <div class="content-wheel__pointer content-wheel__pointer--2">
+          <div class="content-wheel__pointer-inner">
+            <div class="content-wheel__num">02</div>
+            <div class="content-wheel__name">哥哥与弟弟</div>
+            <div class="content-wheel__sub">大哥的概念</div>
+          </div>
+        </div>
+
+        <div class="content-wheel__pointer content-wheel__pointer--3">
+          <div class="content-wheel__pointer-inner">
+            <div class="content-wheel__num">03</div>
+            <div class="content-wheel__name">工作</div>
+            <div class="content-wheel__sub">拒绝内卷</div>
+          </div>
+        </div>
+
+        <div class="content-wheel__pointer content-wheel__pointer--4">
+          <div class="content-wheel__pointer-inner">
+            <div class="content-wheel__num">04</div>
+            <div class="content-wheel__name">健康生活</div>
+            <div class="content-wheel__sub">清醒与边界</div>
+          </div>
+        </div>
+
+        <div class="content-wheel__pointer content-wheel__pointer--5">
+          <div class="content-wheel__pointer-inner">
+            <div class="content-wheel__num">05</div>
+            <div class="content-wheel__name">新的能力</div>
+            <div class="content-wheel__sub">AI 与素养</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--jade">
+      <div class="lex-item">
+        <div class="lex-item__zh">五个部分</div>
+        <div class="lex-item__def">演讲分成五块。</div>
+        <div class="lex-item__en">Five parts.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">内容</div>
+        <div class="lex-item__def">分享的结构。</div>
+        <div class="lex-item__en">Content.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 3 — СОБЧАК: БЛЁСТКИ + СУМОЧКА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header" data-num="01">
+      <div class="tag-badge tag-rose">第一部分 · 01</div>
+      <h2 class="slide-title speakable" onclick="speakZH('左边是Ksenia Sobchak')">左边是 Ksenia Sobchak</h2>
+      <p class="sub-title">俄罗斯版 Paris Hilton · 千禧一代的典型代表</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="glitter-scene">
+        <span class="glitter-sparkle" aria-hidden="true">✨</span>
+        <span class="glitter-sparkle" aria-hidden="true">💎</span>
+        <span class="glitter-sparkle" aria-hidden="true">✨</span>
+        <span class="glitter-sparkle" aria-hidden="true">💫</span>
+        <span class="glitter-sparkle" aria-hidden="true">✨</span>
+        <span class="glitter-sparkle" aria-hidden="true">💎</span>
+
+        <svg viewBox="0 0 320 320" style="width: 100%; height: 100%; max-height: 340px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Сумочка -->
+          <g class="handbag" transform="translate(160, 130)">
+            <path d="M -50 0 Q -50 -30 0 -30 Q 50 -30 50 0 L 55 60 Q 55 75 40 75 L -40 75 Q -55 75 -55 60 Z" fill="#C97B84" stroke="#A85862" stroke-width="3"/>
+            <path d="M -20 -30 Q -20 -60 0 -60 Q 20 -60 20 -30" fill="none" stroke="#A85862" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="0" cy="10" r="5" fill="#FFD966"/>
+            <line x1="0" y1="15" x2="0" y2="60" stroke="#A85862" stroke-width="2" opacity="0.4"/>
+          </g>
+
+          <!-- Блики на сумочке -->
+          <circle cx="130" cy="135" r="4" fill="#FFFFFF" opacity="0.7">
+            <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="190" cy="180" r="3" fill="#FFFFFF" opacity="0.6">
+            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Подпись -->
+          <text x="160" y="290" text-anchor="middle" font-size="16" font-weight="800" fill="#A85862" font-family="sans-serif" letter-spacing="2">
+            2000 年代的符号
+          </text>
+        </svg>
+      </div>
+
+      <div class="fact-stack">
+        <div class="card card--rose">
+          <strong class="card-title">👑 富二代与名媛</strong>
+          <p class="card-body">
+            父亲是知名政治家。她本身也是<strong>俄罗斯版 Paris Hilton</strong>，两人还曾一起主持过一场音乐颁奖礼。
+          </p>
+        </div>
+
+        <div class="card card--rose">
+          <strong class="card-title">🎬 电视生涯的起点</strong>
+          <p class="card-body">
+            主持过真人秀《巧克力中的金发女郎》。节目里常有各种派对，和寡头的约会。
+          </p>
+        </div>
+
+        <div class="card card--rose">
+          <strong class="card-title">🎓 多次转型</strong>
+          <p class="card-body">
+            毕业于俄罗斯排名前三的高校，专业是<strong>新闻学</strong>。如今制作深度访谈节目，嘉宾既有当红明星，也有罪犯或颇具争议的人物。
+          </p>
+        </div>
+
+        <div class="quote-bubble quote-bubble--rose" style="margin-top: 0.5rem;">
+          她是家境优渥的反叛者。
+          <span class="quote-bubble__author">— 关于她的评价</span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak · Миллениал">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek" data-name="Maxim Lutchak · Gen Z">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--rose">
+      <div class="lex-item">
+        <div class="lex-item__zh">颇具争议</div>
+        <div class="lex-item__def">很多人对此人持有不同看法，褒贬不一。</div>
+        <div class="lex-item__en">Controversial.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">家境优渥</div>
+        <div class="lex-item__def">家庭经济条件富足宽裕。</div>
+        <div class="lex-item__en">Well-off family.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">反叛者</div>
+        <div class="lex-item__def">反抗固有规则、权威的人。</div>
+        <div class="lex-item__en">Rebel.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">共事</div>
+        <div class="lex-item__def">在同一个团队一起工作。</div>
+        <div class="lex-item__en">To work together.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 4 — ЛУТЧАК: КОФЕ + ЛЕНТА + ЛАЙКИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header" data-num="02">
+      <div class="tag-badge tag-jade">第一部分 · 02</div>
+      <h2 class="slide-title speakable" onclick="speakZH('右边是Maxim Lutchak')">右边是 Maxim Lutchak</h2>
+      <p class="sub-title">2002 年生 · 23 岁 · Forbes 30 under 30</p>
+    </div>
+
+    <div class="grid-split">
+      <div class="fact-stack">
+        <div class="card card--jade">
+          <strong class="card-title">📍 来自小镇</strong>
+          <p class="card-body">
+            2002 年出生于俄罗斯地方地区。<strong>库尔干州，新米尔小镇。</strong>今年 23 岁。
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">🎬 办公室短剧</strong>
+          <p class="card-body">
+            在社交平台拍摄短剧，以幽默视角<strong>刻画办公室里的 Z 世代与千禧一代</strong>。
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">📈 近两年爆红</strong>
+          <p class="card-body">
+            视频播放量暴涨，入选 <strong>Forbes 30 位 30 岁以下精英榜单</strong>。
+          </p>
+        </div>
+
+        <div class="quote-bubble quote-bubble--jade" style="margin-top: 0.5rem;">
+          我不是专家，我只是拍下我看到的一切。
+          <span class="quote-bubble__author">— Maxim Lutchak</span>
+        </div>
+      </div>
+
+      <div style="position: relative; height: 100%;">
+        <div class="coffee-rain" aria-hidden="true">
+          <span class="coffee-drop">☕</span>
+          <span class="coffee-drop">☕</span>
+          <span class="coffee-drop">☕</span>
+          <span class="coffee-drop">☕</span>
+          <span class="coffee-drop">☕</span>
+          <span class="coffee-drop">☕</span>
+          <span class="coffee-drop">☕</span>
+        </div>
+
+        <span class="like-float" aria-hidden="true">❤️</span>
+        <span class="like-float" aria-hidden="true">💚</span>
+        <span class="like-float" aria-hidden="true">❤️</span>
+
+        <div class="feed-scroll" aria-hidden="true">
+          <div class="feed-scroll__inner">
+            <div class="feed-scroll__card"></div>
+            <div class="feed-scroll__card"></div>
+            <div class="feed-scroll__card"></div>
+            <div class="feed-scroll__card"></div>
+            <div class="feed-scroll__card"></div>
+            <div class="feed-scroll__card"></div>
+            <div class="feed-scroll__card"></div>
+            <div class="feed-scroll__card"></div>
+          </div>
+        </div>
+
+        <svg viewBox="0 0 200 300" style="width: 100%; max-width: 240px; height: auto; display: block; margin: 0 auto; position: relative; z-index: 2;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="100" cy="90" r="45" fill="#FCD3B8"/>
+          <path d="M 65 80 C 60 55, 75 35, 95 33 C 115 31, 135 45, 138 65 C 140 78, 137 88, 133 90 C 130 75, 125 65, 115 60 C 100 55, 85 60, 78 72 C 73 80, 68 88, 65 80 Z" fill="#D99B4E"/>
+          <rect x="80" y="130" width="40" height="80" rx="8" fill="#2EB886"/>
+          <path d="M 80 150 Q 100 142 120 150" stroke="#1F8B67" stroke-width="2.5" fill="none"/>
+          <rect x="80" y="205" width="15" height="40" rx="4" fill="#22252A"/>
+          <rect x="105" y="205" width="15" height="40" rx="4" fill="#22252A"/>
+          <circle cx="88" cy="90" r="3" fill="#22252A"/>
+          <circle cx="112" cy="90" r="3" fill="#22252A"/>
+          <path d="M 90 105 Q 100 113 110 105" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ksenia Sobchak · Миллениал">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak · Gen Z">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--jade">
+      <div class="lex-item">
+        <div class="lex-item__zh">物色</div>
+        <div class="lex-item__def">用心寻找合适的人选。</div>
+        <div class="lex-item__en">To scout, to look for.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">直观</div>
+        <div class="lex-item__def">不需要复杂思考，直接就能感受到。</div>
+        <div class="lex-item__en">Intuitive.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">规划</div>
+        <div class="lex-item__def">对未来长远的安排与计划。</div>
+        <div class="lex-item__en">Plan, blueprint.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">晋升</div>
+        <div class="lex-item__def">职位向上提升。</div>
+        <div class="lex-item__en">To get promoted.</div>
+      </div>
+    </div>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 5 — СОБЕСЕДОВАНИЕ: ВОПРОС «画出你眼中的时间»
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header" data-num="03">
+      <div class="tag-badge tag-jade">第一部分 · 03</div>
+      <h2 class="slide-title speakable" onclick="speakZH('他们把访谈和助理招聘面试结合在了一起')">访谈 · 也是面试</h2>
+      <p class="sub-title">把访谈和助理招聘面试结合在了一起</p>
+    </div>
+
+    <div style="text-align: center; margin: 0.5rem 0 1rem;">
+      <div class="quote-bubble quote-bubble--jade" style="display: inline-block; font-size: clamp(16px, 1.3vw, 22px); padding: 16px 30px;">
+        画出你眼中的时间
+        <span class="quote-bubble__author">— 面试中的一道问题</span>
+      </div>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Левая колонка — креатив -->
+      <div class="card card--jade" style="text-align: center;">
+        <strong class="card-title" style="justify-content: center;">🎨 创意型回答</strong>
+
+        <svg class="interview-sketch" viewBox="0 0 280 220" style="width: 100%; max-height: 200px; display: block; margin: 1rem auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Радужный круг времени -->
+          <circle cx="140" cy="110" r="70" fill="none" stroke="#2EB886" stroke-width="3" opacity="0.4"/>
+          <circle cx="140" cy="110" r="55" fill="none" stroke="#D4A574" stroke-width="3" opacity="0.6"/>
+          <circle cx="140" cy="110" r="40" fill="none" stroke="#B5A8D8" stroke-width="3" opacity="0.8"/>
+          <circle cx="140" cy="110" r="25" fill="#F3EFE6" stroke="#2EB886" stroke-width="3"/>
+          <text x="140" y="116" text-anchor="middle" font-size="20" font-weight="900" fill="#1F8B67" font-family="sans-serif">⌛</text>
+
+          <!-- Точки -->
+          <circle cx="140" cy="40" r="4" fill="#E05A47"/>
+          <circle cx="210" cy="110" r="4" fill="#D4A574"/>
+          <circle cx="140" cy="180" r="4" fill="#B5A8D8"/>
+          <circle cx="70" cy="110" r="4" fill="#5B8DB8"/>
+        </svg>
+
+        <div class="card-body" style="text-align: center;">
+          时间不是线性的。<br>
+          是一个<strong>彩色的圈</strong>，是一个<strong>循环的呼吸</strong>。
+        </div>
+      </div>
+
+      <!-- Правая колонка — прагматик -->
+      <div class="card card--terracotta" style="text-align: center;">
+        <strong class="card-title" style="justify-content: center;">📊 务实型回答</strong>
+
+        <svg class="interview-sketch" viewBox="0 0 280 220" style="width: 100%; max-height: 200px; display: block; margin: 1rem auto; animation-delay: 2s;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Классические часы -->
+          <circle cx="140" cy="110" r="70" fill="#FFFFFF" stroke="#22252A" stroke-width="3"/>
+          <circle cx="140" cy="110" r="3" fill="#22252A"/>
+
+          <!-- Цифры 12 3 6 9 -->
+          <text x="140" y="56" text-anchor="middle" font-size="16" font-weight="900" fill="#22252A" font-family="sans-serif">12</text>
+          <text x="198" y="116" text-anchor="middle" font-size="16" font-weight="900" fill="#22252A" font-family="sans-serif">3</text>
+          <text x="140" y="176" text-anchor="middle" font-size="16" font-weight="900" fill="#22252A" font-family="sans-serif">6</text>
+          <text x="82" y="116" text-anchor="middle" font-size="16" font-weight="900" fill="#22252A" font-family="sans-serif">9</text>
+
+          <!-- Стрелки -->
+          <line x1="140" y1="110" x2="140" y2="70" stroke="#E05A47" stroke-width="4" stroke-linecap="round"/>
+          <line x1="140" y1="110" x2="175" y2="110" stroke="#22252A" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Метки -->
+          <circle cx="140" cy="70" r="3" fill="#E05A47"/>
+        </svg>
+
+        <div class="card-body" style="text-align: center;">
+          时间就是<strong>刻度</strong>。<br>
+          一小时 = 一小时。没有多余的解释。
+        </div>
+      </div>
+    </div>
+
+    <div class="card card--blue" style="margin-top: 1rem;">
+      <strong class="card-title">🧭 通过这道题，我们能看到什么</strong>
+      <p class="card-body">
+        Ksenia 可以<strong>立刻判断</strong>应聘者是<strong>创意型</strong>还是<strong>务实型</strong>。一道题 = 一面镜子。
+      </p>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--jade">
+      <div class="lex-item">
+        <div class="lex-item__zh">考验</div>
+        <div class="lex-item__def">通过困难来检验人的能力或者品格。</div>
+        <div class="lex-item__en">Test, trial.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">直观</div>
+        <div class="lex-item__def">不需要复杂思考，直接就能感受到。</div>
+        <div class="lex-item__en">Intuitive.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">创意型</div>
+        <div class="lex-item__def">善于产生新想法的人。</div>
+        <div class="lex-item__en">Creative type.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">务实型</div>
+        <div class="lex-item__def">注重实际效果的人。</div>
+        <div class="lex-item__en">Pragmatic type.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 6 — 大哥 (СТАРШИЙ БРАТ): КОНЦЕПТ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header" data-num="04">
+      <div class="tag-badge tag-jade">第二部分 · 04</div>
+      <h2 class="slide-title speakable" onclick="speakZH('弟弟与哥哥')">弟弟与哥哥</h2>
+      <p class="sub-title">我从对话里得到的第一个感悟</p>
+    </div>
+
+    <div style="text-align: center; margin: 0.5rem 0 1rem;">
+      <div class="quote-bubble quote-bubble--jade" style="display: inline-block; font-size: clamp(16px, 1.3vw, 22px); padding: 16px 30px;">
+        千禧一代不是我们的敌人，他们就像家里的大哥。
+        <span class="quote-bubble__author">— Maxim Lutchak</span>
+      </div>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Силуэты -->
+      <div class="card card--jade" style="padding: 20px;">
+        <svg viewBox="0 0 400 320" style="width: 100%; max-height: 320px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Старший брат -->
+          <g class="brother-older" transform="translate(120, 60)">
+            <circle cx="0" cy="0" r="28" fill="#D4A574"/>
+            <path d="M -22 -10 C -30 -25, -15 -42, 0 -42 C 15 -42, 30 -25, 22 -10 Z" fill="#8B6B3D" opacity="0.4"/>
+            <path d="M -32 30 Q 0 10 32 30 L 38 120 L -38 120 Z" fill="#2EB886"/>
+            <path d="M -15 55 L 15 55" stroke="#1F8B67" stroke-width="3" opacity="0.5"/>
+            <rect x="-25" y="120" width="18" height="60" rx="4" fill="#22252A"/>
+            <rect x="7" y="120" width="18" height="60" rx="4" fill="#22252A"/>
+            <circle cx="-10" cy="0" r="2.5" fill="#22252A"/>
+            <circle cx="10" cy="0" r="2.5" fill="#22252A"/>
+            <path d="M -8 12 Q 0 18 8 12" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+
+          <!-- Младший брат -->
+          <g transform="translate(270, 100)">
+            <circle cx="0" cy="0" r="24" fill="#FCD3B8"/>
+            <path d="M -20 -8 C -25 -22, -12 -35, 2 -35 C 15 -35, 26 -22, 20 -8 Z" fill="#D99B4E"/>
+            <path d="M -28 26 Q 0 10 28 26 L 34 105 L -34 105 Z" fill="#22252A"/>
+            <rect x="-22" y="105" width="15" height="55" rx="3" fill="#22252A"/>
+            <rect x="7" y="105" width="15" height="55" rx="3" fill="#22252A"/>
+            <circle cx="-8" cy="0" r="2.2" fill="#22252A"/>
+            <circle cx="8" cy="0" r="2.2" fill="#22252A"/>
+            <path d="M -6 10 Q 0 15 6 10" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+
+          <!-- Рука на плече -->
+          <g class="brother-hand">
+            <path d="M 155 130 Q 175 128 195 140" stroke="#2EB886" stroke-width="6" fill="none" stroke-linecap="round"/>
+          </g>
+
+          <!-- Подписи -->
+          <text x="120" y="290" text-anchor="middle" font-size="16" font-weight="800" fill="#1F8B67" font-family="sans-serif" letter-spacing="1">大哥 · 千禧一代</text>
+          <text x="270" y="290" text-anchor="middle" font-size="16" font-weight="800" fill="#22252A" font-family="sans-serif" letter-spacing="1">弟弟 · Z世代</text>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--jade">
+          <strong class="card-title">🪨 大哥经历过很多磨难</strong>
+          <p class="card-body">
+            拼命争取自己的位置。<strong>所以自然想要保护弟弟妹妹。</strong>
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">🎛️ 但有时这份保护会过度</strong>
+          <p class="card-body">
+            他想<strong>替你决定所有事</strong>，不停对你说：<span class="key">要更努力，要懂得感恩。</span>
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">🧠 事实也确实如此</strong>
+          <p class="card-body">
+            出发点都是好的。<strong>只是方式，和我们不一样。</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak · 大哥">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak · 弟弟">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--jade">
+      <div class="lex-item">
+        <div class="lex-item__zh">磨难</div>
+        <div class="lex-item__def">长期艰难痛苦的遭遇。</div>
+        <div class="lex-item__en">Hardship, ordeal.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">认知</div>
+        <div class="lex-item__def">人接收、理解、加工信息的思维能力。</div>
+        <div class="lex-item__en">Cognition, perception.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">感恩</div>
+        <div class="lex-item__def">懂得感谢别人。</div>
+        <div class="lex-item__en">Gratitude.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">保护</div>
+        <div class="lex-item__def">守护他人的安全和利益。</div>
+        <div class="lex-item__en">Protection.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 7 — 掌控 vs 边界: ВЕСЫ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header" data-num="05">
+      <div class="tag-badge tag-jade">第二部分 · 05</div>
+      <h2 class="slide-title speakable" onclick="speakZH('千禧一代的掌控，Z世代的边界')">掌控 vs 边界</h2>
+      <p class="sub-title">我们之间最主要的差别</p>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Весы -->
+      <div class="card card--jade" style="padding: 20px;">
+        <svg viewBox="0 0 400 340" style="width: 100%; max-height: 340px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Основание -->
+          <line x1="200" y1="60" x2="200" y2="280" stroke="#22252A" stroke-width="5" stroke-linecap="round"/>
+          <rect x="140" y="280" width="120" height="10" rx="4" fill="#22252A"/>
+
+          <!-- Весы -->
+          <g class="scale-balance" style="transform-origin: 200px 60px;">
+            <line x1="80" y1="60" x2="320" y2="60" stroke="#22252A" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="200" cy="60" r="6" fill="#22252A"/>
+
+            <!-- Левая чаша — 掌控 -->
+            <g class="scale-pan-left">
+              <line x1="80" y1="60" x2="80" y2="110" stroke="#22252A" stroke-width="2"/>
+              <path d="M 40 110 L 120 110 L 110 145 L 50 145 Z" fill="#D4A574" stroke="#A47530" stroke-width="2.5" stroke-linejoin="round"/>
+              <text x="80" y="132" text-anchor="middle" font-size="16" font-weight="900" fill="#FFFFFF" font-family="sans-serif">掌控</text>
+            </g>
+
+            <!-- Правая чаша — 边界 -->
+            <g class="scale-pan-right">
+              <line x1="320" y1="60" x2="320" y2="110" stroke="#22252A" stroke-width="2"/>
+              <path d="M 280 110 L 360 110 L 350 145 L 290 145 Z" fill="#2EB886" stroke="#1F8B67" stroke-width="2.5" stroke-linejoin="round"/>
+              <text x="320" y="132" text-anchor="middle" font-size="16" font-weight="900" fill="#FFFFFF" font-family="sans-serif">边界</text>
+            </g>
+          </g>
+
+          <!-- Подписи -->
+          <text x="80" y="200" text-anchor="middle" font-size="14" font-weight="800" fill="#A47530" font-family="sans-serif">千禧一代</text>
+          <text x="320" y="200" text-anchor="middle" font-size="14" font-weight="800" fill="#1F8B67" font-family="sans-serif">Z世代</text>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="quote-bubble quote-bubble--rose">
+          千禧一代是胜利者。我们看重地位、身份，希望掌握主动权。
+          <span class="quote-bubble__author">— Ksenia Sobchak</span>
+        </div>
+
+        <div class="quote-bubble quote-bubble--jade">
+          没错，这就是我们之间最主要的差别。千禧一代的关键词是掌控。他们习惯制定长期规划，认为努力工作等同于个人价值。而对于我们 Z 世代，最重要的是个人边界。
+          <span class="quote-bubble__author">— Maxim Lutchak</span>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">🎛️ 掌控</strong>
+          <p class="card-body">制定长期规划，认为努力 = 价值。</p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">🛡️ 边界</strong>
+          <p class="card-body">守住自我，不被消耗，不做无意义的妥协。</p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--jade">
+      <div class="lex-item">
+        <div class="lex-item__zh">千禧一代</div>
+        <div class="lex-item__def">1980–1995 出生的一代人，成长于社会快速变革期。</div>
+        <div class="lex-item__en">Millennials (Gen Y).</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">掌控</div>
+        <div class="lex-item__def">全面掌握并且支配、控制人或事态。</div>
+        <div class="lex-item__en">To control, dominate.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">边界</div>
+        <div class="lex-item__def">守护自我与他人之间的分界。</div>
+        <div class="lex-item__en">Personal boundary.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">主动权</div>
+        <div class="lex-item__def">掌握事情走向的主导权。</div>
+        <div class="lex-item__en">Initiative.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 8 — 90-Е: СТЕНА ТРЕСКАЕТСЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header" data-num="06">
+      <div class="tag-badge tag-terracotta">第二部分 · 06</div>
+      <h2 class="slide-title speakable" onclick="speakZH('为什么千禧一代想要掌控')">为什么千禧一代想要掌控</h2>
+      <p class="sub-title">他们成长在动荡的 90 年代</p>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Стена -->
+      <div class="card card--terracotta" style="padding: 20px;">
+        <svg viewBox="0 0 400 320" style="width: 100%; max-height: 320px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Кирпичи -->
+          <g>
+            <rect class="wall-brick" x="60" y="60" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+            <rect x="160" y="60" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+            <rect class="wall-brick" x="260" y="60" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+
+            <rect x="60" y="115" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+            <rect class="wall-brick" x="160" y="115" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+            <rect x="260" y="115" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+
+            <rect class="wall-brick" x="60" y="170" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+            <rect x="160" y="170" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+            <rect class="wall-brick" x="260" y="170" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+
+            <rect x="60" y="225" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+            <rect x="160" y="225" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+            <rect x="260" y="225" width="90" height="45" rx="4" fill="#D4A574" opacity="0.7"/>
+          </g>
+
+          <!-- Трещина -->
+          <path class="wall-crack" d="M 200 30 L 195 80 L 210 120 L 190 160 L 205 200 L 195 250 L 200 290" stroke="#B23A3A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--terracotta">
+          <strong class="card-title">🌪️ 动荡的 90 年代</strong>
+          <p class="card-body">
+            俄罗斯当时很多事物崩塌。生活没有确定性。
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">💥 崩塌</strong>
+          <p class="card-body">
+            旧的体系没了。<strong>新的还没来。</strong>
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">🛡️ 所以掌控一切，是他们的生存方式</strong>
+          <p class="card-body">
+            抓住能抓住的。<strong>规划能规划的。</strong>
+          </p>
+        </div>
+
+        <div class="card card--blue" style="margin-top: 0.5rem;">
+          <strong class="card-title">🔄 而我们呢？</strong>
+          <p class="card-body">
+            我们成长在快速变革的时代，每个人<strong>都无法确定未来</strong>：房贷利率上涨、边境关闭、通讯中断。
+            <br><br>
+            所以我们的本能不是掌控所有事情，<strong>而是保全自我。</strong>
+          </p>
+        </div>
+
+        <div class="quote-bubble quote-bubble--rose" style="margin-top: 0.5rem;">
+          你们比我们看得更深，你们知道什么时候该停下。
+          <span class="quote-bubble__author">— Ksenia Sobchak 自己也承认</span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--terracotta">
+      <div class="lex-item">
+        <div class="lex-item__zh">动荡</div>
+        <div class="lex-item__def">局势不稳定，社会秩序混乱。</div>
+        <div class="lex-item__en">Turbulent, unstable.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">崩塌</div>
+        <div class="lex-item__def">彻底垮掉、瓦解，多用于体系、秩序。</div>
+        <div class="lex-item__en">To collapse.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">变革</div>
+        <div class="lex-item__def">大规模、根本性的改变。</div>
+        <div class="lex-item__en">Transformation, reform.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">保全自我</div>
+        <div class="lex-item__def">保护自身身心不受损害，守住个人底线。</div>
+        <div class="lex-item__en">To preserve oneself.</div>
+      </div>
+    </div>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 9 — 逃离 (ПЕРВЫЙ ОТВЕТ): ЙОГА + ПУЗЫРИ ДАВЛЕНИЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header" data-num="07">
+      <div class="tag-badge tag-terracotta">第三部分 · 07</div>
+      <h2 class="slide-title speakable" onclick="speakZH('第一种回应：逃离压力')">第一种回应 · 逃离压力</h2>
+      <p class="sub-title">这不是懒惰，是自我保护</p>
+    </div>
+
+    <div style="text-align: center; margin: 0.5rem 0 1rem;">
+      <div class="quote-bubble quote-bubble--terracotta" style="display: inline-block; font-size: clamp(15px, 1.2vw, 20px); padding: 14px 26px;">
+        这不是懒惰，这是逃离压力。我们逃离的是让人喘不过气的现实。
+        <span class="quote-bubble__author">— Maxim Lutchak</span>
+      </div>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Йога-сцена -->
+      <div class="card card--terracotta" style="padding: 20px;">
+        <svg viewBox="0 0 400 340" style="width: 100%; max-height: 340px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Пузыри давления всплывают -->
+          <g class="pressure-bubble" transform="translate(80, 220)">
+            <circle r="18" fill="#E05A47" opacity="0.7"/>
+            <text y="5" text-anchor="middle" font-size="12" font-weight="800" fill="#FFFFFF" font-family="sans-serif">你不够好</text>
+          </g>
+          <g class="pressure-bubble" transform="translate(320, 240)">
+            <circle r="20" fill="#B23A3A" opacity="0.7"/>
+            <text y="5" text-anchor="middle" font-size="11" font-weight="800" fill="#FFFFFF" font-family="sans-serif">同龄人创业</text>
+          </g>
+          <g class="pressure-bubble" transform="translate(140, 260)">
+            <circle r="16" fill="#E05A47" opacity="0.6"/>
+            <text y="5" text-anchor="middle" font-size="10" font-weight="800" fill="#FFFFFF" font-family="sans-serif">百万粉丝</text>
+          </g>
+          <g class="pressure-bubble" transform="translate(280, 280)">
+            <circle r="14" fill="#B23A3A" opacity="0.6"/>
+            <text y="5" text-anchor="middle" font-size="10" font-weight="800" fill="#FFFFFF" font-family="sans-serif">焦虑</text>
+          </g>
+
+          <!-- Йога-фигура -->
+          <g class="yoga-figure" transform="translate(200, 180)">
+            <!-- Тело в позе лотоса -->
+            <ellipse cx="0" cy="40" rx="55" ry="20" fill="#2EB886"/>
+            <path d="M -55 40 Q -70 30 -65 15 Q -55 20 -45 30 Z" fill="#2EB886"/>
+            <path d="M 55 40 Q 70 30 65 15 Q 55 20 45 30 Z" fill="#2EB886"/>
+
+            <!-- Туловище -->
+            <path d="M -25 40 Q -20 -10 0 -10 Q 20 -10 25 40 Z" fill="#1F8B67"/>
+
+            <!-- Голова -->
+            <circle cx="0" cy="-35" r="22" fill="#FCD3B8"/>
+            <path d="M -20 -40 C -22 -55, -10 -65, 5 -65 C 20 -65, 30 -55, 25 -40 Z" fill="#D99B4E"/>
+
+            <!-- Руки в позе медитации -->
+            <path d="M -25 5 Q -40 20 -30 35 Q -15 30 -10 20" stroke="#FCD3B8" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path d="M 25 5 Q 40 20 30 35 Q 15 30 10 20" stroke="#FCD3B8" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+            <!-- Закрытые глаза -->
+            <path d="M -9 -35 Q -5 -32 -1 -35" stroke="#22252A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M 1 -35 Q 5 -32 9 -35" stroke="#22252A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M -6 -25 Q 0 -22 6 -25" stroke="#22252A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          </g>
+
+          <!-- Аура спокойствия -->
+          <circle cx="200" cy="200" r="130" fill="none" stroke="#2EB886" stroke-width="2" opacity="0.3">
+            <animate attributeName="r" values="120;140;120" dur="5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.4;0.15;0.4" dur="5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="200" cy="200" r="160" fill="none" stroke="#2EB886" stroke-width="1.5" opacity="0.2">
+            <animate attributeName="r" values="150;175;150" dur="5s" repeatCount="indefinite"/>
+          </circle>
+
+          <text x="200" y="320" text-anchor="middle" font-size="14" font-weight="800" fill="#1F8B67" font-family="sans-serif" letter-spacing="1">不是逃避 · 是释放</text>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--terracotta">
+          <strong class="card-title">🎬 先看一段视频</strong>
+          <p class="card-body">
+            看完视频，很多人评价 Z 世代：「你们不想干活，逃避现实。」
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">☁️ 但事实是什么</strong>
+          <p class="card-body">
+            这不是懒惰，也不是摆烂。<strong>这是自我保护。</strong>
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">🌊 想一想</strong>
+          <p class="card-body">
+            我们每天<strong>接收无穷无尽的信息</strong>。社交媒体不断暗示你：「你不够优秀。」
+            <br><br>
+            有人年纪比你小，已经拥有百万粉丝。同龄人已经创业。
+            <br><br>
+            在这样的环境下，如果不释放压力，<strong>人很难坚持下去。</strong>
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">☕ 所以我们</strong>
+          <p class="card-body">
+            用幽默消解焦虑，拍视频怀念回到父母身边休息的日子。
+            <br><br>
+            这不代表我们脆弱。<strong>这是维持心理健康的方式。</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ВИДЕО-КАРТОЧКА -->
+    <div class="video-frame" style="max-width: 520px; margin: 1rem auto 0;" role="button" tabindex="0" aria-label="Видео о эскапизме">
+      <div class="video-frame__title-card">
+        <span>短视频 · 001</span>
+        <span>🎬 想回爸妈家</span>
+      </div>
+      <div class="video-frame__play" aria-hidden="true"></div>
+      <div class="video-frame__hint">
+        <strong>🎬 播放视频</strong>
+        逃离压力 · 自嘲式幽默
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak · 弟弟">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--terracotta">
+      <div class="lex-item">
+        <div class="lex-item__zh">消解</div>
+        <div class="lex-item__def">逐步化解、消除负面情绪或者矛盾冲突。</div>
+        <div class="lex-item__en">To dispel, relieve.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">焦虑</div>
+        <div class="lex-item__def">持续紧张、担忧的心理状态。</div>
+        <div class="lex-item__en">Anxiety.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">脆弱</div>
+        <div class="lex-item__def">容易受伤、抗压力差。</div>
+        <div class="lex-item__en">Vulnerable.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">心理健康</div>
+        <div class="lex-item__def">精神和情绪处于稳定良好的状态。</div>
+        <div class="lex-item__en">Mental health.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 10 — 拒绝 (ВТОРОЙ ОТВЕТ): КОНТРАКТ ПЕРЕЧЁРКИВАЕТСЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header" data-num="08">
+      <div class="tag-badge tag-terracotta">第三部分 · 08</div>
+      <h2 class="slide-title speakable" onclick="speakZH('第二种回应：拒绝')">第二种回应 · 拒绝</h2>
+      <p class="sub-title">拒绝无效内卷</p>
+    </div>
+
+    <div style="text-align: center; margin: 0.5rem 0 1rem;">
+      <div class="quote-bubble quote-bubble--terracotta" style="display: inline-block; font-size: clamp(15px, 1.2vw, 20px); padding: 14px 26px;">
+        为什么我们要牺牲当下的生活，去换取三十年后未必兑现的承诺？
+        <span class="quote-bubble__author">— Maxim Lutchak 问 Ksenia</span>
+      </div>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Контракт -->
+      <div class="card card--terracotta" style="padding: 20px;">
+        <svg viewBox="0 0 400 340" style="width: 100%; max-height: 340px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Контракт -->
+          <rect x="60" y="40" width="180" height="240" rx="6" fill="#FFFFFF" stroke="#B23A3A" stroke-width="2.5"/>
+          <line x1="80" y1="70" x2="220" y2="70" stroke="#9DA3AF" stroke-width="2"/>
+          <line x1="80" y1="90" x2="220" y2="90" stroke="#9DA3AF" stroke-width="2"/>
+          <line x1="80" y1="110" x2="200" y2="110" stroke="#9DA3AF" stroke-width="2"/>
+          <text x="150" y="155" text-anchor="middle" font-size="14" font-weight="900" fill="#B23A3A" font-family="sans-serif">30 年房贷</text>
+          <text x="150" y="185" text-anchor="middle" font-size="12" font-weight="700" fill="#6C727E" font-family="sans-serif">每周 60 小时</text>
+          <text x="150" y="215" text-anchor="middle" font-size="12" font-weight="700" fill="#6C727E" font-family="sans-serif">咖啡要盘算</text>
+          <text x="150" y="245" text-anchor="middle" font-size="12" font-weight="700" fill="#6C727E" font-family="sans-serif">未来未定</text>
+
+          <!-- Перечёркивание -->
+          <line class="contract-line" x1="50" y1="280" x2="250" y2="40" stroke="#B23A3A" stroke-width="6" stroke-linecap="round"/>
+
+          <!-- Свободная фигура -->
+          <g class="free-figure" transform="translate(310, 180)">
+            <circle cx="0" cy="-30" r="22" fill="#FCD3B8"/>
+            <path d="M -22 -35 C -25 -50, -12 -62, 4 -62 C 20 -62, 30 -50, 24 -35 Z" fill="#D99B4E"/>
+            <path d="M -30 25 Q 0 5 30 25 L 35 90 L -35 90 Z" fill="#2EB886"/>
+            <rect x="-25" y="90" width="18" height="45" rx="4" fill="#22252A"/>
+            <rect x="7" y="90" width="18" height="45" rx="4" fill="#22252A"/>
+            <circle cx="-8" cy="-30" r="2.5" fill="#22252A"/>
+            <circle cx="8" cy="-30" r="2.5" fill="#22252A"/>
+            <path d="M -8 -18 Q 0 -12 8 -18" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--terracotta">
+          <strong class="card-title">🎬 再看一段视频</strong>
+          <p class="card-body">
+            十年前，成为中产阶级意味着什么？稳定工作、汽车、房子，清晰安稳的未来。
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">💔 现在呢</strong>
+          <p class="card-body">
+            往往意味着<strong>每周 60 小时的工作、房贷</strong>，连一杯咖啡都要精打细算。
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">🎯 这就是我们拒绝无效内卷的核心原因</strong>
+          <p class="card-body">
+            我们不是拒绝劳动。<strong>我们只是会算账。</strong>
+            <br><br>
+            如果体系不会给忠于它的人以回报，我们为什么要遵守它的规则？
+          </p>
+        </div>
+
+        <div class="quote-bubble quote-bubble--rose" style="margin-top: 0.5rem;">
+          规则向来如此，好好工作，就能获得回报。
+          <span class="quote-bubble__author">— Ksenia Sobchak 的回答</span>
+        </div>
+
+        <div class="quote-bubble quote-bubble--jade">
+          或许这套规则只适合你们那一代人。
+          <span class="quote-bubble__author">— Maxim Lutchak 轻轻一笑</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ВИДЕО-КАРТОЧКА -->
+    <div class="video-frame" style="max-width: 520px; margin: 1rem auto 0;" role="button" tabindex="0" aria-label="Видео о отказе от гонки">
+      <div class="video-frame__title-card">
+        <span>短视频 · 002</span>
+        <span>🎬 中产的真相</span>
+      </div>
+      <div class="video-frame__play" aria-hidden="true"></div>
+      <div class="video-frame__hint">
+        <strong>🎬 播放视频</strong>
+        拒绝无效内卷 · 会算账
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--terracotta">
+      <div class="lex-item">
+        <div class="lex-item__zh">内卷</div>
+        <div class="lex-item__def">无意义的内部恶性竞争，付出变多但收益不变。</div>
+        <div class="lex-item__en">Involution.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">承诺</div>
+        <div class="lex-item__def">答应别人一定会做到的事情。</div>
+        <div class="lex-item__en">Promise.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">牺牲</div>
+        <div class="lex-item__def">为了某个目标放弃自己当下的利益。</div>
+        <div class="lex-item__en">Sacrifice.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">兑现</div>
+        <div class="lex-item__def">实现之前的承诺或约定。</div>
+        <div class="lex-item__en">To fulfill.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 11 — СССР 1960–1991: ФАБРИКА + ВСЁ В ОДНОМ МЕСТЕ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-11">
+    <div class="slide-header" data-num="09">
+      <div class="tag-badge tag-terracotta">第三部分 · 09</div>
+      <h2 class="slide-title speakable" onclick="speakZH('这套观念源自苏联时期')">这套观念 · 源自苏联时期</h2>
+      <p class="sub-title">1960 — 1991 · 工厂包揽一切</p>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Фабрика-сцена -->
+      <div class="card card--terracotta" style="padding: 20px;">
+        <svg viewBox="0 0 400 340" style="width: 100%; max-height: 340px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Завод -->
+          <g>
+            <!-- Трубы с дымом -->
+            <rect x="70" y="80" width="16" height="60" fill="#B23A3A"/>
+            <circle class="factory-smoke-anim" cx="78" cy="70" r="8" fill="#9DA3AF" opacity="0.5"/>
+            <circle class="factory-smoke-anim" cx="78" cy="70" r="10" fill="#9DA3AF" opacity="0.4"/>
+            <circle class="factory-smoke-anim" cx="78" cy="70" r="9" fill="#9DA3AF" opacity="0.45"/>
+
+            <rect x="120" y="60" width="16" height="80" fill="#B23A3A"/>
+            <circle class="factory-smoke-anim" cx="128" cy="50" r="9" fill="#9DA3AF" opacity="0.5"/>
+            <circle class="factory-smoke-anim" cx="128" cy="50" r="11" fill="#9DA3AF" opacity="0.4"/>
+            <circle class="factory-smoke-anim" cx="128" cy="50" r="10" fill="#9DA3AF" opacity="0.45"/>
+
+            <!-- Корпус завода -->
+            <rect x="50" y="140" width="160" height="90" fill="#FCE8E4" stroke="#B23A3A" stroke-width="3"/>
+            <rect x="70" y="160" width="20" height="20" fill="#B23A3A" opacity="0.6"/>
+            <rect x="100" y="160" width="20" height="20" fill="#B23A3A" opacity="0.6"/>
+            <rect x="130" y="160" width="20" height="20" fill="#B23A3A" opacity="0.6"/>
+            <rect x="160" y="160" width="20" height="20" fill="#B23A3A" opacity="0.6"/>
+            <rect x="80" y="195" width="80" height="35" fill="#B23A3A" opacity="0.4"/>
+            <text x="120" y="218" text-anchor="middle" font-size="12" font-weight="900" fill="#FFFFFF" font-family="sans-serif">工厂</text>
+          </g>
+
+          <!-- Три карточки-подписи -->
+          <g transform="translate(240, 80)">
+            <rect x="0" y="0" width="140" height="55" rx="10" fill="#FCE8E4" stroke="#B23A3A" stroke-width="2"/>
+            <text x="70" y="24" text-anchor="middle" font-size="13" font-weight="900" fill="#B23A3A" font-family="sans-serif">🏠 分房子</text>
+            <text x="70" y="44" text-anchor="middle" font-size="11" fill="#6C727E" font-family="sans-serif">等 10 年也一定有</text>
+          </g>
+
+          <g transform="translate(240, 150)">
+            <rect x="0" y="0" width="140" height="55" rx="10" fill="#FCE8E4" stroke="#B23A3A" stroke-width="2"/>
+            <text x="70" y="24" text-anchor="middle" font-size="13" font-weight="900" fill="#B23A3A" font-family="sans-serif">🏥 管看病</text>
+            <text x="70" y="44" text-anchor="middle" font-size="11" fill="#6C727E" font-family="sans-serif">医疗免费</text>
+          </g>
+
+          <g transform="translate(240, 220)">
+            <rect x="0" y="0" width="140" height="55" rx="10" fill="#FCE8E4" stroke="#B23A3A" stroke-width="2"/>
+            <text x="70" y="24" text-anchor="middle" font-size="13" font-weight="900" fill="#B23A3A" font-family="sans-serif">🧒 幼儿园</text>
+            <text x="70" y="44" text-anchor="middle" font-size="11" fill="#6C727E" font-family="sans-serif">配套齐全</text>
+          </g>
+
+          <text x="200" y="320" text-anchor="middle" font-size="14" font-weight="800" fill="#B23A3A" font-family="sans-serif" letter-spacing="1">一旦离职 · 全部消失</text>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--terracotta">
+          <strong class="card-title">🏭 工厂几乎包揽一切</strong>
+          <p class="card-body">
+            如果你在工厂上班，工厂<strong>免费分配住房</strong>。可能要等十年，但房子一定会给到你。
+            <br><br>
+            工厂报销医药费，配备幼儿园，还提供假期。
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">⚠️ 但一旦离职，所有福利全部消失</strong>
+          <p class="card-body">
+            这不只是「失去工作」。是<strong>失去整个生活体系。</strong>
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">🧓 父母那一辈的记忆</strong>
+          <p class="card-body">
+            很多人从父母那里听过类似故事：以前<strong>单位分配住房、报销医疗</strong>，人们一辈子在同一个地方工作。
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">🧭 所以留下来是明智的</strong>
+          <p class="card-body">
+            苏联 1960 到 1991 年的逻辑就是这样：<strong>留下 = 保障。</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--terracotta">
+      <div class="lex-item">
+        <div class="lex-item__zh">包揽</div>
+        <div class="lex-item__def">把全部事情都承担下来。</div>
+        <div class="lex-item__en">To cover everything.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">福利</div>
+        <div class="lex-item__def">额外提供的社会保障和待遇。</div>
+        <div class="lex-item__en">Welfare, benefits.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">单位</div>
+        <div class="lex-item__def">旧体制下的工作机构（承担一切生活职能）。</div>
+        <div class="lex-item__en">Work unit (danwei).</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">保障</div>
+        <div class="lex-item__def">保障生活的基本条件。</div>
+        <div class="lex-item__en">Guarantee, security.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 12 — 1991 → 2026: ЗАВОД РАССЫПАЕТСЯ, 1.8 ГОДА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-12">
+    <div class="slide-header" data-num="10">
+      <div class="tag-badge tag-terracotta">第三部分 · 10</div>
+      <h2 class="slide-title speakable" onclick="speakZH('1991年之后，一切崩塌')">1991 之后 · 一切崩塌</h2>
+      <p class="sub-title">忠诚 → 跳槽 · 1.8 年 · 80%</p>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Завод рассыпается -->
+      <div class="card card--terracotta" style="padding: 20px;">
+        <svg viewBox="0 0 400 340" style="width: 100%; max-height: 340px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Разрушающийся завод -->
+          <g class="collapsing-factory">
+            <rect x="60" y="140" width="140" height="80" fill="#9DA3AF" opacity="0.5"/>
+            <path d="M 60 140 L 90 100 L 120 140 L 150 100 L 180 140 L 200 140" stroke="#9DA3AF" stroke-width="2" fill="none" opacity="0.5"/>
+            <line x1="80" y1="160" x2="100" y2="180" stroke="#6C727E" stroke-width="2" opacity="0.6"/>
+            <line x1="120" y1="160" x2="140" y2="180" stroke="#6C727E" stroke-width="2" opacity="0.6"/>
+            <line x1="160" y1="160" x2="180" y2="180" stroke="#6C727E" stroke-width="2" opacity="0.6"/>
+          </g>
+
+          <!-- Обломки -->
+          <rect x="40" y="230" width="20" height="10" fill="#9DA3AF" opacity="0.6" transform="rotate(-15 50 235)"/>
+          <rect x="90" y="240" width="25" height="8" fill="#9DA3AF" opacity="0.6" transform="rotate(20 100 244)"/>
+          <rect x="150" y="235" width="15" height="10" fill="#9DA3AF" opacity="0.6" transform="rotate(-10 160 240)"/>
+          <rect x="200" y="245" width="18" height="8" fill="#9DA3AF" opacity="0.5" transform="rotate(12 210 249)"/>
+
+          <!-- Стрелка времени -->
+          <path d="M 40 290 L 360 290" stroke="#B23A3A" stroke-width="3" marker-end="url(#arrow-end)"/>
+          <text x="50" y="310" font-size="12" font-weight="800" fill="#B23A3A" font-family="sans-serif">1991</text>
+          <text x="335" y="310" font-size="12" font-weight="800" fill="#B23A3A" font-family="sans-serif">2026</text>
+
+          <!-- Цифры -->
+          <text class="stat-appears" x="200" y="70" text-anchor="middle" font-size="42" font-weight="900" fill="#B23A3A" font-family="sans-serif">1.8 年</text>
+          <text class="stat-appears" x="200" y="95" text-anchor="middle" font-size="14" font-weight="700" fill="#6C727E" font-family="sans-serif">平均在一家公司的时间</text>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--terracotta">
+          <strong class="card-title">💥 1991 年之后</strong>
+          <p class="card-body">
+            福利消失，分房制度结束。<strong>所有事情只能靠自己。</strong>
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">📊 2026 年，普通 Z 世代</strong>
+          <p class="card-body">
+            在一家公司<strong>平均只工作 1.8 年</strong>。超过一半人计划今年<strong>跳槽</strong>。十个年轻人里，八个如果 <strong>18 个月</strong>内得不到<strong>晋升</strong>就会离职。
+          </p>
+        </div>
+
+        <div class="quote-bubble quote-bubble--rose">
+          忠诚度不够。
+          <span class="quote-bubble__author">— Ksenia Sobchak 看到数据</span>
+        </div>
+
+        <div class="quote-bubble quote-bubble--jade">
+          没有回报的忠诚不是忠诚，只是被压榨。
+          <span class="quote-bubble__author">— Maxim Lutchak</span>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">🎯 我的看法</strong>
+          <p class="card-body">
+            那个忠诚就能换来保障的时代早已过去。<strong>何必假装它还存在？</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--terracotta">
+      <div class="lex-item">
+        <div class="lex-item__zh">压榨</div>
+        <div class="lex-item__def">剥削他人，掠夺别人劳动成果。</div>
+        <div class="lex-item__en">To exploit.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">忠诚</div>
+        <div class="lex-item__def">对组织或个人的忠实。</div>
+        <div class="lex-item__en">Loyalty.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">跳槽</div>
+        <div class="lex-item__def">主动换工作。</div>
+        <div class="lex-item__en">Job-hopping.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">晋升</div>
+        <div class="lex-item__def">职位向上提升，得到更高的岗位。</div>
+        <div class="lex-item__en">To get promoted.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 13 — 有毒高薪: ЛАМПА ГАСНЕТ + СЕРДЦЕ ТРЕСКАЕТСЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-13">
+    <div class="slide-header" data-num="11">
+      <div class="tag-badge tag-terracotta">第三部分 · 11</div>
+      <h2 class="slide-title speakable" onclick="speakZH('什么是有毒高薪')">什么是有毒高薪</h2>
+      <p class="sub-title">心理安全 &gt; 薪水</p>
+    </div>
+
+    <div style="text-align: center; margin: 0.5rem 0 1rem;">
+      <div class="quote-bubble quote-bubble--terracotta" style="display: inline-block; font-size: clamp(15px, 1.2vw, 20px); padding: 14px 26px;">
+        你去哪？才六点。 —— 回家，我有自己的生活。
+        <span class="quote-bubble__author">— 视频对话</span>
+      </div>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Офис-сцена -->
+      <div class="card card--terracotta" style="padding: 20px;">
+        <svg viewBox="0 0 400 340" style="width: 100%; max-height: 340px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Офис, 18:00 на часах -->
+          <circle cx="100" cy="80" r="40" fill="#FFFFFF" stroke="#B23A3A" stroke-width="3"/>
+          <circle cx="100" cy="80" r="3" fill="#22252A"/>
+          <line x1="100" y1="80" x2="100" y2="55" stroke="#B23A3A" stroke-width="3" stroke-linecap="round"/>
+          <line x1="100" y1="80" x2="118" y2="80" stroke="#22252A" stroke-width="2.5" stroke-linecap="round"/>
+          <text x="100" y="135" text-anchor="middle" font-size="14" font-weight="900" fill="#B23A3A" font-family="sans-serif">18:00</text>
+
+          <!-- Гаснущая лампа -->
+          <g class="office-lamp" transform="translate(280, 60)">
+            <rect x="-4" y="0" width="8" height="30" fill="#6C727E"/>
+            <ellipse cx="0" cy="40" rx="35" ry="18" fill="#FFB800" opacity="0.7"/>
+            <ellipse cx="0" cy="40" rx="25" ry="12" fill="#FFD966"/>
+            <ellipse cx="0" cy="40" rx="15" ry="7" fill="#FFFBEA"/>
+          </g>
+
+          <!-- Сердце с трещиной -->
+          <g class="heart-crack" transform="translate(200, 250)">
+            <path d="M 0 -25 C -15 -45, -50 -45, -50 -15 C -50 15, 0 45, 0 45 C 0 45, 50 15, 50 -15 C 50 -45, 15 -45, 0 -25 Z" fill="#E05A47" stroke="#B23A3A" stroke-width="2.5"/>
+            <!-- Трещина -->
+            <path d="M -5 -20 L 0 -5 L -5 5 L 5 15 L 0 25" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--terracotta">
+          <strong class="card-title">💸 什么是「有毒高薪」</strong>
+          <p class="card-body">
+            薪水看着很高，但人<strong>持续紧绷</strong>、不断遭受批评，精力一点点<strong>耗尽</strong>。
+          </p>
+        </div>
+
+        <div class="card card--terracotta">
+          <strong class="card-title">🚪 对 Z 世代来说</strong>
+          <p class="card-body">
+            <strong>心理安全感更加重要。</strong>我们希望工作中可以犯错，获得基本尊重。
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">💚 再高的薪水</strong>
+          <p class="card-body">
+            也<strong>修复不了受损的心理状态</strong>。
+          </p>
+        </div>
+
+        <div class="quote-bubble quote-bubble--jade">
+          我来上班，完成我的职责。如果下午两点做完工作，为什么要坐到六点？只为假装自己在岗吗？
+          <span class="quote-bubble__author">— Maxim Lutchak</span>
+        </div>
+
+        <div class="quote-bubble quote-bubble--rose">
+          在我们那个年代，能被领导看见，本身就是你的价值。
+          <span class="quote-bubble__author">— Ksenia Sobchak 反驳</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ВИДЕО-КАРТОЧКА -->
+    <div class="video-frame" style="max-width: 520px; margin: 1rem auto 0;" role="button" tabindex="0" aria-label="Видео о токсичной зарплате">
+      <div class="video-frame__title-card">
+        <span>短视频 · 003</span>
+        <span>🎬 六点就走</span>
+      </div>
+      <div class="video-frame__play" aria-hidden="true"></div>
+      <div class="video-frame__hint">
+        <strong>🎬 播放视频</strong>
+        心理安全 · 毒性高薪
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--terracotta">
+      <div class="lex-item">
+        <div class="lex-item__zh">过劳</div>
+        <div class="lex-item__def">长期超负荷工作导致身心疲惫。</div>
+        <div class="lex-item__en">Overwork, burnout.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">紧绷</div>
+        <div class="lex-item__def">精神持续高度紧张。</div>
+        <div class="lex-item__en">Tense, strained.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">耗尽</div>
+        <div class="lex-item__def">力气、精力被全部用光。</div>
+        <div class="lex-item__en">To exhaust.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">心理安全感</div>
+        <div class="lex-item__def">在环境中感到可以放心表达、不怕犯错的状态。</div>
+        <div class="lex-item__en">Psychological safety.</div>
+      </div>
+    </div>
+  </section>
+    <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 14 — 大哥的真相: СИЛУЭТЫ СБЛИЖАЮТСЯ + ПЕЧАТЬ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-14">
+    <div class="slide-header" data-num="12">
+      <div class="tag-badge tag-jade">第三部分 · 12</div>
+      <h2 class="slide-title speakable" onclick="speakZH('但两代人并非敌人')">但两代人 · 并非敌人</h2>
+      <p class="sub-title">请让我讲讲大哥这个比喻的真相</p>
+    </div>
+
+    <div style="text-align: center; margin: 0.5rem 0 1rem;">
+      <div class="quote-bubble quote-bubble--rose" style="display: inline-block; font-size: clamp(15px, 1.2vw, 20px); padding: 14px 26px;">
+        我其实挺欣赏你的。我想把你招到我的团队。
+        <span class="quote-bubble__author">— Ksenia Sobchak 在访谈最后</span>
+      </div>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Силуэты сближаются + печать -->
+      <div class="card card--jade" style="padding: 20px;">
+        <svg viewBox="0 0 400 340" style="width: 100%; max-height: 340px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Левый силуэт -->
+          <g class="silhouette-left" transform="translate(140, 80)">
+            <circle cx="0" cy="0" r="32" fill="#D4A574"/>
+            <path d="M -26 -12 C -34 -28, -16 -48, 0 -48 C 16 -48, 34 -28, 26 -12 Z" fill="#8B6B3D" opacity="0.5"/>
+            <path d="M -36 34 Q 0 12 36 34 L 42 140 L -42 140 Z" fill="#D4A574"/>
+            <circle cx="-10" cy="0" r="3" fill="#22252A"/>
+            <circle cx="10" cy="0" r="3" fill="#22252A"/>
+            <path d="M -8 14 Q 0 20 8 14" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+
+          <!-- Правый силуэт -->
+          <g class="silhouette-right" transform="translate(260, 90)">
+            <circle cx="0" cy="0" r="30" fill="#FCD3B8"/>
+            <path d="M -24 -10 C -30 -26, -14 -44, 2 -44 C 18 -44, 30 -26, 22 -10 Z" fill="#D99B4E"/>
+            <path d="M -32 30 Q 0 12 32 30 L 38 130 L -38 130 Z" fill="#2EB886"/>
+            <circle cx="-8" cy="0" r="2.5" fill="#22252A"/>
+            <circle cx="8" cy="0" r="2.5" fill="#22252A"/>
+            <path d="M -6 12 Q 0 17 6 12" stroke="#22252A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+
+          <!-- Печать 哥哥 -->
+          <g class="seal-stamp" transform="translate(200, 270)">
+            <circle r="46" fill="none" stroke="#B23A3A" stroke-width="4"/>
+            <circle r="38" fill="none" stroke="#B23A3A" stroke-width="2"/>
+            <text y="12" text-anchor="middle" font-size="32" font-weight="900" fill="#B23A3A" font-family="Noto Serif SC, serif">哥哥</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--jade">
+          <strong class="card-title">🤝 访谈快结束的时候</strong>
+          <p class="card-body">
+            Ksenia <strong>看着 Maxim 说：</strong>「你知道吗？我其实挺欣赏你的。我甚至想把你招到我的团队。」
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">👨‍👦 这就是哥哥</strong>
+          <p class="card-body">
+            不是对手。<br>
+            不是高高在上的老板。<br>
+            <strong>就是哥哥。</strong>
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">❤️ 他不一定完全懂你</strong>
+          <p class="card-body">
+            但心里，<strong>是真的在乎你。</strong>
+          </p>
+        </div>
+
+        <div class="quote-bubble quote-bubble--jade" style="margin-top: 0.5rem;">
+          千禧一代不是我们的敌人，他们就像家里的大哥。
+          <span class="quote-bubble__author">— Maxim Lutchak</span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak · 大哥">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak · 弟弟">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--jade">
+      <div class="lex-item">
+        <div class="lex-item__zh">欣赏</div>
+        <div class="lex-item__def">看好、认可别人的价值。</div>
+        <div class="lex-item__en">To appreciate.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">客观</div>
+        <div class="lex-item__def">不带偏见地看待事情。</div>
+        <div class="lex-item__en">Objective.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">在乎</div>
+        <div class="lex-item__def">重视并关心。</div>
+        <div class="lex-item__en">To care about.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">团队</div>
+        <div class="lex-item__def">一起工作的小集体。</div>
+        <div class="lex-item__en">Team.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 15 — AI: ПРОМПТ ПЕЧАТАЕТСЯ + ЭКРАН
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-15">
+    <div class="slide-header" data-num="13">
+      <div class="tag-badge tag-blue">第三部分 · 13</div>
+      <h2 class="slide-title speakable" onclick="speakZH('人工智能时代的新能力')">人工智能时代 · 新能力</h2>
+      <p class="sub-title">大哥不认可我们总盯着屏幕</p>
+    </div>
+
+    <div style="text-align: center; margin: 0.5rem 0 1rem;">
+      <div class="quote-bubble quote-bubble--terracotta" style="display: inline-block; font-size: clamp(14px, 1.15vw, 19px); padding: 12px 24px;">
+        你们静不下来，注意力只能维持八秒，看书都是碎片化浏览。
+        <span class="quote-bubble__author">— 大哥常说</span>
+      </div>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Экран + промпт -->
+      <div class="card card--blue" style="padding: 24px;">
+        <svg viewBox="0 0 400 340" style="width: 100%; max-height: 320px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Экран монитора -->
+          <rect x="40" y="60" width="320" height="200" rx="14" fill="#1A1D22" stroke="#2A5C8A" stroke-width="3"/>
+          <rect x="48" y="68" width="304" height="184" rx="8" fill="#0F1216"/>
+
+          <!-- Скролл-лента (много контента) -->
+          <rect x="60" y="80" width="80" height="12" rx="4" fill="#5B8DB8" opacity="0.7"/>
+          <rect x="60" y="100" width="280" height="8" rx="3" fill="#3A3E45"/>
+          <rect x="60" y="114" width="240" height="8" rx="3" fill="#3A3E45"/>
+          <rect x="60" y="128" width="260" height="8" rx="3" fill="#3A3E45"/>
+
+          <!-- Печатающийся промпт -->
+          <text x="60" y="180" font-size="16" font-weight="700" fill="#4ECDC4" font-family="monospace">
+            <tspan class="prompt-typing">&gt; 请帮我分析这段文本</tspan>
+          </text>
+
+          <!-- Курсор мигает -->
+
+          <!-- Ответ AI -->
+          <rect x="60" y="200" width="200" height="8" rx="3" fill="#2A5C8A"/>
+          <rect x="60" y="214" width="240" height="8" rx="3" fill="#2A5C8A"/>
+          <rect x="60" y="228" width="180" height="8" rx="3" fill="#2A5C8A"/>
+
+          <!-- AI-иконка в углу -->
+          <g class="ai-pulse" transform="translate(330, 100)">
+            <circle r="18" fill="#4ECDC4" opacity="0.2"/>
+            <circle r="12" fill="#4ECDC4" opacity="0.5"/>
+            <circle r="6" fill="#4ECDC4"/>
+          </g>
+
+          <!-- Подставка -->
+          <rect x="170" y="260" width="60" height="8" rx="3" fill="#2A5C8A"/>
+          <rect x="150" y="272" width="100" height="10" rx="4" fill="#2A5C8A"/>
+        </svg>
+
+        <div class="card-body" style="text-align: center; margin-top: 1rem;">
+          <strong>「如果三十秒就能找到答案，为什么要读五百页的书？」</strong>
+        </div>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--blue">
+          <strong class="card-title">📚 死记硬背，不再是核心能力</strong>
+          <p class="card-body">
+            人工智能时代，最重要的技能是<strong>提示词工程</strong>。
+            <br><br>
+            简单说，就是<strong>提出好问题的能力</strong>。
+          </p>
+        </div>
+
+        <div class="card card--blue">
+          <strong class="card-title">🤖 AI 是提升思考效率的工具</strong>
+          <p class="card-body">
+            不必记住全部知识，<strong>学会提问就足够</strong>。
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">📊 57% 的 Z 世代</strong>
+          <p class="card-body">
+            已经在工作中使用<strong>生成式人工智能</strong>。
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">💡 这不是作弊</strong>
+          <p class="card-body">
+            这是新时代必备的<strong>数字素养</strong>。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ksenia Sobchak · 大哥">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak · 弟弟">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--blue">
+      <div class="lex-item">
+        <div class="lex-item__zh">死记硬背</div>
+        <div class="lex-item__def">不理解含义，机械强行背诵内容。</div>
+        <div class="lex-item__en">Rote memorization.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">提示词工程</div>
+        <div class="lex-item__def">编写指令引导人工智能生成内容的技术。</div>
+        <div class="lex-item__en">Prompt engineering.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">数字素养</div>
+        <div class="lex-item__def">合理使用数字科技的综合能力与认知。</div>
+        <div class="lex-item__en">Digital literacy.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">碎片化</div>
+        <div class="lex-item__def">信息被拆成零散的小段，不完整、不成体系。</div>
+        <div class="lex-item__en">Fragmented.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 16 — 住·花·爱: ТРИ ПУЛЬСАЦИИ ПО ОЧЕРЕДИ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-16">
+    <div class="slide-header" data-num="14">
+      <div class="tag-badge tag-lavender">第四部分 · 14</div>
+      <h2 class="slide-title speakable" onclick="speakZH('不是拥有，是流动')">不是拥有 · 是流动</h2>
+      <p class="sub-title">住 · 花 · 爱 · 三件事，一个核心</p>
+    </div>
+
+    <div class="grid-3col">
+      <!-- Дом -->
+      <div class="card card--lavender" style="text-align: center;">
+        <svg class="flow-house" viewBox="0 0 200 200" style="width: 100%; max-height: 170px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Дом -->
+          <path d="M 40 100 L 100 50 L 160 100 L 160 160 L 40 160 Z" fill="#EFEBF7" stroke="#6B5B95" stroke-width="3"/>
+          <rect x="85" y="120" width="30" height="40" fill="#6B5B95"/>
+          <circle cx="105" cy="140" r="2" fill="#FFFFFF"/>
+          <rect x="55" y="115" width="20" height="20" fill="#B5A8D8" opacity="0.7"/>
+          <rect x="125" y="115" width="20" height="20" fill="#B5A8D8" opacity="0.7"/>
+
+          <!-- Замок (аренда) -->
+          <path d="M 20 150 L 20 170 L 40 170 L 40 150 Z" fill="#B5A8D8" opacity="0.5"/>
+          <path d="M 25 150 L 25 145 Q 30 140 35 145 L 35 150" stroke="#B5A8D8" stroke-width="2" fill="none" opacity="0.5"/>
+        </svg>
+
+        <strong class="card-title" style="justify-content: center; color: var(--lavender-deep);">🏠 住</strong>
+        <p class="card-body" style="font-size: clamp(13px, 1vw, 16px);">
+          30 年房贷 = <strong>枷锁</strong>。<br>
+          更好的公寓 = <strong>自由</strong>。<br>
+          想换城市的时候，直接搬走。
+        </p>
+        <div class="quote-bubble quote-bubble--lavender" style="font-size: 0.85em;">
+          没必要对着房贷祈祷。
+          <span class="quote-bubble__author">— Maxim Lutchak</span>
+        </div>
+      </div>
+
+      <!-- Кофе -->
+      <div class="card card--lavender" style="text-align: center;">
+        <svg class="flow-coffee" viewBox="0 0 200 200" style="width: 100%; max-height: 170px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Чашка кофе -->
+          <ellipse cx="100" cy="140" rx="55" ry="12" fill="#B5A8D8" opacity="0.4"/>
+          <path d="M 60 80 L 140 80 L 130 140 L 70 140 Z" fill="#FFFFFF" stroke="#6B5B95" stroke-width="3"/>
+          <ellipse cx="100" cy="80" rx="40" ry="10" fill="#6B5B95"/>
+          <ellipse cx="100" cy="80" rx="35" ry="7" fill="#4B3E6E"/>
+          <path d="M 140 95 Q 160 95 160 110 Q 160 125 140 125" stroke="#6B5B95" stroke-width="3" fill="none"/>
+
+          <!-- Пар -->
+          <path d="M 85 60 Q 80 50 85 40" stroke="#6B5B95" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+          </path>
+          <path d="M 100 55 Q 95 45 100 35" stroke="#6B5B95" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite"/>
+          </path>
+          <path d="M 115 60 Q 110 50 115 40" stroke="#6B5B95" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.5;0.1;0.5" dur="3s" repeatCount="indefinite"/>
+          </path>
+
+          <!-- Сердечко -->
+          <path d="M 165 155 C 155 145, 155 135, 165 140 C 175 135, 175 145, 165 155 Z" fill="#E05A47" opacity="0.7"/>
+        </svg>
+
+        <strong class="card-title" style="justify-content: center; color: var(--lavender-deep);">☕ 花</strong>
+        <p class="card-body" style="font-size: clamp(13px, 1vw, 16px);">
+          以前买实物。<br>
+          现在为<strong>体验</strong>买单。<br>
+          音乐节 · 旅行 · 一个瞬间。
+        </p>
+        <div class="quote-bubble quote-bubble--lavender" style="font-size: 0.85em;">
+          沙发能给到你的，就只是一张沙发而已。
+          <span class="quote-bubble__author">— Maxim Lutchak</span>
+        </div>
+      </div>
+
+      <!-- Сердце -->
+      <div class="card card--lavender" style="text-align: center;">
+        <svg class="flow-heart" viewBox="0 0 200 200" style="width: 100%; max-height: 170px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Одно сердце (одиночество как выбор) -->
+          <path d="M 100 140 C 60 100, 40 70, 60 50 C 75 35, 90 45, 100 60 C 110 45, 125 35, 140 50 C 160 70, 140 100, 100 140 Z" fill="#B5A8D8" stroke="#6B5B95" stroke-width="3"/>
+
+          <!-- Свет вокруг -->
+          <circle cx="100" cy="90" r="60" fill="none" stroke="#B5A8D8" stroke-width="1.5" opacity="0.4">
+            <animate attributeName="r" values="55;70;55" dur="4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.5;0.15;0.5" dur="4s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+
+        <strong class="card-title" style="justify-content: center; color: var(--lavender-deep);">❤️ 爱</strong>
+        <p class="card-body" style="font-size: clamp(13px, 1vw, 16px);">
+          不将就。<br>
+          独处不是失败，<strong>是主动选择</strong>。<br>
+          我们要的是深度共情。
+        </p>
+        <div class="quote-bubble quote-bubble--lavender" style="font-size: 0.85em;">
+          如果一段关系不能让我们变得更好，我们宁愿独自生活。
+          <span class="quote-bubble__author">— 我们这代人</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card--blue" style="margin-top: 1rem; text-align: center;">
+      <strong class="card-title" style="justify-content: center;">🌊 核心都是一件事</strong>
+      <p class="card-body">
+        不执着占有，而是<strong>拥抱流动</strong>。住房、消费、感情 —— 都是同一个逻辑。
+      </p>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--lavender">
+      <div class="lex-item">
+        <div class="lex-item__zh">共情</div>
+        <div class="lex-item__def">体会并理解他人内心感受的能力。</div>
+        <div class="lex-item__en">Empathy.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">妥协</div>
+        <div class="lex-item__def">为达成和解，放弃一部分自己的要求。</div>
+        <div class="lex-item__en">To compromise.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">独处</div>
+        <div class="lex-item__def">独自一个人生活、待着。</div>
+        <div class="lex-item__en">Solitude.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">枷锁</div>
+        <div class="lex-item__def">束缚人的东西。</div>
+        <div class="lex-item__en">Shackles.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 17 — 清醒: ЧАЙ ПОДНИМАЕТСЯ, РЮМКА ОПУСКАЕТСЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-17">
+    <div class="slide-header" data-num="15">
+      <div class="tag-badge tag-lavender">第四部分 · 15</div>
+      <h2 class="slide-title speakable" onclick="speakZH('保持清醒，是我们对自己的尊重')">保持清醒 · 对自己的尊重</h2>
+      <p class="sub-title">不愿妥协</p>
+    </div>
+
+    <div class="grid-split" style="gap: 1.4rem;">
+      <!-- Чай vs Рюмка -->
+      <div class="card card--lavender" style="padding: 20px;">
+        <svg viewBox="0 0 400 340" style="width: 100%; max-height: 320px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Чайная чашка (поднимается) -->
+          <g class="tea-cup" transform="translate(120, 140)">
+            <ellipse cx="0" cy="80" rx="60" ry="10" fill="#B5A8D8" opacity="0.3"/>
+            <path d="M -50 20 L 50 20 L 40 80 L -40 80 Z" fill="#FFFFFF" stroke="#6B5B95" stroke-width="3"/>
+            <ellipse cx="0" cy="20" rx="50" ry="12" fill="#6B5B95"/>
+            <ellipse cx="0" cy="20" rx="44" ry="9" fill="#B5A8D8"/>
+            <!-- Пар -->
+            <path d="M -20 5 Q -25 -10 -20 -25" stroke="#6B5B95" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round">
+              <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+            </path>
+            <path d="M 0 0 Q -5 -15 0 -30" stroke="#6B5B95" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round">
+              <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite"/>
+            </path>
+            <path d="M 20 5 Q 15 -10 20 -25" stroke="#6B5B95" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round">
+              <animate attributeName="opacity" values="0.5;0.1;0.5" dur="3s" repeatCount="indefinite"/>
+            </path>
+            <!-- Листик -->
+            <ellipse cx="55" cy="15" rx="10" ry="4" fill="#2EB886" transform="rotate(-30 55 15)"/>
+          </g>
+
+          <!-- Рюмка водки (опускается) -->
+          <g class="shot-glass" transform="translate(280, 180)">
+            <path d="M -25 0 L 25 0 L 15 80 L -15 80 Z" fill="#FFFFFF" stroke="#6C727E" stroke-width="2.5" opacity="0.6"/>
+            <path d="M -22 30 L 22 30 L 15 78 L -15 78 Z" fill="#9DA3AF" opacity="0.4"/>
+            <ellipse cx="0" cy="0" rx="25" ry="6" fill="#9DA3AF" opacity="0.5"/>
+            <!-- Крестик -->
+            <line x1="-15" y1="45" x2="15" y2="65" stroke="#B23A3A" stroke-width="3" opacity="0.7"/>
+            <line x1="15" y1="45" x2="-15" y2="65" stroke="#B23A3A" stroke-width="3" opacity="0.7"/>
+          </g>
+
+          <!-- Подписи -->
+          <text x="120" y="310" text-anchor="middle" font-size="16" font-weight="900" fill="#6B5B95" font-family="sans-serif">🍵 清醒 · 新的酷</text>
+          <text x="280" y="310" text-anchor="middle" font-size="14" font-weight="700" fill="#9DA3AF" font-family="sans-serif">🍶 酒桌文化 · 慢慢改变</text>
+        </svg>
+      </div>
+
+      <!-- Текст -->
+      <div class="fact-stack">
+        <div class="card card--lavender">
+          <strong class="card-title">💪 我们这代人，不愿妥协</strong>
+          <p class="card-body">
+            这<strong>不仅关乎和他人的关系</strong>，也关乎对待自我的态度。
+            <br><br>
+            爱情不妥协。身体状态不妥协。亲密关系不妥协。健康尤其如此。
+          </p>
+        </div>
+
+        <div class="card card--lavender">
+          <strong class="card-title">🍶 老一辈聚会</strong>
+          <p class="card-body">
+            喝酒是<strong>必修课</strong>。不喝酒很难融入圈子。
+          </p>
+        </div>
+
+        <div class="card card--jade">
+          <strong class="card-title">🍵 现在一切不一样了</strong>
+          <p class="card-body">
+            保持<strong>头脑清醒</strong>成为新趋势。在中国，传统<strong>酒桌文化</strong>正在慢慢改变。年轻人聚会更喜欢喝茶，而非烈酒。
+          </p>
+        </div>
+
+        <div class="card card--blue">
+          <strong class="card-title">🎯 真正的成熟</strong>
+          <p class="card-body">
+            不在于酒量，<strong>而在于自控力</strong>。
+            <br><br>
+            保持清醒，是我们对自己的尊重。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--lavender">
+      <div class="lex-item">
+        <div class="lex-item__zh">酒桌文化</div>
+        <div class="lex-item__def">宴席上劝酒、以喝酒维系社交的传统习俗。</div>
+        <div class="lex-item__en">Wine-table culture.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">心智</div>
+        <div class="lex-item__def">人的思维、认知、精神综合能力。</div>
+        <div class="lex-item__en">Mind, mentality.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">自控力</div>
+        <div class="lex-item__def">控制自己行为和情绪的能力。</div>
+        <div class="lex-item__en">Self-control.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">清醒</div>
+        <div class="lex-item__def">头脑清楚、不被影响的状态。</div>
+        <div class="lex-item__en">Sober, clear-headed.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 18 — 交融: ДВЕ ЧАШКИ В КОЛЬЦЕ
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--centered" id="slide-18">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🕊️</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🌊</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">✨</div>
+
+    <div class="tag-badge tag-jade" style="margin: 0 auto 1rem;">结语 · 交融</div>
+
+    <h2 class="slide-title speakable" style="font-size: clamp(34px, 3.6vw, 56px); text-align: center;" onclick="speakZH('过往的经验，和新一代的自由，互相交融')">
+      经验 × 自由 · <span class="key">互相交融</span>
+    </h2>
+
+    <svg viewBox="0 0 400 300" style="width: 100%; max-width: 500px; height: auto; margin: 1.5rem auto; display: block;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g class="blend-ring">
+        <!-- Кольцо вращается -->
+        <circle cx="200" cy="150" r="80" fill="none" stroke="#2EB886" stroke-width="2.5" stroke-dasharray="8 6" opacity="0.6"/>
+        <circle cx="200" cy="150" r="100" fill="none" stroke="#D4A574" stroke-width="2.5" stroke-dasharray="10 8" opacity="0.4"/>
+        <circle cx="200" cy="150" r="120" fill="none" stroke="#B5A8D8" stroke-width="2" stroke-dasharray="12 10" opacity="0.3"/>
+      </g>
+
+      <!-- Левая чашка — 千禧一代 -->
+      <g transform="translate(155, 150)">
+        <rect x="-35" y="-30" width="70" height="60" rx="10" fill="#FFFFFF" stroke="#D4A574" stroke-width="3"/>
+        <path d="M 35 -10 Q 55 -10 55 10 Q 55 30 35 30" stroke="#D4A574" stroke-width="3" fill="none"/>
+        <ellipse cx="-5" cy="-35" rx="40" ry="8" fill="#F5EBDD"/>
+        <text y="8" text-anchor="middle" font-size="14" font-weight="900" fill="#A47530" font-family="sans-serif">经验</text>
+      </g>
+
+      <!-- Правая чашка — Z 世代 -->
+      <g transform="translate(245, 150)">
+        <path d="M -35 -30 L 35 -30 L 28 30 L -28 30 Z" fill="#E4F5EE" stroke="#2EB886" stroke-width="3"/>
+        <path d="M 35 -10 Q 55 -10 55 10 Q 55 30 35 30" stroke="#2EB886" stroke-width="3" fill="none"/>
+        <circle cx="0" cy="-15" r="8" fill="#FFB800"/>
+        <text y="15" text-anchor="middle" font-size="14" font-weight="900" fill="#1F8B67" font-family="sans-serif">自由</text>
+      </g>
+
+      <!-- Стрелки в кольце -->
+      <path d="M 200 30 Q 240 60 240 150" stroke="#B5A8D8" stroke-width="2" fill="none" opacity="0.5" stroke-dasharray="5 5">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M 200 270 Q 160 240 160 150" stroke="#2EB886" stroke-width="2" fill="none" opacity="0.5" stroke-dasharray="5 5">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/>
+      </path>
+    </svg>
+
+    <div class="final-quote" style="margin-top: 1rem;">
+      这不是对抗 —— // 是一场对话。
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak · 大哥">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak · 弟弟">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--blue">
+      <div class="lex-item">
+        <div class="lex-item__zh">交融</div>
+        <div class="lex-item__def">两种事物互相渗透、融合在一起。</div>
+        <div class="lex-item__en">To blend, intermingle.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">考验</div>
+        <div class="lex-item__def">通过困难来检验人的能力或者品格。</div>
+        <div class="lex-item__en">Test, trial.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">对话</div>
+        <div class="lex-item__def">双方平等交流、交换想法。</div>
+        <div class="lex-item__en">Dialogue.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">当下</div>
+        <div class="lex-item__def">此时此刻。</div>
+        <div class="lex-item__en">The present moment.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 19 — 3 ИНТЕРАКТИВНЫХ ВОПРОСА
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide" id="slide-19">
+    <div class="slide-header" style="text-align: center;">
+      <div class="tag-badge tag-blue" style="margin: 0 auto 1rem;">结语 · 三个问题</div>
+      <h2 class="slide-title speakable" style="text-align: center; font-size: clamp(30px, 3.2vw, 48px);" onclick="speakZH('我想大家心里会有一些疑问')">
+        我想大家心里 · 会有一些疑问
+      </h2>
+      <p class="sub-title" style="text-align: center;">点击问题 · 看看答案</p>
+    </div>
+
+    <div class="question-buttons">
+      <button class="question-btn question-btn-breathe" type="button" onclick="toggleQuestion(this)" aria-expanded="false">
+        <span>1 · 大哥真的错了吗？</span>
+        <span class="question-btn__arrow">›</span>
+      </button>
+      <div class="question-answer">
+        <div>
+          <strong>没有错。</strong>大哥经历过我们没经历过的时代。他的控制，<strong>不是霸道，是他活下来的方式。</strong>我们可以不认同，但不能不尊重。他付出的，比我们想象的多得多。
+        </div>
+      </div>
+
+      <button class="question-btn question-btn-breathe" type="button" onclick="toggleQuestion(this)" aria-expanded="false">
+        <span>2 · 如果 Z 世代都想「守住边界」，世界会怎样？</span>
+        <span class="question-btn__arrow">›</span>
+      </button>
+      <div class="question-answer">
+        <div>
+          世界<strong>不会停</strong>。它会<strong>慢下来一点</strong>——而这未必是坏事。人不会再一个个烧干自己。工作不再是唯一的意义。<strong>关系会更深</strong>，因为不再靠绝望维系。
+        </div>
+      </div>
+
+      <button class="question-btn question-btn-breathe" type="button" onclick="toggleQuestion(this)" aria-expanded="false">
+        <span>3 · 那你呢？你站在哪一边？</span>
+        <span class="question-btn__arrow">›</span>
+      </button>
+      <div class="question-answer">
+        <div>
+          <em style="color: var(--text-muted); font-style: italic;">（停顿。留白。）</em>
+          <br><br>
+          <strong style="font-size: 1.15em;">看你自己。</strong>
+          <br><br>
+          这个问题不是给我的。<strong>是给你的。</strong>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+
+    <div class="lex-panel lex-panel--blue">
+      <div class="lex-item">
+        <div class="lex-item__zh">认知</div>
+        <div class="lex-item__def">人接收、理解、加工信息的思维能力。</div>
+        <div class="lex-item__en">Cognition, perception.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">尊重</div>
+        <div class="lex-item__def">重视并认可他人的价值。</div>
+        <div class="lex-item__en">Respect.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">自我认知</div>
+        <div class="lex-item__def">对自己内心世界的了解。</div>
+        <div class="lex-item__en">Self-awareness.</div>
+      </div>
+      <div class="lex-item">
+        <div class="lex-item__zh">选择</div>
+        <div class="lex-item__def">自己做决定。</div>
+        <div class="lex-item__en">Choice.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       СЛАЙД 20 — 谢谢大家
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="slide slide--thanks slide--centered" id="slide-20">
+    <div class="bg-emoji bg-emoji--1" aria-hidden="true">🕊️</div>
+    <div class="bg-emoji bg-emoji--2" aria-hidden="true">🌱</div>
+    <div class="bg-emoji bg-emoji--3" aria-hidden="true">✨</div>
+
+    <div class="thanks-title speakable" onclick="speakZH('谢谢大家')">
+      谢谢大家
+    </div>
+
+    <div class="thanks-dove" aria-hidden="true">🕊️</div>
+
+    <p class="final-sub speakable" style="max-width: 800px; margin: 2rem auto 0;" onclick="speakZH('希望今天的分享能带给大家一些值得思考的想法')">
+      希望今天的分享<br>
+      <strong>能带给大家一些值得思考的想法</strong>
+    </p>
+
+    <!-- Печать 叶信安 -->
+    <div class="seal-final" style="margin-top: 3rem; display: inline-block; padding: 22px 28px; border: 3px solid var(--rose); border-radius: 50%; background: var(--surface-white);">
+      <div style="font-family: 'Noto Serif SC', serif; font-size: clamp(30px, 3vw, 44px); font-weight: 900; color: var(--rose); line-height: 1; letter-spacing: 0.05em;">叶信安</div>
+      <div style="font-size: clamp(11px, 0.9vw, 14px); color: var(--text-muted); font-weight: 700; margin-top: 6px; letter-spacing: 2px;">YÈ XÌN'ĀN</div>
+    </div>
+
+    <div style="margin-top: 2.5rem; font-size: clamp(12px, 0.95vw, 15px); color: var(--text-muted); font-style: italic; letter-spacing: 0.5px;">
+      时代的决斗 · 冲突、美学与Z世代哲学
+    </div>
+
+    <aside class="hero-avatars" aria-label="Герои">
+      <div class="hero-avatar hero-avatar--sobchak is-speaking" data-name="Ksenia Sobchak · 千禧一代">
+        <svg viewBox="0 0 100 100"><use href="#avatar-sobchak"/></svg>
+      </div>
+      <div class="hero-avatar hero-avatar--lutchek is-speaking" data-name="Maxim Lutchak · Z世代">
+        <svg viewBox="0 0 100 100"><use href="#avatar-lutchek"/></svg>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       НАВИГАЦИЯ
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="nav-bar">
+    <div class="slide-indicator" id="slide-indicator">第 1 页 / 共 20 页</div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prev-btn" aria-label="上一页">←</button>
+      <button class="nav-btn" id="next-btn" aria-label="下一页">→</button>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  class SlideDeck {
+    constructor() {
+      this.slides = Array.from(document.querySelectorAll('.slide'));
+      this.indicator = document.getElementById('slide-indicator');
+      this.prevBtn = document.getElementById('prev-btn');
+      this.nextBtn = document.getElementById('next-btn');
+      this.progressBar = document.getElementById('progress');
+
+      let saved = 0;
+      try {
+        const raw = localStorage.getItem('deck_duel_v1');
+        const parsed = parseInt(raw, 10);
+        if (!isNaN(parsed) && parsed >= 0 && parsed < this.slides.length) {
+          saved = parsed;
+        }
+      } catch (e) { saved = 0; }
+      this.currentIdx = saved;
+
+      this.init();
+    }
+
+    init() {
+      this.updateSlides();
+
+      this.prevBtn.addEventListener('click', () => this.prev());
+      this.nextBtn.addEventListener('click', () => this.next());
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+          e.preventDefault();
+          this.next();
+        }
+        if (e.key === 'ArrowLeft') this.prev();
+      });
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) this.next();
+        if (touchEndX - touchStartX > 50) this.prev();
+      }, { passive: true });
+    }
+
+    goTo(index) {
+      if (index < 0 || index >= this.slides.length) return;
+      this.currentIdx = index;
+      this.updateSlides();
+      try { localStorage.setItem('deck_duel_v1', this.currentIdx); } catch (e) {}
+    }
+
+    next() {
+      if (this.currentIdx < this.slides.length - 1) this.goTo(this.currentIdx + 1);
+    }
+
+    prev() {
+      if (this.currentIdx > 0) this.goTo(this.currentIdx - 1);
+    }
+
+    updateSlides() {
+      this.slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === this.currentIdx);
+      });
+
+      this.indicator.textContent = `第 ${this.currentIdx + 1} 页 / 共 ${this.slides.length} 页`;
+      this.prevBtn.classList.toggle('is-disabled', this.currentIdx === 0);
+      this.nextBtn.classList.toggle('is-disabled', this.currentIdx === this.slides.length - 1);
+
+      if (this.progressBar) {
+        const percent = ((this.currentIdx + 1) / this.slides.length) * 100;
+        this.progressBar.style.width = percent + '%';
+      }
+    }
+  }
+
+  function speakZH(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-CN';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+
+  function toggleQuestion(btn) {
+    btn.classList.toggle('is-open');
+    const answer = btn.nextElementSibling;
+    if (answer && answer.classList.contains('question-answer')) {
+      answer.classList.toggle('is-open');
+    }
+    btn.setAttribute('aria-expanded', btn.classList.contains('is-open') ? 'true' : 'false');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    window.deck = new SlideDeck();
+  });
+</script>
+</body>
+</html>
