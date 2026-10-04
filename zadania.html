@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>HSK4 · Аудирование + Чтение</title>
+<style>
+:root{
+  --bg:#faf8f5;--surface:#fff;--border:#e8e2d8;--text:#2d2a22;--muted:#8a7a64;
+  --gold:#b8914a;--gold-soft:#fdf9f0;--green:#2e7d32;--green-soft:#e8f5e9;
+  --blue:#4a5b8c;--blue-soft:#eef1f7;--purple:#6a4c9c;--purple-soft:#f3e5f5;
+  --cinnabar:#b5443c;--radius:20px;--shadow:0 4px 12px rgba(0,0,0,.04);
+  --cjk:'Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding:16px;font-size:15px}
+.app{max-width:1100px;margin:0 auto}
+h1{color:var(--green);font-size:1.7rem;margin-bottom:.3rem;line-height:1.25}
+.subtitle{color:var(--muted);margin-bottom:1.2rem;font-size:.9rem}
+.panel{background:var(--surface);border-radius:var(--radius);padding:1.4rem;box-shadow:var(--shadow);margin-bottom:1.4rem;border:1px solid var(--border)}
+
+/* ТАБЫ */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.4rem;position:sticky;top:0;background:var(--bg);z-index:10;padding:8px 0}
+.tab-btn{background:var(--surface);border:1px solid var(--border);padding:8px 16px;border-radius:24px;font-weight:600;font-size:.82rem;cursor:pointer;transition:.2s;color:var(--text);font-family:inherit}
+.tab-btn:hover{background:var(--gold-soft)}
+.tab-btn.active{background:var(--green);color:#fff;border-color:var(--green)}
+.tab-content{display:none;animation:fade .3s}
+.tab-content.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.intro-block{background:#fff8e6;border-left:5px solid var(--gold);border-radius:14px;padding:16px 20px;margin-bottom:18px;font-size:.92rem;line-height:1.75}
+.intro-block strong{color:#7a5c2e}
+
+/* КАРТОЧКА ДИАЛОГА */
+.dialogue-card{background:#fffefc;border:2px solid var(--blue);border-radius:20px;padding:20px;margin-bottom:22px;box-shadow:var(--shadow)}
+.dialogue-card.reading{border-color:var(--purple)}
+.dialogue-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.dialogue-title{font-weight:800;color:var(--blue);font-size:1.1rem}
+.dialogue-card.reading .dialogue-title{color:var(--purple)}
+.dialogue-controls{display:flex;gap:8px;flex-wrap:wrap}
+.ctrl-btn{background:var(--blue-soft);border:1px solid var(--blue);color:#2a3a5c;padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit}
+.ctrl-btn:hover{background:#dde3f0}
+.dialogue-card.reading .ctrl-btn{background:var(--purple-soft);border-color:var(--purple);color:#311b92}
+.dialogue-card.reading .ctrl-btn:hover{background:#e8d5f0}
+
+.dialogue-body{font-family:var(--cjk);font-size:1.08rem;line-height:2;background:#f9fdf9;padding:14px 16px;border-radius:12px;border-left:4px solid var(--blue)}
+.dialogue-card.reading .dialogue-body{background:#fbf8ff;border-left-color:var(--purple)}
+.dlg-line{margin:4px 0}
+.dlg-speaker{font-weight:800;color:var(--blue);margin-right:6px;font-family:'Segoe UI',sans-serif}
+.dialogue-card.reading .dlg-speaker{color:var(--purple)}
+
+.pinyin-box{display:none;font-size:.92rem;color:var(--muted);line-height:1.9;background:#fff9;padding:12px 16px;border-radius:12px;margin-top:10px}
+.pinyin-box.show{display:block}
+
+.ru-box{display:none;font-size:.9rem;color:#5c503e;line-height:1.8;background:var(--gold-soft);padding:12px 16px;border-radius:12px;margin-top:10px;border-left:3px solid var(--gold)}
+.ru-box.show{display:block}
+
+/* ВОПРОСЫ */
+.questions-box{display:none;margin-top:14px}
+.questions-box.show{display:block}
+.q-item{background:#fbf8ff;border-radius:12px;padding:12px 14px;margin-bottom:10px;border-left:4px solid var(--purple)}
+.q-text{font-family:var(--cjk);font-weight:700;font-size:1.02rem;color:#311b92;margin-bottom:6px}
+.q-options{display:flex;flex-wrap:wrap;gap:8px}
+.q-opt{background:#fff;border:1px solid var(--purple);border-radius:18px;padding:4px 14px;font-family:var(--cjk);font-size:.9rem}
+
+/* ОТВЕТЫ */
+.answers-box{display:none;margin-top:10px;background:var(--green-soft);border-radius:12px;padding:12px 14px;border-left:4px solid var(--green)}
+.answers-box.show{display:block}
+.answers-box .a-line{font-family:var(--cjk);font-weight:700;color:#1b5e20;margin:4px 0}
+
+/* ЛЕКСИКА */
+.vocab-box{display:none;margin-top:12px;background:#f7f4ea;border-radius:12px;padding:12px 14px}
+.vocab-box.show{display:block}
+.vocab-item{margin:4px 0;font-size:.9rem}
+.vocab-word{font-family:var(--cjk);font-weight:700;color:#a05e15}
+.vocab-pinyin{font-family:monospace;color:var(--muted);font-size:.82rem;margin-left:6px}
+.vocab-ru{color:var(--text);margin-left:6px}
+
+@media(max-width:640px){
+  body{padding:10px}
+  h1{font-size:1.3rem}
+  .dialogue-body{font-size:.98rem}
+  .ctrl-btn{font-size:.7rem;padding:5px 10px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<h1>📚 HSK4 · Аудирование + Чтение</h1>
+<div class="subtitle">Персонажи: 斯拉瓦 · 卡荚 · 仁杰</div>
+
+<!-- ТАБЫ -->
+<div class="tabs">
+  <button class="tab-btn active" data-tab="listening">🎧 Аудирование (4 диалога)</button>
+  <button class="tab-btn" data-tab="reading">📖 Чтение (3 диалога)</button>
+</div>
+
+<!-- ================= АУДИРОВАНИЕ ================= -->
+<div class="tab-content active" id="listening">
+
+<div class="intro-block">
+<strong>⏳ Как работать с аудированием.</strong><br>
+1. Сначала прочитайте диалог <strong>по иероглифам</strong> вслух, не открывая пиньинь и перевод.<br>
+2. Потом откройте <strong>пиньинь</strong> — проверьте произношение.<br>
+3. Потом откройте <strong>перевод</strong> — проверьте понимание.<br>
+4. Затем откройте <strong>вопросы</strong> и ответьте письменно, не подглядывая.<br>
+5. В конце откройте <strong>ответы</strong> и сверьтесь.
+</div>
+
+<!-- ДИАЛОГ 1 -->
+<div class="dialogue-card">
+<div class="dialogue-header">
+<div class="dialogue-title">🎧 Диалог 1 · 斯拉瓦 + 同事</div>
+<div class="dialogue-controls">
+<button class="ctrl-btn" onclick="toggle('a1_pinyin')">🔤 Пиньинь</button>
+<button class="ctrl-btn" onclick="toggle('a1_ru')">🌐 Перевод</button>
+<button class="ctrl-btn" onclick="toggle('a1_q')">❓ Вопросы</button>
+<button class="ctrl-btn" onclick="toggle('a1_a')">✅ Ответы</button>
+<button class="ctrl-btn" onclick="toggle('a1_v')">📖 Лексика</button>
+</div>
+</div>
+
+<div class="dialogue-body">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 斯拉瓦，你每天几点起床？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 我早上六点起床，然后跑步半个小时。我家离公司很远，从家到公司要一个小时，所以我坐公共汽车上班。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 你周末一般做什么？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 如果有空，我想去旅游。坐飞机很快，但是机票贵。我不喜欢生病，平时坚持运动，身体还不错。</div>
+</div>
+
+<div class="pinyin-box" id="a1_pinyin">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> sī lā wǎ，nǐ měi tiān jǐ diǎn qǐ chuáng？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> wǒ zǎo shang liù diǎn qǐ chuáng，rán hòu pǎo bù bàn gè xiǎo shí。wǒ jiā lí gōng sī hěn yuǎn，cóng jiā dào gōng sī yào yí gè xiǎo shí，suǒ yǐ wǒ zuò gōng gòng qì chē shàng bān。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> nǐ zhōu mò yì bān zuò shén me？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> rú guǒ yǒu kōng，wǒ xiǎng qù lǚ yóu。zuò fēi jī hěn kuài，dàn shì jī piào guì。wǒ bù xǐ huan shēng bìng，píng shí jiān chí yùn dòng，shēn tǐ hái bú cuò。</div>
+</div>
+
+<div class="ru-box" id="a1_ru">
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Слава, во сколько ты встаёшь каждый день?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Я встаю в шесть утра, потом бегаю полчаса. Мой дом далеко от компании, дорога от дома до работы занимает час, поэтому я езжу на автобусе на работу.</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Чем ты обычно занимаешься на выходных?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Если есть свободное время, хочу поехать путешествовать. Самолёт быстро довезёт, но билеты дорогие. Я не люблю болеть, постоянно занимаюсь спортом, со здоровьем всё хорошо.</div>
+</div>
+
+<div class="questions-box" id="a1_q">
+<div class="q-item">
+<div class="q-text">1. 斯拉瓦早上起床以后先做什么？</div>
+<div class="q-options"><span class="q-opt">A) 坐公共汽车</span><span class="q-opt">B) 跑步</span><span class="q-opt">C) 去旅游</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">2. 斯拉瓦为什么坐公共汽车上班？</div>
+<div class="q-options"><span class="q-opt">A) 家离公司很远</span><span class="q-opt">B) 他没有自行车</span><span class="q-opt">C) 飞机太贵</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">3. 斯拉瓦坚持运动是为了什么？</div>
+<div class="q-options"><span class="q-opt">A) 考试</span><span class="q-opt">B) 身体好</span><span class="q-opt">C) 去饭店吃饭</span></div>
+</div>
+</div>
+
+<div class="answers-box" id="a1_a">
+<div class="a-line">1. ✅ B) 跑步</div>
+<div class="a-line">2. ✅ A) 家离公司很远</div>
+<div class="a-line">3. ✅ B) 身体好</div>
+</div>
+
+<div class="vocab-box" id="a1_v">
+<div class="vocab-item"><span class="vocab-word">⏱小时</span><span class="vocab-pinyin">xiǎo shí</span><span class="vocab-ru">— час</span></div>
+<div class="vocab-item"><span class="vocab-word">📍离</span><span class="vocab-pinyin">lí</span><span class="vocab-ru">— на расстоянии</span></div>
+<div class="vocab-item"><span class="vocab-word">🚶起床</span><span class="vocab-pinyin">qǐ chuáng</span><span class="vocab-ru">— вставать</span></div>
+<div class="vocab-item"><span class="vocab-word">🏃跑步</span><span class="vocab-pinyin">pǎo bù</span><span class="vocab-ru">— бегать</span></div>
+<div class="vocab-item"><span class="vocab-word">🚌公共汽车</span><span class="vocab-pinyin">gōng gòng qì chē</span><span class="vocab-ru">— автобус</span></div>
+<div class="vocab-item"><span class="vocab-word">✈️旅游</span><span class="vocab-pinyin">lǚ yóu</span><span class="vocab-ru">— путешествовать</span></div>
+<div class="vocab-item"><span class="vocab-word">🤒生病</span><span class="vocab-pinyin">shēng bìng</span><span class="vocab-ru">— болеть</span></div>
+<div class="vocab-item"><span class="vocab-word">🫁身体</span><span class="vocab-pinyin">shēn tǐ</span><span class="vocab-ru">— здоровье, тело</span></div>
+</div>
+</div>
+
+<!-- ДИАЛОГ 2 -->
+<div class="dialogue-card">
+<div class="dialogue-header">
+<div class="dialogue-title">🎧 Диалог 2 · 卡荚 + 姐姐</div>
+<div class="dialogue-controls">
+<button class="ctrl-btn" onclick="toggle('a2_pinyin')">🔤 Пиньинь</button>
+<button class="ctrl-btn" onclick="toggle('a2_ru')">🌐 Перевод</button>
+<button class="ctrl-btn" onclick="toggle('a2_q')">❓ Вопросы</button>
+<button class="ctrl-btn" onclick="toggle('a2_a')">✅ Ответы</button>
+<button class="ctrl-btn" onclick="toggle('a2_v')">📖 Лексика</button>
+</div>
+</div>
+
+<div class="dialogue-body">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 卡荚，上周的考试怎么样？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 考试题有点儿难，但是我考完了。我每天九点上班，公司离我家很近，走路就能到。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 你常去家附近的饭店吗？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 是的，那里的面条很好吃，服务员很热情。下个月是你的生日，我和丈夫想送你一块手表。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 不用买太贵的，我们一起吃饭，我就很高兴。</div>
+</div>
+
+<div class="pinyin-box" id="a2_pinyin">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> kǎ jiá，shàng zhōu de kǎo shì zěn me yàng？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> kǎo shì tí yǒu diǎn nán，dàn shì wǒ kǎo wán le。wǒ měi tiān jiǔ diǎn shàng bān，gōng sī lí wǒ jiā hěn jìn，zǒu lù jiù néng dào。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> nǐ cháng qù jiā fù jìn de fàn diàn ma？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> shì de，nà lǐ de miàn tiáo hěn hǎo chī，fú wù yuán hěn rè qíng。xià gè yuè shì nǐ de shēng rì，wǒ hé zhàng fu xiǎng sòng nǐ yí kuài shǒu biǎo。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> bú yòng mǎi tài guì de，wǒ men yì qǐ chī fàn，wǒ jiù hěn gāo xìng。</div>
+</div>
+
+<div class="ru-box" id="a2_ru">
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Кадзя, как прошёл экзамен на прошлой неделе?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Задания экзамена немного сложные, но я его сдала. Я начинаю работу в девять каждый день, компания близко от дома, можно дойти пешком.</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Ты часто ходишь в ресторан рядом с домом?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Да, там очень вкусная лапша, официанты приветливые. В следующем месяце твой день рождения, мы с мужем хотим подарить тебе наручные часы.</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Не покупай слишком дорогой подарок, если мы просто поужинаем вместе — я уже буду очень рада.</div>
+</div>
+
+<div class="questions-box" id="a2_q">
+<div class="q-item">
+<div class="q-text">1. 卡荚的公司离她家？</div>
+<div class="q-options"><span class="q-opt">A) 很远</span><span class="q-opt">B) 很近</span><span class="q-opt">C) 要坐一小时车</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">2. 饭店里什么食物很好吃？</div>
+<div class="q-options"><span class="q-opt">A) 面条</span><span class="q-opt">B) 鱼</span><span class="q-opt">C) 羊肉</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">3. 卡荚打算给谁送手表？</div>
+<div class="q-options"><span class="q-opt">A) 丈夫</span><span class="q-opt">B) 姐姐</span><span class="q-opt">C) 同事</span></div>
+</div>
+</div>
+
+<div class="answers-box" id="a2_a">
+<div class="a-line">1. ✅ B) 很近</div>
+<div class="a-line">2. ✅ A) 面条</div>
+<div class="a-line">3. ✅ B) 姐姐</div>
+</div>
+
+<div class="vocab-box" id="a2_v">
+<div class="vocab-item"><span class="vocab-word">📝考试</span><span class="vocab-pinyin">kǎo shì</span><span class="vocab-ru">— экзамен</span></div>
+<div class="vocab-item"><span class="vocab-word">❓题</span><span class="vocab-pinyin">tí</span><span class="vocab-ru">— задание</span></div>
+<div class="vocab-item"><span class="vocab-word">✅完</span><span class="vocab-pinyin">wán</span><span class="vocab-ru">— закончить</span></div>
+<div class="vocab-item"><span class="vocab-word">🏢公司</span><span class="vocab-pinyin">gōng sī</span><span class="vocab-ru">— компания</span></div>
+<div class="vocab-item"><span class="vocab-word">🏪饭店</span><span class="vocab-pinyin">fàn diàn</span><span class="vocab-ru">— ресторан</span></div>
+<div class="vocab-item"><span class="vocab-word">👩‍🍳服务员</span><span class="vocab-pinyin">fú wù yuán</span><span class="vocab-ru">— официант</span></div>
+<div class="vocab-item"><span class="vocab-word">🍜面条</span><span class="vocab-pinyin">miàn tiáo</span><span class="vocab-ru">— лапша</span></div>
+<div class="vocab-item"><span class="vocab-word">⌚手表</span><span class="vocab-pinyin">shǒu biǎo</span><span class="vocab-ru">— часы</span></div>
+<div class="vocab-item"><span class="vocab-word">🎂生日</span><span class="vocab-pinyin">shēng rì</span><span class="vocab-ru">— день рождения</span></div>
+<div class="vocab-item"><span class="vocab-word">🤵丈夫</span><span class="vocab-pinyin">zhàng fu</span><span class="vocab-ru">— муж</span></div>
+<div class="vocab-item"><span class="vocab-word">😀高兴</span><span class="vocab-pinyin">gāo xìng</span><span class="vocab-ru">— радостный</span></div>
+</div>
+</div>
+
+<!-- ДИАЛОГ 3 -->
+<div class="dialogue-card">
+<div class="dialogue-header">
+<div class="dialogue-title">🎧 Диалог 3 · 仁杰 + 朋友</div>
+<div class="dialogue-controls">
+<button class="ctrl-btn" onclick="toggle('a3_pinyin')">🔤 Пиньинь</button>
+<button class="ctrl-btn" onclick="toggle('a3_ru')">🌐 Перевод</button>
+<button class="ctrl-btn" onclick="toggle('a3_q')">❓ Вопросы</button>
+<button class="ctrl-btn" onclick="toggle('a3_a')">✅ Ответы</button>
+<button class="ctrl-btn" onclick="toggle('a3_v')">📖 Лексика</button>
+</div>
+</div>
+
+<div class="dialogue-body">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 仁杰，中午我们一起去饭店吃饭吗？我知道一家饭店，鱼和羊肉都不错。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 太好了！下午我要去游泳。运动对身体最好。晚上回家，我一般看报纸、喝咖啡。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 听说你喜欢跳舞？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 是的，跳舞是我的爱好。明天是我妈妈的生日，我要打电话祝妈妈生日快乐，希望她身体健康。</div>
+</div>
+
+<div class="pinyin-box" id="a3_pinyin">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> rén jié，zhōng wǔ wǒ men yì qǐ qù fàn diàn chī fàn ma？wǒ zhī dào yì jiā fàn diàn，yú hé yáng ròu dōu bú cuò。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> tài hǎo le！xià wǔ wǒ yào qù yóu yǒng。yùn dòng duì shēn tǐ zuì hǎo。wǎn shang huí jiā，wǒ yì bān kàn bào zhǐ、hē kā fēi。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> tīng shuō nǐ xǐ huan tiào wǔ？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> shì de，tiào wǔ shì wǒ de ài hào。míng tiān shì wǒ mā ma de shēng rì，wǒ yào dǎ diàn huà zhù mā ma shēng rì kuài lè，xī wàng tā shēn tǐ jiàn kāng。</div>
+</div>
+
+<div class="ru-box" id="a3_ru">
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Жэньцзе, сходим пообедать в ресторан? Я знаю одно место, рыба и баранина там хорошие.</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Замечательно! Днём я пойду плавать. Спорт — самое полезное для здоровья. Вечером дома я обычно читаю газеты и пью кофе.</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Я слышал, ты любишь танцевать?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Да, танцы — моё хобби. Завтра день рождения моей мамы, я позвоню ей, поздравлю с днём рождения и пожелаю здоровья.</div>
+</div>
+
+<div class="questions-box" id="a3_q">
+<div class="q-item">
+<div class="q-text">1. 下午仁杰要做什么运动？</div>
+<div class="q-options"><span class="q-opt">A) 打篮球</span><span class="q-opt">B) 游泳</span><span class="q-opt">C) 跑步</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">2. 仁杰晚上在家看什么？</div>
+<div class="q-options"><span class="q-opt">A) 报纸</span><span class="q-opt">B) 杂志</span><span class="q-opt">C) 手表</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">3. 仁杰妈妈什么时候过生日？</div>
+<div class="q-options"><span class="q-opt">A) 今天</span><span class="q-opt">B) 明天</span><span class="q-opt">C) 下个月</span></div>
+</div>
+</div>
+
+<div class="answers-box" id="a3_a">
+<div class="a-line">1. ✅ B) 游泳</div>
+<div class="a-line">2. ✅ A) 报纸</div>
+<div class="a-line">3. ✅ B) 明天</div>
+</div>
+
+<div class="vocab-box" id="a3_v">
+<div class="vocab-item"><span class="vocab-word">🏊游泳</span><span class="vocab-pinyin">yóu yǒng</span><span class="vocab-ru">— плавать</span></div>
+<div class="vocab-item"><span class="vocab-word">💃跳舞</span><span class="vocab-pinyin">tiào wǔ</span><span class="vocab-ru">— танцевать</span></div>
+<div class="vocab-item"><span class="vocab-word">🐟鱼</span><span class="vocab-pinyin">yú</span><span class="vocab-ru">— рыба</span></div>
+<div class="vocab-item"><span class="vocab-word">🐑羊肉</span><span class="vocab-pinyin">yáng ròu</span><span class="vocab-ru">— баранина</span></div>
+<div class="vocab-item"><span class="vocab-word">📰报纸</span><span class="vocab-pinyin">bào zhǐ</span><span class="vocab-ru">— газета</span></div>
+<div class="vocab-item"><span class="vocab-word">☕咖啡</span><span class="vocab-pinyin">kā fēi</span><span class="vocab-ru">— кофе</span></div>
+<div class="vocab-item"><span class="vocab-word">👍最</span><span class="vocab-pinyin">zuì</span><span class="vocab-ru">— самый</span></div>
+<div class="vocab-item"><span class="vocab-word">🫁身体</span><span class="vocab-pinyin">shēn tǐ</span><span class="vocab-ru">— здоровье</span></div>
+</div>
+</div>
+
+<!-- ДИАЛОГ 4 -->
+<div class="dialogue-card">
+<div class="dialogue-header">
+<div class="dialogue-title">🎧 Диалог 4 · 斯拉瓦 + 服务员 (в ресторане)</div>
+<div class="dialogue-controls">
+<button class="ctrl-btn" onclick="toggle('a4_pinyin')">🔤 Пиньинь</button>
+<button class="ctrl-btn" onclick="toggle('a4_ru')">🌐 Перевод</button>
+<button class="ctrl-btn" onclick="toggle('a4_q')">❓ Вопросы</button>
+<button class="ctrl-btn" onclick="toggle('a4_a')">✅ Ответы</button>
+<button class="ctrl-btn" onclick="toggle('a4_v')">📖 Лексика</button>
+</div>
+</div>
+
+<div class="dialogue-body">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 您好！请问这里可以坐吗？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 可以。您想吃什么？我们的面条很好吃。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 我想吃面条。我是斯拉瓦，今天休息，不用上班。我家离这儿很远，坐公共汽车来的。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 您经常来我们饭店吗？</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 不经常。我每天早上起床跑步，要好好保护身体。周末我打算坐飞机去旅游。</div>
+</div>
+
+<div class="pinyin-box" id="a4_pinyin">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> nín hǎo！qǐng wèn zhè lǐ kě yǐ zuò ma？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> kě yǐ。nín xiǎng chī shén me？wǒ men de miàn tiáo hěn hǎo chī。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> wǒ xiǎng chī miàn tiáo。wǒ shì sī lā wǎ，jīn tiān xiū xi，bú yòng shàng bān。wǒ jiā lí zhèr hěn yuǎn，zuò gōng gòng qì chē lái de。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> nín jīng cháng lái wǒ men fàn diàn ma？</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> bù jīng cháng。wǒ měi tiān zǎo shang qǐ chuáng pǎo bù，yào hǎo hǎo bǎo hù shēn tǐ。zhōu mò wǒ dǎ suàn zuò fēi jī qù lǚ yóu。</div>
+</div>
+
+<div class="ru-box" id="a4_ru">
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Здравствуйте! Можно сесть за этот стол?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Да. Что вы хотите заказать? У нас очень вкусная лапша.</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Я возьму лапшу. Я Слава, сегодня выходной, не нужно идти на работу. Мой дом далеко отсюда, я приехал на автобусе.</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Вы часто приходите в наш ресторан?</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Не очень. Каждый день утром я встаю и бегаю, чтобы беречь здоровье. На выходных планирую поехать путешествовать на самолёте.</div>
+</div>
+
+<div class="questions-box" id="a4_q">
+<div class="q-item">
+<div class="q-text">1. 斯拉瓦今天为什么不用上班？</div>
+<div class="q-options"><span class="q-opt">A) 今天休息</span><span class="q-opt">B) 他生病了</span><span class="q-opt">C) 考试完了</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">2. 斯拉瓦怎么来到饭店？</div>
+<div class="q-options"><span class="q-opt">A) 骑自行车</span><span class="q-opt">B) 坐公共汽车</span><span class="q-opt">C) 坐飞机</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">3. 斯拉瓦周末打算做什么？</div>
+<div class="q-options"><span class="q-opt">A) 在饭店吃饭</span><span class="q-opt">B) 跑步</span><span class="q-opt">C) 去旅游</span></div>
+</div>
+</div>
+
+<div class="answers-box" id="a4_a">
+<div class="a-line">1. ✅ A) 今天休息</div>
+<div class="a-line">2. ✅ B) 坐公共汽车</div>
+<div class="a-line">3. ✅ C) 去旅游</div>
+</div>
+
+<div class="vocab-box" id="a4_v">
+<div class="vocab-item"><span class="vocab-word">🏪饭店</span><span class="vocab-pinyin">fàn diàn</span><span class="vocab-ru">— ресторан</span></div>
+<div class="vocab-item"><span class="vocab-word">👩‍🍳服务员</span><span class="vocab-pinyin">fú wù yuán</span><span class="vocab-ru">— официант</span></div>
+<div class="vocab-item"><span class="vocab-word">🍜面条</span><span class="vocab-pinyin">miàn tiáo</span><span class="vocab-ru">— лапша</span></div>
+<div class="vocab-item"><span class="vocab-word">⏸休息</span><span class="vocab-pinyin">xiū xi</span><span class="vocab-ru">— отдыхать</span></div>
+<div class="vocab-item"><span class="vocab-word">🏢上班</span><span class="vocab-pinyin">shàng bān</span><span class="vocab-ru">— ходить на работу</span></div>
+<div class="vocab-item"><span class="vocab-word">📍离</span><span class="vocab-pinyin">lí</span><span class="vocab-ru">— далеко от</span></div>
+<div class="vocab-item"><span class="vocab-word">🚌公共汽车</span><span class="vocab-pinyin">gōng gòng qì chē</span><span class="vocab-ru">— автобус</span></div>
+<div class="vocab-item"><span class="vocab-word">⏰起床</span><span class="vocab-pinyin">qǐ chuáng</span><span class="vocab-ru">— вставать</span></div>
+<div class="vocab-item"><span class="vocab-word">🏃跑步</span><span class="vocab-pinyin">pǎo bù</span><span class="vocab-ru">— бегать</span></div>
+<div class="vocab-item"><span class="vocab-word">🫁身体</span><span class="vocab-pinyin">shēn tǐ</span><span class="vocab-ru">— здоровье</span></div>
+<div class="vocab-item"><span class="vocab-word">✈️飞机</span><span class="vocab-pinyin">fēi jī</span><span class="vocab-ru">— самолёт</span></div>
+<div class="vocab-item"><span class="vocab-word">🧳旅游</span><span class="vocab-pinyin">lǚ yóu</span><span class="vocab-ru">— путешествовать</span></div>
+</div>
+</div>
+
+</div>
+
+<!-- ================= ЧТЕНИЕ ================= -->
+<div class="tab-content" id="reading">
+
+<div class="intro-block">
+<strong>⏳ Как работать с чтением.</strong><br>
+1. Прочитайте диалог <strong>по иероглифам</strong> про себя.<br>
+2. Откройте <strong>пиньинь</strong> — проверьте, правильно ли вы прочитали.<br>
+3. Откройте <strong>перевод</strong> — проверьте понимание.<br>
+4. Откройте <strong>вопросы</strong>, ответьте.<br>
+5. Сверьтесь с <strong>ответами</strong>.<br>
+6. Разберите <strong>лексику</strong>.
+</div>
+
+<!-- ЧТЕНИЕ 1 -->
+<div class="dialogue-card reading">
+<div class="dialogue-header">
+<div class="dialogue-title">📖 Диалог 1 · 卡荚 + 同事</div>
+<div class="dialogue-controls">
+<button class="ctrl-btn" onclick="toggle('r1_pinyin')">🔤 Пиньинь</button>
+<button class="ctrl-btn" onclick="toggle('r1_ru')">🌐 Перевод</button>
+<button class="ctrl-btn" onclick="toggle('r1_q')">❓ Вопросы</button>
+<button class="ctrl-btn" onclick="toggle('r1_a')">✅ Ответы</button>
+<button class="ctrl-btn" onclick="toggle('r1_v')">📖 Лексика</button>
+</div>
+</div>
+
+<div class="dialogue-body">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 卡荚，你手上这块手表真好看！</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 谢谢！这是我姐姐送我的生日礼物。我上周考试，题有点儿难，还好我考完了。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 你每天几点上班？公司离你家近吗？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 九点上班。公司离我家很近。下班以后，我有时候和丈夫去饭店喝咖啡。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 你最近身体怎么样？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 有点儿累，但是不用吃药，休息几天就好了。</div>
+</div>
+
+<div class="pinyin-box" id="r1_pinyin">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> kǎ jiá，nǐ shǒu shang zhè kuài shǒu biǎo zhēn hǎo kàn！</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> xiè xie！zhè shì wǒ jiě jie sòng wǒ de shēng rì lǐ wù。wǒ shàng zhōu kǎo shì，tí yǒu diǎn nán，hái hǎo wǒ kǎo wán le。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> nǐ měi tiān jǐ diǎn shàng bān？gōng sī lí nǐ jiā jìn ma？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> jiǔ diǎn shàng bān。gōng sī lí wǒ jiā hěn jìn。xià bān yǐ hòu，wǒ yǒu shí hou hé zhàng fu qù fàn diàn hē kā fēi。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> nǐ zuì jìn shēn tǐ zěn me yàng？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> yǒu diǎn lèi，dàn shì bú yòng chī yào，xiū xi jǐ tiān jiù hǎo le。</div>
+</div>
+
+<div class="ru-box" id="r1_ru">
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Кадзя, у тебя очень красивые часы на руке!</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Спасибо! Это подарок от старшей сестры на день рождения. На прошлой неделе у меня был экзамен, задания немного сложные, но я успешно его сдала.</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Во сколько ты начинаешь работу? Компания близко от твоего дома?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> В девять. Компания рядом с домом. После работы иногда с мужем ходим в ресторан пить кофе.</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Как твоё здоровье в последнее время?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Немного устаю, но лекарства принимать не нужно, отдохну несколько дней и всё будет хорошо.</div>
+</div>
+
+<div class="questions-box" id="r1_q">
+<div class="q-item">
+<div class="q-text">1. 手表是谁送给卡荚的？</div>
+<div class="q-options"><span class="q-opt">A) 丈夫</span><span class="q-opt">B) 姐姐</span><span class="q-opt">C) 同事</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">2. 卡荚上周做了什么？</div>
+<div class="q-options"><span class="q-opt">A) 去旅游</span><span class="q-opt">B) 考试</span><span class="q-opt">C) 游泳</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">3. 卡荚觉得身体怎么样？</div>
+<div class="q-options"><span class="q-opt">A) 有点儿累</span><span class="q-opt">B) 生病了</span><span class="q-opt">C) 非常高兴</span></div>
+</div>
+</div>
+
+<div class="answers-box" id="r1_a">
+<div class="a-line">1. ✅ B) 姐姐</div>
+<div class="a-line">2. ✅ B) 考试</div>
+<div class="a-line">3. ✅ A) 有点儿累</div>
+</div>
+
+<div class="vocab-box" id="r1_v">
+<div class="vocab-item"><span class="vocab-word">⌚手表</span><span class="vocab-pinyin">shǒu biǎo</span><span class="vocab-ru">— наручные часы</span></div>
+<div class="vocab-item"><span class="vocab-word">👩姐姐</span><span class="vocab-pinyin">jiě jie</span><span class="vocab-ru">— старшая сестра</span></div>
+<div class="vocab-item"><span class="vocab-word">🎂生日</span><span class="vocab-pinyin">shēng rì</span><span class="vocab-ru">— день рождения</span></div>
+<div class="vocab-item"><span class="vocab-word">📝考试</span><span class="vocab-pinyin">kǎo shì</span><span class="vocab-ru">— экзамен</span></div>
+<div class="vocab-item"><span class="vocab-word">❓题</span><span class="vocab-pinyin">tí</span><span class="vocab-ru">— задание</span></div>
+<div class="vocab-item"><span class="vocab-word">✅完</span><span class="vocab-pinyin">wán</span><span class="vocab-ru">— закончить</span></div>
+<div class="vocab-item"><span class="vocab-word">🏢公司</span><span class="vocab-pinyin">gōng sī</span><span class="vocab-ru">— компания</span></div>
+<div class="vocab-item"><span class="vocab-word">🤵丈夫</span><span class="vocab-pinyin">zhàng fu</span><span class="vocab-ru">— муж</span></div>
+<div class="vocab-item"><span class="vocab-word">☕咖啡</span><span class="vocab-pinyin">kā fēi</span><span class="vocab-ru">— кофе</span></div>
+<div class="vocab-item"><span class="vocab-word">💊药</span><span class="vocab-pinyin">yào</span><span class="vocab-ru">— лекарство</span></div>
+<div class="vocab-item"><span class="vocab-word">🫁身体</span><span class="vocab-pinyin">shēn tǐ</span><span class="vocab-ru">— здоровье</span></div>
+<div class="vocab-item"><span class="vocab-word">⏸休息</span><span class="vocab-pinyin">xiū xi</span><span class="vocab-ru">— отдыхать</span></div>
+</div>
+</div>
+
+<!-- ЧТЕНИЕ 2 -->
+<div class="dialogue-card reading">
+<div class="dialogue-header">
+<div class="dialogue-title">📖 Диалог 2 · 仁杰 + 新伙伴</div>
+<div class="dialogue-controls">
+<button class="ctrl-btn" onclick="toggle('r2_pinyin')">🔤 Пиньинь</button>
+<button class="ctrl-btn" onclick="toggle('r2_ru')">🌐 Перевод</button>
+<button class="ctrl-btn" onclick="toggle('r2_q')">❓ Вопросы</button>
+<button class="ctrl-btn" onclick="toggle('r2_a')">✅ Ответы</button>
+<button class="ctrl-btn" onclick="toggle('r2_v')">📖 Лексика</button>
+</div>
+</div>
+
+<div class="dialogue-body">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 你好！我想介绍一下，我是仁杰。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 您好仁杰！听说你喜欢运动？</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 是的。我最喜欢游泳，也会跳舞。中午我常去饭店吃羊肉和鱼。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 晚上在家你一般做什么？</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 我看报纸。明天是妈妈的生日，我要打电话，祝她生日快乐。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 太好了！希望她身体健康。</div>
+</div>
+
+<div class="pinyin-box" id="r2_pinyin">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> nǐ hǎo！wǒ xiǎng jiè shào yí xià，wǒ shì rén jié。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> nín hǎo rén jié！tīng shuō nǐ xǐ huan yùn dòng？</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> shì de。wǒ zuì xǐ huan yóu yǒng，yě huì tiào wǔ。zhōng wǔ wǒ cháng qù fàn diàn chī yáng ròu hé yú。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> wǎn shang zài jiā nǐ yì bān zuò shén me？</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> wǒ kàn bào zhǐ。míng tiān shì mā ma de shēng rì，wǒ yào dǎ diàn huà，zhù tā shēng rì kuài lè。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> tài hǎo le！xī wàng tā shēn tǐ jiàn kāng。</div>
+</div>
+
+<div class="ru-box" id="r2_ru">
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Привет! Позволь представиться, я Жэньцзе.</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Здравствуйте, Жэньцзе! Я слышал, ты любишь спорт?</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Да. Больше всего люблю плавать, ещё умею танцевать. В обед часто хожу в ресторан, ем баранину и рыбу.</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Что ты обычно делаешь дома вечером?</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Читаю газеты. Завтра день рождения моей мамы, я позвоню ей и поздравлю с днём рождения.</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Замечательно! Желаю ей крепкого здоровья.</div>
+</div>
+
+<div class="questions-box" id="r2_q">
+<div class="q-item">
+<div class="q-text">1. 仁杰最喜欢什么运动？</div>
+<div class="q-options"><span class="q-opt">A) 游泳</span><span class="q-opt">B) 打篮球</span><span class="q-opt">C) 跑步</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">2. 仁杰中午在饭店吃什么？</div>
+<div class="q-options"><span class="q-opt">A) 面条和咖啡</span><span class="q-opt">B) 鱼和羊肉</span><span class="q-opt">C) 鱼和面条</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">3. 仁杰明天要给谁打电话？</div>
+<div class="q-options"><span class="q-opt">A) 姐姐</span><span class="q-opt">B) 妈妈</span><span class="q-opt">C) 丈夫</span></div>
+</div>
+</div>
+
+<div class="answers-box" id="r2_a">
+<div class="a-line">1. ✅ A) 游泳</div>
+<div class="a-line">2. ✅ B) 鱼和羊肉</div>
+<div class="a-line">3. ✅ B) 妈妈</div>
+</div>
+
+<div class="vocab-box" id="r2_v">
+<div class="vocab-item"><span class="vocab-word">📢介绍</span><span class="vocab-pinyin">jiè shào</span><span class="vocab-ru">— представить</span></div>
+<div class="vocab-item"><span class="vocab-word">🏃运动</span><span class="vocab-pinyin">yùn dòng</span><span class="vocab-ru">— спорт</span></div>
+<div class="vocab-item"><span class="vocab-word">🏊游泳</span><span class="vocab-pinyin">yóu yǒng</span><span class="vocab-ru">— плавать</span></div>
+<div class="vocab-item"><span class="vocab-word">💃跳舞</span><span class="vocab-pinyin">tiào wǔ</span><span class="vocab-ru">— танцевать</span></div>
+<div class="vocab-item"><span class="vocab-word">🐑羊肉</span><span class="vocab-pinyin">yáng ròu</span><span class="vocab-ru">— баранина</span></div>
+<div class="vocab-item"><span class="vocab-word">🐟鱼</span><span class="vocab-pinyin">yú</span><span class="vocab-ru">— рыба</span></div>
+<div class="vocab-item"><span class="vocab-word">📰报纸</span><span class="vocab-pinyin">bào zhǐ</span><span class="vocab-ru">— газета</span></div>
+<div class="vocab-item"><span class="vocab-word">🎂生日</span><span class="vocab-pinyin">shēng rì</span><span class="vocab-ru">— день рождения</span></div>
+<div class="vocab-item"><span class="vocab-word">😀快乐</span><span class="vocab-pinyin">kuài lè</span><span class="vocab-ru">— счастливый</span></div>
+<div class="vocab-item"><span class="vocab-word">🫁身体</span><span class="vocab-pinyin">shēn tǐ</span><span class="vocab-ru">— здоровье</span></div>
+<div class="vocab-item"><span class="vocab-word">👍最</span><span class="vocab-pinyin">zuì</span><span class="vocab-ru">— самый</span></div>
+</div>
+</div>
+
+<!-- ЧТЕНИЕ 3 -->
+<div class="dialogue-card reading">
+<div class="dialogue-header">
+<div class="dialogue-title">📖 Диалог 3 · 仁杰 + 同事 (о еде и планах)</div>
+<div class="dialogue-controls">
+<button class="ctrl-btn" onclick="toggle('r3_pinyin')">🔤 Пиньинь</button>
+<button class="ctrl-btn" onclick="toggle('r3_ru')">🌐 Перевод</button>
+<button class="ctrl-btn" onclick="toggle('r3_q')">❓ Вопросы</button>
+<button class="ctrl-btn" onclick="toggle('r3_a')">✅ Ответы</button>
+<button class="ctrl-btn" onclick="toggle('r3_v')">📖 Лексика</button>
+</div>
+</div>
+
+<div class="dialogue-body">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 仁杰，中午我们一起去饭店吃饭吗？我知道一家饭店，鱼和羊肉都不错。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 太好了！下午我要去游泳。运动对身体最好。晚上回家，我一般看报纸、喝咖啡。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 听说你喜欢跳舞？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 是的，跳舞是我的爱好。明天是我妈妈的生日，我要打电话祝妈妈生日快乐，希望她身体健康。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> 你妈妈喜欢什么？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> 她喜欢面条和鱼，也喜欢咖啡。我打算下个月坐飞机去看她。</div>
+</div>
+
+<div class="pinyin-box" id="r3_pinyin">
+<div class="dlg-line"><span class="dlg-speaker">A:</span> rén jié，zhōng wǔ wǒ men yì qǐ qù fàn diàn chī fàn ma？wǒ zhī dào yì jiā fàn diàn，yú hé yáng ròu dōu bú cuò。</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> tài hǎo le！xià wǔ wǒ yào qù yóu yǒng。yùn dòng duì shēn tǐ zuì hǎo。wǎn shang huí jiā，wǒ yì bān kàn bào zhǐ、hē kā fēi。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> tīng shuō nǐ xǐ huan tiào wǔ？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> shì de，tiào wǔ shì wǒ de ài hào。míng tiān shì wǒ mā ma de shēng rì，wǒ yào dǎ diàn huà zhù mā ma shēng rì kuài lè，xī wàng tā shēn tǐ jiàn kāng。</div>
+<div class="dlg-line"><span class="dlg-speaker">A:</span> nǐ mā ma xǐ huan shén me？</div>
+<div class="dlg-line"><span class="dlg-speaker">B:</span> tā xǐ huan miàn tiáo hé yú，yě xǐ huan kā fēi。wǒ dǎ suàn xià gè yuè zuò fēi jī qù kàn tā。</div>
+</div>
+
+<div class="ru-box" id="r3_ru">
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Жэньцзе, сходим пообедать в ресторан? Я знаю одно место, рыба и баранина там хорошие.</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Замечательно! Днём я пойду плавать. Спорт — самое полезное для здоровья. Вечером дома я обычно читаю газеты и пью кофе.</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Я слышал, ты любишь танцевать?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Да, танцы — моё хобби. Завтра день рождения моей мамы, я позвоню ей, поздравлю с днём рождения и пожелаю здоровья.</div>
+<div class="dlg-line"><span class="dlg-speaker">А:</span> Что любит твоя мама?</div>
+<div class="dlg-line"><span class="dlg-speaker">Б:</span> Она любит лапшу и рыбу, а также кофе. Я планирую в следующем месяце полететь к ней на самолёте.</div>
+</div>
+
+<div class="questions-box" id="r3_q">
+<div class="q-item">
+<div class="q-text">1. 仁杰下午要做什么？</div>
+<div class="q-options"><span class="q-opt">A) 去饭店</span><span class="q-opt">B) 去游泳</span><span class="q-opt">C) 看报纸</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">2. 仁杰妈妈喜欢什么食物？</div>
+<div class="q-options"><span class="q-opt">A) 面条和鱼</span><span class="q-opt">B) 羊肉和咖啡</span><span class="q-opt">C) 面条和羊肉</span></div>
+</div>
+<div class="q-item">
+<div class="q-text">3. 仁杰打算怎么去看妈妈？</div>
+<div class="q-options"><span class="q-opt">A) 坐公共汽车</span><span class="q-opt">B) 坐飞机</span><span class="q-opt">C) 走路</span></div>
+</div>
+</div>
+
+<div class="answers-box" id="r3_a">
+<div class="a-line">1. ✅ B) 去游泳</div>
+<div class="a-line">2. ✅ A) 面条和鱼</div>
+<div class="a-line">3. ✅ B) 坐飞机</div>
+</div>
+
+<div class="vocab-box" id="r3_v">
+<div class="vocab-item"><span class="vocab-word">🏪饭店</span><span class="vocab-pinyin">fàn diàn</span><span class="vocab-ru">— ресторан</span></div>
+<div class="vocab-item"><span class="vocab-word">🏊游泳</span><span class="vocab-pinyin">yóu yǒng</span><span class="vocab-ru">— плавать</span></div>
+<div class="vocab-item"><span class="vocab-word">📰报纸</span><span class="vocab-pinyin">bào zhǐ</span><span class="vocab-ru">— газета</span></div>
+<div class="vocab-item"><span class="vocab-word">☕咖啡</span><span class="vocab-pinyin">kā fēi</span><span class="vocab-ru">— кофе</span></div>
+<div class="vocab-item"><span class="vocab-word">💃跳舞</span><span class="vocab-pinyin">tiào wǔ</span><span class="vocab-ru">— танцевать</span></div>
+<div class="vocab-item"><span class="vocab-word">🍜面条</span><span class="vocab-pinyin">miàn tiáo</span><span class="vocab-ru">— лапша</span></div>
+<div class="vocab-item"><span class="vocab-word">🐟鱼</span><span class="vocab-pinyin">yú</span><span class="vocab-ru">— рыба</span></div>
+<div class="vocab-item"><span class="vocab-word">✈️飞机</span><span class="vocab-pinyin">fēi jī</span><span class="vocab-ru">— самолёт</span></div>
+<div class="vocab-item"><span class="vocab-word">🎂生日</span><span class="vocab-pinyin">shēng rì</span><span class="vocab-ru">— день рождения</span></div>
+<div class="vocab-item"><span class="vocab-word">🫁身体</span><span class="vocab-pinyin">shēn tǐ</span><span class="vocab-ru">— здоровье</span></div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+// ===== ТАБЫ =====
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ===== ОТКРЫТИЕ / ЗАКРЫТИЕ БЛОКОВ =====
+function toggle(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.classList.toggle('show');
+}
+</script>
+</body>
+</html>
