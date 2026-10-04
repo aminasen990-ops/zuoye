@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🎡 Колесо лотереи · Разговорная практика HSK 1-2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #2d4a2a 0%, #1a3a1a 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .game-container {
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 253, 245, 0.97);
+            border-radius: 3rem;
+            box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.4);
+            padding: 1.8rem;
+            backdrop-filter: blur(2px);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #e6a817, #f5c542);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .sub {
+            text-align: center;
+            color: #8b7652;
+            margin-bottom: 1.8rem;
+            font-size: 0.85rem;
+        }
+
+        /* КОЛЕСО */
+        .wheel-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 550px) {
+            .wheel-container {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 50%;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 0 8px #faf0cf, 0 0 0 12px #e6a817;
+            transition: all 0.2s;
+        }
+
+        .spin-btn {
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, #e6a817, #f5c542);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #3d2b1a;
+            box-shadow: 0 6px 0 #a05e15;
+            transition: 0.07s linear;
+            font-family: inherit;
+        }
+
+        .spin-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #a05e15;
+        }
+
+        /* ВЫПАВШАЯ ТЕМА */
+        .result-card {
+            background: #fff8e8;
+            border-radius: 2rem;
+            padding: 1rem 1.5rem;
+            margin: 1.2rem 0;
+            text-align: center;
+            border-left: 8px solid #e6a817;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .topic-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #a05e15;
+            margin-bottom: 0.3rem;
+        }
+
+        .topic-emoji {
+            font-size: 2rem;
+        }
+
+        /* ВОПРОСЫ */
+        .questions-area {
+            background: #fefaf0;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid #f0dbc0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #3a2c1f;
+            margin-bottom: 0.3rem;
+        }
+
+        .question-translation {
+            font-size: 0.8rem;
+            color: #8b7652;
+            margin-bottom: 0.6rem;
+            font-style: italic;
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .toggle-btn {
+            background: #e2ecd9;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #3a2c1f;
+            transition: background 0.15s;
+        }
+
+        .toggle-btn:hover {
+            background: #d4e3c5;
+        }
+
+        .toggle-btn.active {
+            background: #c5dcb0;
+        }
+
+        .pinyin-box,
+        .answer-box,
+        .branches-box,
+        .vocab-box {
+            display: none;
+            background: #f7f4ea;
+            padding: 0.7rem 1rem;
+            border-radius: 0.9rem;
+            margin-top: 0.6rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #3a2c1f;
+        }
+
+        .pinyin-box.show,
+        .answer-box.show,
+        .branches-box.show,
+        .vocab-box.show {
+            display: block;
+        }
+
+        .pinyin-text {
+            font-family: monospace;
+            color: #7a6a4f;
+            font-size: 0.8rem;
+        }
+
+        .answer-text {
+            color: #2a7a3a;
+            font-weight: 500;
+        }
+
+        .answer-translation {
+            color: #6b8a5e;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        .branch-item {
+            margin-bottom: 0.4rem;
+            padding-left: 0.8rem;
+            border-left: 3px solid #e6a817;
+        }
+
+        .branch-pinyin {
+            font-family: monospace;
+            color: #7a6a4f;
+            font-size: 0.75rem;
+        }
+
+        .vocab-item {
+            margin-bottom: 0.35rem;
+        }
+
+        .vocab-word {
+            font-weight: 700;
+            color: #a05e15;
+        }
+
+        .help-text {
+            background: #f0e8d8;
+            border-radius: 1rem;
+            padding: 0.6rem 1rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            text-align: center;
+            color: #6b5a3e;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #9b8a6a;
+        }
+
+        @media (max-width: 550px) {
+            .game-container {
+                padding: 1rem;
+            }
+            .topic-name {
+                font-size: 1.3rem;
+            }
+            .question-text {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div style="text-align: center;">
+        <h1>🎡 Колесо лотереи <span style="font-size: 1rem;">🗣️ Разговорная практика</span></h1>
+        <div class="sub">✨ Нажми на колесо или на кнопку — выбери тему. Отвечай на вопросы вслух. ✨</div>
+    </div>
+
+    <div class="wheel-section">
+        <div class="wheel-container">
+            <canvas id="wheelCanvas" width="500" height="500"></canvas>
+        </div>
+        <button class="spin-btn" id="spinBtn">🎲 КРУТИТЬ КОЛЕСО 🎲</button>
+    </div>
+
+    <div id="resultArea" style="min-height: 300px;">
+        <div class="result-card">
+            <div class="topic-emoji" id="topicEmoji">🎲</div>
+            <div class="topic-name" id="topicName">Нажми на колесо!</div>
+            <div style="font-size: 0.8rem; color:#a05e15;">⬇️ Ниже — вопросы для обсуждения ⬇️</div>
+        </div>
+        <div id="questionsContainer" class="questions-area">
+            <div style="text-align: center; padding: 1.5rem; color: #9b8a6a;">
+                🎡 Покрутите колесо, чтобы начать разговорную практику!
+            </div>
+        </div>
+        <div class="help-text">
+            💡 Совет: говори полными предложениями. Не бойся ошибаться — главное говорить!
+        </div>
+    </div>
+    <footer>
+        ⭐ Каждая тема — реальные разговоры из жизни. Жми на кнопки, чтобы открыть пиньинь, ответ, ветки или лексику.
+    </footer>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // ТЕМЫ И ВОПРОСЫ — 5 блоков, весь контент сохранён
+    // --------------------------------------------------------------
+    const topics = [
+        {
+            name: "🏢 Работа в компании, добыча золота",
+            emoji: "🏢",
+            questions: [
+                {
+                    q: "你是更喜欢坐办公室，还是跑开采现场呀？",
+                    pinyin: "nǐ shì gèng xǐ huan zuò bàn gōng shì，hái shì pǎo kāi cǎi xiàn chǎng ya？",
+                    translation: "Тебе больше нравится работать в офисе или ездить на место добычи?",
+                    answer: "两种工作各有好处。平时我主要在办公室处理财务文件，但偶尔去现场，能亲眼看到金矿真实的情况。",
+                    answerPinyin: "liǎng zhǒng gōng zuò gè yǒu hǎo chù。píng shí wǒ zhǔ yào zài bàn gōng shì chǔ lǐ cái wù wén jiàn，dàn ǒu ěr qù xiàn chǎng，néng qīn yǎn kàn dào jīn kuàng zhēn shí de qíng kuàng。",
+                    answerTranslation: "Оба варианта работы имеют свои плюсы. Обычно я в офисе работаю с финансовыми документами, но иногда езжу на объект и вижу золотой рудник своими глазами.",
+                    branches: [
+                        { q: "去现场出差一般要待几天？", pinyin: "qù xiàn chǎng chū chāi yì bān yào dāi jǐ tiān？" },
+                        { q: "在现场工作环境会不会比较辛苦？", pinyin: "zài xiàn chǎng gōng zuò huán jìng huì bú huì bǐ jiào xīn kǔ？" }
+                    ]
+                },
+                {
+                    q: "你亲眼见过的金块，最大的有多重？",
+                    pinyin: "nǐ qīn yǎn jiàn guò de jīn kuài，zuì dà de yǒu duō zhòng？",
+                    translation: "Самый большой золотой слиток, который ты видел своими глазами — сколько весит?",
+                    answer: "我见过一块大概二十公斤的成品金块，看起来不大，可是拿在手里特别沉。",
+                    answerPinyin: "wǒ jiàn guò yí kuài dà gài èr shí gōng jīn de chéng pǐn jīn kuài，kàn qǐ lái bù dà，kě shì ná zài shǒu lǐ tè bié chén。",
+                    answerTranslation: "Я видел готовый золотой слиток примерно 20 кг. Он выглядит небольшим, но в руках очень тяжёлый.",
+                    branches: [
+                        { q: "这种金块做好以后会送到什么地方？", pinyin: "zhè zhǒng jīn kuài zuò hǎo yǐ hòu huì sòng dào shén me dì fang？" },
+                        { q: "第一次见到大金块的时候你惊讶吗？", pinyin: "dì yī cì jiàn dào dà jīn kuài de shí hou nǐ jīng yà ma？" }
+                    ]
+                },
+                {
+                    q: "跟中国伙伴合作，对比本地伙伴，你觉得哪边更舒服？",
+                    pinyin: "gēn zhōng guó huǒ bàn hé zuò，duì bǐ běn dì huǒ bàn，nǐ jué de nǎ biān gèng shū fu？",
+                    translation: "Работать с китайскими партнёрами или с местными — что для тебя комфортнее?",
+                    answer: "大家做事风格不太一样。中国伙伴做事效率很高，沟通的时候我也可以顺便练习中文，很有意思。",
+                    answerPinyin: "dà jiā zuò shì fēng gé bù tài yí yàng。zhōng guó huǒ bàn zuò shì xiào lǜ hěn gāo，gōu tōng de shí hou wǒ yě kě yǐ shùn biàn liàn xí zhōng wén，hěn yǒu yì si。",
+                    answerTranslation: "Стиль работы у всех разный. Китайские партнёры работают быстро, а при общении я ещё практикую китайский, это интересно.",
+                    branches: [
+                        { q: "和中国伙伴合作的时候会遇到文化差别吗？", pinyin: "hé zhōng guó huǒ bàn hé zuò de shí hou huì yù dào wén huà chā bié ma？" },
+                        { q: "你们一般用中文还是英文沟通？", pinyin: "nǐ men yì bān yòng zhōng wén hái shì yīng wén gōu tōng？" }
+                    ]
+                },
+                {
+                    q: "做这份工作，给你的身体带来过什么毛病吗？",
+                    pinyin: "zuò zhè fèn gōng zuò，gěi nǐ de shēn tǐ dài lái guò shén me máo bìng ma？",
+                    translation: "Из-за этой работы у тебя появились какие-то проблемы со здоровьем?",
+                    answer: "长时间坐在电脑前面，腰和脖子经常不舒服。去现场的时候走路多，晚上也容易觉得累。",
+                    answerPinyin: "cháng shí jiān zuò zài diàn nǎo qián miàn，yāo hé bó zi jīng cháng bù shū fu。qù xiàn chǎng de shí hou zǒu lù duō，wǎn shang yě róng yì jué de lèi。",
+                    answerTranslation: "Долгое сидение за компьютером даёт боль в шее и спине. Когда езжу на объект, много хожу и к вечеру сильно устаю.",
+                    branches: [
+                        { q: "休息的时候你会做运动保护腰吗？", pinyin: "xiū xi de shí hou nǐ huì zuò yùn dòng bǎo hù yāo ma？" },
+                        { q: "你会不会调整作息来减轻疲劳？", pinyin: "nǐ huì bú huì tiáo zhěng zuò xī lái jiǎn qīng pí láo？" }
+                    ]
+                },
+                {
+                    q: "你们办公室有 Z 世代的同事吗？多不多呀？",
+                    pinyin: "nǐ men bàn gōng shì yǒu Z shì dài de tóng shì ma？duō bù duō ya？",
+                    translation: "В твоём офисе есть коллеги из Z-поколения? Их много?",
+                    answer: "有几位。他们想法很新，习惯用很多线上工具，和我们这一代人的工作想法不太一样。",
+                    answerPinyin: "yǒu jǐ wèi。tā men xiǎng fǎ hěn xīn，xí guàn yòng hěn duō xiàn shàng gōng jù，hé wǒ men zhè yí dài rén de gōng zuò xiǎng fǎ bù tài yí yàng。",
+                    answerTranslation: "Несколько человек есть. У них современные идеи, они активно используют онлайн-инструменты, их взгляд на работу отличается от нашего поколения.",
+                    branches: [
+                        { q: "和年轻同事一起工作，最大的差别是什么？", pinyin: "hé nián qīng tóng shì yì qǐ gōng zuò，zuì dà de chā bié shì shén me？" },
+                        { q: "他们喜欢弹性工作时间吗？", pinyin: "tā men xǐ huan tán xìng gōng zuò shí jiān ma？" }
+                    ]
+                }
+            ],
+            vocab: [
+                { word: "🏢坐办公室", pinyin: "zuò bàn gōng shì", ru: "работать в офисе (разговорное)" },
+                { word: "⛏️跑开采现场", pinyin: "pǎo kāi cǎi xiàn chǎng", ru: "ездить на места добычи" },
+                { word: "👁️亲眼", pinyin: "qīn yǎn", ru: "своими глазами" },
+                { word: "🪙金块", pinyin: "jīn kuài", ru: "золотой слиток / самородок" },
+                { word: "🤕毛病", pinyin: "máo bìng", ru: "недомогание, небольшая проблема со здоровьем" },
+                { word: "👨‍💻Z 世代", pinyin: "Z shì dài", ru: "Z-поколение, зумеры" },
+                { word: "🤝伙伴", pinyin: "huǒ bàn", ru: "партнёр, коллега" }
+            ]
+        },
+        {
+            name: "✈️ Путешествия, страны, отпуск",
+            emoji: "✈️",
+            questions: [
+                {
+                    q: "你最喜欢哪个国家呀？",
+                    pinyin: "nǐ zuì xǐ huan nǎ ge guó jiā ya？",
+                    translation: "Какая страна тебе больше всего нравится?",
+                    answer: "我当然很爱自己的家乡俄罗斯，同时我对中国文化特别感兴趣，一直希望有机会到处走走看看。",
+                    answerPinyin: "wǒ dāng rán hěn ài zì jǐ de jiā xiāng é luó sī，tóng shí wǒ duì zhōng guó wén huà tè bié gǎn xìng qù，yì zhí xī wàng yǒu jī huì dào chù zǒu zou kàn kan。",
+                    answerTranslation: "Конечно я люблю Россию, мой родной край. При этом меня очень привлекает культура Китая, я хочу путешествовать и смотреть разные места.",
+                    branches: [
+                        { q: "你家乡最吸引游客的地方是什么？", pinyin: "nǐ jiā xiāng zuì xī yǐn yóu kè de dì fang shì shén me？" },
+                        { q: "你旅行的时候更喜欢安静小城还是大城市？", pinyin: "nǐ lǚ xíng de shí hou gèng xǐ huan ān jìng xiǎo chéng hái shì dà chéng shì？" }
+                    ]
+                },
+                {
+                    q: "你在国外度假的时候，一般都会怎么安排？",
+                    pinyin: "nǐ zài guó wài dù jià de shí hou，yì bān dōu huì zěn me ān pái？",
+                    translation: "Как ты обычно планируешь отпуск за границей?",
+                    answer: "我不会把行程排得太满。我喜欢慢慢逛，尝尝当地食物，也找机会和本地人简单聊聊天。",
+                    answerPinyin: "wǒ bú huì bǎ xíng chéng pái de tài mǎn。wǒ xǐ huan màn man guàng，cháng chang dāng dì shí wù，yě zhǎo jī huì hé běn dì rén jiǎn dān liáo liao tiān。",
+                    answerTranslation: "Я не перегружаю план поездки. Мне нравится спокойно гулять, пробовать местную еду и разговаривать с жителями.",
+                    branches: [
+                        { q: "旅行你会提前很久做计划吗？", pinyin: "lǚ xíng nǐ huì tí qián hěn jiǔ zuò jì huà ma？" },
+                        { q: "度假的时候你更喜欢独自出行还是和朋友一起？", pinyin: "dù jià de shí hou nǐ gèng xǐ huan dú zì chū xíng hái shì hé péng you yì qǐ？" }
+                    ]
+                },
+                {
+                    q: "如果明天就能出发旅行，你会回家乡，还是出国去别的城市？",
+                    pinyin: "rú guǒ míng tiān jiù néng chū fā lǚ xíng，nǐ huí jiā xiāng，hái shì chū guó qù bié de chéng shì？",
+                    translation: "Если бы завтра можно было сразу поехать путешествовать — ты поехал бы на родину, или за границу в другой город?",
+                    answer: "我会先回家乡看看家人。平时工作太忙，很少有机会回去，很想念家里的饭菜。",
+                    answerPinyin: "wǒ huì xiān huí jiā xiāng kàn kan jiā rén。píng shí gōng zuò tài máng，hěn shǎo yǒu jī huì huí qù，hěn xiǎng niàn jiā lǐ de fàn cài。",
+                    answerTranslation: "Сначала я поехал бы на родину к семье. Работа отнимает много времени, редко получается вернуться, скучаю по домашней еде.",
+                    branches: [
+                        { q: "你多久才能回一次家乡？", pinyin: "nǐ duō jiǔ cái néng huí yí cì jiā xiāng？" },
+                        { q: "家乡的季节变化会不会很大？", pinyin: "jiā xiāng de jì jié biàn huà huì bú huì hěn dà？" }
+                    ]
+                },
+                {
+                    q: "你是真的很想去北京吗？还是刷社交软件的时候，看上了别的好玩的城市？比如说重庆可以骑摩托，成都能看熊猫。",
+                    pinyin: "nǐ shì zhēn de hěn xiǎng qù běi jīng ma？hái shì shuā shè jiāo ruǎn jiàn de shí hou，kàn shàng le bié de hǎo wán de chéng shì？bǐ rú shuō chóng qìng kě yǐ qí mó tuō，chéng dū néng kàn xióng māo。",
+                    translation: "Ты правда очень хочешь в Пекин? Или когда листаешь соцсети, тебе приглянулись другие интересные города? Например, в Чунцине можно ездить на мотоцикле, а в Чэнду посмотреть панд.",
+                    answer: "北京肯定想去，长城、故宫我都想亲眼看看。刷短视频的时候，重庆和成都也吸引我，风格完全不一样。",
+                    answerPinyin: "běi jīng kěn dìng xiǎng qù，cháng chéng、gù gōng wǒ dōu xiǎng qīn yǎn kàn kan。shuā duǎn shì pín de shí hou，chóng qìng hé chéng dū yě xī yǐn wǒ，fēng gé wán quán bù yí yàng。",
+                    answerTranslation: "Конечно хочу в Пекин, хочу своими глазами увидеть Великую стену и Запретный город. Когда смотрю короткие видео, Чунцин и Чэнду тоже привлекают, у них совсем другой характер.",
+                    branches: [
+                        { q: "你最想先去看长城还是故宫？", pinyin: "nǐ zuì xiǎng xiān qù kàn cháng chéng hái shì gù gōng？" },
+                        { q: "你觉得重庆的山城是什么样的感觉？", pinyin: "nǐ jué de chóng qìng de shān chéng shì shén me yàng de gǎn jué？" }
+                    ]
+                }
+            ],
+            vocab: [
+                { word: "🏠家乡", pinyin: "jiā xiāng", ru: "родной город, малая родина" },
+                { word: "🏖️度假", pinyin: "dù jià", ru: "отпуск, каникулы" },
+                { word: "📅怎么安排", pinyin: "zěn me ān pái", ru: "как планировать" },
+                { word: "📱刷社交软件", pinyin: "shuā shè jiāo ruǎn jiàn", ru: "скроллить соцсети" },
+                { word: "❤️看上", pinyin: "kàn shàng", ru: "приглянуться, понравиться" },
+                { word: "🎉好玩", pinyin: "hǎo wán", ru: "интересный, увлекательный" },
+                { word: "🏍️骑摩托", pinyin: "qí mó tuō", ru: "ездить на мотоцикле" },
+                { word: "🐼熊猫", pinyin: "xióng māo", ru: "панда" }
+            ]
+        },
+        {
+            name: "💻 Сравнение офисной и удалённой работы",
+            emoji: "💻",
+            questions: [
+                {
+                    q: "和线上办公比起来，坐办公室有哪些好处呀？",
+                    pinyin: "hé xiàn shàng bàn gōng bǐ qǐ lái，zuò bàn gōng shì yǒu nǎ xiē hǎo chu ya？",
+                    translation: "По сравнению с удалённой работой, какие плюсы у офисной работы?",
+                    answer: "在办公室沟通更直接。遇到问题可以马上找同事讨论，团队氛围也更好，不容易觉得孤单。",
+                    answerPinyin: "zài bàn gōng shì gōu tōng gèng zhí jiē。yù dào wèn tí kě yǐ mǎ shàng zhǎo tóng shì tǎo lùn，tuán duì fēn wéi yě gèng hǎo，bù róng yì jué de gū dān。",
+                    answerTranslation: "В офисе общение прямое. Если возникнет вопрос — сразу можно обсудить с коллегами, хороший командный дух, не чувствуешь себя одиноким.",
+                    branches: [
+                        { q: "线上办公的时候沟通会有什么麻烦？", pinyin: "xiàn shàng bàn gōng de shí hou gōu tōng huì yǒu shén me má fan？" },
+                        { q: "你更喜欢和同事当面开会还是线上开会？", pinyin: "nǐ gèng xǐ huan hé tóng shì dāng miàn kāi huì hái shì xiàn shàng kāi huì？" }
+                    ]
+                },
+                {
+                    q: "线上办公的时候，你的作息怎么样？",
+                    pinyin: "xiàn shàng bàn gōng de shí hou，nǐ de zuò xī zěn me yàng？",
+                    translation: "Когда работаешь онлайн, какой у тебя режим дня?",
+                    answer: "线上办公很容易打乱作息。有时候工作和生活的边界模糊，一不小心就熬夜，起床时间也不固定。",
+                    answerPinyin: "xiàn shàng bàn gōng hěn róng yì dǎ luàn zuò xī。yǒu shí hou gōng zuò hé shēng huó de biān jiè mó hu，yì bù xiǎo xīn jiù áo yè，qǐ chuáng shí jiān yě bù gù dìng。",
+                    answerTranslation: "Удалённая работа легко ломает режим дня. Граница между работой и жизнью стирается, можно незаметно поздно ложиться, время подъёма плавает.",
+                    branches: [
+                        { q: "你会专门定下时间，停止工作吗？", pinyin: "nǐ huì zhuān mén dìng xià shí jiān，tíng zhǐ gōng zuò ma？" },
+                        { q: "固定作息对你来说难不难？", pinyin: "gù dìng zuò xī duì nǐ lái shuō nán bù nán？" }
+                    ]
+                },
+                {
+                    q: "你觉得线上办公有什么不好的地方？",
+                    pinyin: "nǐ jué de xiàn shàng bàn gōng yǒu shén me bù hǎo de dì fang？",
+                    translation: "Что тебе не нравится в удалённой работе?",
+                    answer: "在家很容易分心，家里有很多小事打断工作。而且长时间对着电脑，缺少和人面对面交流。",
+                    answerPinyin: "zài jiā hěn róng yì fēn xīn，jiā lǐ yǒu hěn duō xiǎo shì dǎ duàn gōng zuò。ér qiě cháng shí jiān duì zhe diàn nǎo，quē shǎo hé rén miàn duì miàn jiāo liú。",
+                    answerTranslation: "Дома легко отвлекаться, бытовые мелочи прерывают работу. Также много времени за компьютером, не хватает живого личного общения.",
+                    branches: [
+                        { q: "你在家工作的时候怎么减少分心？", pinyin: "nǐ zài jiā gōng zuò de shí hou zěn me jiǎn shǎo fēn xīn？" },
+                        { q: "线上办公会不会让你社交变少？", pinyin: "xiàn shàng bàn gōng huì bú huì ràng nǐ shè jiāo biàn shǎo？" }
+                    ]
+                }
+            ],
+            vocab: [
+                { word: "💻线上办公", pinyin: "xiàn shàng bàn gōng", ru: "онлайн / удалённая работа" },
+                { word: "⚖️… 比起来", pinyin: "…bǐ qǐ lái", ru: "по сравнению с …" },
+                { word: "✅好处", pinyin: "hǎo chu", ru: "плюсы, преимущества" },
+                { word: "🕒作息", pinyin: "zuò xī", ru: "режим дня (подъём, сон)" },
+                { word: "🧠专心", pinyin: "zhuān xīn", ru: "сосредоточиться" },
+                { word: "🫥分心", pinyin: "fēn xīn", ru: "отвлекаться" }
+            ]
+        },
+        {
+            name: "👫 Друзья и окружение",
+            emoji: "👫",
+            questions: [
+                {
+                    q: "你认识的朋友里，都有哪些国家的人？",
+                    pinyin: "nǐ rèn shi de péng you lǐ，dōu yǒu nǎ xiē guó jiā de rén？",
+                    translation: "У тебя есть друзья из каких стран?",
+                    answer: "我的朋友国籍很丰富。大部分是俄罗斯人，也认识一些中国、欧洲其他国家的朋友。",
+                    answerPinyin: "wǒ de péng you guó jí hěn fēng fù。dà bù fen shì é luó sī rén，yě rèn shi yì xiē zhōng guó、ōu zhōu qí tā guó jiā de péng you。",
+                    answerTranslation: "У друзей разные национальности. Большинство — русские, также я знаком с друзьями из Китая и других стран Европы.",
+                    branches: [
+                        { q: "和不同国家的朋友聊天，最有趣的是什么？", pinyin: "hé bù tóng guó jiā de péng you liáo tiān，zuì yǒu qù de shì shén me？" },
+                        { q: "你一般通过什么方式认识外国朋友？", pinyin: "nǐ yì bān tōng guò shén me fāng shì rèn shi wài guó péng you？" }
+                    ]
+                },
+                {
+                    q: "你和朋友一般用什么语言聊天？",
+                    pinyin: "nǐ hé péng you yì bān yòng shén me yǔ yán liáo tiān？",
+                    translation: "На каком языке ты обычно разговариваешь с друзьями?",
+                    answer: "和俄罗斯朋友当然用俄语。和中国朋友，我们尽量用中文，遇到难词的时候，偶尔会换成英文帮忙解释。",
+                    answerPinyin: "hé é luó sī péng you dāng rán yòng é yǔ。hé zhōng guó péng you，wǒ men jǐn liàng yòng zhōng wén，yù dào nán cí de shí hou，ǒu ěr huì huàn chéng yīng wén bāng máng jiě shì。",
+                    answerTranslation: "С русскими друзьями — русский. С китайскими друзьями стараемся общаться по-китайски, если сложные слова — иногда переходим на английский для объяснения.",
+                    branches: [
+                        { q: "用中文聊天的时候，你最怕哪一类话题？", pinyin: "yòng zhōng wén liáo tiān de shí hou，nǐ zuì pà nǎ yí lèi huà tí？" },
+                        { q: "你的中国朋友会教你很多口语表达吗？", pinyin: "nǐ de zhōng guó péng you huì jiāo nǐ hěn duō kǒu yǔ biǎo dá ma？" }
+                    ]
+                },
+                {
+                    q: "交朋友的时候，你最看重什么？",
+                    pinyin: "jiāo péng you de shí hou，nǐ zuì kàn zhòng shén me？",
+                    translation: "Что для тебя самое важное при знакомстве с новыми людьми?",
+                    answer: "我觉得真诚最重要。不用想法完全一样，但是可以互相尊重，愿意好好沟通。",
+                    answerPinyin: "wǒ jué de zhēn chéng zuì zhòng yào。bú yòng xiǎng fǎ wán quán yí yàng，dàn shì kě yǐ hù xiāng zūn zhòng，yuàn yì hǎo hǎo gōu tōng。",
+                    answerTranslation: "Для меня главное — искренность. Не обязательно иметь одинаковые взгляды, но важно уважать друг друга и быть готовым к диалогу.",
+                    branches: [
+                        { q: "你觉得性格相似更容易成为朋友吗？", pinyin: "nǐ jué de xìng gé xiāng sì gèng róng yì chéng wéi péng you ma？" },
+                        { q: "你可以接受朋友和你的观点不一样吗？", pinyin: "nǐ kě yǐ jiē shòu péng you hé nǐ de guān diǎn bù yí yàng ma？" }
+                    ]
+                }
+            ],
+            vocab: [
+                { word: "👥… 里", pinyin: "…lǐ", ru: "среди …" },
+                { word: "👋认识", pinyin: "rèn shi", ru: "быть знакомым" },
+                { word: "🗣️聊天", pinyin: "liáo tiān", ru: "разговаривать" },
+                { word: "🤝交朋友", pinyin: "jiāo péng you", ru: "заводить друзей" },
+                { word: "⭐看重", pinyin: "kàn zhòng", ru: "ценить, считать важным" },
+                { word: "😊真诚", pinyin: "zhēn chéng", ru: "искренний" }
+            ]
+        },
+        {
+            name: "💬 Реплики для продолжения диалога",
+            emoji: "💬",
+            questions: [
+                {
+                    q: "那你学中文多久啦？觉得最难的地方是汉字吗？",
+                    pinyin: "nà nǐ xué zhōng wén duō jiǔ la？jué de zuì nán de dì fang shì hàn zì ma？",
+                    translation: "Тогда как долго ты учишь китайский? Самое сложное — иероглифы?",
+                    answer: "我学中文差不多一年半。汉字确实很难，记住写法要花很多时间，不过我觉得声调也很有挑战。",
+                    answerPinyin: "wǒ xué zhōng wén chà bu duō yì nián bàn。hàn zì què shí hěn nán，jì zhù xiě fǎ yào huā hěn duō shí jiān，bú guò wǒ jué de shēng diào yě hěn yǒu tiǎo zhàn。",
+                    answerTranslation: "Я учу китайский примерно полтора года. Иероглифы действительно сложные, запоминание написания отнимает много времени, но ещё тона тоже непростые.",
+                    branches: [
+                        { q: "你每天会花多少时间学习中文？", pinyin: "nǐ měi tiān huì huā duō shǎo shí jiān xué xí zhōng wén？" },
+                        { q: "你更喜欢练习口语还是阅读？", pinyin: "nǐ gèng xǐ huan liàn xí kǒu yǔ hái shì yuè dú？" }
+                    ]
+                },
+                {
+                    q: "平时休息的时候，你一般喜欢做点什么？",
+                    pinyin: "píng shí xiū xi de shí hou，nǐ yì bān xǐ huan zuò diǎn shén me？",
+                    translation: "Чем ты обычно любишь заниматься, когда отдыхаешь?",
+                    answer: "空闲时间我会去打冰球，运动可以释放压力。有空也会看书，或者和朋友见面聊天。",
+                    answerPinyin: "kōng xián shí jiān wǒ huì qù dǎ bīng qiú，yùn dòng kě yǐ shì fàng yā lì。yǒu kōng yě huì kàn shū，huò zhě hé péng you jiàn miàn liáo tiān。",
+                    answerTranslation: "В свободное время играю в хоккей, спорт помогает снять стресс. Также читаю книги или встречаюсь с друзьями.",
+                    branches: [
+                        { q: "打冰球是你坚持很多年的爱好吗？", pinyin: "dǎ bīng qiú shì nǐ jiān chí hěn duō nián de ài hào ma？" },
+                        { q: "看书的时候你更喜欢小说还是纪实文章？", pinyin: "kàn shū de shí hou nǐ gèng xǐ huan xiǎo shuō hái shì jì shí wén zhāng？" }
+                    ]
+                },
+                {
+                    q: "冰球是不是作息很特别，玩起来很有意思？",
+                    pinyin: "bīng qiú shì bú shì zuò xī hěn tè bié，wán qǐ lái hěn yǒu yì si？",
+                    translation: "Для хоккея нужен особый режим дня? Играть интересно?",
+                    answer: "没错。训练一般安排在早上，所以我必须调整作息早起。虽然很累，但是在冰场上的感觉特别棒。",
+                    answerPinyin: "méi cuò。xùn liàn yì bān ān pái zài zǎo shang，suǒ yǐ wǒ bì xū tiáo zhěng zuò xī zǎo qǐ。suī rán hěn lèi，dàn shì zài bīng chǎng shàng de gǎn jué tè bié bàng。",
+                    answerTranslation: "Верно. Тренировки обычно утром, поэтому мне приходится подстраивать режим и рано вставать. Несмотря на усталость, на льду очень круто.",
+                    branches: [
+                        { q: "你一周会去冰场训练几次？", pinyin: "nǐ yì zhōu huì qù bīng chǎng xùn liàn jǐ cì？" },
+                        { q: "冰球最吸引你的地方是什么？", pinyin: "bīng qiú zuì xī yǐn nǐ de dì fang shì shén me？" }
+                    ]
+                },
+                {
+                    q: "那你打算什么时候来中国玩呀？",
+                    pinyin: "nà nǐ dǎ suàn shén me shí hou lái zhōng guó wán ya？",
+                    translation: "И когда ты планируешь приехать в Китай путешествовать?",
+                    answer: "我计划明年假期去中国。我希望那时候我的中文可以更好，能不用翻译自己到处逛。",
+                    answerPinyin: "wǒ jì huà míng nián jià qī qù zhōng guó。wǒ xī wàng nà shí hou wǒ de zhōng wén kě yǐ gèng hǎo，néng bú yòng fān yì zì jǐ dào chù guàng。",
+                    answerTranslation: "Я планирую поехать в Китай на каникулы в следующем году. Надеюсь, мой китайский улучшится и я смогу путешествовать без переводчика.",
+                    branches: [
+                        { q: "你来中国打算去几个城市？", pinyin: "nǐ lái zhōng guó dǎ suàn qù jǐ gè chéng shì？" },
+                        { q: "在中国旅行，你最想尝试什么美食？", pinyin: "zài zhōng guó lǚ xíng，nǐ zuì xiǎng cháng shì shén me měi shí？" }
+                    ]
+                }
+            ],
+            vocab: [
+                { word: "⏱️多久", pinyin: "duō jiǔ", ru: "как долго (о времени)" },
+                { word: "📖汉字", pinyin: "hàn zì", ru: "китайские иероглифы" },
+                { word: "🕒作息", pinyin: "zuò xī", ru: "режим дня" },
+                { word: "✨特别", pinyin: "tè bié", ru: "особенный" },
+                { word: "🎮玩起来", pinyin: "wán qǐ lái", ru: "когда занимаешься / играешь" },
+                { word: "📅打算", pinyin: "dǎ suàn", ru: "планировать" },
+                { word: "🧳来中国玩", pinyin: "lái zhōng guó wán", ru: "приехать в Китай путешествовать" }
+            ]
+        }
+    ];
+
+    // Цвета для сегментов колеса
+    const segmentColors = [
+        "#FDE2B5", "#E8D5B7", "#F5E2C8", "#F0DDB5", "#FCE4C0",
+        "#F5DEB3", "#F3D9B1", "#FAE4C4", "#F1DBB8", "#FBE5C2"
+    ];
+
+    let currentTopicIndex = 0;
+    let wheelCanvas = null;
+    let ctx = null;
+    let spinning = false;
+    let currentAngle = 0;
+
+    function initWheel() {
+        wheelCanvas = document.getElementById("wheelCanvas");
+        ctx = wheelCanvas.getContext("2d");
+        drawWheel();
+    }
+
+    function drawWheel() {
+        const size = wheelCanvas.width;
+        const centerX = size / 2;
+        const centerY = size / 2;
+        const radius = size / 2 - 5;
+        const angleStep = (Math.PI * 2) / topics.length;
+
+        ctx.clearRect(0, 0, size, size);
+        for (let i = 0; i < topics.length; i++) {
+            const startAngle = currentAngle + i * angleStep;
+            const endAngle = startAngle + angleStep;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.lineTo(centerX, centerY);
+            ctx.fillStyle = segmentColors[i % segmentColors.length];
+            ctx.fill();
+            ctx.strokeStyle = "#dbb46a";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(startAngle + angleStep / 2);
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = "bold 14px 'Segoe UI', 'Noto Sans'";
+            ctx.fillStyle = "#6b4c2c";
+            const shortName = topics[i].emoji;
+            ctx.fillText(shortName, radius * 0.65, 8);
+            ctx.restore();
+        }
+
+        // стрелка
+        ctx.beginPath();
+        ctx.moveTo(centerX - 12, centerY - radius - 8);
+        ctx.lineTo(centerX, centerY - radius - 22);
+        ctx.lineTo(centerX + 12, centerY - radius - 8);
+        ctx.fillStyle = "#e6a817";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(centerX - 8, centerY - radius - 10);
+        ctx.lineTo(centerX, centerY - radius - 20);
+        ctx.lineTo(centerX + 8, centerY - radius - 10);
+        ctx.fillStyle = "#fff3d1";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 20, 0, Math.PI * 2);
+        ctx.fillStyle = "#f5c542";
+        ctx.fill();
+        ctx.fillStyle = "#8b5a2b";
+        ctx.font = "bold 14px monospace";
+        ctx.fillText("🎡", centerX - 10, centerY + 5);
+    }
+
+    function spinWheel() {
+        if (spinning) return;
+        spinning = true;
+        const spinAngle = Math.random() * Math.PI * 2 + Math.PI * 8;
+        const startTime = performance.now();
+        const startAngle = currentAngle;
+        const duration = 1500;
+
+        function animateSpin(now) {
+            const elapsed = now - startTime;
+            const t = Math.min(1, elapsed / duration);
+            const easeOut = 1 - Math.pow(1 - t, 3);
+            currentAngle = startAngle + spinAngle * easeOut;
+            drawWheel();
+            if (t < 1) {
+                requestAnimationFrame(animateSpin);
+            } else {
+                currentAngle = currentAngle % (Math.PI * 2);
+                drawWheel();
+                const angleStep = (Math.PI * 2) / topics.length;
+                let pointerAngle = (Math.PI * 2 - (currentAngle % (Math.PI * 2))) % (Math.PI * 2);
+                let rawIndex = Math.floor(pointerAngle / angleStep) % topics.length;
+                if (rawIndex < 0) rawIndex += topics.length;
+                currentTopicIndex = rawIndex % topics.length;
+                spinning = false;
+                showTopic(currentTopicIndex);
+            }
+        }
+
+        requestAnimationFrame(animateSpin);
+    }
+
+    function showTopic(index) {
+        const topic = topics[index];
+        document.getElementById("topicEmoji").innerHTML = topic.emoji;
+        document.getElementById("topicName").innerHTML = topic.name;
+        renderQuestions(topic.questions, topic.vocab);
+    }
+
+    function renderQuestions(questions, vocab) {
+        const container = document.getElementById("questionsContainer");
+        if (!container) return;
+        let html = '';
+
+        questions.forEach((item, idx) => {
+            const uid = `q${idx}`;
+
+            html += `
+                <div class="question-card">
+                    <div class="question-text">❓ ${item.q}</div>
+                    <div class="question-translation">${item.translation}</div>
+
+                    <div class="btn-row">
+                        <button class="toggle-btn" data-target="pinyin-${uid}">🔤 Пиньинь</button>
+                        <button class="toggle-btn" data-target="answer-${uid}">💬 Ответ</button>
+                        <button class="toggle-btn" data-target="branches-${uid}">🔁 Ветки</button>
+                    </div>
+
+                    <div class="pinyin-box" id="pinyin-${uid}">
+                        <div class="pinyin-text">${item.pinyin}</div>
+                    </div>
+
+                    <div class="answer-box" id="answer-${uid}">
+                        <div class="answer-text">👉 ${item.answer}</div>
+                        <div class="pinyin-text" style="margin-top:0.4rem;">${item.answerPinyin}</div>
+                        <div class="answer-translation">${item.answerTranslation}</div>
+                    </div>
+
+                    <div class="branches-box" id="branches-${uid}">
+                        ${item.branches.map((b, bi) => `
+                            <div class="branch-item">
+                                <div>① ${b.q}</div>
+                                <div class="branch-pinyin">${b.pinyin}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        });
+
+        // Лексика блока
+        if (vocab && vocab.length) {
+            html += `
+                <div class="question-card" style="background:#fdf6e8;">
+                    <div class="question-text">📖 Полезная лексика</div>
+                    <div class="btn-row">
+                        <button class="toggle-btn" data-target="vocab-block">📖 Показать лексику</button>
+                    </div>
+                    <div class="vocab-box" id="vocab-block">
+                        ${vocab.map(v => `
+                            <div class="vocab-item">
+                                <span class="vocab-word">${v.word}</span>
+                                <span class="pinyin-text">${v.pinyin}</span>
+                                — ${v.ru}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
+
+        // Обработчики кнопок
+        container.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.classList.toggle('show');
+                    btn.classList.toggle('active');
+                }
+            });
+        });
+    }
+
+    initWheel();
+
+    const spinBtn = document.getElementById("spinBtn");
+    spinBtn.addEventListener("click", () => {
+        spinWheel();
+    });
+    const canvasEl = document.getElementById("wheelCanvas");
+    canvasEl.addEventListener("click", () => {
+        spinWheel();
+    });
+
+    setTimeout(() => {
+        const randomIdx = Math.floor(Math.random() * topics.length);
+        currentTopicIndex = randomIdx;
+        showTopic(randomIdx);
+        drawWheel();
+    }, 100);
+</script>
+</body>
+</html>
