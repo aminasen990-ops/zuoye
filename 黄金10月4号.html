@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>安排 · 刷 · 假 · 主要/重要 · 好玩儿 · 熊猫 · 看上了 · 的话 · 就 · 还是 · 过 · 健康</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'SF Pro Text', 'Roboto', sans-serif;
+  background: linear-gradient(150deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 2rem 1rem;
+  line-height: 1.6;
+}
+
+.container { max-width: 950px; margin: 0 auto; }
+
+.module-header {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  border-bottom: 4px solid #10b981;
+}
+
+.module-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #059669, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.module-header p { font-size: 15px; color: #6b7280; }
+
+.guide {
+  background: #fffbeb;
+  border: 3px solid #f59e0b;
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.15);
+}
+
+.guide-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #b45309;
+  margin-bottom: 0.8rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.guide-step {
+  background: #ffffff;
+  border-left: 5px solid #f59e0b;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+.guide-step strong { color: #b45309; font-weight: 800; }
+
+.guide-final {
+  background: #fef3c7;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  font-weight: 700;
+  color: #92400e;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.controls {
+  display: flex; gap: 1rem; justify-content: center;
+  margin-bottom: 2rem; flex-wrap: wrap;
+}
+
+.controls button {
+  padding: 0.6rem 1.3rem; border-radius: 40px; border: none;
+  background: #10b981; color: #fff; font-weight: 600; font-size: 14px;
+  cursor: pointer; transition: 0.2s ease;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.controls button:hover { background: #059669; transform: translateY(-2px); }
+
+.card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease;
+}
+
+.card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08); }
+
+.card.food::before { width:6px; background:#10b981; content:''; position:absolute; left:0; top:0; bottom:0; border-radius:24px 0 0 24px; }
+.card.question::before { width:6px; background:#ec489a; content:''; position:absolute; left:0; top:0; bottom:0; border-radius:24px 0 0 24px; }
+.card.grammar::before { width:6px; background:#8b5cf6; content:''; position:absolute; left:0; top:0; bottom:0; border-radius:24px 0 0 24px; }
+.card.verb::before { width:6px; background:#3b82f6; content:''; position:absolute; left:0; top:0; bottom:0; border-radius:24px 0 0 24px; }
+.card.etymology::before { width:6px; background:#f59e0b; content:''; position:absolute; left:0; top:0; bottom:0; border-radius:24px 0 0 24px; }
+.card.structure::before { width:6px; background:#ef4444; content:''; position:absolute; left:0; top:0; bottom:0; border-radius:24px 0 0 24px; }
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+.badge-food { background:#d1fae5; color:#065f46; }
+.badge-question { background:#fce7f3; color:#be185d; }
+.badge-grammar { background:#ede9fe; color:#5b21b6; }
+.badge-verb { background:#dbeafe; color:#1e40af; }
+.badge-etymology { background:#fed7aa; color:#9a3412; }
+.badge-structure { background:#fee2e2; color:#b91c1c; }
+
+/* ===== ЦВЕТА ПО ЧАСТЯМ РЕЧИ ===== */
+.n    { color: #b45309; font-weight: 600; }
+.v    { color: #047857; font-weight: 600; }
+.adj  { color: #7c3aed; font-weight: 600; }
+.adv  { color: #2563eb; font-weight: 600; }
+.pron { color: #db2777; font-weight: 600; }
+.num  { color: #d97706; font-weight: 600; }
+.prep { color: #0891b2; font-weight: 600; }
+.part { color: #6b7280; font-weight: 500; }
+.conj { color: #7c3aed; font-weight: 600; }
+
+.trans .n    { color: #b45309; font-weight: 600; }
+.trans .v    { color: #047857; font-weight: 600; }
+.trans .adj  { color: #7c3aed; font-weight: 600; }
+.trans .adv  { color: #2563eb; font-weight: 600; }
+.trans .pron { color: #db2777; font-weight: 600; }
+.trans .num  { color: #d97706; font-weight: 600; }
+.trans .prep { color: #0891b2; font-weight: 600; }
+.trans .part { color: #6b7280; font-weight: 500; }
+.trans .conj { color: #7c3aed; font-weight: 600; }
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 0.9rem;
+}
+.stack .hanzi { margin-bottom: 0; }
+.stack .pinyin { margin-bottom: 0; }
+.stack .trans  { margin-bottom: 0; }
+
+.hanzi {
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.pinyin {
+  font-size: 14px;
+  transition: opacity 0.2s;
+  color: #4b5563;
+  letter-spacing: normal;
+  word-break: keep-all;
+}
+
+.trans {
+  font-size: 14px;
+  color: #1f2937;
+  transition: opacity 0.2s;
+  line-height: 1.5;
+}
+
+.hanzi-big {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.literal {
+  color: #9ca3af;
+  font-size: 12px;
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+.literal-big {
+  color: #1f2937;
+  font-size: 18px;
+  margin-top: 0.4rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.rule-card {
+  background: #fef3c7;
+  padding: 0.8rem 1rem;
+  border-radius: 16px;
+  margin-top: 0.5rem;
+  border-left: 4px solid #f59e0b;
+}
+
+.grammar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+.grammar-item {
+  background: #f1f5f9;
+  padding: 0.6rem 1rem;
+  border-radius: 14px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.note-box {
+  background: #fee2e2;
+  padding: 0.8rem 1rem;
+  border-radius: 16px;
+  margin-top: 0.5rem;
+  border-left: 4px solid #ef4444;
+}
+
+.highlight-box {
+  background: #e0f2fe;
+  padding: 0.8rem 1rem;
+  border-radius: 16px;
+  margin-top: 0.5rem;
+  border-left: 4px solid #0284c7;
+}
+
+.etymology-box {
+  background: #fef3c7;
+  padding: 0.8rem 1rem;
+  border-radius: 16px;
+  margin-top: 0.5rem;
+  border-left: 4px solid #d97706;
+}
+
+.emoji-word {
+  font-size: 24px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.important-block {
+  background: #fff1f2;
+  border: 3px solid #ef4444;
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.4rem;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.15);
+}
+.important-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #b91c1c;
+  margin-bottom: 0.7rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.important-text {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+  line-height: 1.7;
+}
+.important-text strong { color: #b91c1c; font-weight: 800; }
+
+.shpora-link {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 24px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-top: 0.6rem;
+  transition: 0.2s;
+}
+.shpora-link:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="module-header">
+    <h1>📘 安排 · 刷 · 假 · 主要/重要 · 好玩儿 · 熊猫 · 看上了 · 的话 · 就 · 还是 · 过 · 健康</h1>
+    <p>иероглиф → пиньинь → перевод · разбор ключей · примеры</p>
+  </div>
+
+  <div class="guide">
+    <div class="guide-title">🧭 РУКОВОДСТВО — ПРОЧТИ ПЕРЕД НАЧАЛОМ</div>
+    <div class="guide-step"><strong>1 шаг:</strong> ВЫКЛЮЧИТЬ ПИНЬИНЬ И ПЕРЕВОД.</div>
+    <div class="guide-step"><strong>2 шаг:</strong> ПРОКРУТИТЬ ЭТОТ ФАЙЛ С НАЧАЛА ДО КОНЦА — ДЛЯ ОРИЕНТАЦИИ. И посмотреть, какие именно слова вы не помните, не смогли по-китайски прочитать.</div>
+    <div class="guide-step"><strong>3 шаг:</strong> СПОКОЙНО ВЫПИСАТЬ СЛОВА, КОТОРЫЕ ВЫ НЕ СМОГЛИ ПРОЧИТАТЬ ПО-КИТАЙСКИ — и именно к ним выписываете только ту инфу, которая у вас не записана, к своим заметкам, чего вам не хватает.</div>
+    <div class="guide-step"><strong>4 шаг:</strong> Остальное — просто читаем. Если, допустим, разбор ключей — выписываем только жёлтую строчку.</div>
+    <div class="guide-final">И дальше идём делать ДЗ, которое задала Амина — долго не засиживаемся в этом файле — «я не успел, но зато переписал все файлы» — я такое не принимаю.</div>
+  </div>
+
+  <div class="controls">
+    <button onclick="show('.pinyin')">🔊 Пиньинь вкл</button>
+    <button onclick="hide('.pinyin')">🔇 Пиньинь выкл</button>
+    <button onclick="show('.trans')">🌐 Перевод вкл</button>
+    <button onclick="hide('.trans')">📖 Перевод выкл</button>
+  </div>
+
+  <!-- БЛОК 1: 安排 -->
+  <div class="card etymology">
+    <div class="badge badge-etymology">📋 1. 安排 — разбор ключей</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">📋</span><span class="n">安</span><span class="n">排</span></div>
+      <div class="pinyin"><span class="n">ān</span> <span class="n">pái</span></div>
+      <div class="trans"><span class="n">организовывать</span></div>
+    </div>
+    <div class="etymology-box">
+      🔍 <span class="n">安</span> — крыша (宀) + женщина (女) = «спокойно под крышей».<br>
+      🔍 <span class="n">排</span> — рука (扌) + 非 (не, ряд) = «рука расставляет в ряд».<br>
+      🧠 <span class="adv">Образ:</span> под крышей женщина расставляет всё по ряду — 安排 = организовывать.
+    </div>
+  </div>
+
+  <!-- БЛОК 2: 刷 -->
+  <div class="card etymology">
+    <div class="badge badge-etymology">🪥 2. 刷 — тереть, перелистывать, зубрить</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">🪥</span><span class="n">刷</span></div>
+      <div class="pinyin"><span class="n">shuā</span></div>
+      <div class="trans"><span class="n">тереть, чистить, перелистывать, зубрить</span></div>
+    </div>
+    <div class="etymology-box">
+      🔍 <span class="n">刷</span> — 刂 (нож) справа + 尸 (тело) + 巾 (полотенце) = «скрести тело полотенцем».<br>
+      🧠 <span class="adv">Образ:</span> трёшь, чистишь, перелистываешь — всё это 刷.
+    </div>
+    <div class="grammar-grid" style="margin-top:0.8rem;">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🪥</span><span class="n">刷</span><span class="n">牙</span></div>
+          <div class="pinyin"><span class="n">shuā</span> <span class="n">yá</span></div>
+          <div class="trans"><span class="n">чистить зубы</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">📱</span><span class="n">刷</span><span class="n">手</span><span class="n">机</span></div>
+          <div class="pinyin"><span class="n">shuā</span> <span class="n">shǒu</span> <span class="n">jī</span></div>
+          <div class="trans"><span class="n">скроллить телефон</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">📝</span><span class="n">刷</span><span class="n">题</span></div>
+          <div class="pinyin"><span class="n">shuā</span> <span class="n">tí</span></div>
+          <div class="trans"><span class="n">решать много задач, «набивать руку» (зубрить практикой)</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:0.8rem;">
+      🧠 <span class="adv">刷 — это «проходить многократно, набивать опыт» (игры / экзамены).</span>
+    </div>
+  </div>
+
+  <!-- БЛОК 3: 假 -->
+  <div class="card etymology">
+    <div class="badge badge-etymology">🏖️ 3. 假 — разбор ключей</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">🏖️</span><span class="n">假</span></div>
+      <div class="pinyin"><span class="n">jià</span></div>
+      <div class="trans"><span class="n">отпуск, выходной</span></div>
+    </div>
+    <div class="etymology-box">
+      🔍 <span class="n">假</span> — 亻(человек) + 叚 (заимствовать) = «человек берёт паузу».<br>
+      🧠 <span class="adv">Образ:</span> человек отложил дела — ушёл в отпуск.
+    </div>
+    <div class="grammar-grid" style="margin-top:0.8rem;">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🏖️</span><span class="n">放</span><span class="n">假</span><span class="part">了</span></div>
+          <div class="pinyin"><span class="n">fàng</span> <span class="n">jià</span> <span class="part">le</span></div>
+          <div class="trans"><span class="n">начались каникулы</span></div>
+        </div>
+        <div class="literal-big">我八月放假了</div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">📅</span><span class="n">假</span><span class="n">期</span></div>
+          <div class="pinyin"><span class="n">jià</span> <span class="n">qī</span></div>
+          <div class="trans"><span class="n">период отпуска</span></div>
+        </div>
+        <div class="literal-big">假期从几月开始</div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">✈️</span><span class="n">度</span><span class="n">假</span></div>
+          <div class="pinyin"><span class="n">dù</span> <span class="n">jià</span></div>
+          <div class="trans"><span class="n">проводить отпуск</span></div>
+        </div>
+        <div class="literal-big">我在北京度假</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- БЛОК 4: 主要 / 重要 -->
+  <div class="card grammar">
+    <div class="badge badge-grammar">⭐ 4. 主要 · 重要</div>
+    <div class="grammar-grid">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🎯</span><span class="adj">主</span><span class="adj">要</span></div>
+          <div class="pinyin"><span class="adj">zhǔ</span> <span class="adj">yào</span></div>
+          <div class="trans"><span class="adj">главный, основной</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">❗</span><span class="adj">重</span><span class="adj">要</span></div>
+          <div class="pinyin"><span class="adj">zhòng</span> <span class="adj">yào</span></div>
+          <div class="trans"><span class="adj">важный</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- БЛОК 5: 好玩儿 -->
+  <div class="card food">
+    <div class="badge badge-food">🎉 5. 好玩儿 — интересный, увлекательный</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">🎉</span><span class="adj">好</span><span class="adj">玩</span><span class="part">儿</span></div>
+      <div class="pinyin"><span class="adj">hǎo</span> <span class="adj">wán</span> <span class="part">r</span></div>
+      <div class="trans"><span class="adj">интересный, увлекательный</span> <span class="part">(приятно играть)</span></div>
+    </div>
+  </div>
+
+  <!-- БЛОК 6: 熊猫 -->
+  <div class="card etymology">
+    <div class="badge badge-etymology">🐼 6. 熊猫 — разбор ключей</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">🐼</span><span class="n">熊</span><span class="n">猫</span></div>
+      <div class="pinyin"><span class="n">xióng</span> <span class="n">māo</span></div>
+      <div class="trans"><span class="n">панда</span></div>
+    </div>
+    <div class="etymology-box">
+      🔍 <span class="n">熊</span> — 能 (мочь) + 灬 (огонь) = «сильный, как огонь» → медведь.<br>
+      🔍 <span class="n">猫</span> — 犭(зверь) + 苗 (росток) = «зверь, который крадётся» → кошка.<br>
+      🧠 <span class="adv">Образ:</span> медведь + кошка = панда.
+    </div>
+  </div>
+
+  <!-- БЛОК 7: 家乡 -->
+  <div class="card question">
+    <div class="badge badge-question">🏠 7. 你的家乡在哪儿？</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">🏠</span><span class="pron">你</span><span class="part">的</span><span class="n">家</span><span class="n">乡</span> <span class="prep">在</span> <span class="n">哪</span><span class="n">儿</span>？</div>
+      <div class="pinyin"><span class="pron">nǐ</span> <span class="part">de</span> <span class="n">jiā</span> <span class="n">xiāng</span> <span class="prep">zài</span> <span class="n">nǎ</span> <span class="n">r</span>？</div>
+      <div class="trans"><span class="adv">Где</span> <span class="pron">твоя</span> <span class="n">родина</span>？</div>
+    </div>
+    <div class="rule-card" style="margin-top:0.8rem;">
+      🇷🇺 <span class="adv">西伯利亚！我是真的西伯利亚人。</span><br>
+      <span class="n">西伯利亚！我是真的西伯利亚人。</span>
+    </div>
+  </div>
+
+  <!-- БЛОК 8: 看上了 -->
+  <div class="card question">
+    <div class="badge badge-question">👀 8. 看上了 — приглянуться</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">👀</span><span class="v">看</span><span class="v">上</span><span class="part">了</span></div>
+      <div class="pinyin"><span class="v">kàn</span> <span class="v">shàng</span> <span class="part">le</span></div>
+      <div class="trans"><span class="v">приглянуться, понравиться</span></div>
+    </div>
+    <div class="grammar-grid" style="margin-top:0.8rem;">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🌆</span><span class="v">看</span><span class="v">上</span><span class="part">了</span> <span class="adj">好</span><span class="adj">玩</span><span class="part">儿</span><span class="part">的</span> <span class="n">城</span><span class="n">市</span></div>
+          <div class="pinyin"><span class="v">kàn</span> <span class="v">shàng</span> <span class="part">le</span> <span class="adj">hǎo</span> <span class="adj">wán</span> <span class="part">r</span> <span class="part">de</span> <span class="n">chéng</span> <span class="n">shì</span></div>
+          <div class="trans"><span class="v">приглянулся</span> <span class="adj">интересный</span> <span class="n">город</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">👕</span><span class="v">看</span><span class="v">上</span><span class="part">了</span> <span class="adv">这</span><span class="n">件</span> <span class="n">衣</span><span class="n">服</span></div>
+          <div class="pinyin"><span class="v">kàn</span> <span class="v">shàng</span> <span class="part">le</span> <span class="adv">zhè</span> <span class="n">jiàn</span> <span class="n">yī</span> <span class="n">fu</span></div>
+          <div class="trans"><span class="v">приглянулась</span> <span class="adv">эта</span> <span class="n">одежда</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- БЛОК 9: 的话 -->
+  <div class="card grammar">
+    <div class="badge badge-grammar">📌 9. 的话 — «если…»</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">📌</span><span class="part">的</span><span class="part">话</span></div>
+      <div class="pinyin"><span class="part">de</span> <span class="part">huà</span></div>
+      <div class="trans"><span class="conj">если…</span> <span class="part">(в конце условия)</span></div>
+    </div>
+    <div class="rule-card" style="margin-top:0.8rem;">
+      📌 <span class="adv">Примеры с лексикой из прошлого файла:</span>
+    </div>
+    <div class="grammar-grid" style="margin-top:0.8rem;">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">✨</span><span class="v">有</span> <span class="n">机</span><span class="n">会</span> <span class="part">的话</span></div>
+          <div class="pinyin"><span class="v">yǒu</span> <span class="n">jī</span> <span class="n">huì</span> <span class="part">de</span> <span class="part">huà</span></div>
+          <div class="trans"><span class="conj">если</span> <span class="v">будет</span> <span class="n">возможность</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🏖️</span><span class="v">放</span><span class="n">假</span> <span class="part">的话</span></div>
+          <div class="pinyin"><span class="v">fàng</span> <span class="n">jià</span> <span class="part">de</span> <span class="part">huà</span></div>
+          <div class="trans"><span class="conj">если</span> <span class="v">будут</span> <span class="n">каникулы</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">⏰</span><span class="v">有</span> <span class="n">时</span><span class="n">间</span> <span class="part">的话</span></div>
+          <div class="pinyin"><span class="v">yǒu</span> <span class="n">shí</span> <span class="n">jiān</span> <span class="part">de</span> <span class="part">huà</span></div>
+          <div class="trans"><span class="conj">если</span> <span class="v">будет</span> <span class="n">время</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">👀</span><span class="v">看</span><span class="v">上</span><span class="part">了</span> <span class="part">的话</span></div>
+          <div class="pinyin"><span class="v">kàn</span> <span class="v">shàng</span> <span class="part">le</span> <span class="part">de</span> <span class="part">huà</span></div>
+          <div class="trans"><span class="conj">если</span> <span class="v">приглянулось</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🇨🇳</span><span class="v">有</span> <span class="n">兴</span><span class="n">趣</span> <span class="part">的话</span></div>
+          <div class="pinyin"><span class="v">yǒu</span> <span class="n">xìng</span> <span class="n">qù</span> <span class="part">de</span> <span class="part">huà</span></div>
+          <div class="trans"><span class="conj">если</span> <span class="v">есть</span> <span class="n">интерес</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ВАЖНО -->
+  <div class="important-block">
+    <div class="important-title">⚠️ ВАЖНО</div>
+    <div class="important-text">
+      <strong>СВОИ ЗАПИСИ ТОЖЕ СМОТРИМ, НЕ ПОЛАГАЕМСЯ ТОЛЬКО НА МОИ КОНСПЕКТЫ</strong> — Я ПИШУ С МЫСЛЯМИ — ЧТО <strong>нужно написать то, что, возможно, они упустили</strong> — а то, что я <strong>рассказывала, упоминала</strong>, что если не успеваете — останавливайте меня и вы записывали — конечно, я не буду это писать здесь — и в голове у меня, что <strong>ОНИ ОБЯЗАТЕЛЬНО ПЕРЕД ВЫПОЛНЕНИЕМ ДЗ СМОТРЯТ СВОИ ЗАМЕТКИ И ОТТУДА БЕРУТ ЛЕКСИКУ</strong>, А НЕ ЛЕКСИКУ, КОТОРОЙ УЖЕ МЕСЯЦЕВ 7 — <strong>если вы не будете употреблять свежие слова — ВЫ ИХ НЕ ЗАПОМНИТЕ</strong>.
+    </div>
+  </div>
+
+  <!-- БЛОК 10: 就 -->
+  <div class="card structure">
+    <div class="badge badge-structure">⚡ 10. Событие/действие/время + 就</div>
+    <div class="rule-card">
+      📌 <span class="adv">Событие / действие / время + 就 = «как только наступит это — то тут же кабанчиком бежим — что-то».</span>
+    </div>
+    <div class="grammar-grid" style="margin-top:0.8rem;">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">📞</span><span class="adv">明天早上就</span> <span class="v">给</span><span class="pron">你</span> <span class="v">打</span><span class="n">电</span><span class="n">话</span></div>
+          <div class="pinyin"><span class="adv">míng</span> <span class="adv">tiān</span> <span class="adv">zǎo</span> <span class="adv">shang</span> <span class="adv">jiù</span> <span class="v">gěi</span> <span class="pron">nǐ</span> <span class="v">dǎ</span> <span class="n">diàn</span> <span class="n">huà</span></div>
+          <div class="trans"><span class="adv">завтра утром сразу</span> <span class="pron">тебе</span> <span class="v">позвоню</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🏠</span><span class="adv">回家就</span> <span class="v">开</span><span class="v">始</span> <span class="v">做</span><span class="n">作</span><span class="n">业</span></div>
+          <div class="pinyin"><span class="adv">huí</span> <span class="adv">jiā</span> <span class="adv">jiù</span> <span class="v">kāi</span> <span class="v">shǐ</span> <span class="v">zuò</span> <span class="n">zuò</span> <span class="n">yè</span></div>
+          <div class="trans"><span class="adv">как только приду домой</span> <span class="adv">сразу</span> <span class="v">начну</span> <span class="v">делать</span> <span class="n">ДЗ</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🏨</span><span class="adv">来到酒店就</span> <span class="v">睡</span><span class="n">觉</span></div>
+          <div class="pinyin"><span class="adv">lái</span> <span class="adv">dào</span> <span class="adv">jiǔ</span> <span class="adv">diàn</span> <span class="adv">jiù</span> <span class="v">shuì</span> <span class="n">jiào</span></div>
+          <div class="trans"><span class="adv">как только приду в отель</span> <span class="adv">сразу</span> <span class="v">спать</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:0.8rem;">
+      🧠 <span class="adv">Выделяем:</span> <span class="adv">明天早上就</span>, <span class="adv">回家就</span>, <span class="adv">来到酒店就</span>.
+    </div>
+  </div>
+
+  <!-- БЛОК 11: 还是 -->
+  <div class="card grammar">
+    <div class="badge badge-grammar">🔀 11. 还是 — или / всё же</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">🔀</span><span class="conj">还</span><span class="conj">是</span></div>
+      <div class="pinyin"><span class="conj">hái</span> <span class="conj">shì</span></div>
+      <div class="trans"><span class="conj">или</span> <span class="part">(в вопросах);</span> <span class="conj">всё же</span> <span class="part">(в утверждениях)</span></div>
+    </div>
+    <div class="rule-card" style="margin-top:0.8rem;">
+      📌 <span class="adv">В вопросах — «или»:</span> 你喝茶还是咖啡？<br>
+      📌 <span class="adv">В утвердительных — «всё же»:</span> <span class="n">这次他还是迟到了</span> — <span class="adv">в этот раз</span> <span class="pron">он</span> <span class="adv">всё же</span> <span class="v">опоздал</span>.
+    </div>
+  </div>
+
+  <!-- БЛОК 12: 一般 / 平时 -->
+  <div class="card grammar">
+    <div class="badge badge-grammar">📊 12. 一般 ≈ 平时</div>
+    <div class="grammar-grid">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">📊</span><span class="adv">一</span><span class="adv">般</span></div>
+          <div class="pinyin"><span class="adv">yī</span> <span class="adv">bān</span></div>
+          <div class="trans"><span class="adv">обычно, как правило</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">📅</span><span class="adv">平</span><span class="adv">时</span></div>
+          <div class="pinyin"><span class="adv">píng</span> <span class="adv">shí</span></div>
+          <div class="trans"><span class="adv">в обычное время</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- БЛОК 13: 很少 -->
+  <div class="card grammar">
+    <div class="badge badge-grammar">🔽 13. 很少 — редко</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">🔽</span><span class="adv">很</span><span class="adv">少</span></div>
+      <div class="pinyin"><span class="adv">hěn</span> <span class="adv">shǎo</span></div>
+      <div class="trans"><span class="adv">редко</span></div>
+    </div>
+    <div class="rule-card" style="margin-top:0.8rem;">
+      📌 <span class="adv">Если это обстоятельство места — ставим рядом с подлежащим, переводим «редко».</span>
+    </div>
+  </div>
+
+  <!-- БЛОК 14: 所以 / 因为 -->
+  <div class="card grammar">
+    <div class="badge badge-grammar">🔗 14. 所以 + последствие · 因为 + причина</div>
+    <div class="grammar-grid">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">➡️</span><span class="conj">所</span><span class="conj">以</span></div>
+          <div class="pinyin"><span class="conj">suǒ</span> <span class="conj">yǐ</span></div>
+          <div class="trans"><span class="conj">поэтому</span> <span class="part">(последствие)</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">⬅️</span><span class="conj">因</span><span class="conj">为</span></div>
+          <div class="pinyin"><span class="conj">yīn</span> <span class="conj">wèi</span></div>
+          <div class="trans"><span class="conj">потому что</span> <span class="part">(причина)</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:0.8rem;">
+      🧠 <span class="adv">坚持运动</span> — <span class="adv">настойчиво</span> <span class="v">заниматься</span> <span class="n">спортом</span>.
+    </div>
+  </div>
+
+  <!-- БЛОК 15: 过 -->
+  <div class="card grammar">
+    <div class="badge badge-grammar">📖 15. 过 — посмотреть самостоятельно в шпоре</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">📖</span><span class="part">过</span></div>
+      <div class="pinyin"><span class="part">guo</span></div>
+      <div class="trans"><span class="part">(опыт: «когда-то делал»)</span></div>
+    </div>
+    <div class="note-box" style="margin-top:0.8rem;">
+      ⚠️ <span class="adv">НЕ ЛЕНИМСЯ, НЕ ОТКЛАДЫВАЕМ, СЕЙЧАС ТЫКНУЛИ, ПОСМОТРЕЛИ В ШПОРУ, ВСПОМНИЛИ — ЗАБЫЛИ — ПОСМОТРЕЛИ — ВСПОМНИЛИ — ЗАБЫЛИ — ВСПОМНИЛИ — И ТАК, ПОКА НЕ ЗАПОМНИМ. ПОТОМУ ЧТО ЭТО У ВАС ЕЩЁ ПРОШЛОЙ ЗИМОЙ БЫЛО ЗАПИСАНО.</span>
+    </div>
+    <a class="shpora-link" href="https://aminasen990-ops.github.io/zuoye/Shpora.html" target="_blank">📖 Открыть шпору: 过</a>
+  </div>
+
+  <!-- БЛОК 16: 祝你生日快乐 -->
+  <div class="card question">
+    <div class="badge badge-question">🎂 16. 祝你生日快乐</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">🎂</span><span class="v">祝</span><span class="pron">你</span> <span class="n">生</span><span class="n">日</span><span class="adj">快</span><span class="adj">乐</span></div>
+      <div class="pinyin"><span class="v">zhù</span> <span class="pron">nǐ</span> <span class="n">shēng</span> <span class="n">rì</span> <span class="adj">kuài</span> <span class="adj">lè</span></div>
+      <div class="trans"><span class="part">С</span> <span class="n">днём</span> <span class="n">рождения</span>!</div>
+    </div>
+    <div class="rule-card" style="margin-top:0.8rem;">
+      📌 <span class="adv">Схема: желать + кому + праздника + счастливого.</span>
+    </div>
+  </div>
+
+  <!-- БЛОК 17: Хобби -->
+  <div class="card question">
+    <div class="badge badge-question">💃 17. Как сказать свои хобби и интересы</div>
+    <div class="grammar-grid">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">💃</span><span class="v">跳</span><span class="v">舞</span> <span class="v">是</span> <span class="pron">我</span><span class="part">的</span> <span class="n">爱</span><span class="n">好</span></div>
+          <div class="pinyin"><span class="v">tiào</span> <span class="v">wǔ</span> <span class="v">shì</span> <span class="pron">wǒ</span> <span class="part">de</span> <span class="n">ài</span> <span class="n">hào</span></div>
+          <div class="trans"><span class="n">Танцы</span> — <span class="pron">моё</span> <span class="n">хобби</span></div>
+        </div>
+        <div class="literal">Здесь 好 читается четвёртым тоном, точно так же как и 爱.</div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🇨🇳</span><span class="pron">我</span> <span class="prep">对</span> <span class="n">中</span><span class="n">文</span> <span class="v">有</span> <span class="n">兴</span><span class="n">趣</span></div>
+          <div class="pinyin"><span class="pron">wǒ</span> <span class="prep">duì</span> <span class="n">Zhōng</span> <span class="n">wén</span> <span class="v">yǒu</span> <span class="n">xìng</span> <span class="n">qù</span></div>
+          <div class="trans"><span class="pron">Я</span> <span class="v">интересуюсь</span> <span class="n">китайским</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:0.8rem;">
+      🗣️ <span class="adv">A: 你学中文已经一年了，对吧？</span><br>
+      <span class="adv">B: 对，有兴趣。</span>
+    </div>
+  </div>
+
+  <!-- БЛОК 18: 健康 -->
+  <div class="card question">
+    <div class="badge badge-question">💚 18. 健康 — 2 фразы, которые скорее всего понадобятся</div>
+    <div class="stack">
+      <div class="hanzi"><span class="emoji-word">💚</span><span class="n">健</span><span class="n">康</span></div>
+      <div class="pinyin"><span class="n">jiàn</span> <span class="n">kāng</span></div>
+      <div class="trans"><span class="n">здоровье, здоровый</span></div>
+    </div>
+    <div class="grammar-grid" style="margin-top:0.8rem;">
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🙏</span><span class="v">希</span><span class="v">望</span> <span class="n">身</span><span class="n">体</span> <span class="adj">健</span><span class="adj">康</span></div>
+          <div class="pinyin"><span class="v">xī</span> <span class="v">wàng</span> <span class="n">shēn</span> <span class="n">tǐ</span> <span class="adj">jiàn</span> <span class="adj">kāng</span></div>
+          <div class="trans"><span class="v">надеюсь</span>, <span class="n">здоровье</span> <span class="adj">крепкое</span></div>
+        </div>
+      </div>
+      <div class="grammar-item">
+        <div class="stack">
+          <div class="hanzi"><span class="emoji-word">🌅</span><span class="adv">早</span><span class="adv">日</span> <span class="adj">健</span><span class="adj">康</span></div>
+          <div class="pinyin"><span class="adv">zǎo</span> <span class="adv">rì</span> <span class="adj">jiàn</span> <span class="adj">kāng</span></div>
+          <div class="trans"><span class="adj">скорейшего</span> <span class="n">выздоровления</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function show(selector) {
+  document.querySelectorAll(selector).forEach(el => el.style.opacity = '1');
+}
+function hide(selector) {
+  document.querySelectorAll(selector).forEach(el => el.style.opacity = '0');
+}
+</script>
+</body>
+</html>
