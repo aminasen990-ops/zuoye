@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ДЗ · Части 1–3 · Скрины · Слова · Коллокации</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'SF Pro Text', 'Roboto', sans-serif;
+  background: linear-gradient(150deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 2rem 1rem;
+  line-height: 1.65;
+  color: #1f2937;
+}
+
+.container { max-width: 950px; margin: 0 auto; }
+
+.hw-header {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem 2rem;
+  margin-bottom: 1.6rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  border-bottom: 4px solid #10b981;
+}
+
+.hw-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #059669, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.hw-header p { font-size: 15px; color: #6b7280; }
+
+/* ===== ВАЖНАЯ ПАМЯТКА ===== */
+.memo {
+  background: #fffbeb;
+  border: 3px solid #f59e0b;
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.6rem;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.15);
+}
+.memo-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #b45309;
+  margin-bottom: 0.7rem;
+  text-align: center;
+}
+.memo-text {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.memo-text strong { color: #b45309; }
+
+/* ===== ЧАСТЬ ===== */
+.part {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.4rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+.part::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  border-radius: 24px 0 0 24px;
+}
+.part.p1::before { background:#10b981; }
+.part.p2::before { background:#ec489a; }
+.part.p3::before { background:#8b5cf6; }
+.part.p4::before { background:#f59e0b; }
+
+.part-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.part.p1 .part-title { color:#065f46; }
+.part.p2 .part-title { color:#be185d; }
+.part.p3 .part-title { color:#5b21b6; }
+.part.p4 .part-title { color:#92400e; }
+
+.part-num {
+  background: currentColor;
+  color: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.step {
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  border-left: 4px solid #cbd5e1;
+}
+.step strong { color: #1f2937; }
+
+.link-btn {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  padding: 0.55rem 1.1rem;
+  border-radius: 24px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin: 0.3rem 0.3rem 0.3rem 0;
+  transition: 0.2s;
+}
+.link-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+.link-btn.green { background:#10b981; }
+.link-btn.green:hover { background:#059669; }
+.link-btn.purple { background:#8b5cf6; }
+.link-btn.purple:hover { background:#7c3aed; }
+
+/* ===== ЧЕК-ЛИСТ ===== */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.6rem 0;
+}
+.check-list li {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.check-list li input[type="checkbox"] {
+  margin-top: 0.3rem;
+  width: 18px;
+  height: 18px;
+  accent-color: #10b981;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.check-list li label { cursor: pointer; }
+
+/* ===== ТЕМЫ ===== */
+.theme-block {
+  background: #f1f5f9;
+  border-radius: 16px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.9rem;
+}
+.theme-title {
+  font-weight: 800;
+  color: #4a3f2f;
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
+}
+.word-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.word-chip {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 0.35rem 0.85rem;
+  font-family: 'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1f2937;
+  cursor: pointer;
+  transition: 0.2s;
+  user-select: none;
+}
+.word-chip:hover { border-color: #10b981; }
+.word-chip.checked {
+  background: #d1fae5;
+  border-color: #10b981;
+  color: #065f46;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+.grammar-chip {
+  background: #ede9fe;
+  border-color: #8b5cf6;
+  color: #5b21b6;
+}
+.grammar-chip:hover { border-color: #7c3aed; }
+.grammar-chip.checked {
+  background: #ddd6fe;
+  border-color: #7c3aed;
+  color: #4c1d95;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* ===== ПОЛЕ ДЛЯ КОЛЛОКАЦИЙ ===== */
+.colloc-area {
+  background: #fef9c3;
+  border: 2px dashed #f59e0b;
+  border-radius: 16px;
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+}
+.colloc-title {
+  font-weight: 800;
+  color: #92400e;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+.colloc-input {
+  width: 100%;
+  min-height: 90px;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 2px solid #f59e0b;
+  font-family: 'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  outline: none;
+  background: #ffffff;
+  resize: vertical;
+}
+.colloc-input:focus { border-color: #b45309; }
+
+/* ===== ПОДСКАЗКА ===== */
+.tip {
+  background: #e0f2fe;
+  border-left: 4px solid #0284c7;
+  border-radius: 14px;
+  padding: 0.8rem 1.1rem;
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.tip strong { color: #0369a1; }
+
+@media (max-width: 640px) {
+  body { padding: 1rem 0.6rem; }
+  .hw-header h1 { font-size: 1.3rem; }
+  .part { padding: 1.1rem 1.1rem; }
+  .part-title { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="hw-header">
+    <h1>📝 ДЗ · Три части · Скрины, слова, коллокации</h1>
+    <p>Выполняем по частям. Даже части можно делать в разные дни.</p>
+  </div>
+
+  <!-- ===== ПАМЯТКА ===== -->
+  <div class="memo">
+    <div class="memo-title">⚠️ ГЛАВНЫЙ ПРИНЦИП</div>
+    <div class="memo-text">
+      <strong>Делаем ДЗ по частям. И даже сами части — допустим, половину — тогда делаем по частям в разные дни.</strong><br><br>
+      Мне поставлена очень сложная задача: тест уже на носу. Но просто зазубривать слова и не знать их живого применения — считаю недобросовестным обманом самого себя.<br><br>
+      <strong>Помним:</strong> если слово полезное — оно 100% потом встретится ( КОГДА ВЫ СМОТРИТЕ КОНТЕНТ, мне не обязательно его вам задавать, ничего не препятсвет вам открыть доуин и вбить слово - на слух его усвоить и проверить как оно звуит сразу с нужной манерой, ту же русскую баню или ВОПРОСЫ С РАЗГ ПРАКТИКИ). Не бежим за количеством （Выше， сильнее）. Иначе усвоем некачественные знания.
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ЧАСТЬ 1 -->
+  <!-- ============================================================ -->
+  <div class="part p1">
+    <div class="part-title">
+      <span class="part-num">1</span>
+      Часть 1 · Два скрина из практики
+    </div>
+
+    <div class="step">
+      <strong>Шаг 1.</strong> Открой первую ссылку. Внутри файла — понятное руководство, как с ним работать. Сделай скрин так, чтобы было видно блок <strong>«Как говорят про 50 юаней»</strong>.
+    </div>
+    <a class="link-btn" href="https://aminasen990-ops.github.io/zuoye/%E9%BB%84%E9%87%9110%E6%9C%882%E5%8F%B7.html" target="_blank">
+      🔗 Открыть урок №1 (10月2号)
+    </a>
+
+    <div class="step" style="margin-top:0.8rem;">
+      <strong>Шаг 2.</strong> Открой вторую ссылку. Сделай скрин так, чтобы был виден диалог:
+      <div style="margin-top:0.5rem; background:#ffffff; border-radius:10px; padding:0.6rem 0.9rem; font-family:'Noto Sans SC','PingFang SC',sans-serif; font-size:1rem; line-height:1.8;">
+        A: 你学中文已经一年了，对吧？<br>
+        B: 对，有兴趣。
+      </div>
+    </div>
+    <a class="link-btn" href="https://aminasen990-ops.github.io/zuoye/%E9%BB%84%E9%87%9110%E6%9C%884%E5%8F%B7.html" target="_blank">
+      🔗 Открыть урок №2 (10月4号)
+    </a>
+
+    <ul class="check-list" style="margin-top:1rem;">
+      <li><input type="checkbox" id="c1a"><label for="c1a">Скрин из урока №1 — блок «Как говорят про 50 юаней»</label></li>
+      <li><input type="checkbox" id="c1b"><label for="c1b">Скрин из урока №2 — диалог 你学中文已经一年了，对吧？ / 对，有兴趣</label></li>
+      <li><input type="checkbox" id="c1c"><label for="c1c">Оба скрина отправлены</label></li>
+    </ul>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ЧАСТЬ 2 -->
+  <!-- ============================================================ -->
+  <div class="part p2">
+    <div class="part-title">
+      <span class="part-num">2</span>
+      Часть 2 · 1–3 слова из разговорной практики (в сумме 2–6)
+    </div>
+
+    <div class="step">
+      <strong>Что присылать:</strong> 1–3 слова из <strong>разговорной практики</strong>, которые вы хотите запомнить. Не «какое-то умное заумное словечко», а такое, где вы <strong>реально понимаете, как вставить его в предложение</strong> — или прямо конкретно воображаете кейс употребления: видите в голове, как вы или вам говорят предложение с этим словом.
+    </div>
+
+    <div class="tip">
+      <strong>Если слово не проходит этот тест — в мусорку.</strong> Потому что если слово полезное — оно 100% встретится.
+    </div>
+
+    <div class="step" style="margin-top:0.8rem;">
+      <strong>Сколько:</strong> 2–6 слов в сумме (по 1–3 из каждой практики). Не бежим за количеством. Выше — сильнее. Иначе поймаем некачественные знания.
+    </div>
+
+    <ul class="check-list">
+      <li><input type="checkbox" id="c2a"><label for="c2a">Выбрал(а) 1–3 слова из первой практики</label></li>
+      <li><input type="checkbox" id="c2b"><label for="c2b">Выбрал(а) 1–3 слова из второй практики</label></li>
+      <li><input type="checkbox" id="c2c"><label for="c2c">К каждому слову могу представить конкретный кейс употребления</label></li>
+      <li><input type="checkbox" id="c2d"><label for="c2d">Слова отправлены</label></li>
+    </ul>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ЧАСТЬ 3 -->
+  <!-- ============================================================ -->
+  <div class="part p3">
+    <div class="part-title">
+      <span class="part-num">3</span>
+      Часть 3 · Слова по темам и коллокации
+    </div>
+
+    <div class="step">
+      <strong>Как работать:</strong> вы очень быстро убираете плюсики у слов, которые не можете прочитать и не можете в моменте придумать с ними короткую фразу — как доказательство того, что вы знаете их употребление. Тогда для этих слов вы идёте и выписываете <strong>исключительно интересные и ранее не знакомые вам коллокации</strong> из файла ниже — <strong>без пиньиня и перевода</strong>.
+    </div>
+
+    <a class="link-btn purple" href="https://aminasen990-ops.github.io/hsk1-lesson-14/Nelafa.html" target="_blank">
+      🔗 Открыть файл с коллокациями (Nelafa)
+    </a>
+
+    <div class="tip" style="margin-top:0.8rem;">
+      💡 <strong>Помним:</strong> на сайте работает поисковик. Само слово не обязательно — мне от вас нужно <strong>фото конспекта</strong>.
+    </div>
+
+    <!-- Тема 1 -->
+    <div class="theme-block">
+      <div class="theme-title">🚗 Тема 1: Транспорт</div>
+      <div class="word-row">
+        <span class="word-chip" onclick="toggleChip(this)">旅游 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">飞机 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">出租车 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">公共汽车 +</span>
+        <span class="word-chip grammar-chip" onclick="toggleChip(this)">离 / 就 / 呢 +</span>
+      </div>
+    </div>
+
+    <!-- Тема 2 -->
+    <div class="theme-block">
+      <div class="theme-title">⏰ Тема 2: Время</div>
+      <div class="word-row">
+        <span class="word-chip" onclick="toggleChip(this)">每 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">起床 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">跑步 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">休息 +</span>
+        <span class="word-chip grammar-chip" onclick="toggleChip(this)">已经 + / ……的时候 + / 小时 vs 点 +</span>
+      </div>
+    </div>
+
+    <!-- Тема 3 -->
+    <div class="theme-block">
+      <div class="theme-title">💊 Тема 3: Здоровье</div>
+      <div class="word-row">
+        <span class="word-chip" onclick="toggleChip(this)">生病 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">药 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">身体 +</span>
+        <span class="word-chip grammar-chip" onclick="toggleChip(this)">有点儿 +</span>
+      </div>
+    </div>
+
+    <!-- Тема 4 -->
+    <div class="theme-block">
+      <div class="theme-title">💼 Тема 4: Работа и учёба</div>
+      <div class="word-row">
+        <span class="word-chip" onclick="toggleChip(this)">公司 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">介绍 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">考试 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">题 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">完 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">懂 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">上班 +</span>
+        <span class="word-chip grammar-chip" onclick="toggleChip(this)">是……的 + / 完 и 懂 + / 从 +</span>
+      </div>
+    </div>
+
+    <!-- Тема 5 -->
+    <div class="theme-block">
+      <div class="theme-title">🍜 Тема 5: Еда</div>
+      <div class="word-row">
+        <span class="word-chip" onclick="toggleChip(this)">饭店 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">服务员 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">面条 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">羊肉 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">好吃 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">咖啡 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">鱼 +</span>
+      </div>
+    </div>
+
+    <!-- Тема 6 -->
+    <div class="theme-block">
+      <div class="theme-title">👨‍👩‍👧 Тема 6: Семья</div>
+      <div class="word-row">
+        <span class="word-chip" onclick="toggleChip(this)">丈夫 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">姐姐 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">生日 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">快乐 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">高兴 +</span>
+        <span class="word-chip grammar-chip" onclick="toggleChip(this)">让 + / 请 +</span>
+      </div>
+    </div>
+
+    <!-- Тема 7 -->
+    <div class="theme-block">
+      <div class="theme-title">🏠 Тема 7: Дом</div>
+      <div class="word-row">
+        <span class="word-chip" onclick="toggleChip(this)">房间 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">手表 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">报纸 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">自行车 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">颜色 +</span>
+        <span class="word-chip grammar-chip" onclick="toggleChip(this)">的-фраза + / 真 +</span>
+      </div>
+    </div>
+
+    <!-- Тема 8 -->
+    <div class="theme-block">
+      <div class="theme-title">⚽ Тема 8: Спорт</div>
+      <div class="word-row">
+        <span class="word-chip" onclick="toggleChip(this)">运动 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">踢足球 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">打篮球 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">游泳 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">跳舞 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">经常 +</span>
+        <span class="word-chip grammar-chip" onclick="toggleChip(this)">要 + / 最 +</span>
+      </div>
+    </div>
+
+    <!-- Тема 9 -->
+    <div class="theme-block">
+      <div class="theme-title">🔢 Тема 9: Числа</div>
+      <div class="word-row">
+        <span class="word-chip" onclick="toggleChip(this)">几 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">多 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">百 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">千 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">两 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">公斤 +</span>
+        <span class="word-chip" onclick="toggleChip(this)">米 +</span>
+        <span class="word-chip grammar-chip" onclick="toggleChip(this)">几 и 多 + / 是不是 +</span>
+      </div>
+    </div>
+
+    <div class="tip">
+      💡 <strong>Как пользоваться:</strong> кликни по слову, если не можешь прочитать и не можешь придумать короткую фразу — оно зачёркивается. Для всех зачёркнутых слов идёшь в файл с коллокациями и выписываешь <strong>только интересные и ранее не знакомые</strong> — без пиньиня и перевода.
+    </div>
+
+    <!-- Поле для коллокаций -->
+    <div class="colloc-area">
+      <div class="colloc-title">📝 Выписанные коллокации (без пиньиня и перевода)</div>
+      <textarea class="colloc-input" id="collocInput" placeholder="Пишите сюда только иероглифы — интересные и ранее не знакомые коллокации..."></textarea>
+      <div style="margin-top:0.6rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
+        <button class="link-btn green" onclick="saveColloc()">💾 Сохранить</button>
+        <button class="link-btn" onclick="clearColloc()">🗑️ Очистить</button>
+        <span id="saveStatus" style="font-size:0.8rem; color:#059669; align-self:center;"></span>
+      </div>
+    </div>
+
+    <ul class="check-list" style="margin-top:1rem;">
+      <li><input type="checkbox" id="c3a"><label for="c3a">Прошёл(ла) по всем темам и отметил(а) слова</label></li>
+      <li><input type="checkbox" id="c3b"><label for="c3b">Для зачёркнутых слов выписал(а) коллокации из Nelafa</label></li>
+      <li><input type="checkbox" id="c3c"><label for="c3c">Сделал(а) фото конспекта</label></li>
+      <li><input type="checkbox" id="c3d"><label for="c3d">Фото отправлено</label></li>
+    </ul>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ЧАСТЬ 4 -->
+  <!-- ============================================================ -->
+  <div class="part p4">
+    <div class="part-title">
+      <span class="part-num">4</span>
+      Часть 4 · Финальная проверка перед отправкой
+    </div>
+
+    <ul class="check-list">
+      <li><input type="checkbox" id="c4a"><label for="c4a">Часть 1: оба скрина готовы</label></li>
+      <li><input type="checkbox" id="c4b"><label for="c4b">Часть 2: 2–6 слов с конкретными кейсами употребления</label></li>
+      <li><input type="checkbox" id="c4c"><label for="c4c">Часть 3: фото конспекта с коллокациями</label></li>
+      <li><input type="checkbox" id="c4d"><label for="c4d">Проверил(а), что слова не зазубрены, а реально понимаю их применение</label></li>
+      <li><input type="checkbox" id="c4e"><label for="c4e">Всё отправлено</label></li>
+    </ul>
+
+    <div class="tip" style="margin-top:1rem;">
+      💡 <strong>Помни:</strong> если слово полезное — оно 100% встретится. Не бежим за количеством. Выше — сильнее. Иначе поймаем некачественные знания.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleChip(el) {
+  el.classList.toggle('checked');
+}
+
+function saveColloc() {
+  const val = document.getElementById('collocInput').value;
+  localStorage.setItem('hw_colloc', val);
+  const s = document.getElementById('saveStatus');
+  s.textContent = '✓ сохранено';
+  setTimeout(() => s.textContent = '', 1500);
+}
+
+function clearColloc() {
+  document.getElementById('collocInput').value = '';
+  localStorage.removeItem('hw_colloc');
+}
+
+// Загрузка сохранённого
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('hw_colloc');
+  if (saved) document.getElementById('collocInput').value = saved;
+});
+
+// Автосохранение
+document.getElementById('collocInput').addEventListener('input', () => {
+  localStorage.setItem('hw_colloc', document.getElementById('collocInput').value);
+});
+</script>
+</body>
+</html>
