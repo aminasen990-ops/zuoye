@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>📖 HSK6 · Разбор лексики · Монголы → 感激</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'SF Pro Text', 'Roboto', sans-serif;
+  background: linear-gradient(150deg, #f0fdf4 0%, #dcfce7 100%);
+  padding: 2rem 1rem;
+  line-height: 1.7;
+  color: #1f2937;
+}
+
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* ===== ШАПКА ===== */
+.header {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  text-align: center;
+  border-bottom: 4px solid #10b981;
+}
+.header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #059669, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+}
+.header p { font-size: 15px; color: #6b7280; }
+
+/* ===== ПАНЕЛЬ УПРАВЛЕНИЯ ===== */
+.controls {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 1.6rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+}
+.controls-left, .controls-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+.btn {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 2px solid #a7f3d0;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.btn:hover { background: #d1fae5; border-color: #10b981; }
+.btn.active { background: #10b981; color: #ffffff; border-color: #059669; }
+
+.search-box {
+  border: 2px solid #a7f3d0;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  outline: none;
+  min-width: 220px;
+}
+.search-box:focus { border-color: #10b981; }
+
+.counter {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ===== БЛОК ЧАСТИ ===== */
+.part-title {
+  background: linear-gradient(135deg, #065f46, #10b981);
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 1rem 1.5rem;
+  margin: 2rem 0 1rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  box-shadow: 0 6px 16px rgba(16,185,129,0.3);
+}
+
+/* ===== КАРТОЧКА СЛОВА ===== */
+.word-card {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.4rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  position: relative;
+  border-left: 6px solid #10b981;
+  transition: 0.2s;
+}
+.word-card:hover { box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+
+.word-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px dashed #d1fae5;
+}
+.word-hanzi {
+  font-family: 'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #065f46;
+}
+.word-pinyin {
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+.word-trans {
+  font-size: 1rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.section {
+  margin-bottom: 0.9rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.section .label {
+  font-weight: 800;
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* разбор — оранжевый */
+.section.analysis { background: #fffbeb; border-left: 4px solid #f59e0b; }
+.section.analysis .label { color: #92400e; }
+
+/* как работают вместе — синий */
+.section.together { background: #eff6ff; border-left: 4px solid #3b82f6; }
+.section.together .label { color: #1e40af; }
+
+/* картинка — фиолетовый */
+.section.picture { background: #f5f3ff; border-left: 4px solid #8b5cf6; }
+.section.picture .label { color: #5b21b6; }
+
+/* коллокации — зелёный */
+.section.colloc { background: #ecfdf5; border-left: 4px solid #10b981; }
+.section.colloc .label { color: #065f46; }
+
+/* ловушка — красный */
+.section.trap { background: #fef2f2; border-left: 4px solid #ef4444; }
+.section.trap .label { color: #991b1b; }
+
+/* пример — бирюзовый */
+.section.example { background: #f0fdfa; border-left: 4px solid #14b8a6; }
+.section.example .label { color: #115e59; }
+
+/* почему здесь — серый */
+.section.why { background: #f9fafb; border-left: 4px solid #6b7280; }
+.section.why .label { color: #374151; }
+
+/* ===== РАЗБОР ИЕРОГЛИФА ===== */
+.glyph {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.6rem;
+  border-left: 3px solid #cbd5e1;
+}
+.glyph .glyph-head {
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+.glyph .glyph-head .glyph-char {
+  font-family: 'Noto Sans SC',sans-serif;
+  font-size: 1.3rem;
+  color: #b45309;
+  margin-right: 0.4rem;
+}
+.glyph ul {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+.glyph li {
+  margin-bottom: 0.15rem;
+  font-size: 0.9rem;
+  color: #374151;
+}
+.glyph li strong { color: #065f46; }
+
+/* ===== ТАБЛИЦА КОЛЛОКАЦИЙ ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+}
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #d1fae5;
+}
+th {
+  background: #d1fae5;
+  color: #065f46;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+td:first-child {
+  font-family: 'Noto Sans SC',sans-serif;
+  font-weight: 700;
+  color: #1f2937;
+}
+td:nth-child(2) {
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* ===== СКРЫТИЕ ===== */
+.hidden { display: none !important; }
+
+@media (max-width: 600px) {
+  .word-hanzi { font-size: 1.5rem; }
+  .controls { position: static; }
+  .search-box { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ШАПКА -->
+  <div class="header">
+    <h1>📖 HSK6 · Разбор лексики</h1>
+    <p>Часть 2 (стр. 038) + Часть 3 (стр. 039) · 22 слова · разбор ключей, коллокации, ловушки</p>
+  </div>
+
+  <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
+  <div class="controls">
+    <div class="controls-left">
+      <button class="btn active" data-filter="all" onclick="filterPart('all', this)">Всё</button>
+      <button class="btn" data-filter="part2" onclick="filterPart('part2', this)">Часть 2 · стр. 038</button>
+      <button class="btn" data-filter="part3" onclick="filterPart('part3', this)">Часть 3 · стр. 039</button>
+    </div>
+    <div class="controls-right">
+      <input type="text" class="search-box" id="search" placeholder="🔍 Поиск по слову..." oninput="searchWords()"/>
+      <span class="counter" id="counter">22 слова</span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ЧАСТЬ 2 -->
+  <!-- ============================================================ -->
+  <div class="part-title" data-part="part2">📖 ЧАСТЬ 2 — слова с первой страницы (038)</div>
+
+  <!-- 1. 蒙古族 -->
+  <div class="word-card" data-part="part2" data-word="蒙古族 měng gǔ zú монгольский народ">
+    <div class="word-head">
+      <span class="word-hanzi">蒙古族</span>
+      <span class="word-pinyin">měng gǔ zú</span>
+      <span class="word-trans">— монгольский народ, монголы</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">蒙</span> (měng) = покрывать; часть слова «Монголия»</div>
+        <ul>
+          <li><strong>Ключ:</strong> 艹 (трава — сверху).</li>
+          <li><strong>Фонетик:</strong> 冡 (мэн).</li>
+          <li><strong>Визуально:</strong> сверху трава 艹, внутри сложная структура, первоначально — покрывать, окутывать.</li>
+          <li><strong>Не путать с:</strong> 朦 (мутный, туманный, с 月 слева).</li>
+          <li><strong>Два чтения:</strong> méng (покрывать) / měng (только в 蒙古).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">古</span> (gǔ) = древний</div>
+        <ul>
+          <li><strong>Ключ:</strong> 口 (рот, полость).</li>
+          <li><strong>Визуально:</strong> сверху 十, снизу 口 — древние записи в углублении.</li>
+          <li><strong>Не путать с:</strong> 故 (поэтому, с 攵 справа).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">族</span> (zú) = народ, племя</div>
+        <ul>
+          <li><strong>Ключ:</strong> 方 (знамя — правая верхняя часть).</li>
+          <li><strong>Фонетик:</strong> 㞐.</li>
+          <li><strong>Визуально:</strong> 方 (племенное знамя) + 矢 (стрела) — племя воинов со знаменем и стрелами.</li>
+          <li><strong>Не путать с:</strong> 旅 (путешествие).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      蒙 + 古 = Монголия, + 族 = монгольский народ.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Племя из Монголии — монголы».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>蒙古族舞蹈</td><td>měng gǔ zú wǔ dǎo</td><td>монгольский танец</td></tr>
+        <tr><td>蒙古族演员</td><td>měng gǔ zú yǎn yuán</td><td>актёр из монгольского народа</td></tr>
+        <tr><td>蒙古族文化</td><td>měng gǔ zú wén huà</td><td>культура монголов</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      蒙 имеет несколько чтений! В 蒙古 только měng, не méng.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      蒙古族是中国少数民族之一。— Монголы — один из малых народов Китая.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Слово из списка словарных комментариев к уроку.
+    </div>
+  </div>
+
+  <!-- 2. 抚养 -->
+  <div class="word-card" data-part="part2" data-word="抚养 fǔ yǎng воспитывать">
+    <div class="word-head">
+      <span class="word-hanzi">抚养</span>
+      <span class="word-pinyin">fǔ yǎng</span>
+      <span class="word-trans">— воспитывать, растить (детей, родителями)</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">抚</span> (fǔ) = гладить, бережно трогать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 扌 (рука — слева).</li>
+          <li><strong>Фонетик:</strong> 无 (wú).</li>
+          <li><strong>Визуально:</strong> слева рука 扌, справа 无. Рука бережно гладит.</li>
+          <li><strong>Не путать с:</strong> 扶 (поддерживать, помогать, тоже 扌, но другой фонетик).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">养</span> (yǎng) = выращивать, воспитывать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 丷 (верх), нижняя часть 食 (еда).</li>
+          <li><strong>Визуально:</strong> кормить, давать еду, взращивать.</li>
+          <li><strong>Не путать с:</strong> 美 (красивый).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Бережно заботиться + выращивать → растить ребёнка.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Рука бережно заботится и кормит — воспитывать».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>抚养子女</td><td>fǔ yǎng zǐ nǚ</td><td>воспитывать детей</td></tr>
+        <tr><td>抚养长大</td><td>fǔ yǎng zhǎng dà</td><td>вырастить</td></tr>
+        <tr><td>抚养孩子</td><td>fǔ yǎng hái zi</td><td>растить ребёнка</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      抚养 = родители воспитывают детей. НЕ для животных: для животных 饲养. Усыновление — 领养.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      父母抚养子女。— Родители воспитывают детей.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Словарная единица, пример в примечании к уроку.
+    </div>
+  </div>
+
+  <!-- 3. 露面 -->
+  <div class="word-card" data-part="part2" data-word="露面 lòu miàn появиться">
+    <div class="word-head">
+      <span class="word-hanzi">露面</span>
+      <span class="word-pinyin">lòu miàn</span>
+      <span class="word-trans">— показаться, появиться на людях</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">露</span> (lòu) — показать, выставить напоказ (разговорное чтение)</div>
+        <ul>
+          <li><strong>Ключ:</strong> 雨 (дождь — сверху).</li>
+          <li><strong>Визуально:</strong> сверху дождь 雨, снизу дорожка. Изначально: роса.</li>
+          <li><strong>Не путать с:</strong> 雾 (туман, тоже 雨 сверху).</li>
+          <li><strong>Два чтения:</strong> lù (роса, открывать, книжн.) / lòu (разговорное: показать).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">面</span> (miàn) — лицо</div>
+        <ul>
+          <li><strong>Ключ:</strong> 面 — сам ключ.</li>
+          <li><strong>Визуально:</strong> схематичное лицо с чертами.</li>
+          <li><strong>Не путать с:</strong> 而 (а, но).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Показать + лицо → показаться, выйти к людям.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Показать своё лицо на публике — 露面».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>公开露面</td><td>gōng kāi lòu miàn</td><td>публично появиться</td></tr>
+        <tr><td>首次露面</td><td>shǒu cì lòu miàn</td><td>первое появление на публике</td></tr>
+        <tr><td>久未露面</td><td>jiǔ wèi lòu miàn</td><td>давно не появлялся</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      露: в слове 露面 читается lòu, не lù!
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他很久没有露面了。— Он давно не показывался на людях.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из раздела 生词注释.
+    </div>
+  </div>
+
+  <!-- 4. 回归 -->
+  <div class="word-card" data-part="part2" data-word="回归 huí guī вернуться">
+    <div class="word-head">
+      <span class="word-hanzi">回归</span>
+      <span class="word-pinyin">huí guī</span>
+      <span class="word-trans">— вернуться, возвратиться</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">回</span> (huí) — возвращаться, круг</div>
+        <ul>
+          <li><strong>Ключ:</strong> 囗 (замкнутая рамка).</li>
+          <li><strong>Визуально:</strong> замкнутый контур, движение по кругу назад.</li>
+          <li><strong>Не путать с:</strong> 国 (страна, внутри 玉).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">归</span> (guī) — вернуться домой</div>
+        <ul>
+          <li><strong>Ключ:</strong> 彐 (сверху).</li>
+          <li><strong>Фонетик:</strong> 彐 + 巾. Изначально: возвращение к ткани/дому.</li>
+          <li><strong>Не путать с:</strong> 扫 (подметать).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Вернуться + возвратиться → возврат (к месту, состоянию).
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Движение назад, возвращение домой — 回归».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>回归自然</td><td>huí guī zì rán</td><td>вернуться к природе</td></tr>
+        <tr><td>回归祖国</td><td>huí guī zǔ guó</td><td>вернуться на родину</td></tr>
+        <tr><td>回归常态</td><td>huí guī cháng tài</td><td>вернуться к обычному состоянию</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      回归 (возвратиться к чему-то, книжное) ≠ 回来 (вернуться домой, разговорное).
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      香港回归祖国。— Гонконг вернулся в состав Родины.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Слово из словарных комментариев.
+    </div>
+  </div>
+
+  <!-- 5. 瞩目 -->
+  <div class="word-card" data-part="part2" data-word="瞩目 zhǔ mù привлекать взгляды">
+    <div class="word-head">
+      <span class="word-hanzi">瞩目</span>
+      <span class="word-pinyin">zhǔ mù</span>
+      <span class="word-trans">— привлекать взгляды, быть в центре внимания</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">瞩</span> (zhǔ) — смотреть пристально, обращать внимание</div>
+        <ul>
+          <li><strong>Ключ:</strong> 目 (глаз — слева).</li>
+          <li><strong>Фонетик:</strong> 属 (shǔ).</li>
+          <li><strong>Визуально:</strong> слева глаз 目, справа 属. Глаз пристально смотрит.</li>
+          <li><strong>Не путать с:</strong> 嘱 (попросить, поручить — с 口 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">目</span> (mù) — глаз</div>
+        <ul>
+          <li><strong>Ключ:</strong> 目 — сам ключ.</li>
+          <li><strong>Визуально:</strong> схематичный глаз с зрачком.</li>
+          <li><strong>Не путать с:</strong> 日 (солнце).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Пристально смотреть + глаз → привлекать взгляды.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Множество глаз смотрят пристально — привлекать внимание».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>举世瞩目</td><td>jǔ shì zhǔ mù</td><td>всемирно известный, привлекает внимание всего мира</td></tr>
+        <tr><td>万众瞩目</td><td>wàn zhòng zhǔ mù</td><td>в центре внимания толпы</td></tr>
+        <tr><td>备受瞩目</td><td>bèi shòu zhǔ mù</td><td>пользоваться большим вниманием</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      瞩 слева ГЛАЗ 目, а не рот 口! 嘱 = поручить, это другой иероглиф.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      这个项目举世瞩目。— Этот проект привлекает внимание всего мира.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из словарного списка.
+    </div>
+  </div>
+
+  <!-- 6. 闻名 -->
+  <div class="word-card" data-part="part2" data-word="闻名 wén míng известный">
+    <div class="word-head">
+      <span class="word-hanzi">闻名</span>
+      <span class="word-pinyin">wén míng</span>
+      <span class="word-trans">— известный, знаменитый</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">闻</span> (wén) — слышать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 耳 (ухо — слева).</li>
+          <li><strong>Визуально:</strong> слева ухо 耳, справа 门 дверь. Слышать через дверь.</li>
+          <li><strong>Не путать с:</strong> 问 (спрашивать, 口 внутри двери).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">名</span> (míng) — имя, слава</div>
+        <ul>
+          <li><strong>Ключ:</strong> 口 (рот).</li>
+          <li><strong>Визуально:</strong> сверху 夕, снизу 口 — произносить имя.</li>
+          <li><strong>Не путать с:</strong> 各 (каждый).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Слышать (о чём-то) + имя → слава, известность.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Ухо слышит имя — стало известно».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>闻名全国</td><td>wén míng quán guó</td><td>известен по всей стране</td></tr>
+        <tr><td>闻名世界</td><td>wén míng shì jiè</td><td>известен во всём мире</td></tr>
+        <tr><td>远近闻名</td><td>yuǎn jìn wén míng</td><td>известен и далеко и близко</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      闻名 = «о нём слышат», это книжное слово. Разговорное: 有名.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      这是远近闻名的风景区。— Это известный на многие километры пейзажный район.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из 生词注释.
+    </div>
+  </div>
+
+  <!-- 7. 粉丝 -->
+  <div class="word-card" data-part="part2" data-word="粉丝 fěn sī фанат">
+    <div class="word-head">
+      <span class="word-hanzi">粉丝</span>
+      <span class="word-pinyin">fěn sī</span>
+      <span class="word-trans">— фанат, поклонник</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">粉</span> (fěn) — пыль, розовый порошок</div>
+        <ul>
+          <li><strong>Ключ:</strong> 米 (рис — слева).</li>
+          <li><strong>Фонетик:</strong> 分 (fēn).</li>
+          <li><strong>Визуально:</strong> слева рис 米, справа 分 делить. Рисовый порошок.</li>
+          <li><strong>Не путать с:</strong> 份 (порция, 亻).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">丝</span> (sī) — нить, шёлковая нить</div>
+        <ul>
+          <li><strong>Ключ:</strong> 纟 (шёлковые нити — слева).</li>
+          <li><strong>Фонетик:</strong> 一 + 糸.</li>
+          <li><strong>Визуально:</strong> клубок тонких нитей.</li>
+          <li><strong>Не путать с:</strong> 思 (думать, 心 внизу).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Букв. рисовые нити (стеклянная лапша), по созвучию с английским fans — фанаты.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Омофон: лапша 粉丝 = фанаты».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>超级粉丝</td><td>chāo jí fěn sī</td><td>суперфанат</td></tr>
+        <tr><td>忠实粉丝</td><td>zhōng shí fěn sī</td><td>преданный поклонник</td></tr>
+        <tr><td>幸运粉丝</td><td>xìng yùn fěn sī</td><td>счастливый фанат</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Это заимствование по звучанию! Первоначальное значение — крахмальная лапша.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他是这位歌手的忠实粉丝。— Он преданный поклонник этого певца.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Слово из комментариев к уроку.
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ЧАСТЬ 3 -->
+  <!-- ============================================================ -->
+  <div class="part-title" data-part="part3">📖 ЧАСТЬ 3 — слова со второй страницы (039)</div>
+
+  <!-- 1. 拜年 -->
+  <div class="word-card" data-part="part3" data-word="拜年 bài nián поздравлять">
+    <div class="word-head">
+      <span class="word-hanzi">拜年</span>
+      <span class="word-pinyin">bài nián</span>
+      <span class="word-trans">— поздравлять с Новым годом</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">拜</span> (bài) — кланяться, почтительно навещать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 手 (рука, нижняя часть 手).</li>
+          <li><strong>Визуально:</strong> две руки, сложенные вместе, поклон.</li>
+          <li><strong>Не путать с:</strong> 排 (выстраивать, 扌 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">年</span> (nián) — год, Новый год</div>
+        <ul>
+          <li><strong>Ключ:</strong> 干.</li>
+          <li><strong>Визуально:</strong> древний рисунок зерна, урожай, символ года.</li>
+          <li><strong>Не путать с:</strong> 午 (полдень).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Поклониться + год → прийти с поклоном и поздравить с Новым годом.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Сложил руки, поклонился — поздравляю с Новым годом».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>给朋友们拜年</td><td>gěi péng you men bài nián</td><td>поздравить друзей с Новым годом</td></tr>
+        <tr><td>给父母拜年</td><td>gěi fù mǔ bài nián</td><td>поздравить родителей с Новым годом</td></tr>
+        <tr><td>去亲戚家拜年</td><td>qù qīn qi jiā bài nián</td><td>пойти поздравлять родственников</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      拜年 — только поздравление с Китайским Новым годом, не для дня рождения.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      春节我们去亲戚家拜年。— На праздник Весны мы ходим поздравлять родственников.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из 生词注释 на странице 039.
+    </div>
+  </div>
+
+  <!-- 2. 过关 -->
+  <div class="word-card" data-part="part3" data-word="过关 guò guān пройти экзамен">
+    <div class="word-head">
+      <span class="word-hanzi">过关</span>
+      <span class="word-pinyin">guò guān</span>
+      <span class="word-trans">— пройти экзамен, сдать, преодолеть барьер</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">过</span> (guò) — проходить, пересекать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 辶 (беговая черта, движение).</li>
+          <li><strong>Фонетик:</strong> 呙.</li>
+          <li><strong>Визуально:</strong> иероглиф внутри, и беговая черта — движение мимо.</li>
+          <li><strong>Не путать с:</strong> 边 (край, 辶 + 力).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">关</span> (guān) — застава, барьер, экзаменационный рубеж</div>
+        <ul>
+          <li><strong>Ключ:</strong> 丷.</li>
+          <li><strong>Визуально:</strong> сверху 丷, снизу 天. Изначально пограничная застава.</li>
+          <li><strong>Не путать с:</strong> 美 (красивый).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Пройти + застава → пройти сквозь барьер, сдать проверку.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Идёшь через пограничную заставу — прошёл проверку».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>过关考试</td><td>guò guān kǎo shì</td><td>проверочный экзамен</td></tr>
+        <tr><td>顺利过关</td><td>shùn lì guò guān</td><td>успешно пройти</td></tr>
+        <tr><td>过不了关</td><td>guò bù liǎo guān</td><td>не пройти проверку</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      过关 — переносное значение «сдать экзамен», не только физически пройти ворота.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      技术过关才能上岗。— Нужно сдать техническую проверку, чтобы начать работать.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Слово из словарного списка урока.
+    </div>
+  </div>
+
+  <!-- 3. 卷子 -->
+  <div class="word-card" data-part="part3" data-word="卷子 juàn zi экзаменационный бланк">
+    <div class="word-head">
+      <span class="word-hanzi">卷子</span>
+      <span class="word-pinyin">juàn zi</span>
+      <span class="word-trans">— экзаменационный бланк, тестовая работа</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">卷</span> (juàn) — свиток, лист бумаги</div>
+        <ul>
+          <li><strong>Ключ:</strong> 㔾 (свёрнутый свиток).</li>
+          <li><strong>Визуально:</strong> сверху 䒑, снизу 㔾 — свёрнутый бумажный свиток.</li>
+          <li><strong>Не путать с:</strong> 券 (талон, билет).</li>
+          <li><strong>Два чтения:</strong> juǎn (сворачивать, глагол) / juàn (свиток, существительное).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">子</span> (zi) — частица существительных (без ударения)</div>
+        <ul>
+          <li><strong>Ключ:</strong> 子 — сам ключ, ребёнок.</li>
+          <li><strong>Визуально:</strong> схематично ребёнок.</li>
+          <li><strong>Не путать с:</strong> 了 (частица действия).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Свиток + частица → бумажный лист экзамена.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Свёрнутый бумажный свиток — экзаменационный бланк».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>试卷子</td><td>shì juàn zi</td><td>экзаменационный бланк</td></tr>
+        <tr><td>发卷子</td><td>fā juàn zi</td><td>раздать листы теста</td></tr>
+        <tr><td>收卷子</td><td>shōu juàn zi</td><td>собрать тестовые работы</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      卷 как существительное читается juàn, глагол — juǎn. Не перепутай!
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      老师开始发卷子。— Учитель начинает раздавать экзаменационные листы.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из комментариев к уроку.
+    </div>
+  </div>
+
+  <!-- 4. 马虎 -->
+  <div class="word-card" data-part="part3" data-word="马虎 mǎ hu небрежный">
+    <div class="word-head">
+      <span class="word-hanzi">马虎</span>
+      <span class="word-pinyin">mǎ hu</span>
+      <span class="word-trans">— небрежный, невнимательный, халатный</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">马</span> (mǎ) — лошадь</div>
+        <ul>
+          <li><strong>Ключ:</strong> 马 — сам ключ, лошадь.</li>
+          <li><strong>Визуально:</strong> схематичный рисунок лошади.</li>
+          <li><strong>Не путать с:</strong> 乌 (чёрный).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">虎</span> (hu) — тигр</div>
+        <ul>
+          <li><strong>Ключ:</strong> 虍 (тигриная шкура).</li>
+          <li><strong>Визуально:</strong> сверху узор тигриной шкуры, снизу 几.</li>
+          <li><strong>Не путать с:</strong> 虚 (пустой).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Лошадь + тигр. Идиома: «смешать лошадь и тигра» → неразборчиво, невнимательно.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Перепутал лошадь с тигром — сделал всё небрежно».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>做事马虎</td><td>zuò shì mǎ hu</td><td>работать небрежно</td></tr>
+        <tr><td>有点马虎</td><td>yǒu diǎn mǎ hu</td><td>немного невнимателен</td></tr>
+        <tr><td>不能马虎</td><td>bù néng mǎ hu</td><td>нельзя халатно относиться</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Это разговорное слово! В письменном стиле лучше использовать 粗心 (cū xīn).
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      考试不能马虎。— На экзамене нельзя быть невнимательным.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из 生词注释 страницы 039.
+    </div>
+  </div>
+
+  <!-- 5. 丢掉 -->
+  <div class="word-card" data-part="part3" data-word="丢掉 diū diào выбросить">
+    <div class="word-head">
+      <span class="word-hanzi">丢掉</span>
+      <span class="word-pinyin">diū diào</span>
+      <span class="word-trans">— выбросить, потерять, отбросить</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">丢</span> (diū) — терять, бросать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 厶.</li>
+          <li><strong>Визуально:</strong> человек теряет вещь.</li>
+          <li><strong>Не путать с:</strong> 去 (уходить).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">掉</span> (diào) — убрать, упасть</div>
+        <ul>
+          <li><strong>Ключ:</strong> 扌 (рука слева).</li>
+          <li><strong>Фонетик:</strong> 卓 (zhuó).</li>
+          <li><strong>Визуально:</strong> рука отпускает, вещь падает.</li>
+          <li><strong>Не путать с:</strong> 桌 (стол, 木 слева).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Потерять + убрать → выбросить / потерять.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Рука бросает вещь, она падает — потерять».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>丢掉习惯</td><td>diū diào xí guàn</td><td>избавиться от привычки</td></tr>
+        <tr><td>丢掉包袱</td><td>diū diào bāo fu</td><td>сбросить груз</td></tr>
+        <tr><td>丢掉工作</td><td>diū diào gōng zuò</td><td>потерять работу</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      丢掉 можно использовать и про физические вещи, и про абстрактные (привычки, страхи).
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      丢掉坏习惯。— Избавься от плохой привычки.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Слово из словарного списка.
+    </div>
+  </div>
+
+  <!-- 6. 科目 -->
+  <div class="word-card" data-part="part3" data-word="科目 kē mù предмет">
+    <div class="word-head">
+      <span class="word-hanzi">科目</span>
+      <span class="word-pinyin">kē mù</span>
+      <span class="word-trans">— предмет (обучения), дисциплина</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">科</span> (kē) — раздел науки, дисциплина</div>
+        <ul>
+          <li><strong>Ключ:</strong> 禾 (злак, зерно слева).</li>
+          <li><strong>Фонетик:</strong> 斗.</li>
+          <li><strong>Визуально:</strong> слева зерно, справа мерка — классифицировать, разделять.</li>
+          <li><strong>Не путать с:</strong> 料 (материал, 米 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">目</span> (mù) — глаз, пункт, раздел</div>
+        <ul>
+          <li><strong>Ключ:</strong> 目 — сам ключ.</li>
+          <li><strong>Визуально:</strong> схематичный глаз.</li>
+          <li><strong>Не путать с:</strong> 日 (солнце).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Раздел + пункт → учебный предмет, дисциплина.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Раздел знаний, пункт программы — учебный предмет».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>专业科目</td><td>zhuān yè kē mù</td><td>профильный предмет</td></tr>
+        <tr><td>文化科目</td><td>wén huà kē mù</td><td>гуманитарные дисциплины</td></tr>
+        <tr><td>考试科目</td><td>kǎo shì kē mù</td><td>экзаменационные предметы</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      科目 — официальное слово для предметов экзамена. В обычном разговоре чаще 学科 или 课.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      高考有很多考试科目。— На гаокао много экзаменационных предметов.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из урока.
+    </div>
+  </div>
+
+  <!-- 7. 满分 -->
+  <div class="word-card" data-part="part3" data-word="满分 mǎn fēn максимальный балл">
+    <div class="word-head">
+      <span class="word-hanzi">满分</span>
+      <span class="word-pinyin">mǎn fēn</span>
+      <span class="word-trans">— максимальный балл, сто баллов</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">满</span> (mǎn) — полный</div>
+        <ul>
+          <li><strong>Ключ:</strong> 氵 (вода слева).</li>
+          <li><strong>Фонетик:</strong> 满 — внутри 艹.</li>
+          <li><strong>Визуально:</strong> вода заполняет сосуд до краёв.</li>
+          <li><strong>Не путать с:</strong> 瞒 (скрывать, 目 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">分</span> (fēn) — балл, делить</div>
+        <ul>
+          <li><strong>Ключ:</strong> 刀 (нож снизу).</li>
+          <li><strong>Визуально:</strong> нож делит вещь на части.</li>
+          <li><strong>Не путать с:</strong> 公 (общий).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Полный + балл → максимальный балл.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Вода заполнила сосуд до краёв — баллы набраны полностью».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>打满分</td><td>dǎ mǎn fēn</td><td>поставить максимальный балл</td></tr>
+        <tr><td>得满分</td><td>dé mǎn fēn</td><td>получить полный балл</td></tr>
+        <tr><td>满分100分</td><td>mǎn fēn yì bǎi fēn</td><td>максимальный балл — 100</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      分 два чтения: fēn (делить, балл) / fèn (часть, доля).
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      这次考试他得了满分。— На этом экзамене он получил максимальный балл.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из 生词注释.
+    </div>
+  </div>
+
+  <!-- 8. 媳妇 -->
+  <div class="word-card" data-part="part3" data-word="媳妇 xí fu жена">
+    <div class="word-head">
+      <span class="word-hanzi">媳妇</span>
+      <span class="word-pinyin">xí fu</span>
+      <span class="word-trans">— жена, невестка</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">媳</span> (xí) — невестка, жена сына</div>
+        <ul>
+          <li><strong>Ключ:</strong> 女 (женщина слева).</li>
+          <li><strong>Фонетик:</strong> 息 (xī).</li>
+          <li><strong>Визуально:</strong> слева женщина 女, справа 息. Женщина в семье.</li>
+          <li><strong>Не путать с:</strong> 熄 (потушить, 火 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">妇</span> (fu) — замужняя женщина</div>
+        <ul>
+          <li><strong>Ключ:</strong> 女 (женщина слева).</li>
+          <li><strong>Фонетик:</strong> 彐.</li>
+          <li><strong>Визуально:</strong> женщина.</li>
+          <li><strong>Не путать с:</strong> 归 (вернуться).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Замужняя женщина в семье → жена / невестка.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Женщина в семье — жена».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>我媳妇</td><td>wǒ xí fu</td><td>моя жена</td></tr>
+        <tr><td>儿媳妇</td><td>ér xí fu</td><td>невестка (жена сына)</td></tr>
+        <tr><td>新媳妇</td><td>xīn xí fu</td><td>молодая невестка</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      媳妇 — разговорное слово. В книжном стиле 妻子 (qī zi). На севере Китая часто значит «жена».
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他媳妇是老师。— Его жена — учительница.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из словарного списка.
+    </div>
+  </div>
+
+  <!-- 9. 文科 -->
+  <div class="word-card" data-part="part3" data-word="文科 wén kē гуманитарные науки">
+    <div class="word-head">
+      <span class="word-hanzi">文科</span>
+      <span class="word-pinyin">wén kē</span>
+      <span class="word-trans">— гуманитарные науки, гуманитарный профиль</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">文</span> (wén) — письменность, культура, гуманитарное</div>
+        <ul>
+          <li><strong>Ключ:</strong> 文 — сам ключ.</li>
+          <li><strong>Визуально:</strong> древний рисунок татуировки на теле, узор, письмо.</li>
+          <li><strong>Не путать с:</strong> 又 (ещё).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">科</span> (kē) — дисциплина, раздел знаний</div>
+        <ul>
+          <li><strong>Ключ:</strong> 禾 (злак слева).</li>
+          <li><strong>Фонетик:</strong> 斗.</li>
+          <li><strong>Визуально:</strong> классификация знаний.</li>
+          <li><strong>Не путать с:</strong> 料.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Культура/письмо + дисциплина → гуманитарные науки.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Знания про письмо и культуру — гуманитарный профиль».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>读文科</td><td>dú wén kē</td><td>учиться на гуманитарном профиле</td></tr>
+        <tr><td>文科班</td><td>wén kē bān</td><td>гуманитарный класс</td></tr>
+        <tr><td>文科状元</td><td>wén kē zhuàng yuán</td><td>лучший по гуманитарному профилю на гаокао</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Противоположность — 理科 lǐ kē (естественные науки).
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      我高中读文科。— В старшей школе я учился на гуманитарном профиле.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из комментариев урока.
+    </div>
+  </div>
+
+  <!-- 10. 状元 -->
+  <div class="word-card" data-part="part3" data-word="状元 zhuàng yuan лучший выпускник">
+    <div class="word-head">
+      <span class="word-hanzi">状元</span>
+      <span class="word-pinyin">zhuàng yuan</span>
+      <span class="word-trans">— лучший выпускник, победитель экзамена</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">状</span> (zhuàng) — описание, отчёт</div>
+        <ul>
+          <li><strong>Ключ:</strong> 犬 (собака справа).</li>
+          <li><strong>Фонетик:</strong> 爿.</li>
+          <li><strong>Визуально:</strong> запись, описание результата.</li>
+          <li><strong>Не путать с:</strong> 壮 (сильный, крепкий).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">元</span> (yuan) — первый, главный</div>
+        <ul>
+          <li><strong>Ключ:</strong> 二.</li>
+          <li><strong>Визуально:</strong> верхняя черта, начало, первый.</li>
+          <li><strong>Не путать с:</strong> 无 (нет).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Запись + первый → тот, кто получил первое место на экзамене.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Первый в списке результатов экзамена — 状元».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>文科状元</td><td>wén kē zhuàng yuán</td><td>лучший по гуманитарному профилю</td></tr>
+        <tr><td>理科状元</td><td>lǐ kē zhuàng yuán</td><td>лучший по естественным наукам</td></tr>
+        <tr><td>科技状元</td><td>kē jì zhuàng yuán</td><td>лучший в технологиях</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Из древних императорских экзаменов, сейчас используется только про гаокао.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他是本省的文科状元。— Он лучший выпускник гуманитарного профиля в этой провинции.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из 生词注释.
+    </div>
+  </div>
+
+  <!-- 11. 扭曲 -->
+  <div class="word-card" data-part="part3" data-word="扭曲 niǔ qū исказить">
+    <div class="word-head">
+      <span class="word-hanzi">扭曲</span>
+      <span class="word-pinyin">niǔ qū</span>
+      <span class="word-trans">— исказить, перекрутить</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">扭</span> (niǔ) — крутить, повернуть</div>
+        <ul>
+          <li><strong>Ключ:</strong> 扌 (рука слева).</li>
+          <li><strong>Фонетик:</strong> 丑 (chǒu).</li>
+          <li><strong>Визуально:</strong> рука крутит что-то.</li>
+          <li><strong>Не путать с:</strong> 纽 (пуговица, 纟 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">曲</span> (qū) — изогнутый, кривой</div>
+        <ul>
+          <li><strong>Ключ:</strong> 曲 — сам ключ.</li>
+          <li><strong>Визуально:</strong> изогнутая линия.</li>
+          <li><strong>Не путать с:</strong> 由 (из).</li>
+          <li><strong>Два чтения:</strong> qū (кривой, глагол) / qǔ (песня).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Крутить + изогнуть → исказить, перекрутить.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Рука крутит и гнёт предмет — исказить».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>扭曲事实</td><td>niǔ qū shì shí</td><td>искажать факты</td></tr>
+        <tr><td>扭曲原文</td><td>niǔ qū yuán wén</td><td>искажать оригинальный текст</td></tr>
+        <tr><td>表情扭曲</td><td>biǎo qíng niǔ qū</td><td>искажённое выражение лица</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      曲 читается qū, не qǔ в этом слове. Используется и для физических вещей, и для фактов.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      不要扭曲我的意思。— Не искажай мои слова.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из словарного списка.
+    </div>
+  </div>
+
+  <!-- 12. 鲜活 -->
+  <div class="word-card" data-part="part3" data-word="鲜活 xiān huó живой">
+    <div class="word-head">
+      <span class="word-hanzi">鲜活</span>
+      <span class="word-pinyin">xiān huó</span>
+      <span class="word-trans">— живой, свежий, яркий</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">鲜</span> (xiān) — свежий</div>
+        <ul>
+          <li><strong>Ключ:</strong> 鱼 (рыба слева).</li>
+          <li><strong>Фонетик:</strong> 羊 (овца справа).</li>
+          <li><strong>Визуально:</strong> рыба + овца — свежее мясо, вкус свежести.</li>
+          <li><strong>Не путать с:</strong> 样 (образец, 木 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">活</span> (huó) — живой</div>
+        <ul>
+          <li><strong>Ключ:</strong> 氵 (вода слева).</li>
+          <li><strong>Фонетик:</strong> 舌 (язык).</li>
+          <li><strong>Визуально:</strong> вода + язык — живой, дышит.</li>
+          <li><strong>Не путать с:</strong> 话 (речь, 讠 слева).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Свежий + живой → яркий, живой, насыщенный.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Свежая рыба, живая — яркий, живой образ».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>内容鲜活</td><td>nèi róng xiān huó</td><td>живое содержание</td></tr>
+        <tr><td>色彩鲜活</td><td>sè cǎi xiān huó</td><td>яркие краски</td></tr>
+        <tr><td>鲜活的语言</td><td>xiān huó de yǔ yán</td><td>живой язык</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Чаще описывает образы, речь, истории, не только продукты.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      这篇文章的语言很鲜活。— Язык этой статьи очень живой.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из 生词注释.
+    </div>
+  </div>
+
+  <!-- 13. 根深蒂固 -->
+  <div class="word-card" data-part="part3" data-word="根深蒂固 gēn shēn dì gù укоренившийся">
+    <div class="word-head">
+      <span class="word-hanzi">根深蒂固</span>
+      <span class="word-pinyin">gēn shēn dì gù</span>
+      <span class="word-trans">— глубоко укоренившийся</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">根</span> (gēn) — корень</div>
+        <ul>
+          <li><strong>Ключ:</strong> 木 (дерево слева).</li>
+          <li><strong>Фонетик:</strong> 艮 (gèn).</li>
+          <li><strong>Визуально:</strong> дерево, его корень под землёй.</li>
+          <li><strong>Не путать с:</strong> 跟 (следом, 足 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">深</span> (shēn) — глубокий</div>
+        <ul>
+          <li><strong>Ключ:</strong> 氵 (вода слева).</li>
+          <li><strong>Фонетик:</strong> 罙.</li>
+          <li><strong>Визуально:</strong> глубокая вода.</li>
+          <li><strong>Не путать с:</strong> 探 (искать, 扌 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">蒂</span> (dì) — плодоножка, основание плода</div>
+        <ul>
+          <li><strong>Ключ:</strong> 艹 (трава сверху).</li>
+          <li><strong>Фонетик:</strong> 帝 (dì).</li>
+          <li><strong>Визуально:</strong> стебель растения.</li>
+          <li><strong>Не путать с:</strong> 帝 (император).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">固</span> (gù) — прочный, твёрдый</div>
+        <ul>
+          <li><strong>Ключ:</strong> 囗 (рамка).</li>
+          <li><strong>Визуально:</strong> в рамке 古 — древнее, крепко держится.</li>
+          <li><strong>Не путать с:</strong> 回 (вернуться).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Корень глубокий, основание плода прочное → образно: идея крепко сидит в голове.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Корень глубоко в земле, стебель прочный — мысль укоренилась».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>根深蒂固的观念</td><td>gēn shēn dì gù de guān niàn</td><td>глубоко укоренившееся убеждение</td></tr>
+        <tr><td>文化根深蒂固</td><td>wén huà gēn shēn dì gù</td><td>культура глубоко укоренилась</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Это идиома! Только про мысли, привычки, представления, не про настоящие деревья.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      这种想法在他心里根深蒂固。— Эта мысль глубоко укоренилась в его сознании.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из словарного списка.
+    </div>
+  </div>
+
+  <!-- 14. 紧迫 -->
+  <div class="word-card" data-part="part3" data-word="紧迫 jǐn pò срочный">
+    <div class="word-head">
+      <span class="word-hanzi">紧迫</span>
+      <span class="word-pinyin">jǐn pò</span>
+      <span class="word-trans">— срочный, неотложный, давящий</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">紧</span> (jǐn) — тугой, сжатый</div>
+        <ul>
+          <li><strong>Ключ:</strong> 糸 (нити шёлка).</li>
+          <li><strong>Визуально:</strong> нити стянуты туго.</li>
+          <li><strong>Не путать с:</strong> 紫 (фиолетовый).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">迫</span> (pò) — давить, вынуждать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 辶 (движение).</li>
+          <li><strong>Фонетик:</strong> 白.</li>
+          <li><strong>Визуально:</strong> движение, давление.</li>
+          <li><strong>Не путать с:</strong> 追 (гнаться).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Туго сжатый + давить → срочный, ограниченный (время).
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Время стянуто туго, давит — срочно».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>时间紧迫</td><td>shí jiān jǐn pò</td><td>время ограничено</td></tr>
+        <tr><td>任务紧迫</td><td>rèn wù jǐn pò</td><td>срочная задача</td></tr>
+        <tr><td>紧迫的情况</td><td>jǐn pò de qíng kuàng</td><td>критическая ситуация</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      紧迫 про время/задачи. 紧急 (jǐn jí) — более сильное «чрезвычайный».
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      时间紧迫，我们快点。— Время ограничено, давай быстрее.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из 生词注释.
+    </div>
+  </div>
+
+  <!-- 15. 惯性 -->
+  <div class="word-card" data-part="part3" data-word="惯性 guàn xìng инерция">
+    <div class="word-head">
+      <span class="word-hanzi">惯性</span>
+      <span class="word-pinyin">guàn xìng</span>
+      <span class="word-trans">— инерция, привычка, инертность</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">惯</span> (guàn) — привыкать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 忄 (сердце, чувства слева).</li>
+          <li><strong>Фонетик:</strong> 贯 (guàn).</li>
+          <li><strong>Визуально:</strong> в сердце закрепилась привычка.</li>
+          <li><strong>Не путать с:</strong> 贯 (пронзать, без 忄).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">性</span> (xìng) — свойство, природа</div>
+        <ul>
+          <li><strong>Ключ:</strong> 忄 (сердце).</li>
+          <li><strong>Фонетик:</strong> 生 (shēng).</li>
+          <li><strong>Визуально:</strong> природа, врождённое свойство.</li>
+          <li><strong>Не путать с:</strong> 姓 (фамилия, 女 слева).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Привычка + свойство → инерция (физика / поведение).
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Свойство, которое вошло в привычку — инерция».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>行为惯性</td><td>xíng wéi guàn xìng</td><td>поведенческая инерция</td></tr>
+        <tr><td>文化惯性</td><td>wén huà guàn xìng</td><td>культурная инерция</td></tr>
+        <tr><td>保持惯性</td><td>bǎo chí guàn xìng</td><td>сохранять инерцию</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Два значения: физическая инерция и переносное — привычка, автоматическое поведение.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      物体有惯性。— Тела обладают инерцией.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из словарного списка.
+    </div>
+  </div>
+
+  <!-- 16. 拼命 -->
+  <div class="word-card" data-part="part3" data-word="拼命 pīn mìng выкладываться">
+    <div class="word-head">
+      <span class="word-hanzi">拼命</span>
+      <span class="word-pinyin">pīn mìng</span>
+      <span class="word-trans">— выкладываться на все 100, рисковать жизнью</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">拼</span> (pīn) — состязаться, соединять</div>
+        <ul>
+          <li><strong>Ключ:</strong> 扌 (рука слева).</li>
+          <li><strong>Фонетик:</strong> 并 (bìng).</li>
+          <li><strong>Визуально:</strong> рука соединяет части, борется.</li>
+          <li><strong>Не путать с:</strong> 饼 (лепёшка, 饣 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">命</span> (mìng) — жизнь, судьба</div>
+        <ul>
+          <li><strong>Ключ:</strong> 口 (рот).</li>
+          <li><strong>Фонетик:</strong> 令 (lìng).</li>
+          <li><strong>Визуально:</strong> приказ, судьба, жизнь.</li>
+          <li><strong>Не путать с:</strong> 今 (сегодня).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Бороться + жизнь → бороться, не жалея жизни.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Сражаться, ставя на кон жизнь — выкладываться на все силы».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>拼命工作</td><td>pīn mìng gōng zuò</td><td>работать изо всех сил</td></tr>
+        <tr><td>拼命地跑</td><td>pīn mìng de pǎo</td><td>бежать во всю прыть</td></tr>
+        <tr><td>别为钱拼命</td><td>bié wèi qián pīn mìng</td><td>не рискуй жизнью ради денег</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Часто не буквально «рисковать жизнью», а просто «очень стараться».
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他拼命准备高考。— Он готовится к гаокао изо всех сил.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из 生词注释.
+    </div>
+  </div>
+
+  <!-- 17. 形形色色 -->
+  <div class="word-card" data-part="part3" data-word="形形色色 xíng xíng sè sè всевозможные">
+    <div class="word-head">
+      <span class="word-hanzi">形形色色</span>
+      <span class="word-pinyin">xíng xíng sè sè</span>
+      <span class="word-trans">— самые разные, всевозможные</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">形</span> (xíng) — форма, вид</div>
+        <ul>
+          <li><strong>Ключ:</strong> 彡 (полоски, узоры справа).</li>
+          <li><strong>Фонетик:</strong> 开.</li>
+          <li><strong>Визуально:</strong> внешний вид, контур.</li>
+          <li><strong>Не путать с:</strong> 刑 (наказание).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">色</span> (sè) — цвет, оттенок</div>
+        <ul>
+          <li><strong>Ключ:</strong> 色 — сам ключ.</li>
+          <li><strong>Визуально:</strong> лицо, оттенок, цвет.</li>
+          <li><strong>Не путать с:</strong> 巴.</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head">Повтор</div>
+        <ul>
+          <li>形 + 色 → удвоение для усиления.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Разные формы и цвета → все виды, разнообразие.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Много разных форм и цветов — всевозможные».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>形形色色的手艺人</td><td>xíng xíng sè sè de shǒu yì rén</td><td>самые разные ремесленники</td></tr>
+        <tr><td>形形色色的人</td><td>xíng xíng sè sè de rén</td><td>люди самых разных типов</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Идиома, используется для описания множества разнообразных людей/вещей.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      街上有形形色色的人。— На улице встречаются люди самых разных типов.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из словарного списка.
+    </div>
+  </div>
+
+  <!-- 18. 聚集 -->
+  <div class="word-card" data-part="part3" data-word="聚集 jù jí собираться">
+    <div class="word-head">
+      <span class="word-hanzi">聚集</span>
+      <span class="word-pinyin">jù jí</span>
+      <span class="word-trans">— собираться, скапливаться</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">聚</span> (jù) — собрать вместе</div>
+        <ul>
+          <li><strong>Ключ:</strong> 耳 (ухо сверху).</li>
+          <li><strong>Фонетик:</strong> 取 (qǔ).</li>
+          <li><strong>Визуально:</strong> люди собрались вместе, слушают.</li>
+          <li><strong>Не путать с:</strong> 娶 (брать жену, 女 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">集</span> (jí) — собирать, коллекция</div>
+        <ul>
+          <li><strong>Ключ:</strong> 隹 (птица справа).</li>
+          <li><strong>Визуально:</strong> птицы садятся на дерево, собираются вместе.</li>
+          <li><strong>Не путать с:</strong> 难 (трудно).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Собрать вместе + скопиться → собираться группой.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Люди и птицы собираются в одном месте — 聚集».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>聚集力量</td><td>jù jí lì liàng</td><td>собрать силы</td></tr>
+        <tr><td>聚集资金</td><td>jù jí zī jīn</td><td>собрать средства</td></tr>
+        <tr><td>人群聚集</td><td>rén qún jù jí</td><td>толпа собирается</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      聚集 — более книжное. Разговорное: 集合, 凑在一起.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      人们聚集在广场上。— Люди собираются на площади.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из 生词注释.
+    </div>
+  </div>
+
+  <!-- 19. 晃荡 -->
+  <div class="word-card" data-part="part3" data-word="晃荡 huàng dàng слоняться">
+    <div class="word-head">
+      <span class="word-hanzi">晃荡</span>
+      <span class="word-pinyin">huàng dàng</span>
+      <span class="word-trans">— слоняться, бродить без дела, качаться</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">晃</span> (huàng) — качаться, раскачиваться</div>
+        <ul>
+          <li><strong>Ключ:</strong> 日 (солнце слева).</li>
+          <li><strong>Фонетик:</strong> 光 (guāng).</li>
+          <li><strong>Визуально:</strong> свет качается, мерцает.</li>
+          <li><strong>Не путать с:</strong> 光 (свет).</li>
+          <li><strong>Два чтения:</strong> huǎng (мелькнуть) / huàng (раскачиваться).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">荡</span> (dàng) — бродить, колебаться</div>
+        <ul>
+          <li><strong>Ключ:</strong> 艹 (трава сверху).</li>
+          <li><strong>Фонетик:</strong> 汤 (tāng).</li>
+          <li><strong>Визуально:</strong> трава качается на ветру.</li>
+          <li><strong>Не путать с:</strong> 汤 (суп, 氵 слева).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Раскачиваться + бродить → слоняться без цели.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Бродишь туда-сюда, раскачиваясь — слоняться».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>出去晃荡</td><td>chū qù huàng dàng</td><td>пойти слоняться</td></tr>
+        <tr><td>在学校晃荡</td><td>zài xué xiào huàng dàng</td><td>слоняться по школе</td></tr>
+        <tr><td>晃荡了一天</td><td>huàng dàng le yì tiān</td><td>пробродить целый день</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Разговорное слово, часто с лёгким оттенком «бездельничать».
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他在街上晃荡。— Он слоняется по улице.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из словарного списка.
+    </div>
+  </div>
+
+  <!-- 20. 任职 -->
+  <div class="word-card" data-part="part3" data-word="任职 rèn zhí занимать должность">
+    <div class="word-head">
+      <span class="word-hanzi">任职</span>
+      <span class="word-pinyin">rèn zhí</span>
+      <span class="word-trans">— занимать должность, работать на посту</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">任</span> (rèn) — нести обязанность, назначаться</div>
+        <ul>
+          <li><strong>Ключ:</strong> 亻 (человек слева).</li>
+          <li><strong>Фонетик:</strong> 壬 (rén).</li>
+          <li><strong>Визуально:</strong> человек несёт ответственность.</li>
+          <li><strong>Не путать с:</strong> 住 (жить).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">职</span> (zhí) — должность, обязанность</div>
+        <ul>
+          <li><strong>Ключ:</strong> 耳 (ухо слева).</li>
+          <li><strong>Фонетик:</strong> 只 (zhǐ).</li>
+          <li><strong>Визуально:</strong> служебная обязанность.</li>
+          <li><strong>Не путать с:</strong> 织 (ткать, 纟 слева).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Взять ответственность + должность → занимать пост.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Человек берёт на себя служебные обязанности — 任职».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>在公司任职</td><td>zài gōng sī rèn zhí</td><td>работать в компании</td></tr>
+        <tr><td>到企业任职</td><td>dào qǐ yè rèn zhí</td><td>устроиться на работу на предприятие</td></tr>
+        <tr><td>任职十年</td><td>rèn zhí shí nián</td><td>занимать пост десять лет</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      任职 — официальное слово, для должностей. Обычное «работать» — 工作.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他在大学任职。— Он работает (занимает должность) в университете.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Лексика из 生词注释.
+    </div>
+  </div>
+
+  <!-- 21. 承包 -->
+  <div class="word-card" data-part="part3" data-word="承包 chéng bāo взять подряд">
+    <div class="word-head">
+      <span class="word-hanzi">承包</span>
+      <span class="word-pinyin">chéng bāo</span>
+      <span class="word-trans">— взять подряд, принять на себя выполнение</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">承</span> (chéng) — принять, выдержать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 乙.</li>
+          <li><strong>Визуально:</strong> руки держат, принимают груз.</li>
+          <li><strong>Не путать с:</strong> 永 (вечный).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">包</span> (bāo) — упаковывать, взять на себя</div>
+        <ul>
+          <li><strong>Ключ:</strong> 勹 (обёртка).</li>
+          <li><strong>Визуально:</strong> обёртка, закрыть всё внутри.</li>
+          <li><strong>Не путать с:</strong> 句 (предложение).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Принять + взять на себя → взять подряд.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Принять задачу и взять всё на себя — контракт-подряд».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>个人承包</td><td>gè rén chéng bāo</td><td>частный подряд</td></tr>
+        <tr><td>集体承包</td><td>jí tǐ chéng bāo</td><td>коллективный подряд</td></tr>
+        <tr><td>承包果园</td><td>chéng bāo guǒ yuán</td><td>взять в аренду/подряд фруктовый сад</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Бизнес-термин, про контракты, подряды, аренду.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他承包了这片土地。— Он взял этот участок земли под подряд.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Из словарного списка.
+    </div>
+  </div>
+
+  <!-- 22. 感激 -->
+  <div class="word-card" data-part="part3" data-word="感激 gǎn jī быть благодарным">
+    <div class="word-head">
+      <span class="word-hanzi">感激</span>
+      <span class="word-pinyin">gǎn jī</span>
+      <span class="word-trans">— быть благодарным, чувствовать признательность</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор</span>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">感</span> (gǎn) — чувствовать, ощущать</div>
+        <ul>
+          <li><strong>Ключ:</strong> 心 (сердце внизу).</li>
+          <li><strong>Фонетик:</strong> 咸 (xián).</li>
+          <li><strong>Визуально:</strong> сердце получает ощущение.</li>
+          <li><strong>Не путать с:</strong> 减 (уменьшать, 冫 слева).</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head"><span class="glyph-char">激</span> (jī) — взволновать, побудить</div>
+        <ul>
+          <li><strong>Ключ:</strong> 氵 (вода слева).</li>
+          <li><strong>Фонетик:</strong> 敫 (jiǎo).</li>
+          <li><strong>Визуально:</strong> вода бурлит, волнуется.</li>
+          <li><strong>Не путать с:</strong> 缴 (платить, 纟 слева).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section together">
+      <span class="label">🧩 Как работают вместе</span>
+      Чувствовать + взволноваться → в сердце благодарность.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Сердце взволновано добротой — благодарность».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>感激不尽</td><td>gǎn jī bù jìn</td><td>безмерно благодарен</td></tr>
+        <tr><td>万分感激</td><td>wàn fēn gǎn jī</td><td>чрезвычайно признателен</td></tr>
+        <tr><td>感激父母</td><td>gǎn jī fù mǔ</td><td>быть благодарным родителям</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      感激 — более глубокая благодарность, чем простое 谢谢.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      我非常感激你的帮助。— Я очень благодарен за твою помощь.
+    </div>
+
+    <div class="section why">
+      <span class="label">📌 Почему здесь</span>
+      Последнее слово из списка.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// ФИЛЬТР ПО ЧАСТЯМ
+// ============================================================
+function filterPart(part, btn) {
+  document.querySelectorAll('.btn[data-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('.word-card').forEach(card => {
+    if (part === 'all') card.classList.remove('hidden');
+    else if (card.dataset.part === part) card.classList.remove('hidden');
+    else card.classList.add('hidden');
+  });
+
+  document.querySelectorAll('.part-title').forEach(title => {
+    if (part === 'all') title.classList.remove('hidden');
+    else if (title.dataset.part === part) title.classList.remove('hidden');
+    else title.classList.add('hidden');
+  });
+
+  updateCounter();
+}
+
+// ============================================================
+// ПОИСК
+// ============================================================
+function searchWords() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('.word-card').forEach(card => {
+    if (!q) { card.classList.remove('hidden'); return; }
+    const text = (card.dataset.word + ' ' + card.innerText).toLowerCase();
+    if (text.includes(q)) card.classList.remove('hidden');
+    else card.classList.add('hidden');
+  });
+  updateCounter();
+}
+
+// ============================================================
+// СЧЁТЧИК
+// ============================================================
+function updateCounter() {
+  const visible = document.querySelectorAll('.word-card:not(.hidden)').length;
+  document.getElementById('counter').textContent = visible + ' слов';
+}
+
+// init
+document.addEventListener('DOMContentLoaded', updateCounter);
+</script>
+
+</body>
+                                                                                                    </html>
