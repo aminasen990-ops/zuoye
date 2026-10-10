@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>📖 HSK6 · P39 核心生词 · 12+5 слов</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'SF Pro Text', 'Roboto', sans-serif;
+  background: linear-gradient(150deg, #f0fdf4 0%, #dcfce7 100%);
+  padding: 2rem 1rem;
+  line-height: 1.7;
+  color: #1f2937;
+}
+
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* ===== ШАПКА ===== */
+.header {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  text-align: center;
+  border-bottom: 4px solid #10b981;
+}
+.header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #059669, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+}
+.header p { font-size: 15px; color: #6b7280; }
+
+/* ===== ПАНЕЛЬ УПРАВЛЕНИЯ ===== */
+.controls {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 1.6rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+}
+.controls-left, .controls-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+.btn {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 2px solid #a7f3d0;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.btn:hover { background: #d1fae5; border-color: #10b981; }
+.btn.active { background: #10b981; color: #ffffff; border-color: #059669; }
+
+.search-box {
+  border: 2px solid #a7f3d0;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  outline: none;
+  min-width: 220px;
+}
+.search-box:focus { border-color: #10b981; }
+
+.counter {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ===== БЛОК ЧАСТИ ===== */
+.part-title {
+  background: linear-gradient(135deg, #065f46, #10b981);
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 1rem 1.5rem;
+  margin: 2rem 0 1rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  box-shadow: 0 6px 16px rgba(16,185,129,0.3);
+}
+
+/* ===== КАРТОЧКА СЛОВА ===== */
+.word-card {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.4rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  position: relative;
+  border-left: 6px solid #10b981;
+  transition: 0.2s;
+}
+.word-card:hover { box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+
+.word-num {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  background: #d1fae5;
+  color: #065f46;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 10px;
+}
+
+.word-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px dashed #d1fae5;
+}
+.word-hanzi {
+  font-family: 'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #065f46;
+}
+.word-pinyin {
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+.word-trans {
+  font-size: 1rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.section {
+  margin-bottom: 0.9rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.section .label {
+  font-weight: 800;
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* разбор — оранжевый */
+.section.analysis { background: #fffbeb; border-left: 4px solid #f59e0b; }
+.section.analysis .label { color: #92400e; }
+
+/* значение — синий */
+.section.meaning { background: #eff6ff; border-left: 4px solid #3b82f6; }
+.section.meaning .label { color: #1e40af; }
+
+/* картинка — фиолетовый */
+.section.picture { background: #f5f3ff; border-left: 4px solid #8b5cf6; }
+.section.picture .label { color: #5b21b6; }
+
+/* коллокации — зелёный */
+.section.colloc { background: #ecfdf5; border-left: 4px solid #10b981; }
+.section.colloc .label { color: #065f46; }
+
+/* ловушка — красный */
+.section.trap { background: #fef2f2; border-left: 4px solid #ef4444; }
+.section.trap .label { color: #991b1b; }
+
+/* пример — бирюзовый */
+.section.example { background: #f0fdfa; border-left: 4px solid #14b8a6; }
+.section.example .label { color: #115e59; }
+
+/* расширение — серый */
+.section.ext { background: #f9fafb; border-left: 4px solid #6b7280; }
+.section.ext .label { color: #374151; }
+
+/* куратор — жёлтый */
+.section.curator { background: #fef3c7; border-left: 4px solid #f59e0b; }
+.section.curator .label { color: #78350f; }
+
+/* ===== РАЗБОР ИЕРОГЛИФА (улучшенный) ===== */
+.glyph {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.8rem;
+  border-left: 4px solid #fbbf24;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+.glyph .glyph-head {
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.glyph .glyph-head .glyph-char {
+  font-family: 'Noto Sans SC',sans-serif;
+  font-size: 1.6rem;
+  color: #b45309;
+  font-weight: 800;
+}
+.glyph .glyph-head .glyph-pinyin {
+  color: #6b7280;
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: 600;
+}
+.glyph .glyph-head .glyph-meaning {
+  color: #1f2937;
+  font-weight: 700;
+}
+.glyph ul {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+.glyph li {
+  margin-bottom: 0.35rem;
+  font-size: 0.92rem;
+  color: #374151;
+  line-height: 1.6;
+}
+.glyph li strong {
+  color: #92400e;
+  font-weight: 800;
+}
+.glyph .key-label {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 6px;
+  padding: 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-right: 0.3rem;
+}
+
+/* ===== ТАБЛИЦА КОЛЛОКАЦИЙ ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+}
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #d1fae5;
+}
+th {
+  background: #d1fae5;
+  color: #065f46;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+td:first-child {
+  font-family: 'Noto Sans SC',sans-serif;
+  font-weight: 700;
+  color: #1f2937;
+}
+td:nth-child(2) {
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* ===== СКРЫТИЕ ===== */
+.hidden { display: none !important; }
+
+@media (max-width: 600px) {
+  .word-hanzi { font-size: 1.5rem; }
+  .controls { position: static; }
+  .search-box { width: 100%; }
+  .word-num { position: static; display: inline-block; margin-bottom: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ШАПКА -->
+  <div class="header">
+    <h1>📖 HSK6 · P39 核心生词</h1>
+    <p>12 官方核心 + 5 复习拓展 · разбор ключей стал подробнее и понятнее</p>
+  </div>
+
+  <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
+  <div class="controls">
+    <div class="controls-left">
+      <button class="btn active" data-filter="all" onclick="filterPart('all', this)">Всё</button>
+      <button class="btn" data-filter="core" onclick="filterPart('core', this)">12 核心</button>
+      <button class="btn" data-filter="rev" onclick="filterPart('rev', this)">5 复习</button>
+    </div>
+    <div class="controls-right">
+      <input type="text" class="search-box" id="search" placeholder="🔍 Поиск по слову..." oninput="searchWords()"/>
+      <span class="counter" id="counter">17 слов</span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 12 核心 -->
+  <!-- ============================================================ -->
+  <div class="part-title" data-part="core">📖 12 核心生词 (P39)</div>
+
+  <!-- 1. 扭曲 -->
+  <div class="word-card" data-part="core" data-word="扭曲 niǔ qū искажать">
+    <span class="word-num">1 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">扭曲</span>
+      <span class="word-pinyin">niǔ qū</span>
+      <span class="word-trans">— искривлять, искажать, перекручивать</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">扭</span>
+          <span class="glyph-pinyin">niǔ</span>
+          <span class="glyph-meaning">— крутить, выворачивать</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>扌 (рука)</strong> слева. Это «рука в профиль» — сжатая в кулак с запястьем. Все иероглифы с 扌 — про действие руками.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>丑 (chǒu)</strong> справа — даёт звук «niǔ», а не смысл. Сам по себе 丑 значит «уродливый, второй по земным ветвям» — но здесь он только звук.</li>
+          <li><span class="key-label">ЗАЧЕМ</span>Рука (扌) + звук «niǔ» → «крутить рукой, выворачивать».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>纽 (niǔ)</strong> — пуговица. Там слева <strong>纟 (нить)</strong>, потому что пуговицу пришивают ниткой. А здесь рука, потому что крутят рукой.</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">曲</span>
+          <span class="glyph-pinyin">qū</span>
+          <span class="glyph-meaning">— кривой, изогнутый</span>
+        </div>
+        <ul>
+          <li><span class="key-label">ОБРАЗ</span>Это <strong>цельная картинка</strong>: изогнутая линия, как ручей или дорога, которая петляет. Не разбирается на ключ + фонетик.</li>
+          <li><span class="key-label">ПОЧЕМУ</span>Иероглиф вырос из рисунка изогнутой корзины/плетёнки. Поэтому его базовое значение — «кривой, изогнутый».</li>
+          <li><span class="key-label">ДВА ЧТЕНИЯ</span><strong>qū</strong> = кривой (прилагательное). <strong>qǔ</strong> = песня, мелодия (потому что мелодия «изгибается»). В слове 扭曲 — qū.</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>由 (yóu)</strong> — «из, от». Похож, но у 曲 внутри две вертикальные черты, а у 由 — одна, и она выходит вверх.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      ① Физически: предмет деформируется под внешним воздействием.<br>
+      ② Переносно: искажать факты, неправильно интерпретировать чужие слова и явления.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Рука (扌) выкручивает кривую (曲) линию — предмет теряет форму».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>表情扭曲</td><td>biǎo qíng niǔ qū</td><td>искажённое выражение лица</td></tr>
+        <tr><td>扭曲事实</td><td>niǔ qū shì shí</td><td>искажать факты</td></tr>
+        <tr><td>扭曲原文意思</td><td>niǔ qū yuán wén yì si</td><td>искажать смысл оригинала</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      曲 в этом слове читается <strong>qū</strong> (не qǔ). Используется и для физических объектов, и для фактов/слов.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      不要扭曲我说的话。<br>
+      <em>Не искажай мои слова.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Разбор лёгкий. Два чтения 曲 — не перепутай: qū (кривой) vs qǔ (песня). 扭 легко узнать по ключу 扌.
+    </div>
+  </div>
+
+  <!-- 2. 鲜活 -->
+  <div class="word-card" data-part="core" data-word="鲜活 xiān huó живой">
+    <span class="word-num">2 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">鲜活</span>
+      <span class="word-pinyin">xiān huó</span>
+      <span class="word-trans">— живой, яркий, наглядный, свежий</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">鲜</span>
+          <span class="glyph-pinyin">xiān</span>
+          <span class="glyph-meaning">— свежий</span>
+        </div>
+        <ul>
+          <li><span class="key-label">ЛЕВАЯ ЧАСТЬ</span><strong>鱼 (рыба)</strong> — ключ. Указывает, что слово связано с рыбой/едой. Это упрощённый рисунок рыбы: голова сверху, хвост снизу.</li>
+          <li><span class="key-label">ПРАВАЯ ЧАСТЬ</span><strong>羊 (овца)</strong> — фонетик. Даёт звук «xiān» (похожий на «yang» в древнем произношении). Сам по себе значит «овца», но здесь — только звук.</li>
+          <li><span class="key-label">ЛОГИКА</span>Рыба (鱼) + овца (羊) = «свежее мясо и рыба». Это два самых свежих продукта в древнем Китае. Отсюда значение «свежий».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>样 (yàng)</strong> — образец. Слева <strong>木 (дерево)</strong>, а не рыба. У 鲜 слева «рыба», а не «дерево» — смотри на нижнюю часть: у 鱼 четыре точки-плавника, у 木 — две ветки.</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">活</span>
+          <span class="glyph-pinyin">huó</span>
+          <span class="glyph-meaning">— живой, жить</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>氵 (вода)</strong> слева — три капли. Ключ всего, что связано с водой и жидкостями.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>舌 (shé, язык)</strong> справа — даёт звук «huó» в древнем произношении. Сам по себе значит «язык».</li>
+          <li><span class="key-label">ЛОГИКА</span>Вода (氵) + язык (舌) = «вода на языке» — то, что пьёшь, чтобы остаться живым. Отсюда «живой, жить».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>话 (huà)</strong> — речь. Слева <strong>讠 (слово)</strong>, а не вода. У 活 слева «вода», у 话 — «речь».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      Описывает事物 свежие, яркие, реалистичные, близкие к жизни — не шаблонные и не устаревшие.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Свежая рыба (鲜) и вода (活) на столе — живой образ».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>鲜活的语言</td><td>xiān huó de yǔ yán</td><td>живой язык</td></tr>
+        <tr><td>内容鲜活</td><td>nèi róng xiān huó</td><td>живое содержание</td></tr>
+        <tr><td>色彩鲜活</td><td>sè cǎi xiān huó</td><td>яркие краски</td></tr>
+        <tr><td>鲜活的故事</td><td>xiān huó de gù shi</td><td>живая история</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Чаще описывает образы, речь, истории, не только продукты. Не путать с <strong>新鲜</strong> — то про еду.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      这本书里有很多鲜活的故事。<br>
+      <em>В этой книге много живых и интересных историй.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Разбор лёгкий. Различие: 鲜活 (образ, язык) vs 新鲜 (еда). Ключи 鱼 и 氵 легко узнать.
+    </div>
+  </div>
+
+  <!-- 3. 根深蒂固 -->
+  <div class="word-card" data-part="core" data-word="根深蒂固 gēn shēn dì gù укоренившийся">
+    <span class="word-num">3 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">根深蒂固</span>
+      <span class="word-pinyin">gēn shēn dì gù</span>
+      <span class="word-trans">— глубоко укоренившийся</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">根</span>
+          <span class="glyph-pinyin">gēn</span>
+          <span class="glyph-meaning">— корень</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>木 (дерево)</strong> слева. Это рисунок дерева с ветками наверху и корнями внизу.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>艮 (gèn)</strong> справа — даёт звук «gēn». Сам по себе значит «твёрдый, упрямый».</li>
+          <li><span class="key-label">ЛОГИКА</span>Дерево (木) + «твёрдый» (艮) = «твёрдая часть дерева» = корень.</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>跟 (gēn)</strong> — «следовать». Слева <strong>足 (нога)</strong>, а не дерево. У 根 слева дерево, у 跟 — нога.</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">深</span>
+          <span class="glyph-pinyin">shēn</span>
+          <span class="glyph-meaning">— глубокий</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>氵 (вода)</strong> слева.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>罙 (shēn)</strong> справа — даёт звук. Это древний рисунок «углубления».</li>
+          <li><span class="key-label">ЛОГИКА</span>Вода (氵) + углубление (罙) = «глубокая вода». Отсюда «глубокий».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>探 (tàn)</strong> — искать. Слева <strong>扌 (рука)</strong>, а не вода. У 深 слева вода, у 探 — рука.</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">蒂</span>
+          <span class="glyph-pinyin">dì</span>
+          <span class="glyph-meaning">— плодоножка, основание плода</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>艹 (трава)</strong> сверху. Это две травинки.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>帝 (dì)</strong> внутри — даёт звук. Сам по себе значит «император».</li>
+          <li><span class="key-label">ЛОГИКА</span>Трава (艹) + «император» (帝) = «главная часть травы» = место, где плод крепится к стеблю.</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>帝 (dì)</strong> — император. Это фонетик внутри 蒂. У 蒂 сверху трава, у 帝 — нет.</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">固</span>
+          <span class="glyph-pinyin">gù</span>
+          <span class="glyph-meaning">— прочный, твёрдый</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>囗 (рамка)</strong> снаружи. Это замкнутая рамка, «огороженное пространство».</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>古 (gǔ)</strong> внутри — даёт звук «gù». Сам по себе значит «древний».</li>
+          <li><span class="key-label">ЛОГИКА</span>Рамка (囗) + древнее (古) = «древнее, огороженное» = то, что крепко держится, не меняется.</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>回 (huí)</strong> — вернуться. Внутри тоже рамка, но внутри 口 (рот), а не 古. У 固 внутри «древнее» (古), у 回 — «рот» (口).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      Идиома:比喻观念、习惯、文化基础极其牢固,难以改变.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Корень (根) глубоко (深) в земле, плодоножка (蒂) прочная (固) — мысль укоренилась».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>根深蒂固的观念</td><td>gēn shēn dì gù de guān niàn</td><td>глубоко укоренившееся убеждение</td></tr>
+        <tr><td>根深蒂固的想法</td><td>gēn shēn dì gù de xiǎng fǎ</td><td>глубоко укоренившаяся мысль</td></tr>
+        <tr><td>中华文化根深蒂固</td><td>Zhōng huá wén huà gēn shēn dì gù</td><td>китайская культура глубоко укоренена</td></tr>
+      </table>
+    </div>
+
+    <div class="section trap">
+      <span class="label">⚠️ Ловушка</span>
+      Только про мысли, привычки, представления — не про настоящие деревья.
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      一些旧观念在人们心中根深蒂固。<br>
+      <em>Некоторые старые представления глубоко укоренились в сознании людей.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟡 Идиома — учи целиком. Каждый ключ (木, 氵, 艹, 囗) легко узнать — это помогает запомнить значение.
+    </div>
+  </div>
+
+  <!-- 4. 紧迫 -->
+  <div class="word-card" data-part="core" data-word="紧迫 jǐn pò срочный">
+    <span class="word-num">4 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">紧迫</span>
+      <span class="word-pinyin">jǐn pò</span>
+      <span class="word-trans">— срочный, напряжённый, неотложный</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">紧</span>
+          <span class="glyph-pinyin">jǐn</span>
+          <span class="glyph-meaning">— тугой, сжатый</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>糸 (нить, шёлк)</strong> снизу. Это рисунок мотка ниток с петлёй.</li>
+          <li><span class="key-label">ВЕРХНЯЯ ЧАСТЬ</span><strong>臤 (qiān)</strong> — фонетик + смысл «крепко держать». Слева «слуга» (臣), справа «рука» (又).</li>
+          <li><span class="key-label">ЛОГИКА</span>Рука крепко держит (臤) + нити (糸) = «туго стянуто». Отсюда «тугой, сжатый».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>紫 (zǐ)</strong> — фиолетовый. Снизу тоже 糸, но сверху 此 (это). У 紧 сверху «рука + слуга», у 紫 — «это».</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">迫</span>
+          <span class="glyph-pinyin">pò</span>
+          <span class="glyph-meaning">— давить, вынуждать</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>辶 (идти, движение)</strong> внизу слева. Это «нога, шагающая вперёд».</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>白 (bái, белый)</strong> справа — даёт звук «pò» в древнем произношении. Здесь только фонетик.</li>
+          <li><span class="key-label">ЛОГИКА</span>Движение (辶) + звук «pò» = «давить, теснить, вынуждать двигаться».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>追 (zhuī)</strong> — гнаться. Ключ тот же 辶, но внутри <strong>𠂤</strong>, а не 白. У 迫 внутри «белый», у 追 — «холм».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      Ситуация紧急、时间不足,没有多余缓冲空间.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Нити туго стянуты (紧), движение давит (迫) — срочно».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>时间紧迫</td><td>shí jiān jǐn pò</td><td>время ограничено</td></tr>
+        <tr><td>任务紧迫</td><td>rèn wù jǐn pò</td><td>срочная задача</td></tr>
+        <tr><td>紧迫的情况</td><td>jǐn pò de qíng kuàng</td><td>критическая ситуация</td></tr>
+        <tr><td>紧迫的课题</td><td>jǐn pò de kè tí</td><td>актуальная тема</td></tr>
+      </table>
+    </div>
+
+    <div class="section ext">
+      <span class="label">📎 Расширение</span>
+      近词: 急迫 (срочный), 逼迫 (принуждать).
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      时间紧迫,我们要马上开始。<br>
+      <em>Время ограничено, мы должны начать немедленно.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Разбор лёгкий. 紧迫 (время/задача) ≠ 紧急 (чрезвычайный). Ключи 糸 и 辶 помогают не путать с 紫 и 追.
+    </div>
+  </div>
+
+  <!-- 5. 惯性 -->
+  <div class="word-card" data-part="core" data-word="惯性 guàn xìng инерция">
+    <span class="word-num">5 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">惯性</span>
+      <span class="word-pinyin">guàn xìng</span>
+      <span class="word-trans">— инерция</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">惯</span>
+          <span class="glyph-pinyin">guàn</span>
+          <span class="glyph-meaning">— привыкать</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>忄 (сердце)</strong> слева. Это «сердце в профиль» — три точки-луча. Все иероглифы с 忄 — про чувства и состояния.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>贯 (guàn)</strong> справа — даёт звук. Сам по себе значит «пронзать, нанизывать».</li>
+          <li><span class="key-label">ЛОГИКА</span>Сердце (忄) + «нанизывать» (贯) = «то, что нанизалось в сердце» = привычка.</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>贯 (guàn)</strong> — пронзать. Без 忄. У 惯 есть «сердце», потому что привычка — в сердце.</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">性</span>
+          <span class="glyph-pinyin">xìng</span>
+          <span class="glyph-meaning">— свойство, природа</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>忄 (сердце)</strong> слева.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>生 (shēng)</strong> справа — даёт звук. Сам по себе значит «рождать, жизнь».</li>
+          <li><span class="key-label">ЛОГИКА</span>Сердце (忄) + «рождать» (生) = «врождённое свойство, природа».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>姓 (xìng)</strong> — фамилия. Слева <strong>女 (женщина)</strong>, а не сердце. У 性 слева сердце, у 姓 — женщина.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      ① Физика: свойство物体保持原有运动状态的属性.<br>
+      ② Переносно:长期养成、难以改变的思维与行为习惯.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Сердце (忄) привыкло (惯) — свойство (性) вошло в привычку».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>思维惯性</td><td>sī wéi guàn xìng</td><td>инерция мышления</td></tr>
+        <tr><td>行为惯性</td><td>xíng wéi guàn xìng</td><td>поведенческая инерция</td></tr>
+        <tr><td>打破惯性</td><td>dǎ pò guàn xìng</td><td>сломать инерцию</td></tr>
+        <tr><td>文化惯性</td><td>wén huà guàn xìng</td><td>культурная инерция</td></tr>
+      </table>
+    </div>
+
+    <div class="section ext">
+      <span class="label">📎 Расширение</span>
+      近形: 共性 (общность), 理性 (рациональность), 感性 (чувственность), 本性 (природа).
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      我们要打破旧的思维惯性。<br>
+      <em>Нам нужно преодолеть старую мыслительную инерцию.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Разбор лёгкий. 性 — суффикс свойства: 惯性, 理性, 感性, 共性. Ключ 忄 — общий.
+    </div>
+  </div>
+
+  <!-- 6. 拼命 -->
+  <div class="word-card" data-part="core" data-word="拼命 pīn mìng изо всех сил">
+    <span class="word-num">6 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">拼命</span>
+      <span class="word-pinyin">pīn mìng</span>
+      <span class="word-trans">— изо всех сил, не щадя себя</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">拼</span>
+          <span class="glyph-pinyin">pīn</span>
+          <span class="glyph-meaning">— состязаться, соединять</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>扌 (рука)</strong> слева.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>并 (bìng)</strong> справа — даёт звук «pīn» (в древнем произношении). Сам по себе значит «соединять вместе».</li>
+          <li><span class="key-label">ЛОГИКА</span>Рука (扌) + «соединять» (并) = «соединять руками» → «складывать, бороться, состязаться».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>饼 (bǐng)</strong> — лепёшка. Слева <strong>饣 (еда)</strong>, а не рука. У 拼 слева рука, у 饼 — еда.</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">命</span>
+          <span class="glyph-pinyin">mìng</span>
+          <span class="glyph-meaning">— жизнь, судьба</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>口 (рот)</strong> снизу. Квадрат-рот.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>令 (lìng)</strong> сверху — даёт звук «mìng». Сам по себе значит «приказ».</li>
+          <li><span class="key-label">ЛОГИКА</span>Приказ (令) + рот (口) = «то, что произносит рот по приказу судьбы» = жизнь, судьба.</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>今 (jīn)</strong> — сегодня. Похож, но у 命 внизу «рот» (口) и сверху «приказ» (令), у 今 — просто навес.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      用尽全身力气、不顾一切去做某件事.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Рука (扌) борется (拼), ставя на кон жизнь (命) — выкладываться на все силы».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>拼命学习</td><td>pīn mìng xué xí</td><td>учиться изо всех сил</td></tr>
+        <tr><td>拼命工作</td><td>pīn mìng gōng zuò</td><td>работать изо всех сил</td></tr>
+        <tr><td>拼命奔跑</td><td>pīn mìng bēn pǎo</td><td>бежать во всю прыть</td></tr>
+        <tr><td>别为钱拼命</td><td>bié wèi qián pīn mìng</td><td>не рискуй жизнью ради денег</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他拼命学习准备考试。<br>
+      <em>Он усердно учится, готовясь к экзамену.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Разбор лёгкий. Часто не буквально — просто «очень стараться». Ключи 扌 и 口 легко узнать.
+    </div>
+  </div>
+
+  <!-- 7. 形形色色 -->
+  <div class="word-card" data-part="core" data-word="形形色色 xíng xíng sè sè всевозможные">
+    <span class="word-num">7 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">形形色色</span>
+      <span class="word-pinyin">xíng xíng sè sè</span>
+      <span class="word-trans">— самые разнообразные, всевозможные</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">形</span>
+          <span class="glyph-pinyin">xíng</span>
+          <span class="glyph-meaning">— форма, вид</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>彡 (полоски, узор)</strong> справа. Три косые линии — рисунок «украшения, узора».</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>开 (kāi)</strong> слева — даёт звук «xíng» в древнем произношении. Сам по себе значит «открывать».</li>
+          <li><span class="key-label">ЛОГИКА</span>Узор (彡) + звук «xíng» = «внешний вид, форма».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>刑 (xíng)</strong> — наказание. Слева <strong>开 (открывать)</strong>, а справа <strong>刂 (нож)</strong>. У 形 справа «узор», у 刑 — «нож».</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">色</span>
+          <span class="glyph-pinyin">sè</span>
+          <span class="glyph-meaning">— цвет, оттенок</span>
+        </div>
+        <ul>
+          <li><span class="key-label">ОБРАЗ</span><strong>Цельная картинка</strong>: человек сверху склонился над другим — древняя идея «выражение лица». Отсюда «цвет, оттенок лица».</li>
+          <li><span class="key-label">ПОЧЕМУ</span>Иероглиф вырос из рисунка лица человека. Поэтому «цвет» в китайском — это «оттенок лица».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>巴 (bā)</strong> — «надеяться, прилипать». Похож, но у 色 сверху «человек» (⺈), у 巴 — «змея» (巳).</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">Повтор</div>
+        <ul>
+          <li>形 + 形 + 色 + 色 — удвоение усиливает значение: «много разных форм, много разных цветов» → «всевозможные».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      形容人、事物种类繁多、样式各异.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Много разных форм (形) и оттенков (色) — всевозможные».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>形形色色的人</td><td>xíng xíng sè sè de rén</td><td>люди самых разных типов</td></tr>
+        <tr><td>形形色色的小店</td><td>xíng xíng sè sè de xiǎo diàn</td><td>самые разные маленькие магазины</td></tr>
+        <tr><td>形形色色的现代观念</td><td>xíng xíng sè sè de xiàn dài guān niàn</td><td>самые разные современные взгляды</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      街上有形形色色的小店。<br>
+      <em>На улице есть самые разные маленькие магазины.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟡 Идиома — учи целиком. Ключ 彡 («узор») помогает запомнить «форму».
+    </div>
+  </div>
+
+  <!-- 8. 聚集 -->
+  <div class="word-card" data-part="core" data-word="聚集 jù jí собираться">
+    <span class="word-num">8 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">聚集</span>
+      <span class="word-pinyin">jù jí</span>
+      <span class="word-trans">— собираться, скапливаться</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">聚</span>
+          <span class="glyph-pinyin">jù</span>
+          <span class="glyph-meaning">— собрать вместе</span>
+        </div>
+        <ul>
+          <li><span class="key-label">ВЕРХ</span><strong>取 (qǔ)</strong> — фонетик. Даёт звук «jù» в древнем произношении. Сам по себе значит «брать».</li>
+          <li><span class="key-label">НИЗ</span><strong>乑 (yín)</strong> — три человека в ряд. Идеограмма «толпа». Указывает на смысл «много людей».</li>
+          <li><span class="key-label">ЛОГИКА</span>«Брать» (取) + «толпа» (乑) = «собирать людей вместе» → «собирать, скапливать».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>娶 (qǔ)</strong> — брать жену. Слева <strong>女 (женщина)</strong>. У 聚 снизу «толпа» (乑), у 娶 — женщина.</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">集</span>
+          <span class="glyph-pinyin">jí</span>
+          <span class="glyph-meaning">— собирать, коллекция</span>
+        </div>
+        <ul>
+          <li><span class="key-label">ВЕРХ</span><strong>隹 (zhuī)</strong> — короткохвостая птица. Ключ всего, что связано с птицами.</li>
+          <li><span class="key-label">НИЗ</span><strong>木 (дерево)</strong> — ключ дерева.</li>
+          <li><span class="key-label">ЛОГИКА</span>Птица (隹) + дерево (木) = «птицы сидят на дереве» = собираются вместе. Отсюда «собирать».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>难 (nán)</strong> — трудно. Слева <strong>又 (рука)</strong>, а не птица. У 集 сверху «птица», у 难 — «рука».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      分散的人或事物汇聚到一起.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Люди (乑) и птицы (隹) собираются на дереве (木) —聚集».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>人群聚集</td><td>rén qún jù jí</td><td>толпа собирается</td></tr>
+        <tr><td>聚集力量</td><td>jù jí lì liàng</td><td>собрать силы</td></tr>
+        <tr><td>聚集资金</td><td>jù jí zī jīn</td><td>собрать средства</td></tr>
+      </table>
+    </div>
+
+    <div class="section ext">
+      <span class="label">📎 Расширение</span>
+      近词: 汇集 (собираться), 筹集 (собирать деньги), 采集 (собирать).
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      人们聚集在广场上。<br>
+      <em>Люди собираются на площади.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Разбор лёгкий. 聚集 — книжное; разговорное: 集合, 凑在一起. Ключ 木 и 隹 помогают запомнить «собирание».
+    </div>
+  </div>
+
+  <!-- 9. 晃荡 -->
+  <div class="word-card" data-part="core" data-word="晃荡 huàng dang слоняться">
+    <span class="word-num">9 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">晃荡</span>
+      <span class="word-pinyin">huàng dang</span>
+      <span class="word-trans">— бродить без цели, бездельничать</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">晃</span>
+          <span class="glyph-pinyin">huàng</span>
+          <span class="glyph-meaning">— качаться, раскачиваться</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>日 (солнце)</strong> сверху. Это квадрат с чертой — рисунок солнца.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>光 (guāng)</strong> снизу — даёт звук «huàng» в древнем произношении. Сам по себе значит «свет».</li>
+          <li><span class="key-label">ЛОГИКА</span>Солнце (日) + свет (光) = «мерцание, качание света» → «качаться, раскачиваться».</li>
+          <li><span class="key-label">ДВА ЧТЕНИЯ</span><strong>huǎng</strong> = мелькнуть (о свете). <strong>huàng</strong> = раскачиваться (о предмете). В 晃荡 — huàng.</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>光 (guāng)</strong> — свет. У 晃 сверху «солнце» (日), у 光 — нет.</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">荡</span>
+          <span class="glyph-pinyin">dàng</span>
+          <span class="glyph-meaning">— бродить, колебаться</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>艹 (трава)</strong> сверху. Две травинки.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>汤 (tāng, суп)</strong> снизу — даёт звук «dàng» в древнем произношении. Сам по себе значит «кипяток, суп».</li>
+          <li><span class="key-label">ЛОГИКА</span>Трава (艹) + «кипяток» (汤) = «трава, которая колышется на ветру» → «колебаться, бродить».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>汤 (tāng)</strong> — суп. Слева <strong>氵 (вода)</strong>, а не трава. У 荡 сверху трава, у 汤 — вода.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      无明确目的闲逛、游荡,无所事事.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Свет качается (晃), трава колышется (荡) — слоняться без цели».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>街上晃荡</td><td>jiē shàng huàng dang</td><td>слоняться по улице</td></tr>
+        <tr><td>出去晃荡</td><td>chū qù huàng dang</td><td>пойти слоняться</td></tr>
+        <tr><td>晃荡了一天</td><td>huàng dang le yì tiān</td><td>пробродить целый день</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      周末他就在街上晃荡。<br>
+      <em>В выходные он просто бродит по улице без дела.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟡 Разговорное, с лёгким оттенком «бездельничать». Ключи 日 и 艹 легко узнать.
+    </div>
+  </div>
+
+  <!-- 10. 任职 -->
+  <div class="word-card" data-part="core" data-word="任职 rèn zhí занимать должность">
+    <span class="word-num">10 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">任职</span>
+      <span class="word-pinyin">rèn zhí</span>
+      <span class="word-trans">— занимать должность, работать на посту (офиц.)</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">任</span>
+          <span class="glyph-pinyin">rèn</span>
+          <span class="glyph-meaning">— нести обязанность, назначаться</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>亻 (человек)</strong> слева. Это «человек в профиль» — две ноги и одна рука.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>壬 (rén)</strong> справа — даёт звук. Сам по себе — «9-й циклический знак», здесь только фонетик.</li>
+          <li><span class="key-label">ЛОГИКА</span>Человек (亻) + звук «rèn» = «человек, который несёт обязанность» → «нести, назначаться».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>住 (zhù)</strong> — жить. Слева 亻, но справа <strong>主 (хозяин)</strong>, а не 壬. У 任 справа «9-й знак», у 住 — «хозяин».</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">职</span>
+          <span class="glyph-pinyin">zhí</span>
+          <span class="glyph-meaning">— должность, обязанность</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>耳 (ухо)</strong> слева. Это рисунок уха.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>只 (zhǐ)</strong> справа — даёт звук «zhí». Сам по себе значит «только».</li>
+          <li><span class="key-label">ЛОГИКА</span>Ухо (耳) + звук «zhí» = «то, что нужно слушать» → «служебная обязанность, должность».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>织 (zhī)</strong> — ткать. Слева <strong>纟 (нить)</strong>, а не ухо. У 职 слева ухо, у 织 — нить.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      正式担任某个工作职务.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Человек (亻) несёт обязанность (任), которую слушают ухом (职) — занимать пост».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>长期任职</td><td>cháng qī rèn zhí</td><td>занимать пост долго</td></tr>
+        <tr><td>在高校任职</td><td>zài gāo xiào rèn zhí</td><td>работать в вузе</td></tr>
+        <tr><td>在企业任职</td><td>zài qǐ yè rèn zhí</td><td>работать на предприятии</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他在大学任职。<br>
+      <em>Он занимает должность в университете.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Официальное слово для должностей. Бытовое «работать» — 工作. Ключи 亻 и 耳 помогают не путать с 住 и 织.
+    </div>
+  </div>
+
+  <!-- 11. 承包 -->
+  <div class="word-card" data-part="core" data-word="承包 chéng bāo взять подряд">
+    <span class="word-num">11 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">承包</span>
+      <span class="word-pinyin">chéng bāo</span>
+      <span class="word-trans">— брать объект в подряд, арендовать</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">承</span>
+          <span class="glyph-pinyin">chéng</span>
+          <span class="glyph-meaning">— принять, выдержать</span>
+        </div>
+        <ul>
+          <li><span class="key-label">ОБРАЗ</span><strong>Цельная картинка</strong>: две руки снизу поддерживают что-то сверху. Изначально — «держать на ладонях».</li>
+          <li><span class="key-label">ПОЧЕМУ</span>Иероглиф вырос из рисунка «человек с поднятыми руками, принимающий груз». Отсюда «принимать, выдерживать».</li>
+          <li><span class="key-label">КЛЮЧ</span>Формально — <strong>乙</strong> («крючок»), но важнее образ рук.</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>永 (yǒng)</strong> — вечный. Похож, но у 承 сверху «руки», у 永 — «точка-навес».</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">包</span>
+          <span class="glyph-pinyin">bāo</span>
+          <span class="glyph-meaning">— упаковывать, взять на себя</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>勹 (обёртка)</strong> снаружи. Это рисунок «человек, согнувшийся и обнимающий что-то».</li>
+          <li><span class="key-label">ВНУТРИ</span><strong>巳 (sì)</strong> — эмбрион. Идеограмма «свёрнутый плод».</li>
+          <li><span class="key-label">ЛОГИКА</span>Обёртка (勹) + эмбрион (巳) = «завёрнутый плод» → «упаковывать, обнимать, брать на себя».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>句 (jù)</strong> — предложение. Снаружи тоже 勹, но внутри <strong>口 (рот)</strong>, а не 巳. У 包 внутри «эмбрион», у 句 — «рот».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      承接工程、项目、场地、土地等,全权负责完成与运营.
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Руки (承) принимают груз, обёртка (包) закрывает всё — контракт-подряд».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>个人承包</td><td>gè rén chéng bāo</td><td>частный подряд</td></tr>
+        <tr><td>集体承包</td><td>jí tǐ chéng bāo</td><td>коллективный подряд</td></tr>
+        <tr><td>土地承包</td><td>tǔ dì chéng bāo</td><td>земельный подряд</td></tr>
+        <tr><td>承包果园</td><td>chéng bāo guǒ yuán</td><td>взять сад в подряд</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      他承包了这片果园。<br>
+      <em>Он взял этот фруктовый сад в подряд.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Бизнес-термин. Образ рук (承) и обёртки (包) помогает запомнить «взять всё на себя».
+    </div>
+  </div>
+
+  <!-- 12. 感激 -->
+  <div class="word-card" data-part="core" data-word="感激 gǎn jī благодарный">
+    <span class="word-num">12 / 12</span>
+    <div class="word-head">
+      <span class="word-hanzi">感激</span>
+      <span class="word-pinyin">gǎn jī</span>
+      <span class="word-trans">— быть глубоко благодарным</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">感</span>
+          <span class="glyph-pinyin">gǎn</span>
+          <span class="glyph-meaning">— чувствовать</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>心 (сердце)</strong> снизу. Это рисунок сердца с сосудами.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>咸 (xián)</strong> сверху — даёт звук «gǎn» в древнем произношении. Сам по себе значит «солёный».</li>
+          <li><span class="key-label">ЛОГИКА</span>«Солёный» (咸) + сердце (心) = «то, что трогает сердце до слёз» → «чувствовать».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>减 (jiǎn)</strong> — уменьшать. Слева <strong>冫 (лёд)</strong>, а не сердце. У 感 внизу сердце, у 减 — «лёд».</li>
+        </ul>
+      </div>
+
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">激</span>
+          <span class="glyph-pinyin">jī</span>
+          <span class="glyph-meaning">— взволновать, побудить</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>氵 (вода)</strong> слева. Три капли.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>敫 (jiǎo)</strong> справа — даёт звук «jī». Сам по себе значит «сиять, светиться».</li>
+          <li><span class="key-label">ЛОГИКА</span>Вода (氵) + «сиять» (敫) = «вода бурлит и сверкает» → «взволновать, побудить».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>缴 (jiǎo)</strong> — платить. Слева <strong>纟 (нить)</strong>, а не вода. У 激 слева вода, у 缴 — нить.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      因他人的帮助、恩惠内心感动,心生深切感谢.<br>
+      <em>Сильнее обычного 谢谢.</em>
+    </div>
+
+    <div class="section picture">
+      <span class="label">🎨 Картинка</span>
+      «Сердце (心) взволновано (激) добротой — благодарность».
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>感激不尽</td><td>gǎn jī bù jìn</td><td>безмерно благодарен</td></tr>
+        <tr><td>万分感激</td><td>wàn fēn gǎn jī</td><td>чрезвычайно признателен</td></tr>
+        <tr><td>感激家人</td><td>gǎn jī jiā rén</td><td>быть благодарным семье</td></tr>
+        <tr><td>感激他人的帮助</td><td>gǎn jī tā rén de bāng zhù</td><td>быть благодарным за помощь</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      我万分感激你的帮助。<br>
+      <em>Я бесконечно благодарен за твою помощь.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Глубже, чем 谢谢. Используй в письмах, поздравлениях, официальной речи. Ключи 心 и 氵 помогают запомнить.
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 5 复习 -->
+  <!-- ============================================================ -->
+  <div class="part-title" data-part="rev">📖 补充复习生词 (上单元拓展)</div>
+
+  <!-- 1. 遥远 -->
+  <div class="word-card" data-part="rev" data-word="遥远 yáo yuǎn далёкий">
+    <span class="word-num">1 / 5</span>
+    <div class="word-head">
+      <span class="word-hanzi">遥远</span>
+      <span class="word-pinyin">yáo yuǎn</span>
+      <span class="word-trans">— далёкий</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">遥</span>
+          <span class="glyph-pinyin">yáo</span>
+          <span class="glyph-meaning">— далёкий</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>辶 (идти)</strong> — «нога шагает вперёд». Ключ всего, что связано с движением/путём.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>摇 (yáo)</strong> — даёт звук. Сам по себе значит «качать».</li>
+          <li><span class="key-label">ЛОГИКА</span>Идти (辶) + звук «yáo» = «идти долго, далеко» → «далёкий».</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">远</span>
+          <span class="glyph-pinyin">yuǎn</span>
+          <span class="glyph-meaning">— далёкий</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>辶 (идти)</strong>.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>元 (yuán)</strong> — даёт звук. Сам по себе значит «первый, начало».</li>
+          <li><span class="key-label">ЛОГИКА</span>Идти (辶) + звук «yuán» = «далеко идти» → «далёкий».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      Используем для расстояний в пространстве или во времени, не для людей.
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>遥远的地方</td><td>yáo yuǎn de dì fang</td><td>далёкое место</td></tr>
+        <tr><td>遥远的回忆</td><td>yáo yuǎn de huí yì</td><td>далёкое воспоминание</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      遥远的山区还保留着古老的习俗。<br>
+      <em>В далёких горных районах до сих пор сохраняются древние обычаи.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Ключ 辶 — общий для 遥 и 远. Не говорим «遥远的人», лучше «陌生的人».
+    </div>
+  </div>
+
+  <!-- 2. 压缩 -->
+  <div class="word-card" data-part="rev" data-word="压缩 yā suō сжимать">
+    <span class="word-num">2 / 5</span>
+    <div class="word-head">
+      <span class="word-hanzi">压缩</span>
+      <span class="word-pinyin">yā suō</span>
+      <span class="word-trans">— сжимать, сокращать</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">压</span>
+          <span class="glyph-pinyin">yā</span>
+          <span class="glyph-meaning">— давить</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>厂 (скала)</strong> снаружи. Рисунок навеса/скалы, под которой что-то лежит.</li>
+          <li><span class="key-label">ВНУТРИ</span><strong>土 (земля)</strong> — точка-крест.</li>
+          <li><span class="key-label">ЛОГИКА</span>Скала (厂) давит на землю (土) → «давить, сжимать».</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">缩</span>
+          <span class="glyph-pinyin">suō</span>
+          <span class="glyph-meaning">— сжиматься</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>纟 (нить)</strong> слева. Ключ всего, что связано с нитями/тканями.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>宿 (sù)</strong> справа — даёт звук «suō». Сам по себе значит «ночевать».</li>
+          <li><span class="key-label">ЛОГИКА</span>Нить (纟) + звук «suō» = «стягивать нитью» → «сжиматься, сокращаться».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      Часто в текстах HSK6 — сокращать объём, расходы, сроки. Можно про файлы (сжимать файл), но на экзамене чаще про планы и бюджет.
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>压缩时间</td><td>yā suō shí jiān</td><td>сократить время</td></tr>
+        <tr><td>压缩成本</td><td>yā suō chéng běn</td><td>сократить расходы</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      我们需要压缩开会的时间。<br>
+      <em>Нам нужно сократить время совещания.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Ключ 纟 в 缩 = «стягивать нитью». Отсюда «сжимать».
+    </div>
+  </div>
+
+  <!-- 3. 画像 -->
+  <div class="word-card" data-part="rev" data-word="画像 huà xiàng портрет">
+    <span class="word-num">3 / 5</span>
+    <div class="word-head">
+      <span class="word-hanzi">画像</span>
+      <span class="word-pinyin">huà xiàng</span>
+      <span class="word-trans">— портрет</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">画</span>
+          <span class="glyph-pinyin">huà</span>
+          <span class="glyph-meaning">— рисовать</span>
+        </div>
+        <ul>
+          <li><span class="key-label">ОБРАЗ</span>Внутри рамки (囗) — <strong>田 (поле)</strong> и <strong>一 (черта)</strong>. Изначально — «проводить границы поля». Отсюда «рисовать, чертить».</li>
+          <li><span class="key-label">КЛЮЧ</span>Формально <strong>田 (поле)</strong>.</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">像</span>
+          <span class="glyph-pinyin">xiàng</span>
+          <span class="glyph-meaning">— образ, портрет</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>亻 (человек)</strong> слева.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>象 (xiàng, слон)</strong> справа — даёт звук. Сам по себе значит «слон, образ».</li>
+          <li><span class="key-label">ЛОГИКА</span>Человек (亻) + «образ» (象) = «образ человека» → «портрет».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      Не только нарисованный портрет. В современных текстах часто «用户画像» — профиль пользователя (в бизнесе, чтение HSK).
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>人物画像</td><td>rén wù huà xiàng</td><td>портрет персонажа</td></tr>
+        <tr><td>绘制画像</td><td>huì zhì huà xiàng</td><td>нарисовать портрет</td></tr>
+        <tr><td>用户画像</td><td>yòng hù huà xiàng</td><td>профиль пользователя</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      这幅画像把老人的神态表现出来了。<br>
+      <em>Этот портрет передаёт выражение лица старика.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Ключ 亻 в 像 = «образ человека». Отсюда «портрет».
+    </div>
+  </div>
+
+  <!-- 4. 络绎不绝 -->
+  <div class="word-card" data-part="rev" data-word="络绎不绝 luò yì bù jué непрерывный поток">
+    <span class="word-num">4 / 5</span>
+    <div class="word-head">
+      <span class="word-hanzi">络绎不绝</span>
+      <span class="word-pinyin">luò yì bù jué</span>
+      <span class="word-trans">— непрерывный поток (людей/машин)</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">络</span>
+          <span class="glyph-pinyin">luò</span>
+          <span class="glyph-meaning">— нить, сеть</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>纟 (нить)</strong> слева.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>各 (gè, каждый)</strong> справа — даёт звук «luò» в древнем произношении.</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">绎</span>
+          <span class="glyph-pinyin">yì</span>
+          <span class="glyph-meaning">— распутывать, тянуться</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>纟 (нить)</strong> слева — снова нить.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>𠬤 (yì)</strong> справа — звук.</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">绝</span>
+          <span class="glyph-pinyin">jué</span>
+          <span class="glyph-meaning">— прерывать</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>纟 (нить)</strong> слева.</li>
+          <li><span class="key-label">ФОНЕТИК</span><strong>色 (sè, цвет)</strong> справа — звук.</li>
+          <li><span class="key-label">ЛОГИКА</span>Нить (纟) + «цвет» (色) = «нить оборвалась» → «прерывать».</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head">Общая логика</div>
+        <ul>
+          <li>络 + 绎 — «нити тянутся и переплетаются», 不绝 — «не прерываются». Образ: как нити в ткани, люди/машины тянутся непрерывно.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      Только для людей, транспорта. Нельзя про дождь, звуки. Очень частый идиом в чтении HSK6.
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>游人络绎不绝</td><td>yóu rén luò yì bù jué</td><td>непрерывный поток туристов</td></tr>
+        <tr><td>车辆络绎不绝</td><td>chē liàng luò yì bù jué</td><td>непрерывный поток машин</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      节日期间,前来参观的游客络绎不绝。<br>
+      <em>В праздничные дни поток посетителей не прекращается.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟡 Идиома. Ключ 纟 (нить) во всех трёх иероглифах — «непрерывная нить людей/машин».
+    </div>
+  </div>
+
+  <!-- 5. 衷心 -->
+  <div class="word-card" data-part="rev" data-word="衷心 zhōng xīn искренне">
+    <span class="word-num">5 / 5</span>
+    <div class="word-head">
+      <span class="word-hanzi">衷心</span>
+      <span class="word-pinyin">zhōng xīn</span>
+      <span class="word-trans">— искренне, от всего сердца</span>
+    </div>
+
+    <div class="section analysis">
+      <span class="label">🔍 Разбор ключей</span>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">衷</span>
+          <span class="glyph-pinyin">zhōng</span>
+          <span class="glyph-meaning">— внутренний, сокровенный</span>
+        </div>
+        <ul>
+          <li><span class="key-label">КЛЮЧ</span><strong>衣 (одежда)</strong> снаружи. Это рисунок «верхняя одежда, распахнутая спереди».</li>
+          <li><span class="key-label">ВНУТРИ</span><strong>中 (середина)</strong> — квадрат с чертой.</li>
+          <li><span class="key-label">ЛОГИКА</span>Одежда (衣) + середина (中) = «то, что внутри одежды, под одеждой» → «внутренний, сокровенный».</li>
+          <li><span class="key-label">НЕ ПУТАТЬ</span><strong>哀 (āi)</strong> — горе. Внутри <strong>口 (рот)</strong>, а не 中. У 衷 внутри «середина», у 哀 — «рот».</li>
+        </ul>
+      </div>
+      <div class="glyph">
+        <div class="glyph-head">
+          <span class="glyph-char">心</span>
+          <span class="glyph-pinyin">xīn</span>
+          <span class="glyph-meaning">— сердце</span>
+        </div>
+        <ul>
+          <li><span class="key-label">ОБРАЗ</span><strong>Цельная картинка</strong>: сердце с сосудами. Ключ всего, что связано с чувствами.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section meaning">
+      <span class="label">💡 Значение</span>
+      Слова официально-вежливые, для поздравлений, благодарностей. В разговорной речи простой вариант — 真心.
+    </div>
+
+    <div class="section colloc">
+      <span class="label">📚 Коллокации</span>
+      <table>
+        <tr><th>中文</th><th>Пиньинь</th><th>Русский</th></tr>
+        <tr><td>衷心感谢</td><td>zhōng xīn gǎn xiè</td><td>искренне благодарю</td></tr>
+        <tr><td>衷心祝福</td><td>zhōng xīn zhù fú</td><td>искренне желаю</td></tr>
+      </table>
+    </div>
+
+    <div class="section example">
+      <span class="label">💬 Пример</span>
+      我衷心祝愿你考试顺利。<br>
+      <em>Я от всего сердца желаю тебе успешно сдать экзамен.</em>
+    </div>
+
+    <div class="section curator">
+      <span class="label">👨‍🏫 Куратор</span>
+      🟢 Образ: «то, что под одеждой (衷), в сердце (心)» — самое сокровенное. Отсюда «искренне».
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// ФИЛЬТР ПО ЧАСТЯМ
+// ============================================================
+function filterPart(part, btn) {
+  document.querySelectorAll('.btn[data-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('.word-card').forEach(card => {
+    if (part === 'all') card.classList.remove('hidden');
+    else if (card.dataset.part === part) card.classList.remove('hidden');
+    else card.classList.add('hidden');
+  });
+
+  document.querySelectorAll('.part-title').forEach(title => {
+    if (part === 'all') title.classList.remove('hidden');
+    else if (title.dataset.part === part) title.classList.remove('hidden');
+    else title.classList.add('hidden');
+  });
+
+  updateCounter();
+}
+
+// ============================================================
+// ПОИСК
+// ============================================================
+function searchWords() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('.word-card').forEach(card => {
+    if (!q) { card.classList.remove('hidden'); return; }
+    const text = (card.dataset.word + ' ' + card.innerText).toLowerCase();
+    if (text.includes(q)) card.classList.remove('hidden');
+    else card.classList.add('hidden');
+  });
+  updateCounter();
+}
+
+// ============================================================
+// СЧЁТЧИК
+// ============================================================
+function updateCounter() {
+  const visible = document.querySelectorAll('.word-card:not(.hidden)').length;
+  document.getElementById('counter').textContent = visible + ' слов';
+}
+
+document.addEventListener('DOMContentLoaded', updateCounter);
+</script>
+
+</body>
+</html>
