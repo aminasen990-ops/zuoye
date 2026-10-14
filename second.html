@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>📖 HSK6 · Конспект урока БКЛУ (Вариант В)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','SF Pro Text','Roboto',sans-serif;background:linear-gradient(150deg,#f0fdf4,#dcfce7);padding:2rem 1rem;line-height:1.7;color:#1f2937}
+.container{max-width:1100px;margin:0 auto}
+.header{background:#fff;border-radius:24px;padding:2rem;margin-bottom:1.5rem;box-shadow:0 10px 30px rgba(0,0,0,.06);text-align:center;border-bottom:4px solid #10b981}
+.header h1{font-size:26px;font-weight:800;background:linear-gradient(135deg,#059669,#10b981);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:.5rem}
+.header p{font-size:14px;color:#6b7280}
+.controls{background:#fff;border-radius:20px;padding:1rem 1.4rem;margin-bottom:1.6rem;box-shadow:0 4px 12px rgba(0,0,0,.05);display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;justify-content:space-between;position:sticky;top:1rem;z-index:10}
+.controls-left,.controls-right{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.btn{background:#ecfdf5;color:#065f46;border:2px solid #a7f3d0;border-radius:12px;padding:.45rem .9rem;font-weight:700;font-size:.85rem;cursor:pointer;transition:.15s}
+.btn:hover{background:#d1fae5;border-color:#10b981}
+.btn.active{background:#10b981;color:#fff;border-color:#059669}
+.search-box{border:2px solid #a7f3d0;border-radius:12px;padding:.45rem .9rem;font-size:.85rem;outline:none;min-width:200px}
+.search-box:focus{border-color:#10b981}
+.counter{font-size:.85rem;color:#6b7280;font-weight:600}
+.part-title{background:linear-gradient(135deg,#065f46,#10b981);color:#fff;border-radius:18px;padding:1rem 1.5rem;margin:2.5rem 0 1rem;font-size:1.2rem;font-weight:800;box-shadow:0 6px 16px rgba(16,185,129,.3)}
+.sub-title{background:#ecfdf5;color:#065f46;border-radius:14px;padding:.7rem 1.2rem;margin:1.5rem 0 .8rem;font-size:1rem;font-weight:800;border-left:5px solid #10b981}
+.word-card{background:#fff;border-radius:20px;padding:1.4rem 1.6rem;margin-bottom:1.2rem;box-shadow:0 6px 16px rgba(0,0,0,.05);border-left:5px solid #10b981;position:relative}
+.word-card:hover{box-shadow:0 10px 24px rgba(0,0,0,.08)}
+.word-num{position:absolute;top:1rem;right:1.2rem;background:#d1fae5;color:#065f46;font-weight:800;font-size:.8rem;padding:.15rem .6rem;border-radius:10px}
+.word-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem;margin-bottom:.9rem;padding-bottom:.7rem;border-bottom:2px dashed #d1fae5}
+.word-emoji{font-size:1.7rem}
+.word-hanzi{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;font-size:1.7rem;font-weight:800;color:#065f46}
+.word-pinyin{font-size:1rem;color:#6b7280;font-weight:600}
+.word-trans{font-size:.95rem;color:#1f2937;font-weight:600}
+.section{margin-bottom:.7rem;padding:.7rem .9rem;border-radius:12px;font-size:.92rem;line-height:1.65}
+.section .label{font-weight:800;display:block;margin-bottom:.35rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+.section.keys{background:#fffbeb;border-left:4px solid #f59e0b}
+.section.keys .label{color:#92400e}
+.section.meaning{background:#eff6ff;border-left:4px solid #3b82f6}
+.section.meaning .label{color:#1e40af}
+.section.colloc{background:#ecfdf5;border-left:4px solid #10b981}
+.section.colloc .label{color:#065f46}
+.section.trap{background:#fef2f2;border-left:4px solid #ef4444}
+.section.trap .label{color:#991b1b}
+.section.example{background:#f0fdfa;border-left:4px solid #14b8a6}
+.section.example .label{color:#115e59}
+.section.teacher{background:#fef3c7;border-left:4px solid #f59e0b}
+.section.teacher .label{color:#78350f}
+.section.student{background:#f5f3ff;border-left:4px solid #8b5cf6}
+.section.student .label{color:#5b21b6}
+.section.text{background:#f9fafb;border-left:4px solid #6b7280}
+.section.text .label{color:#374151}
+.glyph{background:#fff;border-radius:10px;padding:.55rem .85rem;margin-bottom:.5rem;border-left:3px solid #cbd5e1}
+.glyph-head{font-weight:800;color:#1f2937;margin-bottom:.3rem;font-size:.95rem;display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+.glyph-head .glyph-char{font-family:'Noto Sans SC',sans-serif;font-size:1.4rem;color:#b45309;font-weight:800}
+.glyph-head .glyph-pinyin{color:#6b7280;font-size:.85rem;font-style:italic}
+.glyph-head .glyph-meaning{color:#1f2937;font-weight:700}
+.glyph ul{padding-left:1.1rem;margin:0}
+.glyph li{margin-bottom:.25rem;font-size:.88rem;color:#374151;line-height:1.6}
+.glyph li strong{color:#92400e;font-weight:800}
+.glyph .key-label{display:inline-block;background:#fef3c7;color:#92400e;border-radius:6px;padding:0 .4rem;font-size:.7rem;font-weight:800;margin-right:.3rem}
+table{width:100%;border-collapse:collapse;margin-top:.35rem;font-size:.85rem}
+th,td{text-align:left;padding:.35rem .55rem;border-bottom:1px solid #d1fae5}
+th{background:#d1fae5;color:#065f46;font-weight:800;font-size:.72rem;text-transform:uppercase}
+td:first-child{font-family:'Noto Sans SC',sans-serif;font-weight:700;color:#1f2937}
+td:nth-child(2){color:#6b7280;font-style:italic}
+.hidden{display:none!important}
+.toc{background:#fff;border-radius:16px;padding:1rem 1.4rem;margin-bottom:1.5rem;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.toc h3{color:#065f46;font-size:.95rem;margin-bottom:.5rem}
+.toc ul{list-style:none;padding:0}
+.toc li{font-size:.88rem;color:#374151;padding:.15rem 0}
+.toc li a{color:#059669;text-decoration:none}
+.toc li a:hover{text-decoration:underline}
+@media(max-width:600px){.word-hanzi{font-size:1.3rem}.controls{position:static}.search-box{width:100%}.word-num{position:static;display:inline-block;margin-bottom:.4rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+<h1>📖 HSK6 · Конспект урока БКЛУ</h1>
+<p>Вариант В: по ходу урока + группировка по смыслу · всё сохранено, ничего не выброшено</p>
+</div>
+
+<div class="toc">
+<h3>🗂 Содержание</h3>
+<ul>
+<li><a href="#part1">Часть I. Урок 1: Слова P39 (в порядке разбора)</a></li>
+<li><a href="#part2">Часть II. Урок 1: Текст «Бай Яньсун» (по абзацам)</a></li>
+<li><a href="#part3">Часть III. Урок 2: Грамматика 而</a></li>
+<li><a href="#part4">Часть IV. Урок 3: Грамматика 别管…都…</a></li>
+<li><a href="#part5">Часть V. Урок 4: Иероглиф 结 — большая лекция</a></li>
+<li><a href="#part6">Часть VI. Урок 5: Грамматика 之</a></li>
+<li><a href="#part7">Часть VII. Урок 6: 阶层板结 — текст про Гаокао</a></li>
+</ul>
+</div>
+
+<div class="controls">
+<div class="controls-left">
+<button class="btn active" data-filter="all" onclick="filterPart('all',this)">Всё</button>
+<button class="btn" data-filter="p1" onclick="filterPart('p1',this)">I. P39</button>
+<button class="btn" data-filter="p2" onclick="filterPart('p2',this)">II. Бай Яньсун</button>
+<button class="btn" data-filter="p3" onclick="filterPart('p3',this)">III. 而</button>
+<button class="btn" data-filter="p4" onclick="filterPart('p4',this)">IV. 别管</button>
+<button class="btn" data-filter="p5" onclick="filterPart('p5',this)">V. 结</button>
+<button class="btn" data-filter="p6" onclick="filterPart('p6',this)">VI. 之</button>
+<button class="btn" data-filter="p7" onclick="filterPart('p7',this)">VII. 阶层板结</button>
+</div>
+<div class="controls-right">
+<input type="text" class="search-box" id="search" placeholder="🔍 Поиск..." oninput="searchWords()"/>
+<span class="counter" id="counter">0 слов</span>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ЧАСТЬ I. УРОК 1: СЛОВА P39 -->
+<!-- ============================================================ -->
+<div class="part-title" id="part1" data-part="p1">📚 ЧАСТЬ I. Урок 1: Слова P39 (в порядке разбора)</div>
+
+<div class="sub-title">Начало урока: 鲜活 → 根深蒂固 → 紧迫 → 惯性 → 拼命 → 形形色色 → 聚集 → 晃荡 → 任职 → 承包 → 感激 → 遥远 → 压缩 → 落下 → 络绎不绝 → 中心</div>
+
+<!-- 鲜活 -->
+<div class="word-card" data-part="p1" data-word="鲜活 xiān huó живой">
+<span class="word-num">1</span>
+<div class="word-head">
+<span class="word-emoji">🎨</span>
+<span class="word-hanzi">鲜活</span>
+<span class="word-pinyin">xiān huó</span>
+<span class="word-trans">— живой, яркий, полный жизни</span>
+</div>
+<div class="section keys"><span class="label">🔍 Разбор ключей</span>
+<div class="glyph"><div class="glyph-head"><span class="glyph-char">鲜</span><span class="glyph-pinyin">xiān</span><span class="glyph-meaning">— свежий</span></div>
+<ul>
+<li><span class="key-label">КЛЮЧ</span><strong>鱼 (рыба)</strong> слева — рисунок рыбы с головой и хвостом.</li>
+<li><span class="key-label">ФОНЕТИК</span><strong>羊 (баран)</strong> справа — даёт звук.</li>
+<li><span class="key-label">ЛОГИКА</span>Рыба + баран = свежее мясо.</li>
+</ul></div>
+<div class="glyph"><div class="glyph-head"><span class="glyph-char">活</span><span class="glyph-pinyin">huó</span><span class="glyph-meaning">— живой</span></div>
+<ul>
+<li><span class="key-label">КЛЮЧ</span><strong>氵 (вода)</strong> слева.</li>
+<li><span class="key-label">ФОНЕТИК</span><strong>舌 (язык)</strong> справа.</li>
+<li><span class="key-label">ЛОГИКА</span>Вода на языке = живой.</li>
+</ul></div>
+</div>
+<div class="section colloc"><span class="label">Коллокации (как разбирал преподаватель)</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>鲜活的语言</td><td>xiān huó de yǔ yán</td><td>живая речь</td></tr>
+<tr><td>鲜活的例子</td><td>xiān huó de lì zi</td><td>яркий пример</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя БКЛУ</span>«Используем про речь, истории, краски. <strong>Не про предметы.</strong> HSK6 часто встречается в текстах про культуру».</div>
+</div>
+
+<!-- 根深蒂固 -->
+<div class="word-card" data-part="p1" data-word="根深蒂固 gēn shēn dì gù укоренившийся">
+<span class="word-num">2</span>
+<div class="word-head">
+<span class="word-emoji">🌳</span>
+<span class="word-hanzi">根深蒂固</span>
+<span class="word-pinyin">gēn shēn dì gù</span>
+<span class="word-trans">— глубоко укоренившийся (идиома)</span>
+</div>
+<div class="section keys"><span class="label">🔍 Разбор</span>
+<div class="glyph"><div class="glyph-head"><span class="glyph-char">根</span></div><ul><li><span class="key-label">КЛЮЧ</span><strong>木 (дерево)</strong> слева.</li><li><span class="key-label">ФОНЕТИК</span><strong>艮 (gèn)</strong> справа.</li></ul></div>
+<div class="glyph"><div class="glyph-head"><span class="glyph-char">深</span></div><ul><li><span class="key-label">КЛЮЧ</span><strong>氵 (вода)</strong> слева.</li><li><span class="key-label">ФОНЕТИК</span><strong>罙 (shēn)</strong> справа.</li></ul></div>
+<div class="glyph"><div class="glyph-head"><span class="glyph-char">蒂</span></div><ul><li><span class="key-label">КЛЮЧ</span><strong>艹 (трава)</strong> сверху.</li><li><span class="key-label">ФОНЕТИК</span><strong>帝 (dì)</strong> внутри.</li></ul></div>
+<div class="glyph"><div class="glyph-head"><span class="glyph-char">固</span></div><ul><li><span class="key-label">КЛЮЧ</span><strong>囗 (рамка)</strong> снаружи.</li><li><span class="key-label">ФОНЕТИК</span><strong>古 (gǔ)</strong> внутри.</li></ul></div>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>根深蒂固的观念</td><td>gēn shēn dì gù de guān niàn</td><td>глубоко укоренившиеся взгляды</td></tr>
+<tr><td>影响根深蒂固</td><td>yǐng xiǎng gēn shēn dì gù</td><td>влияние глубоко укоренилось</td></tr>
+</table>
+</div>
+<div class="section example"><span class="label">Пример из урока</span>有些文化观念对我们的影响是根深蒂固的。<br><em>yǒu xiē wén huà guān niàn duì wǒ men de yǐng xiǎng shì gēn shēn dì gù de.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Только для взглядов, привычек, культурных представлений. <strong>Не про физические вещи.</strong>»</div>
+</div>
+
+<!-- 紧迫 -->
+<div class="word-card" data-part="p1" data-word="紧迫 jǐn pò срочный">
+<span class="word-num">3</span>
+<div class="word-head">
+<span class="word-emoji">⏱️</span>
+<span class="word-hanzi">紧迫</span>
+<span class="word-pinyin">jǐn pò</span>
+<span class="word-trans">— срочный, неотложный</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>紧迫的任务</td><td>jǐn pò de rèn wù</td><td>срочная задача</td></tr>
+<tr><td>时间紧迫</td><td>shí jiān jǐn pò</td><td>время поджимает</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Говорим о делах, сроках. Пример: Подготовка к HSK6 — это紧迫的任务».</div>
+<div class="section student"><span class="label">💬 Разговор на уроке</span>Преподаватель спросил: «现在我们班的同学有没有什么紧迫的学习任务?» Студенты ответили: «准备考试». Преподаватель: «Нет срочных задач, потому что нет промежуточного экзамена. Но если в выходные сдавать HSK 高级 — это уже紧迫的任务».</div>
+</div>
+
+<!-- 惯性 -->
+<div class="word-card" data-part="p1" data-word="惯性 guàn xìng инерция">
+<span class="word-num">4</span>
+<div class="word-head">
+<span class="word-emoji">🔄</span>
+<span class="word-hanzi">惯性</span>
+<span class="word-pinyin">guàn xìng</span>
+<span class="word-trans">— инерция</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>生活惯性</td><td>shēng huó guàn xìng</td><td>жизненная инерция</td></tr>
+<tr><td>养成惯性</td><td>yǎng chéng guàn xìng</td><td>выработать привычку</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Можно физический термин и переносное значение (привычка)».</div>
+<div class="section student"><span class="label">💬 Разговор на уроке</span>Преподаватель: «Ты в 8 встаёшь? Или в субботу-воскресенье у тебя нет惯性 вставать в 8?» Студент: «Нет, нет этой惯性, не выработал».</div>
+</div>
+
+<!-- 拼命 -->
+<div class="word-card" data-part="p1" data-word="拼命 pīn mìng изо всех сил">
+<span class="word-num">5</span>
+<div class="word-head">
+<span class="word-emoji">💪</span>
+<span class="word-hanzi">拼命</span>
+<span class="word-pinyin">pīn mìng</span>
+<span class="word-trans">— изо всех сил, рискуя жизнью</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>拼命学习</td><td>pīn mìng xué xí</td><td>учиться изо всех сил</td></tr>
+<tr><td>拼命努力</td><td>pīn mìng nǔ lì</td><td>стараться изо всех сил</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Выражает очень сильное усилие. Разговорное, но подходит для письменной речи HSK6».</div>
+</div>
+
+<!-- 形形色色 -->
+<div class="word-card" data-part="p1" data-word="形形色色 xíng xíng sè sè всевозможные">
+<span class="word-num">6</span>
+<div class="word-head">
+<span class="word-emoji">🌈</span>
+<span class="word-hanzi">形形色色</span>
+<span class="word-pinyin">xíng xíng sè sè</span>
+<span class="word-trans">— самые разные, всевозможные</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>形形色色的人</td><td>xíng xíng sè sè de rén</td><td>самые разные люди</td></tr>
+<tr><td>形形色色的事情</td><td>xíng xíng sè sè de shì qíng</td><td>всевозможные события</td></tr>
+</table>
+</div>
+<div class="section example"><span class="label">Пример из урока</span>В путешествии мы встречаем形形色色的人和事。<br><em>zài lǚ xíng zhōng wǒ men yù dào xíng xíng sè sè de rén hé shì.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Идиома HSK6».</div>
+</div>
+
+<!-- 聚集 -->
+<div class="word-card" data-part="p1" data-word="聚集 jù jí собираться">
+<span class="word-num">7</span>
+<div class="word-head">
+<span class="word-emoji">👥</span>
+<span class="word-hanzi">聚集</span>
+<span class="word-pinyin">jù jí</span>
+<span class="word-trans">— собираться, скапливаться</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>聚集人群</td><td>jù jí rén qún</td><td>собирать толпу</td></tr>
+<tr><td>聚集在一起</td><td>jù jí zài yì qǐ</td><td>собраться вместе</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Подчёркивает, что люди сходятся в одном месте».</div>
+</div>
+
+<!-- 晃荡 -->
+<div class="word-card" data-part="p1" data-word="晃荡 huàng dang слоняться">
+<span class="word-num">8</span>
+<div class="word-head">
+<span class="word-emoji">🚶</span>
+<span class="word-hanzi">晃荡</span>
+<span class="word-pinyin">huàng dang</span>
+<span class="word-trans">— бродить без цели, слоняться</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>在街上晃荡</td><td>zài jiē shàng huàng dang</td><td>слоняться по улице</td></tr>
+<tr><td>到处晃荡</td><td>dào chù huàng dang</td><td>бродить повсюду</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Разговорное слово, без негативной окраски».</div>
+<div class="section student"><span class="label">💬 Разговор на уроке</span>Преподаватель: «По выходным ты часто在外面晃荡?» Студент: «不常, я остаюсь в комнате». Преподаватель: «Сейчас мало кто在外面晃荡, все заняты, все спешат».</div>
+</div>
+
+<!-- 任职 -->
+<div class="word-card" data-part="p1" data-word="任职 rèn zhí занимать должность">
+<span class="word-num">9</span>
+<div class="word-head">
+<span class="word-emoji">📋</span>
+<span class="word-hanzi">任职</span>
+<span class="word-pinyin">rèn zhí</span>
+<span class="word-trans">— занимать должность</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>担任职务</td><td>dān rèn zhí wù</td><td>занимать пост</td></tr>
+<tr><td>任职多年</td><td>rèn zhí duō nián</td><td>много лет занимать должность</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Официальное слово, для работы, должностей».</div>
+<div class="section text"><span class="label">📖 Из текста «Бай Яньсун»</span>«我在学生会里任职» — я занимал должность в студсовете.</div>
+</div>
+
+<!-- 承包 -->
+<div class="word-card" data-part="p1" data-word="承包 chéng bāo взять подряд">
+<span class="word-num">10</span>
+<div class="word-head">
+<span class="word-emoji">📦</span>
+<span class="word-hanzi">承包</span>
+<span class="word-pinyin">chéng bāo</span>
+<span class="word-trans">— взять на подряд, арендовать</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>承包项目</td><td>chéng bāo xiàng mù</td><td>взять проект на подряд</td></tr>
+<tr><td>承包服务</td><td>chéng bāo fú wù</td><td>заключить подряд на услуги</td></tr>
+<tr><td>承包图书馆</td><td>chéng bāo tú shū guǎn</td><td>взять библиотеку на попечение</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Пример из урока: университет может承包 услуги внешней компании».</div>
+<div class="section text"><span class="label">📖 Из текста «Бай Яньсун»</span>«和同学"承包"了一年的图书馆» — вместе с однокурсниками «взял на подряд» библиотеку на год.</div>
+</div>
+
+<!-- 感激 -->
+<div class="word-card" data-part="p1" data-word="感激 gǎn jī быть благодарным">
+<span class="word-num">11</span>
+<div class="word-head">
+<span class="word-emoji">🙏</span>
+<span class="word-hanzi">感激</span>
+<span class="word-pinyin">gǎn jī</span>
+<span class="word-trans">— быть благодарным</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>十分感激</td><td>shí fēn gǎn jī</td><td>глубоко благодарен</td></tr>
+<tr><td>感激帮助</td><td>gǎn jī bāng zhù</td><td>благодарить за помощь</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Сильнее, чем простое 谢谢. Более литературное слово HSK6».</div>
+</div>
+
+<!-- 遥远 -->
+<div class="word-card" data-part="p1" data-word="遥远 yáo yuǎn далёкий">
+<span class="word-num">12</span>
+<div class="word-head">
+<span class="word-emoji">🌌</span>
+<span class="word-hanzi">遥远</span>
+<span class="word-pinyin">yáo yuǎn</span>
+<span class="word-trans">— далёкий</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>遥远的地方</td><td>yáo yuǎn de dì fang</td><td>далёкое место</td></tr>
+<tr><td>遥远的过去</td><td>yáo yuǎn de guò qù</td><td>далёкое прошлое</td></tr>
+<tr><td>遥远的事情</td><td>yáo yuǎn de shì qing</td><td>давнее событие</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Можно про расстояние и про время».</div>
+<div class="section text"><span class="label">📖 Из текста «Бай Яньсун»</span>«我特别想讲一个很遥远的事情» — я хочу рассказать одну очень давнюю историю.</div>
+</div>
+
+<!-- 压缩 -->
+<div class="word-card" data-part="p1" data-word="压缩 yā suō сжимать">
+<span class="word-num">13</span>
+<div class="word-head">
+<span class="word-emoji">📉</span>
+<span class="word-hanzi">压缩</span>
+<span class="word-pinyin">yā suō</span>
+<span class="word-trans">— сжимать, сокращать</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>压缩时间</td><td>yā suō shí jiān</td><td>сократить время</td></tr>
+<tr><td>压缩尺寸</td><td>yā suō chǐ cùn</td><td>сжимать размер</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Можно физически (сжать предмет) или про время, бюджет».</div>
+<div class="section text"><span class="label">📖 Из текста «Бай Яньсун»</span>«我们把工作时间压缩了，一上午全部完成» — мы сократили рабочее время, всё закончили за утро.</div>
+</div>
+
+<!-- 落下 -->
+<div class="word-card" data-part="p1" data-word="落下 luò xià упасть">
+<span class="word-num">14</span>
+<div class="word-head">
+<span class="word-emoji">⬇️</span>
+<span class="word-hanzi">落下</span>
+<span class="word-pinyin">luò xià</span>
+<span class="word-trans">— упасть, отстать</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>落下功课</td><td>luò xià gōng kè</td><td>отстать по учёбе</td></tr>
+<tr><td>落下东西</td><td>luò xià dōng xi</td><td>забыть вещь</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Важно: много значений, часто ошибки в HSK».</div>
+</div>
+
+<!-- 络绎不绝 -->
+<div class="word-card" data-part="p1" data-word="络绎不绝 luò yì bù jué непрерывный поток">
+<span class="word-num">15</span>
+<div class="word-head">
+<span class="word-emoji">🚗</span>
+<span class="word-hanzi">络绎不绝</span>
+<span class="word-pinyin">luò yì bù jué</span>
+<span class="word-trans">— непрерывный поток (людей, машин)</span>
+</div>
+<div class="section keys"><span class="label">🔍 Разбор ключей</span>
+<div class="glyph"><div class="glyph-head"><span class="glyph-char">络</span> + <span class="glyph-char">绎</span> + <span class="glyph-char">绝</span></div><ul>
+<li><span class="key-label">КЛЮЧ</span><strong>纟 (нить)</strong> слева во всех трёх иероглифах — нити тянутся.</li>
+</ul></div>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>车辆络绎不绝</td><td>chē liàng luò yì bù jué</td><td>непрерывный поток машин</td></tr>
+<tr><td>游人络绎不绝</td><td>yóu rén luò yì bù jué</td><td>поток туристов</td></tr>
+</table>
+</div>
+<div class="section example"><span class="label">Пример из урока</span>В 8 утра машины на улице络绎不绝。<br><em>zǎo shàng bā diǎn de shí hou，wài miàn de chē luò yì bù jué.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Идиома HSK6! <strong>Только люди или транспорт.</strong>»</div>
+</div>
+
+<!-- 中心 -->
+<div class="word-card" data-part="p1" data-word="中心 zhōng xīn центр">
+<span class="word-num">16</span>
+<div class="word-head">
+<span class="word-emoji">📍</span>
+<span class="word-hanzi">中心</span>
+<span class="word-pinyin">zhōng xīn</span>
+<span class="word-trans">— центр</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>市中心</td><td>shì zhōng xīn</td><td>центр города</td></tr>
+<tr><td>研究中心</td><td>yán jiū zhōng xīn</td><td>исследовательский центр</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Бывает географический центр, главный пункт темы».</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ЧАСТЬ II. ТЕКСТ БАЙ ЯНЬСУН -->
+<!-- ============================================================ -->
+<div class="part-title" id="part2" data-part="p2">📖 ЧАСТЬ II. Урок 1: Текст «Бай Яньсун» (по абзацам)</div>
+
+<div class="sub-title">Абзац 1: «大学四年把时光浪费在...»</div>
+
+<div class="word-card" data-part="p2" data-word="浪费时光 làng fèi shí guāng тратить время">
+<span class="word-num">17</span>
+<div class="word-head">
+<span class="word-emoji">⏳</span>
+<span class="word-hanzi">浪费时光</span>
+<span class="word-pinyin">làng fèi shí guāng</span>
+<span class="word-trans">— тратить время впустую</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>大学四年把时光浪费在了很多美好但是没用的东西上。<br><em>dà xué sì nián bǎ shí guāng làng fèi zài le hěn duō měi hǎo dàn shì méi yòng de dōng xi shàng.</em><br>За 4 года университета я потратил время на много прекрасных, но бесполезных вещей.</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Обрати внимание на конструкцию <strong>把…浪费在…上</strong>».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="四处晃荡 sì chù huàng dang бродить повсюду">
+<span class="word-num">18</span>
+<div class="word-head">
+<span class="word-emoji">🗺️</span>
+<span class="word-hanzi">四处晃荡</span>
+<span class="word-pinyin">sì chù huàng dang</span>
+<span class="word-trans">— бродить повсюду без цели</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>谈话、辩论、大量看书、四处晃荡、听讲座、听歌。<br><em>tán huà、biàn lùn、dà liàng kàn shū、sì chù huàng dang、tīng jiǎng zuò、tīng gē.</em><br>Разговоры, дебаты, много читал, бродил повсюду, ходил на лекции, слушал музыку.</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="书市 shū shì книжная ярмарка">
+<span class="word-num">19</span>
+<div class="word-head">
+<span class="word-emoji">📚</span>
+<span class="word-hanzi">书市</span>
+<span class="word-pinyin">shū shì</span>
+<span class="word-trans">— книжная ярмарка</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我办了广院的第一个书市、第一个体育节。<br><em>wǒ bàn le guǎng yuàn de dì yī gè shū shì、dì yī gè tǐ yù jié.</em><br>Я организовал первую книжную ярмарку и первый спортивный фестиваль в Гуанъюане.</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="体育节 tǐ yù jié спортивный фестиваль">
+<span class="word-num">20</span>
+<div class="word-head">
+<span class="word-emoji">🏃</span>
+<span class="word-hanzi">体育节</span>
+<span class="word-pinyin">tǐ yù jié</span>
+<span class="word-trans">— спортивный фестиваль</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="学生会 xué shēng huì студсовет">
+<span class="word-num">21</span>
+<div class="word-head">
+<span class="word-emoji">🎓</span>
+<span class="word-hanzi">学生会</span>
+<span class="word-pinyin">xué shēng huì</span>
+<span class="word-trans">— студенческий совет</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我在学生会里任职。<br><em>wǒ zài xué shēng huì lǐ rèn zhí.</em><br>Я занимал должность в студсовете.</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="做讲座 zuò jiǎng zuò читать лекцию">
+<span class="word-num">22</span>
+<div class="word-head">
+<span class="word-emoji">🎤</span>
+<span class="word-hanzi">做讲座</span>
+<span class="word-pinyin">zuò jiǎng zuò</span>
+<span class="word-trans">— читать публичную лекцию</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>然后请人来做讲座。<br><em>rán hòu qǐng rén lái zuò jiǎng zuò.</em><br>И приглашал людей читать лекции.</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="成就了我 chéng jiù le wǒ сформировал меня">
+<span class="word-num">23</span>
+<div class="word-head">
+<span class="word-emoji">✨</span>
+<span class="word-hanzi">成就了我</span>
+<span class="word-pinyin">chéng jiù le wǒ</span>
+<span class="word-trans">— сформировал меня, сделал меня тем, кто я есть</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>其实今天看来这些活动基本都是无用的，但是这些成就了我，让我成了我。<br><em>qí shí jīn tiān kàn lái zhè xiē huó dòng jī běn dōu shì wú yòng de，dàn shì zhè xiē chéng jiù le wǒ，ràng wǒ chéng le wǒ.</em></div>
+</div>
+
+<div class="sub-title">Абзац 2: «你很感激高考...»</div>
+
+<div class="word-card" data-part="p2" data-word="睡梦中 shuì mèng zhōng во сне">
+<span class="word-num">24</span>
+<div class="word-head">
+<span class="word-emoji">😴</span>
+<span class="word-hanzi">睡梦中</span>
+<span class="word-pinyin">shuì mèng zhōng</span>
+<span class="word-trans">— во сне</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>那天睡梦中刘春突然把我推醒。<br><em>nà tiān shuì mèng zhōng liú chūn tū rán bǎ wǒ tuī xǐng.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="推醒 tuī xǐng разбудить толчком">
+<span class="word-num">25</span>
+<div class="word-head">
+<span class="word-emoji">👋</span>
+<span class="word-hanzi">推醒</span>
+<span class="word-pinyin">tuī xǐng</span>
+<span class="word-trans">— разбудить толчком</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="去世 qù shì скончаться">
+<span class="word-num">26</span>
+<div class="word-head">
+<span class="word-emoji">🕯️</span>
+<span class="word-hanzi">去世</span>
+<span class="word-pinyin">qù shì</span>
+<span class="word-trans">— скончаться</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>「岩松岩松，快起来，小平去世了!」<br><em>yán sōng yán sōng，kuài qǐ lái，xiǎo píng qù shì le!</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="画像 huà xiàng портрет">
+<span class="word-num">27</span>
+<div class="word-head">
+<span class="word-emoji">🖼️</span>
+<span class="word-hanzi">画像</span>
+<span class="word-pinyin">huà xiàng</span>
+<span class="word-trans">— портрет</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>当天下午我们就到了深圳，去给邓小平的画像献花。<br><em>dāng tiān xià wǔ wǒ men jiù dào le shēn zhèn，qù gěi dèng xiǎo píng de huà xiàng xiàn huā.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="献花 xiàn huā возложить цветы">
+<span class="word-num">28</span>
+<div class="word-head">
+<span class="word-emoji">💐</span>
+<span class="word-hanzi">献花</span>
+<span class="word-pinyin">xiàn huā</span>
+<span class="word-trans">— возложить цветы</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="植物园 zhí wù yuán ботанический сад">
+<span class="word-num">29</span>
+<div class="word-head">
+<span class="word-emoji">🌳</span>
+<span class="word-hanzi">植物园</span>
+<span class="word-pinyin">zhí wù yuán</span>
+<span class="word-trans">— ботанический сад</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我们随后又跑到深圳植物园，去他种的那棵树下献了花。<br><em>wǒ men suí hòu yòu pǎo dào shēn zhèn zhí wù yuán，qù tā zhòng de nà kē shù xià xiàn le huā.</em></div>
+</div>
+
+<div class="sub-title">Абзац 3: «要说改革开放还是更宏观...»</div>
+
+<div class="word-card" data-part="p2" data-word="改革开放 gǎi gé kāi fàng реформы и открытость">
+<span class="word-num">30</span>
+<div class="word-head">
+<span class="word-emoji">🔄</span>
+<span class="word-hanzi">改革开放</span>
+<span class="word-pinyin">gǎi gé kāi fàng</span>
+<span class="word-trans">— реформы и открытость</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>要说改革开放还是更宏观的事情。<br><em>yào shuō gǎi gé kāi fàng hái shì gèng hóng guān de shì qing.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="宏观 hóng guān макро">
+<span class="word-num">31</span>
+<div class="word-head">
+<span class="word-emoji">🌐</span>
+<span class="word-hanzi">宏观</span>
+<span class="word-pinyin">hóng guān</span>
+<span class="word-trans">— макро-, глобальный</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Антоним 微观. Говорим о крупных процессах в стране, экономике, обществе».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="恢复高考 huī fù gāo kǎo восстановить гаокао">
+<span class="word-num">32</span>
+<div class="word-head">
+<span class="word-emoji">🎓</span>
+<span class="word-hanzi">恢复高考</span>
+<span class="word-pinyin">huī fù gāo kǎo</span>
+<span class="word-trans">— восстановить экзамен гаокао (1977)</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>仅仅恢复高考这一件事，就深深地改变了我们的命运。<br><em>jǐn jǐn huī fù gāo kǎo zhè yī jiàn shì，jiù shēn shēn de gǎi biàn le wǒ men de mìng yùn.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="改变命运 gǎi biàn mìng yùn изменить судьбу">
+<span class="word-num">33</span>
+<div class="word-head">
+<span class="word-emoji">🔮</span>
+<span class="word-hanzi">改变命运</span>
+<span class="word-pinyin">gǎi biàn mìng yùn</span>
+<span class="word-trans">— изменить судьбу</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="生命的直径 shēng mìng de zhí jìng диаметр жизни">
+<span class="word-num">34</span>
+<div class="word-head">
+<span class="word-emoji">📏</span>
+<span class="word-hanzi">生命的直径</span>
+<span class="word-pinyin">shēng mìng de zhí jìng</span>
+<span class="word-trans">— диаметр жизни (метафора горизонтов)</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我是生活在海拉尔这个中国最北方的人，而邓小平去世的时候，我是在中国几乎最南方的广州。如此远的距离，也就是说生命的直径变大了。<br><em>wǒ shì shēng huó zài hǎi lā ěr zhè ge zhōng guó zuì běi fāng de rén，ér dèng xiǎo píng qù shì de shí hou，wǒ shì zài zhōng guó jī hū zuì nán fāng de guǎng zhōu。rú cǐ yuǎn de jù lí，yě jiù shì shuō shēng mìng de zhí jìng biàn dà le.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«<strong>Не буквально!</strong> Значение: расширились жизненные горизонты, стало больше возможностей».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="主政 zhǔ zhèng руководить">
+<span class="word-num">35</span>
+<div class="word-head">
+<span class="word-emoji">👑</span>
+<span class="word-hanzi">主政</span>
+<span class="word-pinyin">zhǔ zhèng</span>
+<span class="word-trans">— руководить административной / государственной работой</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>高考就是邓小平主政之后恢复的。<br><em>gāo kǎo jiù shì dèng xiǎo píng zhǔ zhèng zhī hòu huī fù de.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Книжное, политическая лексика. <strong>Не путать с 主持</strong> (вести совещание). Отличать от 执政 (приход к власти)».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="内心的感恩 nèi xīn de gǎn ēn внутренняя благодарность">
+<span class="word-num">36</span>
+<div class="word-head">
+<span class="word-emoji">🙏</span>
+<span class="word-hanzi">内心的感恩</span>
+<span class="word-pinyin">nèi xīn de gǎn ēn</span>
+<span class="word-trans">— глубокая внутренняя благодарность</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我内心的感恩是非常强的。<br><em>wǒ nèi xīn de gǎn ēn shì fēi cháng qiáng de.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«感恩 — слово HSK6, сильнее обычного 感谢».</div>
+</div>
+
+<div class="sub-title">Абзац 4: «为什么感受这么强烈?»</div>
+
+<div class="word-card" data-part="p2" data-word="国家兴亡，匹夫有责 guó jiā xīng wáng pǐ fū yǒu zé">
+<span class="word-num">37</span>
+<div class="word-head">
+<span class="word-emoji">🇨🇳</span>
+<span class="word-hanzi">国家兴亡，匹夫有责</span>
+<span class="word-pinyin">guó jiā xīng wáng, pǐ fū yǒu zé</span>
+<span class="word-trans">— за судьбу страны отвечает каждый</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>中国有一句话一直流传，「国家兴亡，匹夫有责」。其实我觉得恢复高考在中间应该再加上四个字，「国家兴亡，学子有路，匹夫有责」。<br><em>zhōng guó yǒu yī jù huà yī zhí liú chuán，「guó jiā xīng wáng，pǐ fū yǒu zé」。qí shí wǒ jué de huī fù gāo kǎo zài zhōng jiān yīng gāi zài jiā shàng sì gè zì，「guó jiā xīng wáng，xué zǐ yǒu lù，pǐ fū yǒu zé」.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Известная старая идиома. Бай Яньсун дополняет её своими словами, подчёркивая важность образования и гаокао. Хороший пример для письменного сочинения HSK6».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="学子 xué zǐ учащийся">
+<span class="word-num">38</span>
+<div class="word-head">
+<span class="word-emoji">👨‍🎓</span>
+<span class="word-hanzi">学子</span>
+<span class="word-pinyin">xué zǐ</span>
+<span class="word-trans">— учащийся, студент (книжное)</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«В обычной беседе говорим 学生. 学子 — только в письменной речи, торжественных текстах».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="一直流传 yī zhí liú chuán передаваться">
+<span class="word-num">39</span>
+<div class="word-head">
+<span class="word-emoji">📜</span>
+<span class="word-hanzi">一直流传</span>
+<span class="word-pinyin">yī zhí liú chuán</span>
+<span class="word-trans">— передаваться из поколения в поколение</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="40周年 sì shí zhōu nián 40-летие">
+<span class="word-num">40</span>
+<div class="word-head">
+<span class="word-emoji">🎂</span>
+<span class="word-hanzi">40周年</span>
+<span class="word-pinyin">sì shí zhōu nián</span>
+<span class="word-trans">— сороковая годовщина</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>今年是恢复高考40周年，恢复的不仅仅是高考，是多少代中国人的公平、尊严和梦想。<br><em>jīn nián shì huī fù gāo kǎo sì shí zhōu nián，huī fù de bù jǐn jǐn shì gāo kǎo，shì duō shǎo dài zhōng guó rén de gōng píng、zūn yán hé mèng xiǎng.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="公平 gōng píng справедливость">
+<span class="word-num">41</span>
+<div class="word-head">
+<span class="word-emoji">⚖️</span>
+<span class="word-hanzi">公平</span>
+<span class="word-pinyin">gōng píng</span>
+<span class="word-trans">— справедливость</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="尊严 zūn yán достоинство">
+<span class="word-num">42</span>
+<div class="word-head">
+<span class="word-emoji">🏅</span>
+<span class="word-hanzi">尊严</span>
+<span class="word-pinyin">zūn yán</span>
+<span class="word-trans">— достоинство</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="梦想 mèng xiǎng мечта">
+<span class="word-num">43</span>
+<div class="word-head">
+<span class="word-emoji">💭</span>
+<span class="word-hanzi">梦想</span>
+<span class="word-pinyin">mèng xiǎng</span>
+<span class="word-trans">— мечта</span>
+</div>
+</div>
+
+<div class="sub-title">Абзац 5: «每年高考，媒体都会披露...»</div>
+
+<div class="word-card" data-part="p2" data-word="媒体披露 méi tǐ pī lù СМИ публикуют">
+<span class="word-num">44</span>
+<div class="word-head">
+<span class="word-emoji">📰</span>
+<span class="word-hanzi">媒体披露</span>
+<span class="word-pinyin">méi tǐ pī lù</span>
+<span class="word-trans">— СМИ публикуют / раскрывают информацию</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>每年高考，媒体都会披露，有多少高三毕业生放弃了高考。<br><em>měi nián gāo kǎo，méi tǐ dōu huì pī lù，yǒu duō shǎo gāo sān bì yè shēng fàng qì le gāo kǎo.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«<strong>披露</strong> часто про неприятную / скрытую информацию. <strong>公布</strong> — нейтральное».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="高三毕业生 gāo sān bì yè shēng выпускник 12 класса">
+<span class="word-num">45</span>
+<div class="word-head">
+<span class="word-emoji">🎓</span>
+<span class="word-hanzi">高三毕业生</span>
+<span class="word-pinyin">gāo sān bì yè shēng</span>
+<span class="word-trans">— выпускник старшей школы (12 класс)</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="放弃高考 fàng qì gāo kǎo отказаться">
+<span class="word-num">46</span>
+<div class="word-head">
+<span class="word-emoji">🚫</span>
+<span class="word-hanzi">放弃高考</span>
+<span class="word-pinyin">fàng qì gāo kǎo</span>
+<span class="word-trans">— отказаться от сдачи гаокао</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="接手家族企业 jiē shǒu jiā zú qǐ yè принять семейный бизнес">
+<span class="word-num">47</span>
+<div class="word-head">
+<span class="word-emoji">🏢</span>
+<span class="word-hanzi">接手家族企业</span>
+<span class="word-pinyin">jiē shǒu jiā zú qǐ yè</span>
+<span class="word-trans">— принять семейный бизнес</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我关注的不是那些由于有条件出国或者接手家族企业等原因放弃高考的。<br><em>wǒ guān zhù de bù shì nà xiē yóu yú yǒu tiáo jiàn chū guó huò zhě jiē shǒu jiā zú qǐ yè děng yuán yīn fàng qì gāo kǎo de.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="经济状况 jīng jì zhuàng kuàng финансовое положение">
+<span class="word-num">48</span>
+<div class="word-head">
+<span class="word-emoji">💰</span>
+<span class="word-hanzi">经济状况</span>
+<span class="word-pinyin">jīng jì zhuàng kuàng</span>
+<span class="word-trans">— финансовое положение</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我关注的是那些因为家里的经济状况不好、上不起大学而放弃高考的。<br><em>wǒ guān zhù de shì nà xiē yīn wèi jiā lǐ de jīng jì zhuàng kuàng bù hǎo、shàng bù qǐ dà xué ér fàng qì gāo kǎo de.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="上不起大学 shàng bù qǐ dà xué не иметь средств">
+<span class="word-num">49</span>
+<div class="word-head">
+<span class="word-emoji">📉</span>
+<span class="word-hanzi">上不起大学</span>
+<span class="word-pinyin">shàng bù qǐ dà xué</span>
+<span class="word-trans">— не иметь средств на учёбу в университете</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«<strong>上不起</strong> = только из-за денег. <strong>上不了</strong> = по любой причине (здоровье, документы)».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="资助大学生 zī zhù dà xué shēng помогать студентам">
+<span class="word-num">50</span>
+<div class="word-head">
+<span class="word-emoji">🎁</span>
+<span class="word-hanzi">资助大学生</span>
+<span class="word-pinyin">zī zhù dà xué shēng</span>
+<span class="word-trans">— материально помогать студентам</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我们广播学院1985级的同学，每年都资助十几个大学生。<br><em>wǒ men guǎng bō xué yuàn yī jiǔ bā wǔ jí de tóng xué，měi nián dōu zī zhù shí jǐ gè dà xué shēng.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="乐观 lè guān оптимистичный">
+<span class="word-num">51</span>
+<div class="word-head">
+<span class="word-emoji">😊</span>
+<span class="word-hanzi">乐观</span>
+<span class="word-pinyin">lè guān</span>
+<span class="word-trans">— оптимистичный</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>当我们真的去了解的时候，发现我们想象的太乐观，依然有很多学生来自贫困家庭。<br><em>dāng wǒ men zhēn de qù liǎo jiě de shí hou，fā xiàn wǒ men xiǎng xiàng de tài lè guān，yī rán yǒu hěn duō xué shēng lái zì pín kùn jiā tíng.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="依然 yī rán по-прежнему">
+<span class="word-num">52</span>
+<div class="word-head">
+<span class="word-emoji">♻️</span>
+<span class="word-hanzi">依然</span>
+<span class="word-pinyin">yī rán</span>
+<span class="word-trans">— по-прежнему</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="贫困生 pín kùn shēng малоимущий студент">
+<span class="word-num">53</span>
+<div class="word-head">
+<span class="word-emoji">💸</span>
+<span class="word-hanzi">贫困生</span>
+<span class="word-pinyin">pín kùn shēng</span>
+<span class="word-trans">— малоимущий студент</span>
+</div>
+</div>
+
+<div class="sub-title">Блок про 奖学金 и советы Бай Яньсуна</div>
+
+<div class="word-card" data-part="p2" data-word="奖学金 jiǎng xué jīn стипендия">
+<span class="word-num">54</span>
+<div class="word-head">
+<span class="word-emoji">🎓</span>
+<span class="word-hanzi">奖学金</span>
+<span class="word-pinyin">jiǎng xué jīn</span>
+<span class="word-trans">— стипендия</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我每次都会跟接受奖学金的孩子说这样两句话。<br><em>wǒ měi cì dōu huì gēn jiē shòu jiǎng xué jīn de hái zi shuō zhè yàng liǎng jù huà.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="自卑 zì bēi комплекс неполноценности">
+<span class="word-num">55</span>
+<div class="word-head">
+<span class="word-emoji">🙇</span>
+<span class="word-hanzi">自卑</span>
+<span class="word-pinyin">zì bēi</span>
+<span class="word-trans">— комплекс неполноценности</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>第一，你们的贫穷是你们漂亮简历的一部分。别觉得自己不如别人。<br><em>dì yī，nǐ men de pín qióng shì nǐ men piào liang jiǎn lì de yī bù fen。bié jué de zì jǐ bù rú bié rén.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="简历 jiǎn lì резюме">
+<span class="word-num">56</span>
+<div class="word-head">
+<span class="word-emoji">📄</span>
+<span class="word-hanzi">简历</span>
+<span class="word-pinyin">jiǎn lì</span>
+<span class="word-trans">— резюме, жизненный опыт</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Здесь метафора: жизненный путь, опыт, который формирует человека».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="当初 dāng chū в то время">
+<span class="word-num">57</span>
+<div class="word-head">
+<span class="word-emoji">⏪</span>
+<span class="word-hanzi">当初</span>
+<span class="word-pinyin">dāng chū</span>
+<span class="word-trans">— в то время, раньше</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我当初也跟你们一样。<br><em>wǒ dāng chū yě gēn nǐ men yí yàng.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="寒冷 hán lěng холодный">
+<span class="word-num">58</span>
+<div class="word-head">
+<span class="word-emoji">🥶</span>
+<span class="word-hanzi">寒冷</span>
+<span class="word-pinyin">hán lěng</span>
+<span class="word-trans">— холодный</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>他说每一个冬天都很寒冷。<br><em>tā shuō měi yí gè dōng tiān dōu hěn hán lěng.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="不如别人 bù rú bié rén хуже других">
+<span class="word-num">59</span>
+<div class="word-head">
+<span class="word-emoji">⬇️</span>
+<span class="word-hanzi">不如别人</span>
+<span class="word-pinyin">bù rú bié rén</span>
+<span class="word-trans">— быть хуже других</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>不要觉得自己不如别人。<br><em>bù yào jué de zì jǐ bù rú bié rén.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="产生自卑 chǎn shēng zì bēi появился комплекс">
+<span class="word-num">60</span>
+<div class="word-head">
+<span class="word-emoji">😔</span>
+<span class="word-hanzi">产生自卑</span>
+<span class="word-pinyin">chǎn shēng zì bēi</span>
+<span class="word-trans">— появился комплекс неполноценности</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="将来 jiāng lái в будущем">
+<span class="word-num">61</span>
+<div class="word-head">
+<span class="word-emoji">🔜</span>
+<span class="word-hanzi">将来</span>
+<span class="word-pinyin">jiāng lái</span>
+<span class="word-trans">— в будущем</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>将来有机会，你也帮助其他人。<br><em>jiāng lái yǒu jī huì，nǐ yě bāng zhù qí tā rén.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="同样的事 tóng yàng de shì то же самое">
+<span class="word-num">62</span>
+<div class="word-head">
+<span class="word-emoji">🔁</span>
+<span class="word-hanzi">同样的事</span>
+<span class="word-pinyin">tóng yàng de shì</span>
+<span class="word-trans">— то же самое дело</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="劝告 quàn gào советовать">
+<span class="word-num">63</span>
+<div class="word-head">
+<span class="word-emoji">💬</span>
+<span class="word-hanzi">劝告</span>
+<span class="word-pinyin">quàn gào</span>
+<span class="word-trans">— советовать, давать наставление</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>他劝告接受奖学金的学生两句话。<br><em>tā quàn gào jiē shòu jiǎng xué jīn de xué shēng liǎng jù huà.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="一是…二是… yī shì… èr shì… во-первых…">
+<span class="word-num">64</span>
+<div class="word-head">
+<span class="word-emoji">🔢</span>
+<span class="word-hanzi">一是…二是…</span>
+<span class="word-pinyin">yī shì… èr shì…</span>
+<span class="word-trans">— во-первых… во-вторых…</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>一是现在不要自卑；二是将来要帮助别人。<br><em>yī shì xiàn zài bù yào zì bēi；èr shì jiāng lái yào bāng zhù bié rén.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Очень частая письменная структура HSK6 для перечисления пунктов».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="划线部分 huà xiàn bù fen подчёркнутый фрагмент">
+<span class="word-num">65</span>
+<div class="word-head">
+<span class="word-emoji">✏️</span>
+<span class="word-hanzi">划线部分</span>
+<span class="word-pinyin">huà xiàn bù fen</span>
+<span class="word-trans">— подчёркнутый фрагмент</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Стандартная формулировка заданий в HSK6 по чтению».</div>
+</div>
+
+<div class="sub-title">Блок про надежду и 希望工程</div>
+
+<div class="word-card" data-part="p2" data-word="希望工程 xī wàng gōng chéng Проект Надежда">
+<span class="word-num">66</span>
+<div class="word-head">
+<span class="word-emoji">🌟</span>
+<span class="word-hanzi">希望工程</span>
+<span class="word-pinyin">xī wàng gōng chéng</span>
+<span class="word-trans">— Проект «Надежда»</span>
+</div>
+<div class="section text"><span class="label">📖 Из урока</span>Преподаватель: «В нашей стране есть проект希望工程 — можно пожертвовать деньги или книги, или связаться с учеником напрямую».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="希望小学 xī wàng xiǎo xué школа Надежда">
+<span class="word-num">67</span>
+<div class="word-head">
+<span class="word-emoji">🏫</span>
+<span class="word-hanzi">希望小学</span>
+<span class="word-pinyin">xī wàng xiǎo xué</span>
+<span class="word-trans">— начальная школа «Надежда»</span>
+</div>
+<div class="section text"><span class="label">📖 Из урока</span>«БКЛУ преподаватели и студенты вместе пожертвовали деньги и построили希望小学 в зоне бедствия».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="捐款 juān kuǎn жертвовать деньги">
+<span class="word-num">68</span>
+<div class="word-head">
+<span class="word-emoji">💝</span>
+<span class="word-hanzi">捐款</span>
+<span class="word-pinyin">juān kuǎn</span>
+<span class="word-trans">— жертвовать деньги</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="文具 wén jù канцелярия">
+<span class="word-num">69</span>
+<div class="word-head">
+<span class="word-emoji">✏️</span>
+<span class="word-hanzi">文具</span>
+<span class="word-pinyin">wén jù</span>
+<span class="word-trans">— канцелярские принадлежности</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="民间 mín jiān общественный">
+<span class="word-num">70</span>
+<div class="word-head">
+<span class="word-emoji">🏘️</span>
+<span class="word-hanzi">民间</span>
+<span class="word-pinyin">mín jiān</span>
+<span class="word-trans">— общественный, негосударственный</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>国家做国家应做的，民间也做些力所能及的。<br><em>guó jiā zuò guó jiā yīng zuò de，mín jiān yě zuò xiē lì suǒ néng jí de.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="力所能及 lì suǒ néng jí по силам">
+<span class="word-num">71</span>
+<div class="word-head">
+<span class="word-emoji">💪</span>
+<span class="word-hanzi">力所能及</span>
+<span class="word-pinyin">lì suǒ néng jí</span>
+<span class="word-trans">— то, что по силам</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Важная идиома HSK6! Противоположные: 力所不能及, 力不从心».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="获得 huò dé получить">
+<span class="word-num">72</span>
+<div class="word-head">
+<span class="word-emoji">🏅</span>
+<span class="word-hanzi">获得</span>
+<span class="word-pinyin">huò dé</span>
+<span class="word-trans">— получить (ценное)</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Книжное. Отличается от 得到 (разговорное, для всего)».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="考上 kǎo shàng поступить">
+<span class="word-num">73</span>
+<div class="word-head">
+<span class="word-emoji">🎯</span>
+<span class="word-hanzi">考上</span>
+<span class="word-pinyin">kǎo shàng</span>
+<span class="word-trans">— успешно сдать и поступить</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="分数 fēn shù балл">
+<span class="word-num">74</span>
+<div class="word-head">
+<span class="word-emoji">💯</span>
+<span class="word-hanzi">分数</span>
+<span class="word-pinyin">fēn shù</span>
+<span class="word-trans">— балл, оценка</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="甚至于 shèn zhì yú даже">
+<span class="word-num">75</span>
+<div class="word-head">
+<span class="word-emoji">🔺</span>
+<span class="word-hanzi">甚至于</span>
+<span class="word-pinyin">shèn zhì yú</span>
+<span class="word-trans">— даже, более того</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>有些孩子会觉得自己不如别人，甚至于产生自卑。<br><em>yǒu xiē hái zi huì jué de zì jǐ bù rú bié rén，shèn zhì yú chǎn shēng zì bēi.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="想一想 xiǎng yi xiǎng подумать">
+<span class="word-num">76</span>
+<div class="word-head">
+<span class="word-emoji">🤔</span>
+<span class="word-hanzi">想一想</span>
+<span class="word-pinyin">xiǎng yi xiǎng</span>
+<span class="word-trans">— подумать</span>
+</div>
+</div>
+
+<div class="sub-title">Блок про 阶层板结 и мобильность</div>
+
+<div class="word-card" data-part="p2" data-word="阶层板结 jiē céng bǎn jié застой">
+<span class="word-num">77</span>
+<div class="word-head">
+<span class="word-emoji">🔒</span>
+<span class="word-hanzi">阶层板结</span>
+<span class="word-pinyin">jiē céng bǎn jié</span>
+<span class="word-trans">— застывание социальных слоёв</span>
+</div>
+<div class="section keys"><span class="label">🔍 Разбор ключа 板</span>
+<div class="glyph"><div class="glyph-head"><span class="glyph-char">板</span></div><ul>
+<li><span class="key-label">КЛЮЧ</span><strong>木 (дерево)</strong> слева.</li>
+<li><span class="key-label">ФОНЕТИК</span><strong>反 (fǎn)</strong> справа.</li>
+<li><span class="key-label">ЛОГИКА</span>Дерево (木) + звук = деревянная доска.</li>
+</ul></div>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Буквально: земля затвердела как плита. Переносно: слои общества застыли, человеку сложно перейти в другой слой».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="阶层 jiē céng социальный слой">
+<span class="word-num">78</span>
+<div class="word-head">
+<span class="word-emoji">🏛️</span>
+<span class="word-hanzi">阶层</span>
+<span class="word-pinyin">jiē céng</span>
+<span class="word-trans">— социальный слой</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="上升渠道 shàng shēng qú dào канал роста">
+<span class="word-num">79</span>
+<div class="word-head">
+<span class="word-emoji">📈</span>
+<span class="word-hanzi">上升渠道</span>
+<span class="word-pinyin">shàng shēng qú dào</span>
+<span class="word-trans">— канал социального роста</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>不得不承认，高考作为一种阶层上升渠道，变窄了。<br><em>bù dé bù chéng rèn，gāo kǎo zuò wéi yī zhǒng jiē céng shàng shēng qú dào，biàn zhǎi le.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="变窄 biàn zhǎi сузиться">
+<span class="word-num">80</span>
+<div class="word-head">
+<span class="word-emoji">↔️</span>
+<span class="word-hanzi">变窄</span>
+<span class="word-pinyin">biàn zhǎi</span>
+<span class="word-trans">— сузиться</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="窄 zhǎi узкий">
+<span class="word-num">81</span>
+<div class="word-head">
+<span class="word-emoji">📏</span>
+<span class="word-hanzi">窄</span>
+<span class="word-pinyin">zhǎi</span>
+<span class="word-trans">— узкий</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="精英教育 jīng yīng jiào yù элитное образование">
+<span class="word-num">82</span>
+<div class="word-head">
+<span class="word-emoji">👑</span>
+<span class="word-hanzi">精英教育</span>
+<span class="word-pinyin">jīng yīng jiào yù</span>
+<span class="word-trans">— элитное образование</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>1977年、1978年的高考入学率仅5%左右，现在接近80%。<br><em>yī jiǔ qī qī nián、yī jiǔ qī bā nián de gāo kǎo rù xué lǜ jǐn wǔ bǎi fēn zhī zuǒ yòu，xiàn zài jiē jìn bā shí bǎi fēn zhī.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="常态教育 cháng tài jiào yù массовое образование">
+<span class="word-num">83</span>
+<div class="word-head">
+<span class="word-emoji">👥</span>
+<span class="word-hanzi">常态教育</span>
+<span class="word-pinyin">cháng tài jiào yù</span>
+<span class="word-trans">— массовое образование</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="义务教育 yì wù jiào yù обязательное образование">
+<span class="word-num">84</span>
+<div class="word-head">
+<span class="word-emoji">🏫</span>
+<span class="word-hanzi">义务教育</span>
+<span class="word-pinyin">yì wù jiào yù</span>
+<span class="word-trans">— обязательное образование</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我相信用不了多久，9年义务教育将变成12年义务教育，高中必定成为义务教育的一部分。<br><em>wǒ xiāng xìn yòng bù liǎo duō jiǔ，jiǔ nián yì wù jiào yù jiāng biàn chéng shí èr nián yì wù jiào yù，gāo zhōng bì dìng chéng wéi yì wù jiào yù de yī bù fen.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="用不了多久 yòng bù liǎo duō jiǔ скоро">
+<span class="word-num">85</span>
+<div class="word-head">
+<span class="word-emoji">⏰</span>
+<span class="word-hanzi">用不了多久</span>
+<span class="word-pinyin">yòng bù liǎo duō jiǔ</span>
+<span class="word-trans">— скоро, пройдёт немного времени</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="必定 bì dìng непременно">
+<span class="word-num">86</span>
+<div class="word-head">
+<span class="word-emoji">🎯</span>
+<span class="word-hanzi">必定</span>
+<span class="word-pinyin">bì dìng</span>
+<span class="word-trans">— непременно, обязательно</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Уверенный логический вывод, почти 100%».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="必然 bì rán неизбежно">
+<span class="word-num">87</span>
+<div class="word-head">
+<span class="word-emoji">🎯</span>
+<span class="word-hanzi">必然</span>
+<span class="word-pinyin">bì rán</span>
+<span class="word-trans">— неизбежно, обязательно</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Книжное, для сочинений. Разница с 一定: 一定 может быть обещанием, 必定/必然 — логический вывод».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="基数 jī shù базовое число">
+<span class="word-num">88</span>
+<div class="word-head">
+<span class="word-emoji">🔢</span>
+<span class="word-hanzi">基数</span>
+<span class="word-pinyin">jī shù</span>
+<span class="word-trans">— базовое число, база</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>当大学成为一种普通教育，而且基数变得如此之大的时候，它当然不可能像过去那样深刻地改变命运了。<br><em>dāng dà xué chéng wéi yī zhǒng pǔ tōng jiào yù，ér qiě jī shù biàn dé rú cǐ zhī dà de shí hou，tā dāng rán bù kě néng xiàng guò qù nà yàng shēn kè de gǎi biàn mìng yùn le.</em></div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="人口基数 rén kǒu jī shù базовая численность">
+<span class="word-num">89</span>
+<div class="word-head">
+<span class="word-emoji">👥</span>
+<span class="word-hanzi">人口基数</span>
+<span class="word-pinyin">rén kǒu jī shù</span>
+<span class="word-trans">— базовая численность населения</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="如此之大 rú cǐ zhī dà настолько большой">
+<span class="word-num">90</span>
+<div class="word-head">
+<span class="word-emoji">📏</span>
+<span class="word-hanzi">如此之大</span>
+<span class="word-pinyin">rú cǐ zhī dà</span>
+<span class="word-trans">— настолько большой</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«之 = 的 (книжное). 如此之大 = 如此的大».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="做出贡献 zuò chū gòng xiàn вносить вклад">
+<span class="word-num">91</span>
+<div class="word-head">
+<span class="word-emoji">🏅</span>
+<span class="word-hanzi">做出贡献</span>
+<span class="word-pinyin">zuò chū gòng xiàn</span>
+<span class="word-trans">— вносить вклад</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Ключевая коллокация HSK6. Запомни: не "делать вклад", а именно 做出贡献».</div>
+</div>
+
+<div class="word-card" data-part="p2" data-word="前途 qián tú перспективы">
+<span class="word-num">92</span>
+<div class="word-head">
+<span class="word-emoji">🌟</span>
+<span class="word-hanzi">前途</span>
+<span class="word-pinyin">qián tú</span>
+<span class="word-trans">— перспективы, будущее</span>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ЧАСТЬ III. 而 -->
+<!-- ============================================================ -->
+<div class="part-title" id="part3" data-part="p3">🧩 ЧАСТЬ III. Урок 2: Грамматика 而</div>
+
+<div class="word-card" data-part="p3" data-word="而 ér союз">
+<span class="word-num">93</span>
+<div class="word-head">
+<span class="word-emoji">🔗</span>
+<span class="word-hanzi">而</span>
+<span class="word-pinyin">ér</span>
+<span class="word-trans">— союз «а, но, и»</span>
+</div>
+<div class="section meaning"><span class="label">Три функции (разбирал преподаватель)</span>
+<strong>1. Сопоставление:</strong> A，而B — A, а B. Показывает параллель, сравнение двух фактов.<br>
+<em>我是老师，而你们是学生。</em> — Я преподаватель, а вы студенты.<br><br>
+<strong>2. Контраст / уступка:</strong> «но», резкий контраст.<br>
+<em>饭就在我面前，而我一口也吃不下。</em> — Еда передо мной, но я не могу съесть ни кусочка.<br>
+<em>我不能眼看这件事情发生，而我不说话。</em> — Я не могу смотреть, как это происходит, и молчать.<br><br>
+<strong>3. Соединение прилагательных:</strong><br>
+• <strong>A而不B</strong> — есть качество А, но не переходит в крайность:<br>
+&nbsp;&nbsp;肥而不腻 / 甜而不腻 / 独而不孤 / 简而不减 / 咸而不腻<br>
+• <strong>A而B</strong> — два положительных качества:<br>
+&nbsp;&nbsp;清晰而真实 / 温柔而坚定
+</div>
+<div class="section text"><span class="label">📖 Из текста «Бай Яньсун»</span>我是生活在海拉尔这个中国最北方的人，而邓小平去世的时候，我是在中国几乎最南方的广州。<br><em>wǒ shì shēng huó zài hǎi lā ěr zhè ge zhōng guó zuì běi fāng de rén，ér dèng xiǎo píng qù shì de shí hou，wǒ shì zài zhōng guó jī hū zuì nán fāng de guǎng zhōu.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«В разговорной речи заменяют на 但是/a. В письменных текстах HSK6 — именно 而».</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ЧАСТЬ IV. 别管…都… -->
+<!-- ============================================================ -->
+<div class="part-title" id="part4" data-part="p4">🧩 ЧАСТЬ IV. Урок 3: Грамматика 别管…都…</div>
+
+<div class="word-card" data-part="p4" data-word="别管……都…… bié guǎn dōu независимо от">
+<span class="word-num">94</span>
+<div class="word-head">
+<span class="word-emoji">♾️</span>
+<span class="word-hanzi">别管……都……</span>
+<span class="word-pinyin">bié guǎn… dōu…</span>
+<span class="word-trans">— независимо от…, что бы ни…</span>
+</div>
+<div class="section meaning"><span class="label">Значение</span>Безусловная конструкция. Результат одинаков при любых условиях.</div>
+<div class="section colloc"><span class="label">Синонимы (по возрастанию формальности)</span>
+<table>
+<tr><th>Китайский</th><th>Пиньинь</th><th>Стиль</th></tr>
+<tr><td>别管…都…</td><td>bié guǎn… dōu…</td><td>разговорный</td></tr>
+<tr><td>不管…都…</td><td>bù guǎn… dōu…</td><td>нейтральный</td></tr>
+<tr><td>无论…都…</td><td>wú lùn… dōu…</td><td>книжный</td></tr>
+<tr><td>不论…都…</td><td>bù lùn… dōu…</td><td>книжный</td></tr>
+</table>
+</div>
+<div class="section example"><span class="label">Примеры из урока</span>
+• 别管刮风下雨下雪，我都来上课。<br>
+• 别管天气怎么样，我都来上课。<br>
+• 别管天气多不好，我都来上课。<br>
+• 别管他怎么想，我都不在乎。<br>
+• 别管他的生活多么痛苦，他都保持乐观。<br>
+• 别管价格便宜还是贵，只要质量好，我都要买。<br>
+• 别管经历是幸福还是痛苦，都是巨大的财富。
+</div>
+<div class="section trap"><span class="label">⚠️ Правило (важное для экзамена)</span>После 别管 должно быть <strong>не менее двух вариантов</strong> ситуации.<br>
+❌ 别管价格还是质量 — это две разные категории.<br>
+✅ 别管价格便宜还是贵 — одна категория, два противоположных состояния.
+</div>
+<div class="section student"><span class="label">💬 Разговор на уроке</span>Преподаватель объяснял: «Если я скажу "别管价格还是质量，我都买" — это неверно, потому что цена и качество — это не два противоположных состояния одного признака».</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ЧАСТЬ V. ИЕРОГЛИФ 结 -->
+<!-- ============================================================ -->
+<div class="part-title" id="part5" data-part="p5">🧩 ЧАСТЬ V. Урок 4: Иероглиф 结 — большая лекция</div>
+
+<div class="word-card" data-part="p5" data-word="结 jié / jiē">
+<span class="word-num">95</span>
+<div class="word-head">
+<span class="word-emoji">🪢</span>
+<span class="word-hanzi">结</span>
+<span class="word-pinyin">jié / jiē</span>
+<span class="word-trans">— узел / завязывать / заканчивать / плодоносить</span>
+</div>
+<div class="section meaning"><span class="label">6 значений (как разбирал преподаватель)</span>
+<strong>1.</strong> Узел, завязывать: 死结 (мёртвый узел), 活结 (развязываемый узел), 打结 (завязать).<br>
+<strong>2.</strong> Сгущаться: 凝聚, 结冰 (замерзать), 结晶 (кристаллизоваться).<br>
+<strong>3.</strong> Объединяться: 联合, 结婚 (жениться), 结交 (завести друзей).<br>
+<strong>4.</strong> Заканчивать: 结束 (закончить), 结账 (рассчитаться), 结局 (финал), 结论 (заключение), 具结 (подписка).<br>
+<strong>5.</strong> 结实 (jiē shi) — прочный.<br>
+<strong>6.</strong> Чтение jiē — 植物结果实 (плодоносить): 树上结了许多苹果.
+</div>
+<div class="section colloc"><span class="label">Слова с 结 (из урока)</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>结束</td><td>jié shù</td><td>закончить</td></tr>
+<tr><td>结伴</td><td>jié bàn</td><td>в компании</td></tr>
+<tr><td>结晶</td><td>jié jīng</td><td>кристалл, квинтэссенция</td></tr>
+<tr><td>结算</td><td>jié suàn</td><td>рассчитаться</td></tr>
+<tr><td>结实</td><td>jiē shi</td><td>прочный</td></tr>
+<tr><td>结构</td><td>jié gòu</td><td>структура</td></tr>
+<tr><td>结婚</td><td>jié hūn</td><td>жениться</td></tr>
+<tr><td>结果</td><td>jié guǒ</td><td>результат</td></tr>
+<tr><td>纠结</td><td>jiū jié</td><td>запутанный, мучиться</td></tr>
+<tr><td>总结</td><td>zǒng jié</td><td>обобщать</td></tr>
+<tr><td>团结</td><td>tuán jié</td><td>сплочённость</td></tr>
+<tr><td>凝结</td><td>níng jié</td><td>сгущаться</td></tr>
+<tr><td>完结</td><td>wán jié</td><td>завершиться</td></tr>
+<tr><td>终结</td><td>zhōng jié</td><td>окончание</td></tr>
+<tr><td>勾结</td><td>gōu jié</td><td>сговориться (негативно)</td></tr>
+<tr><td>板结</td><td>bǎn jié</td><td>затвердеть</td></tr>
+</table>
+</div>
+<div class="section colloc"><span class="label">Идиомы с 结 (из урока)</span>
+<table>
+<tr><th>Идиома</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>张灯结彩</td><td>zhāng dēng jié cǎi</td><td>украшать фонарями и гирляндами</td></tr>
+<tr><td>成群结队</td><td>chéng qún jié duì</td><td>толпами, группами</td></tr>
+<tr><td>瞠目结舌</td><td>chēng mù jié shé</td><td>остолбенеть</td></tr>
+<tr><td>义结金兰</td><td>yì jié jīn lán</td><td>стать назваными братьями</td></tr>
+<tr><td>张口结舌</td><td>zhāng kǒu jié shé</td><td>язык заплетается</td></tr>
+<tr><td>精诚团结</td><td>jīng chéng tuán jié</td><td>искренняя сплочённость</td></tr>
+<tr><td>愁肠百结</td><td>chóu cháng bǎi jié</td><td>тоска гложет</td></tr>
+<tr><td>攀高结贵</td><td>pān gāo jié guì</td><td>искать связей с высшими</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«结 — иероглиф-многостаночник. Учи сразу группами: узел / сгущаться / объединяться / заканчивать / плодоносить».</div>
+</div>
+
+<div class="word-card" data-part="p5" data-word="冻结 dòng jié заморозить">
+<span class="word-num">96</span>
+<div class="word-head">
+<span class="word-emoji">🧊</span>
+<span class="word-hanzi">冻结</span>
+<span class="word-pinyin">dòng jié</span>
+<span class="word-trans">— замораживать (прям. и перен.)</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>冻结资产</td><td>dòng jié zī chǎn</td><td>заморозить активы</td></tr>
+<tr><td>冻结资金</td><td>dòng jié zī jīn</td><td>заморозить средства</td></tr>
+<tr><td>冻结关系</td><td>dòng jié guān xì</td><td>заморозить отношения</td></tr>
+</table>
+</div>
+</div>
+
+<div class="word-card" data-part="p5" data-word="集结 jí jié собираться">
+<span class="word-num">97</span>
+<div class="word-head">
+<span class="word-emoji">⚔️</span>
+<span class="word-hanzi">集结</span>
+<span class="word-pinyin">jí jié</span>
+<span class="word-trans">— собираться (нейтрально)</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>集结力量</td><td>jí jié lì liàng</td><td>собрать силы</td></tr>
+<tr><td>集结队伍</td><td>jí jié duì wǔ</td><td>собрать отряд</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Нейтральное, обычно про людей, силы. <strong>Не путать с 勾结</strong>».</div>
+</div>
+
+<div class="word-card" data-part="p5" data-word="勾结 gōu jié сговориться">
+<span class="word-num">98</span>
+<div class="word-head">
+<span class="word-emoji">🐍</span>
+<span class="word-hanzi">勾结</span>
+<span class="word-pinyin">gōu jié</span>
+<span class="word-trans">— сговориться (негативно)</span>
+</div>
+<div class="section colloc"><span class="label">Коллокации</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>相互勾结</td><td>xiāng hù gōu jié</td><td>сговориться между собой</td></tr>
+<tr><td>勾结势力</td><td>gōu jié shì lì</td><td>сговориться с силами</td></tr>
+</table>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«<strong>Резко отрицательная окраска.</strong> Только для незаконных, плохих объединений».</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ЧАСТЬ VI. 之 -->
+<!-- ============================================================ -->
+<div class="part-title" id="part6" data-part="p6">🧩 ЧАСТЬ VI. Урок 5: Грамматика 之</div>
+
+<div class="word-card" data-part="p6" data-word="之 zhī частица">
+<span class="word-num">99</span>
+<div class="word-head">
+<span class="word-emoji">📖</span>
+<span class="word-hanzi">之</span>
+<span class="word-pinyin">zhī</span>
+<span class="word-trans">— структурная частица (книжная)</span>
+</div>
+<div class="section meaning"><span class="label">Использования (как разбирал преподаватель)</span>
+• 之 = 的 (книжное): 如此之大 = 如此的大.<br>
+• 之间 — между.<br>
+• 之前 / 之后 — до / после.<br>
+• 之内 — в пределах.<br>
+• 人之初 — из «Трёхсловного стихотворения» (三字经).
+</div>
+<div class="section colloc"><span class="label">Устойчивые выражения</span>
+<table>
+<tr><th>Выражение</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>如此之大</td><td>rú cǐ zhī dà</td><td>настолько большой</td></tr>
+<tr><td>之间</td><td>zhī jiān</td><td>между</td></tr>
+<tr><td>之前 / 之后</td><td>zhī qián / zhī hòu</td><td>до / после</td></tr>
+<tr><td>之内</td><td>zhī nèi</td><td>в пределах</td></tr>
+<tr><td>人之初</td><td>rén zhī chū</td><td>в начале жизни человека</td></tr>
+<tr><td>不二之选</td><td>bù èr zhī xuǎn</td><td>безальтернативный выбор</td></tr>
+<tr><td>所到之处</td><td>suǒ dào zhī chù</td><td>везде, куда приходили</td></tr>
+</table>
+</div>
+<div class="section colloc"><span class="label">…之情 (продуктивная модель)</span>
+<table>
+<tr><th>Выражение</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>感激之情</td><td>gǎn jī zhī qíng</td><td>чувство благодарности</td></tr>
+<tr><td>友爱之情</td><td>yǒu ài zhī qíng</td><td>дружеские чувства</td></tr>
+<tr><td>热爱之情</td><td>rè ài zhī qíng</td><td>горячая любовь</td></tr>
+<tr><td>喜爱之情</td><td>xǐ ài zhī qíng</td><td>симпатия</td></tr>
+<tr><td>敬佩之情</td><td>jìng pèi zhī qíng</td><td>восхищение</td></tr>
+<tr><td>怀念之情</td><td>huái niàn zhī qíng</td><td>ностальгия</td></tr>
+<tr><td>同情之情</td><td>tóng qíng zhī qíng</td><td>сочувствие</td></tr>
+</table>
+</div>
+<div class="section example"><span class="label">Пример из урока</span>白岩松对高考制度怀有感激之情。<br><em>bái yán sōng duì gāo kǎo zhì dù huái yǒu gǎn jī zhī qíng.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«之 = книжное 的. Используется в письменных текстах HSK6».</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ЧАСТЬ VII. 阶层板结 ТЕКСТ ПРО ГАОКАО -->
+<!-- ============================================================ -->
+<div class="part-title" id="part7" data-part="p7">📖 ЧАСТЬ VII. Урок 6: Текст про Гаокао и 阶层板结</div>
+
+<div class="word-card" data-part="p7" data-word="不得不承认 bù dé bù chéng rèn приходится признать">
+<span class="word-num">100</span>
+<div class="word-head">
+<span class="word-emoji">😮‍💨</span>
+<span class="word-hanzi">不得不承认</span>
+<span class="word-pinyin">bù dé bù chéng rèn</span>
+<span class="word-trans">— приходится признать</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>不得不承认，高考作为一种阶层上升渠道，变窄了。<br><em>bù dé bù chéng rèn，gāo kǎo zuò wéi yī zhǒng jiē céng shàng shēng qú dào，biàn zhǎi le.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«不得不 = вынужден, приходится (нельзя не сделать). Очень полезная конструкция для сочинений».</div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="时代 shí dài эпоха">
+<span class="word-num">101</span>
+<div class="word-head">
+<span class="word-emoji">⏳</span>
+<span class="word-hanzi">时代</span>
+<span class="word-pinyin">shí dài</span>
+<span class="word-trans">— эпоха, время</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>时代发生了很大变化，高考恢复40年，大学已经由过去极度精英的教育变成常态教育。<br><em>shí dài fā shēng le hěn dà biàn huà，gāo kǎo huī fù sì shí nián，dà xué yǐ jīng yóu guò qù jí dù jīng yīng de jiào yù biàn chéng cháng tài jiào yù.</em></div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="极度精英教育 jí dù jīng yīng jiào yù элитное образование">
+<span class="word-num">102</span>
+<div class="word-head">
+<span class="word-emoji">👑</span>
+<span class="word-hanzi">极度精英教育</span>
+<span class="word-pinyin">jí dù jīng yīng jiào yù</span>
+<span class="word-trans">— крайне элитное образование</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="常态教育 cháng tài jiào yù массовое">
+<span class="word-num">103</span>
+<div class="word-head">
+<span class="word-emoji">👥</span>
+<span class="word-hanzi">常态教育</span>
+<span class="word-pinyin">cháng tài jiào yù</span>
+<span class="word-trans">— массовое образование</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="入学率 rù xué lǜ поступление">
+<span class="word-num">104</span>
+<div class="word-head">
+<span class="word-emoji">📊</span>
+<span class="word-hanzi">入学率</span>
+<span class="word-pinyin">rù xué lǜ</span>
+<span class="word-trans">— коэффициент поступления</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>1977年、1978年的高考入学率仅5%左右，现在接近80%。这区别有多大?<br><em>yī jiǔ qī qī nián、yī jiǔ qī bā nián de gāo kǎo rù xué lǜ jǐn wǔ bǎi fēn zhī zuǒ yòu，xiàn zài jiē jìn bā shí bǎi fēn zhī。zhè qū bié yǒu duō dà?</em></div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="考生 kǎo shēng абитуриент">
+<span class="word-num">105</span>
+<div class="word-head">
+<span class="word-emoji">📝</span>
+<span class="word-hanzi">考生</span>
+<span class="word-pinyin">kǎo shēng</span>
+<span class="word-trans">— абитуриент</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>2017年的考生是940万人，今年毕业的是795万人，1977年的时候只招27万人。<br><em>èr líng yī qī nián de kǎo shēng shì jiǔ bǎi sì shí wàn rén，jīn nián bì yè de shì qī bǎi jiǔ shí wǔ wàn rén，yī jiǔ qī qī nián de shí hou zhǐ zhāo èr shí qī wàn rén.</em></div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="招生 zhāo shēng набор студентов">
+<span class="word-num">106</span>
+<div class="word-head">
+<span class="word-emoji">📋</span>
+<span class="word-hanzi">招生</span>
+<span class="word-pinyin">zhāo shēng</span>
+<span class="word-trans">— приём студентов</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="义务教育 yì wù jiào yù обязательное">
+<span class="word-num">107</span>
+<div class="word-head">
+<span class="word-emoji">🏫</span>
+<span class="word-hanzi">义务教育</span>
+<span class="word-pinyin">yì wù jiào yù</span>
+<span class="word-trans">— обязательное образование</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>我相信用不了多久，9年义务教育将变成12年义务教育，高中必定成为义务教育的一部分。<br><em>wǒ xiāng xìn yòng bù liǎo duō jiǔ，jiǔ nián yì wù jiào yù jiāng biàn chéng shí èr nián yì wù jiào yù，gāo zhōng bì dìng chéng wéi yì wù jiào yù de yī bù fen.</em></div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«小学 1-6, 初中 7-9, 高中 10-12. Сейчас обязательное только 9 лет. Бай Яньсун считает, что станет 12».</div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="职业高中 zhí yè gāo zhōng профшкола">
+<span class="word-num">108</span>
+<div class="word-head">
+<span class="word-emoji">🛠️</span>
+<span class="word-hanzi">职业高中</span>
+<span class="word-pinyin">zhí yè gāo zhōng</span>
+<span class="word-trans">— профессиональная средняя школа</span>
+</div>
+<div class="section teacher"><span class="label">👨‍🏫 Комментарий преподавателя</span>«Если студент не хочет готовиться к гаокао, он идёт в职业高中 — учиться ремеслу (ремонт машин, кулинария, IT)».</div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="基数 jī shù базовое число">
+<span class="word-num">109</span>
+<div class="word-head">
+<span class="word-emoji">🔢</span>
+<span class="word-hanzi">基数</span>
+<span class="word-pinyin">jī shù</span>
+<span class="word-trans">— базовое число</span>
+</div>
+<div class="section text"><span class="label">📖 Из текста</span>当大学成为一种普通教育，而且基数变得如此之大的时候，它当然不可能像过去那样深刻地改变命运了。<br><em>dāng dà xué chéng wéi yī zhǒng pǔ tōng jiào yù，ér qiě jī shù biàn dé rú cǐ zhī dà de shí hou，tā dāng rán bù kě néng xiàng guò qù nà yàng shēn kè de gǎi biàn mìng yùn le.</em></div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="深刻 shēn kè глубоко">
+<span class="word-num">110</span>
+<div class="word-head">
+<span class="word-emoji">🌊</span>
+<span class="word-hanzi">深刻</span>
+<span class="word-pinyin">shēn kè</span>
+<span class="word-trans">— глубоко, глубокий</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="用不了多久 yòng bù liǎo duō jiǔ скоро">
+<span class="word-num">111</span>
+<div class="word-head">
+<span class="word-emoji">⏰</span>
+<span class="word-hanzi">用不了多久</span>
+<span class="word-pinyin">yòng bù liǎo duō jiǔ</span>
+<span class="word-trans">— скоро</span>
+</div>
+</div>
+
+<div class="word-card" data-part="p7" data-word="必定 bì dìng непременно">
+<span class="word-num">112</span>
+<div class="word-head">
+<span class="word-emoji">🎯</span>
+<span class="word-hanzi">必定</span>
+<span class="word-pinyin">bì dìng</span>
+<span class="word-trans">— непременно</span>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- СВОДНАЯ ТАБЛИЦА -->
+<!-- ============================================================ -->
+<div class="part-title" data-part="all">📊 СВОДНАЯ ТАБЛИЦА ЛЕКСИКИ</div>
+
+<div class="word-card" data-part="all">
+<div class="section colloc"><span class="label">Все ключевые слова урока</span>
+<table>
+<tr><th>汉字</th><th>Пиньинь</th><th>Перевод</th></tr>
+<tr><td>鲜活</td><td>xiān huó</td><td>живой</td></tr>
+<tr><td>根深蒂固</td><td>gēn shēn dì gù</td><td>глубоко укоренившийся</td></tr>
+<tr><td>紧迫</td><td>jǐn pò</td><td>срочный</td></tr>
+<tr><td>惯性</td><td>guàn xìng</td><td>инерция</td></tr>
+<tr><td>拼命</td><td>pīn mìng</td><td>изо всех сил</td></tr>
+<tr><td>形形色色</td><td>xíng xíng sè sè</td><td>всевозможные</td></tr>
+<tr><td>聚集</td><td>jù jí</td><td>собираться</td></tr>
+<tr><td>晃荡</td><td>huàng dang</td><td>слоняться</td></tr>
+<tr><td>任职</td><td>rèn zhí</td><td>занимать должность</td></tr>
+<tr><td>承包</td><td>chéng bāo</td><td>взять подряд</td></tr>
+<tr><td>感激</td><td>gǎn jī</td><td>быть благодарным</td></tr>
+<tr><td>遥远</td><td>yáo yuǎn</td><td>далёкий</td></tr>
+<tr><td>压缩</td><td>yā suō</td><td>сжимать</td></tr>
+<tr><td>落下</td><td>luò xià</td><td>упасть</td></tr>
+<tr><td>络绎不绝</td><td>luò yì bù jué</td><td>непрерывный поток</td></tr>
+<tr><td>中心</td><td>zhōng xīn</td><td>центр</td></tr>
+<tr><td>恢复高考</td><td>huī fù gāo kǎo</td><td>восстановить гаокао</td></tr>
+<tr><td>改变命运</td><td>gǎi biàn mìng yùn</td><td>изменить судьбу</td></tr>
+<tr><td>生命的直径</td><td>shēng mìng de zhí jìng</td><td>диаметр жизни</td></tr>
+<tr><td>阶层板结</td><td>jiē céng bǎn jié</td><td>застой в обществе</td></tr>
+<tr><td>上升渠道</td><td>shàng shēng qú dào</td><td>канал роста</td></tr>
+<tr><td>精英教育</td><td>jīng yīng jiào yù</td><td>элитное образование</td></tr>
+<tr><td>常态教育</td><td>cháng tài jiào yù</td><td>массовое образование</td></tr>
+<tr><td>义务教育</td><td>yì wù jiào yù</td><td>обязательное образование</td></tr>
+<tr><td>职业高中</td><td>zhí yè gāo zhōng</td><td>профшкола</td></tr>
+<tr><td>媒体披露</td><td>méi tǐ pī lù</td><td>СМИ публикуют</td></tr>
+<tr><td>高三毕业生</td><td>gāo sān bì yè shēng</td><td>выпускник 12 класса</td></tr>
+<tr><td>放弃高考</td><td>fàng qì gāo kǎo</td><td>отказаться от гаокао</td></tr>
+<tr><td>接手家族企业</td><td>jiē shǒu jiā zú qǐ yè</td><td>принять семейный бизнес</td></tr>
+<tr><td>经济状况</td><td>jīng jì zhuàng kuàng</td><td>финансовое положение</td></tr>
+<tr><td>上不起</td><td>shàng bù qǐ</td><td>не иметь средств</td></tr>
+<tr><td>资助</td><td>zī zhù</td><td>субсидировать</td></tr>
+<tr><td>贫困生</td><td>pín kùn shēng</td><td>малоимущий студент</td></tr>
+<tr><td>奖学金</td><td>jiǎng xué jīn</td><td>стипендия</td></tr>
+<tr><td>希望工程</td><td>xī wàng gōng chéng</td><td>Проект «Надежда»</td></tr>
+<tr><td>捐款</td><td>juān kuǎn</td><td>жертвовать деньги</td></tr>
+<tr><td>文具</td><td>wén jù</td><td>канцелярия</td></tr>
+<tr><td>民间</td><td>mín jiān</td><td>общественный</td></tr>
+<tr><td>力所能及</td><td>lì suǒ néng jí</td><td>по силам</td></tr>
+<tr><td>自卑</td><td>zì bēi</td><td>комплекс неполноценности</td></tr>
+<tr><td>自尊</td><td>zì zūn</td><td>самоуважение</td></tr>
+<tr><td>自信</td><td>zì xìn</td><td>уверенность</td></tr>
+<tr><td>自豪</td><td>zì háo</td><td>гордиться</td></tr>
+<tr><td>自强</td><td>zì qiáng</td><td>укреплять себя</td></tr>
+<tr><td>自立</td><td>zì lì</td><td>самостоятельность</td></tr>
+<tr><td>自立自强</td><td>zì lì zì qiáng</td><td>самостоятельный и сильный</td></tr>
+<tr><td>自强不息</td><td>zì qiáng bù xī</td><td>постоянно совершенствоваться</td></tr>
+<tr><td>自私</td><td>zì sī</td><td>эгоистичный</td></tr>
+<tr><td>自大</td><td>zì dà</td><td>зазнаваться</td></tr>
+<tr><td>自傲</td><td>zì ào</td><td>высокомерие</td></tr>
+<tr><td>骄傲自满</td><td>jiāo ào zì mǎn</td><td>высокомерный и самодовольный</td></tr>
+<tr><td>观点</td><td>guān diǎn</td><td>точка зрения</td></tr>
+<tr><td>认同</td><td>rèn tóng</td><td>признавать</td></tr>
+<tr><td>中立</td><td>zhōng lì</td><td>нейтральный</td></tr>
+<tr><td>态度</td><td>tài dù</td><td>отношение</td></tr>
+<tr><td>潜力</td><td>qián lì</td><td>потенциал</td></tr>
+<tr><td>能力</td><td>néng lì</td><td>способность</td></tr>
+<tr><td>认知</td><td>rèn zhī</td><td>познание</td></tr>
+<tr><td>层次</td><td>céng cì</td><td>уровень</td></tr>
+<tr><td>乐观</td><td>lè guān</td><td>оптимистичный</td></tr>
+<tr><td>悲观</td><td>bēi guān</td><td>пессимистичный</td></tr>
+<tr><td>依然</td><td>yī rán</td><td>по-прежнему</td></tr>
+<tr><td>感恩</td><td>gǎn ēn</td><td>благодарность</td></tr>
+<tr><td>衷心感谢</td><td>zhōng xīn gǎn xiè</td><td>искренне благодарить</td></tr>
+<tr><td>尊严</td><td>zūn yán</td><td>достоинство</td></tr>
+<tr><td>接手</td><td>jiē shǒu</td><td>принять дело</td></tr>
+<tr><td>家族企业</td><td>jiā zú qǐ yè</td><td>семейный бизнес</td></tr>
+<tr><td>接班人</td><td>jiē bān rén</td><td>преемник</td></tr>
+<tr><td>渠道</td><td>qú dào</td><td>канал</td></tr>
+<tr><td>贫穷</td><td>pín qióng</td><td>бедность</td></tr>
+<tr><td>简历</td><td>jiǎn lì</td><td>резюме</td></tr>
+<tr><td>当初</td><td>dāng chū</td><td>в то время</td></tr>
+<tr><td>寒冷</td><td>hán lěng</td><td>холодный</td></tr>
+<tr><td>不如别人</td><td>bù rú bié rén</td><td>хуже других</td></tr>
+<tr><td>产生</td><td>chǎn shēng</td><td>возникать</td></tr>
+<tr><td>将来</td><td>jiāng lái</td><td>в будущем</td></tr>
+<tr><td>劝告</td><td>quàn gào</td><td>советовать</td></tr>
+<tr><td>获得</td><td>huò dé</td><td>получить</td></tr>
+<tr><td>考上</td><td>kǎo shàng</td><td>поступить</td></tr>
+<tr><td>分数</td><td>fēn shù</td><td>балл</td></tr>
+<tr><td>甚至于</td><td>shèn zhì yú</td><td>даже</td></tr>
+<tr><td>靠谱</td><td>kào pǔ</td><td>надёжный</td></tr>
+<tr><td>离谱</td><td>lí pǔ</td><td>абсурдный</td></tr>
+<tr><td>精英</td><td>jīng yīng</td><td>элита</td></tr>
+<tr><td>基数</td><td>jī shù</td><td>базовое число</td></tr>
+<tr><td>必定</td><td>bì dìng</td><td>непременно</td></tr>
+<tr><td>必然</td><td>bì rán</td><td>неизбежно</td></tr>
+<tr><td>如此之大</td><td>rú cǐ zhī dà</td><td>настолько большой</td></tr>
+<tr><td>做出贡献</td><td>zuò chū gòng xiàn</td><td>вносить вклад</td></tr>
+<tr><td>前途</td><td>qián tú</td><td>перспективы</td></tr>
+</table>
+</div>
+</div>
+
+</div>
+
+<script>
+function filterPart(part, btn){
+  document.querySelectorAll('.btn[data-filter]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.word-card').forEach(c=>{
+    if(part==='all') c.classList.remove('hidden');
+    else if(c.dataset.part===part) c.classList.remove('hidden');
+    else c.classList.add('hidden');
+  });
+  document.querySelectorAll('.part-title, .sub-title').forEach(t=>{
+    if(part==='all') t.classList.remove('hidden');
+    else if(t.dataset.part===part) t.classList.remove('hidden');
+    else if(!t.dataset.part) t.classList.remove('hidden');
+    else t.classList.add('hidden');
+  });
+  updateCounter();
+}
+function searchWords(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('.word-card').forEach(c=>{
+    if(!q){c.classList.remove('hidden');return;}
+    const text=(c.dataset.word+' '+c.innerText).toLowerCase();
+    if(text.includes(q)) c.classList.remove('hidden');
+    else c.classList.add('hidden');
+  });
+  updateCounter();
+}
+function updateCounter(){
+  const v=document.querySelectorAll('.word-card:not(.hidden)').length;
+  document.getElementById('counter').textContent=v+' карточек';
+}
+document.addEventListener('DOMContentLoaded',updateCounter);
+</script>
+
+</body>
+                                                                                                                                                                          </html>
