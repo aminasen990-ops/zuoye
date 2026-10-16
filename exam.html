@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Тест · HSK 1 · Лексика · Грамматика · Чтение · Аудирование</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', 'SF Pro Text', 'Roboto', sans-serif;
+  background: linear-gradient(150deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 2rem 1rem;
+  line-height: 1.6;
+  color: #1f2937;
+}
+.container { max-width: 950px; margin: 0 auto; }
+
+/* ===== ЗАГОЛОВОК ===== */
+.module-header {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  text-align: center;
+  border-bottom: 4px solid #10b981;
+}
+.module-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #059669, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+.module-header p { font-size: 15px; color: #6b7280; }
+
+/* ===== РУКОВОДСТВО ===== */
+.guide {
+  background: #fffbeb;
+  border: 3px solid #f59e0b;
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 24px rgba(245,158,11,0.15);
+}
+.guide-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #b45309;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+.guide-step {
+  background: #ffffff;
+  border-left: 5px solid #f59e0b;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+.guide-step strong { color: #b45309; font-weight: 800; }
+.guide-final {
+  background: #fef3c7;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  font-weight: 700;
+  color: #92400e;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* ===== КНОПКИ ГЛОБАЛЬНЫЕ ===== */
+.controls {
+  display: flex; gap: 1rem; justify-content: center;
+  margin-bottom: 2rem; flex-wrap: wrap;
+}
+.controls button {
+  padding: 0.6rem 1.3rem; border-radius: 40px; border: none;
+  background: #10b981; color: #fff; font-weight: 600; font-size: 14px;
+  cursor: pointer; transition: 0.2s ease;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.3);
+  font-family: inherit;
+}
+.controls button:hover { background: #059669; transform: translateY(-2px); }
+
+/* ===== КАРТОЧКИ ===== */
+.card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  position: relative;
+}
+.card.section-head {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #fff;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  padding: 1rem 1.4rem;
+  letter-spacing: 0.5px;
+}
+.card.section-head::before { display: none; }
+
+.card.lvl::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  border-radius: 24px 0 0 24px;
+  background: #b8914a;
+}
+.card.lvl.green::before { background: #10b981; }
+.card.lvl.blue::before { background: #3b82f6; }
+.card.lvl.purple::before { background: #8b5cf6; }
+.card.lvl.pink::before { background: #ec489a; }
+.card.lvl.red::before { background: #ef4444; }
+
+/* ===== ТИПОГРАФИКА ЗАДАНИЙ ===== */
+.task-num {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #1f2937;
+  border-radius: 50%;
+  width: 28px; height: 28px;
+  line-height: 28px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 13px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.task-instruction {
+  font-weight: 700;
+  color: #4a3f2f;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+.task-line {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin: 0.5rem 0;
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+.task-line .who { font-weight: 800; color: #b5443c; min-width: 70px; }
+.task-line .blank {
+  display: inline-block;
+  min-width: 60px;
+  border-bottom: 2px dashed #b8914a;
+  color: #b8914a;
+  text-align: center;
+  font-weight: 700;
+  padding: 0 4px;
+}
+
+/* ===== ВАРИАНТЫ ОТВЕТОВ ===== */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.7rem 0;
+}
+.opt {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.15s;
+  font-family: inherit;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.opt:hover { border-color: #10b981; background: #ecfdf5; }
+.opt .num {
+  font-weight: 800;
+  color: #b8914a;
+  min-width: 20px;
+}
+.opt.correct {
+  background: #d1fae5;
+  border-color: #10b981;
+  color: #065f46;
+  font-weight: 700;
+}
+.opt.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #7f1d1d;
+}
+.opt.disabled { cursor: default; opacity: 0.85; }
+
+/* ===== ОТВЕТЫ (скрытые) ===== */
+.answer-block {
+  background: #f0fdf4;
+  border-left: 5px solid #10b981;
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  display: none;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.answer-block.show { display: block; animation: fade 0.3s; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.answer-block .correct-line {
+  font-weight: 700;
+  color: #065f46;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.answer-block .hint {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: #78350f;
+}
+.answer-block .hint::before {
+  content: '🧑‍🏫 Амина: ';
+  font-weight: 800;
+  color: #b45309;
+}
+.answer-block .expand {
+  background: #f0f9ff;
+  border-left: 4px solid #0284c7;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: #0c4a6e;
+}
+.answer-block .expand::before {
+  content: '➕ РАСШИРЕНИЕ: ';
+  font-weight: 800;
+  color: #0369a1;
+}
+.answer-block .mnemo {
+  background: #cffafe;
+  border-left: 4px solid #06b6d4;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: #155e75;
+}
+.answer-block .mnemo::before {
+  content: '🔑 КЛЮЧИ: ';
+  font-weight: 800;
+  color: #0e7490;
+}
+
+/* ===== ПИНЬИНЬ/ПЕРЕВОД ===== */
+.hanzi { font-size: 1.15rem; font-weight: 500; }
+.hanzi-big { font-size: 1.5rem; font-weight: 700; }
+.pinyin {
+  font-size: 0.9rem;
+  color: #6b7280;
+  transition: opacity 0.2s;
+}
+.trans {
+  font-size: 0.9rem;
+  color: #1f2937;
+  font-style: italic;
+  transition: opacity 0.2s;
+}
+.hidden { opacity: 0; }
+
+/* ===== КАРТИНКА-ЭМОДЗИ ===== */
+.pic-block {
+  background: #fef9c3;
+  border-radius: 18px;
+  padding: 1.2rem;
+  text-align: center;
+  margin: 0.8rem 0;
+}
+.pic-block .emoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.pic-block .caption {
+  font-size: 0.9rem;
+  color: #78350f;
+  font-weight: 600;
+}
+
+/* ===== ПРАВИЛЬНЫЙ ОТВЕТ (маркер в исходнике) ===== */
+.inline-answer {
+  display: inline-block;
+  background: #d1fae5;
+  color: #065f46;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 1px 8px;
+  font-size: 0.95rem;
+}
+
+/* ===== БЛОК ПОДСКАЗОК ===== */
+.tip {
+  background: #fffbeb;
+  border-left: 5px solid #f59e0b;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin: 0.6rem 0;
+  font-size: 0.92rem;
+  color: #78350f;
+}
+.tip::before {
+  content: '🧑‍🏫 Амина: ';
+  font-weight: 800;
+  color: #b45309;
+}
+
+/* ===== МОБИЛЬНЫЕ ===== */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .module-header h1 { font-size: 20px; }
+  .card { padding: 1.1rem 1rem; }
+  .task-line { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== ЗАГОЛОВОК ===== -->
+  <div class="module-header">
+    <h1>📝 Тест · HSK 1 · Лексика · Грамматика · Чтение · Аудирование</h1>
+    <p>Ответы скрыты · Умные подсказки учителя · Расширения помечены ➕</p>
+  </div>
+
+  <!-- ===== РУКОВОДСТВО ===== -->
+  <div class="guide">
+    <div class="guide-title">🧭 РУКОВОДСТВО — ПРОЧТИ ПЕРЕД НАЧАЛОМ</div>
+    <div class="guide-step"><strong>1 шаг:</strong> Сначала честно отвечаем — пиньинь и перевод выключены.</div>
+    <div class="guide-step"><strong>2 шаг:</strong> После ответа жми <em>«Показать ответ»</em> — увидишь комментарий учителя.</div>
+    <div class="guide-step"><strong>3 шаг:</strong> Если хочешь — открой <em>«➕ РАСШИРЕНИЕ»</em> — там дополнительные коллокации и разбор ключей.</div>
+    <div class="guide-final">📢 Если не понял фразу — сразу говори, какое слово не понял. Не тяни время!</div>
+  </div>
+
+  <!-- ===== ГЛОБАЛЬНЫЕ КНОПКИ ===== -->
+  <div class="controls">
+    <button onclick="showAllPinyin()">🔊 Пиньинь вкл</button>
+    <button onclick="hideAllPinyin()">🔇 Пиньинь выкл</button>
+    <button onclick="showAllTrans()">🌐 Перевод вкл</button>
+    <button onclick="hideAllTrans()">📖 Перевод выкл</button>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 1: ЛЕКСИКА -->
+  <!-- ================================================ -->
+  <div class="card section-head">ЛЕКСИКА</div>
+
+  <div class="card lvl green">
+    <div class="task-instruction"><span class="task-num">1</span> Запишите иероглифы данных слов в соответствии с переводом.</div>
+
+    <div id="lex1">
+      <div class="task-line"><span class="who">1) Велосипед</span><span class="blank" data-answer="自行车">____</span></div>
+      <div class="task-line"><span class="who">2) Вкусный</span><span class="blank" data-answer="好吃">____</span></div>
+      <div class="task-line"><span class="who">3) Лапша</span><span class="blank" data-answer="面条">____</span></div>
+      <div class="task-line"><span class="who">4) Танцевать</span><span class="blank" data-answer="跳舞">____</span></div>
+      <div class="task-line"><span class="who">5) Ежедневный, повседневный; часто, постоянно</span><span class="blank" data-answer="经常">____</span></div>
+      <div class="task-line"><span class="who">6) Килограмм</span><span class="blank" data-answer="公斤">____</span></div>
+      <div class="task-line"><span class="who">7) Дорога</span><span class="blank" data-answer="路">____</span></div>
+      <div class="task-line"><span class="who">8) Компания</span><span class="blank" data-answer="公司">____</span></div>
+      <div class="task-line"><span class="who">9) Медленный</span><span class="blank" data-answer="慢">____</span></div>
+      <div class="task-line"><span class="who">10) Ходить</span><span class="blank" data-answer="走">____</span></div>
+    </div>
+
+    <button class="opt" onclick="toggleAnswer('ans_lex1')"><span class="num">👁</span> Показать ответы</button>
+    <div class="answer-block" id="ans_lex1">
+      <div class="correct-line">✅ Правильные ответы:</div>
+      <div>1) <b>自行车</b> · 2) <b>好吃</b> · 3) <b>面条</b> · 4) <b>跳舞</b> · 5) <b>经常</b> · 6) <b>公斤</b> · 7) <b>路</b> · 8) <b>公司</b> · 9) <b>慢</b> · 10) <b>走</b></div>
+      <div class="hint">Не забудьте: 慢 и 快 — это пара «медленный/быстрый». 走 — именно пешком, а 去 — «идти куда-то».</div>
+      <div class="expand">Можно ещё проверить слова из этой же серии: <b>快</b> kuài — быстрый, <b>每天</b> měitiān — каждый день. Они встречаются в ДЗ.</div>
+      <div class="mnemo">慢: сердце (忄) + сеть с солнцем — тянет медленно. 快: сердце (忄) + бегущий человек — быстро.</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 2: ВЕРНО ЛИ ПЕРЕВЕДЕНО -->
+  <!-- ================================================ -->
+  <div class="card lvl blue">
+    <div class="task-instruction"><span class="task-num">2</span> Определите, верно ли переведены слова.</div>
+
+    <!-- 1 -->
+    <div class="task-line"><span class="who">1.</span><span class="hanzi">告诉</span> <span class="pinyin hidden">gàosu</span> <span class="trans hidden">— сказать</span> (думать)</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, false, 'q21')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, true, 'q21')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_q21">
+      <div class="correct-line">✅ 不对 — <b>告诉</b> = «сказать, сообщить», а «думать» = <b>觉得</b> / <b>想</b>.</div>
+      <div class="hint">Запомните: 告诉 — обязательно кому-то что-то сказать. Без человека нельзя.</div>
+      <div class="expand">Можно ещё проверить: 说 (shuō) — говорить; 说 + 话 (huà) — разговаривать.</div>
+    </div>
+
+    <!-- 2 -->
+    <div class="task-line"><span class="who">2.</span><span class="hanzi">事情</span> <span class="pinyin hidden">shìqing</span> <span class="trans hidden">— событие, дело</span> (событие)</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, true, 'q22')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, false, 'q22')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_q22">
+      <div class="correct-line">✅ 对 — 事情 = «дело, событие, вопрос».</div>
+      <div class="hint">Слово нейтральное. Часто встречается: 我有事情 — у меня есть дело.</div>
+      <div class="expand">Можно ещё проверить: 事 (shì) — сам корень «дело», часто в коллокациях 有事 / 没事.</div>
+    </div>
+
+    <!-- 3 -->
+    <div class="task-line"><span class="who">3.</span><span class="hanzi">错</span> <span class="pinyin hidden">cuò</span> <span class="trans hidden">— ошибочно, неправильно</span> (ошибочно)</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, true, 'q23')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, false, 'q23')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_q23">
+      <div class="correct-line">✅ 对 — 错 = «ошибка, неправильно».</div>
+      <div class="hint">Пара: 对 — правильно, 错 — неправильно.</div>
+      <div class="expand">Можно ещё проверить: 不对 (bú duì) — неверно; 没错 (méi cuò) — верно, точно.</div>
+    </div>
+
+    <!-- 4 -->
+    <div class="task-line"><span class="who">4.</span><span class="hanzi">上班</span> <span class="pinyin hidden">shàngbān</span> <span class="trans hidden">— идти на работу</span> (группа)</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, false, 'q24')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, true, 'q24')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_q24">
+      <div class="correct-line">✅ 不对 — <b>上班</b> = «ходить на работу». «Группа» = <b>班</b> или <b>小组</b>.</div>
+      <div class="hint">上班 ≠ «группа». Это действие. Группа — 班 (bān), но отдельно почти не используется.</div>
+      <div class="expand">Можно ещё проверить: 下班 (xiàbān) — уходить с работы; 上班族 — офисные работники.</div>
+    </div>
+
+    <!-- 5 -->
+    <div class="task-line"><span class="who">5.</span><span class="hanzi">手机</span> <span class="pinyin hidden">shǒujī</span> <span class="trans hidden">— мобильный телефон</span> (ноутбук)</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, false, 'q25')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, true, 'q25')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_q25">
+      <div class="correct-line">✅ 不对 — <b>手机</b> = «мобильный телефон» (ручной + механизм). «Ноутбук» = <b>笔记本电脑</b> или <b>电脑</b>.</div>
+      <div class="hint">Логика: 手 — рука, 机 — механизм → «ручной механизм» = мобильный.</div>
+      <div class="expand">Можно ещё проверить: 电脑 (diànnǎo) — компьютер; 手机号码 (shǒujī hàomǎ) — номер мобильного.</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 3: ВСТАВЬ ПРОПУЩЕННОЕ -->
+  <!-- ================================================ -->
+  <div class="card lvl purple">
+    <div class="task-instruction"><span class="task-num">3</span> Заполните пропуски подходящими по смыслу словами.</div>
+    <div class="tip">Варианты: <b>A</b> 题 · <b>B</b> 告诉 · <b>C</b> 等 · <b>D</b> 教室 · <b>E</b> 手机</div>
+
+    <!-- 1 -->
+    <div class="task-line"><span class="who">1.</span>女：今天下午你们在哪个（ ）上汉语课？</div>
+    <div class="task-line"><span class="who"></span>男：还是 407。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'D', 'q31')"><span class="num">A</span> 题</button>
+      <button class="opt" onclick="checkChoice(this, 'D', 'q31')"><span class="num">B</span> 告诉</button>
+      <button class="opt" onclick="checkChoice(this, 'D', 'q31')"><span class="num">C</span> 等</button>
+      <button class="opt" onclick="checkChoice(this, 'D', 'q31')"><span class="num">D</span> 教室</button>
+      <button class="opt" onclick="checkChoice(this, 'D', 'q31')"><span class="num">E</span> 手机</button>
+    </div>
+    <div class="answer-block" id="ans_q31">
+      <div class="correct-line">✅ D · 教室</div>
+      <div>今天下午你们在哪个 <b>教室</b> 上汉语课？ — «В какой аудитории у вас сегодня после обеда урок китайского?»</div>
+      <div class="hint">407 — типичный номер аудитории. Значит, речь именно про место.</div>
+      <div class="expand">Можно ещё проверить: 教室 (jiàoshì) — аудитория; 房间 (fángjiān) — комната.</div>
+    </div>
+
+    <!-- 2 -->
+    <div class="task-line"><span class="who">2.</span>女：今天是你的生日，生日快乐！</div>
+    <div class="task-line"><span class="who"></span>男：谢谢，是谁（ ）你的？</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'B', 'q32')"><span class="num">A</span> 题</button>
+      <button class="opt" onclick="checkChoice(this, 'B', 'q32')"><span class="num">B</span> 告诉</button>
+      <button class="opt" onclick="checkChoice(this, 'B', 'q32')"><span class="num">C</span> 等</button>
+      <button class="opt" onclick="checkChoice(this, 'B', 'q32')"><span class="num">D</span> 教室</button>
+      <button class="opt" onclick="checkChoice(this, 'B', 'q32')"><span class="num">E</span> 手机</button>
+    </div>
+    <div class="answer-block" id="ans_q32">
+      <div class="correct-line">✅ B · 告诉</div>
+      <div>谢谢，是谁 <b>告诉</b> 你的？ — «Спасибо, а кто тебе сказал?»</div>
+      <div class="hint">告诉 = «сказать, сообщить» — именно в контексте передачи информации.</div>
+      <div class="expand">Можно ещё проверить: 说 (shuō) — говорить; 问 (wèn) — спрашивать.</div>
+    </div>
+
+    <!-- 3 -->
+    <div class="task-line"><span class="who">3.</span>女：这个（ ）还有什么颜色的？</div>
+    <div class="task-line"><span class="who"></span>男：还有红色和黑色的。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'E', 'q33')"><span class="num">A</span> 题</button>
+      <button class="opt" onclick="checkChoice(this, 'E', 'q33')"><span class="num">B</span> 告诉</button>
+      <button class="opt" onclick="checkChoice(this, 'E', 'q33')"><span class="num">C</span> 等</button>
+      <button class="opt" onclick="checkChoice(this, 'E', 'q33')"><span class="num">D</span> 教室</button>
+      <button class="opt" onclick="checkChoice(this, 'E', 'q33')"><span class="num">E</span> 手机</button>
+    </div>
+    <div class="answer-block" id="ans_q33">
+      <div class="correct-line">✅ E · 手机</div>
+      <div>这个 <b>手机</b> 还有什么颜色的？ — «А какие ещё цвета есть у этого телефона?»</div>
+      <div class="hint">Цвета упоминаются — значит, речь о конкретном предмете в магазине.</div>
+      <div class="expand">Можно ещё проверить: 颜色 (yánsè) — цвет; 红色 (hóngsè) — красный.</div>
+    </div>
+
+    <!-- 4 -->
+    <div class="task-line"><span class="who">4.</span>我要睡觉了，那些（ ）明天再做吧。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'A', 'q34')"><span class="num">A</span> 题</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'q34')"><span class="num">B</span> 告诉</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'q34')"><span class="num">C</span> 等</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'q34')"><span class="num">D</span> 教室</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'q34')"><span class="num">E</span> 手机</button>
+    </div>
+    <div class="answer-block" id="ans_q34">
+      <div class="correct-line">✅ A · 题</div>
+      <div>我要睡觉了，那些 <b>题</b> 明天再做吧。 — «Я спать, те задачи — завтра». </div>
+      <div class="hint">题 = «задача, вопрос» — типичное домашнее задание.</div>
+      <div class="expand">Можно ещё проверить: 做题 (zuò tí) — решать задачи; 问题 (wèntí) — вопрос.</div>
+    </div>
+
+    <!-- 5 -->
+    <div class="task-line"><span class="who">5.</span>快点儿，大家都在（ ）你吃饭呢。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'C', 'q35')"><span class="num">A</span> 题</button>
+      <button class="opt" onclick="checkChoice(this, 'C', 'q35')"><span class="num">B</span> 告诉</button>
+      <button class="opt" onclick="checkChoice(this, 'C', 'q35')"><span class="num">C</span> 等</button>
+      <button class="opt" onclick="checkChoice(this, 'C', 'q35')"><span class="num">D</span> 教室</button>
+      <button class="opt" onclick="checkChoice(this, 'C', 'q35')"><span class="num">E</span> 手机</button>
+    </div>
+    <div class="answer-block" id="ans_q35">
+      <div class="correct-line">✅ C · 等</div>
+      <div>快点儿，大家都在 <b>等</b> 你吃饭呢。 — «Быстрее, все ждут тебя, чтобы поесть».</div>
+      <div class="hint">等 + 你 = «ждать тебя». Конструкция 等你.</div>
+      <div class="expand">Можно ещё проверить: 等一下 (děng yíxià) — подожди минутку; 稍等 (shāo děng) — подождите немного.</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 4: ГРАММАТИКА -->
+  <!-- ================================================ -->
+  <div class="card section-head">ГРАММАТИКА</div>
+
+  <div class="card lvl purple">
+    <div class="task-instruction"><span class="task-num">4</span> Введите правильный вариант ответа.</div>
+
+    <!-- 1 -->
+    <div class="task-line">这____商店的衣服____都很漂亮。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '3', 'g1')"><span class="num">1)</span> 个, 件</button>
+      <button class="opt" onclick="checkChoice(this, '3', 'g1')"><span class="num">2)</span> 个个, 件件</button>
+      <button class="opt" onclick="checkChoice(this, '3', 'g1')"><span class="num">3)</span> 个, 件</button>
+      <button class="opt" onclick="checkChoice(this, '3', 'g1')"><span class="num">4)</span> 个, 件件</button>
+    </div>
+    <div class="answer-block" id="ans_g1">
+      <div class="correct-line">✅ 3) 个, 件</div>
+      <div>这 <b>个</b> 商店的衣服 <b>件</b> 都很漂亮 — «Одежда в этом магазине вся красивая».</div>
+      <div class="hint">个 — универсальное счётное, 件 — для одежды и дел.</div>
+      <div class="expand">Можно ещё проверить: 一件衣服 / 一个问题 / 一个商店.</div>
+    </div>
+
+    <!-- 2 -->
+    <div class="task-line">因为她哥哥帮助我，____我送他礼物。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '2', 'g2')"><span class="num">1)</span> 就</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g2')"><span class="num">2)</span> 所以</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g2')"><span class="num">3)</span> 也</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g2')"><span class="num">4)</span> 还</button>
+    </div>
+    <div class="answer-block" id="ans_g2">
+      <div class="correct-line">✅ 2) 所以</div>
+      <div>因为她哥哥帮助我，<b>所以</b> 我送他礼物。 — «Поскольку её брат мне помог, я дарю ему подарок».</div>
+      <div class="hint">因为 + причина, 所以 + следствие. Пара.</div>
+      <div class="expand">Можно ещё проверить: 因为...所以 — классическая связка; можно опустить 因为 или 所以, но не оба.</div>
+    </div>
+
+    <!-- 3 -->
+    <div class="task-line">我吃了饭，____去你那里。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '1', 'g3')"><span class="num">1)</span> 就</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g3')"><span class="num">2)</span> 也</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g3')"><span class="num">3)</span> 还</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g3')"><span class="num">4)</span> 已经</button>
+    </div>
+    <div class="answer-block" id="ans_g3">
+      <div class="correct-line">✅ 1) 就</div>
+      <div>我吃了饭，<b>就</b> 去你那里。 — «Я поем и сразу пойду к тебе».</div>
+      <div class="hint">就 после действия = «сразу после этого».</div>
+      <div class="expand">Можно ещё проверить: 回家就开始做作业 — «как только приду домой, сразу начну делать ДЗ».</div>
+    </div>
+
+    <!-- 4 -->
+    <div class="task-line">学校____机场非常远。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '2', 'g4')"><span class="num">1)</span> 和</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g4')"><span class="num">2)</span> 离</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g4')"><span class="num">3)</span> 也</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g4')"><span class="num">4)</span> 还是</button>
+    </div>
+    <div class="answer-block" id="ans_g4">
+      <div class="correct-line">✅ 2) 离</div>
+      <div>学校 <b>离</b> 机场非常远。 — «Школа очень далеко от аэропорта».</div>
+      <div class="hint">A + 离 + B + 远 / 近 — конструкция расстояния.</div>
+      <div class="expand">Можно ещё проверить: 我家离公司很近 — мой дом близко к компании.</div>
+    </div>
+
+    <!-- 5 -->
+    <div class="task-line">别人都走了，为什么你____在这里？</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '1', 'g5')"><span class="num">1)</span> 还</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g5')"><span class="num">2)</span> 也</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g5')"><span class="num">3)</span> 就</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g5')"><span class="num">4)</span> 已经</button>
+    </div>
+    <div class="answer-block" id="ans_g5">
+      <div class="correct-line">✅ 1) 还</div>
+      <div>别人都走了，为什么你 <b>还</b> 在这里？ — «Все уже ушли, почему ты всё ещё здесь?»</div>
+      <div class="hint">还 здесь = «всё ещё» — продолжение состояния.</div>
+      <div class="expand">Можно ещё проверить: 还没 — ещё не; 还是 — или.</div>
+    </div>
+
+    <!-- 6 -->
+    <div class="task-line">你明天____给我打电话吧。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '2', 'g6')"><span class="num">1)</span> 对</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g6')"><span class="num">2)</span> 再</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g6')"><span class="num">3)</span> 就</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g6')"><span class="num">4)</span> 非常</button>
+    </div>
+    <div class="answer-block" id="ans_g6">
+      <div class="correct-line">✅ 2) 再</div>
+      <div>你明天 <b>再</b> 给我打电话吧。 — «Позвони мне завтра ещё раз».</div>
+      <div class="hint">再 = «ещё раз, снова» — когда-то в будущем.</div>
+      <div class="expand">Можно ещё проверить: 再读一下 — прочитай ещё раз.</div>
+    </div>
+
+    <!-- 7 -->
+    <div class="task-line">商店的左边____是学校。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '2', 'g7')"><span class="num">1)</span> 就</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g7')"><span class="num">2)</span> 有</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g7')"><span class="num">3)</span> 还</button>
+      <button class="opt" onclick="checkChoice(this, '2', 'g7')"><span class="num">4)</span> 也</button>
+    </div>
+    <div class="answer-block" id="ans_g7">
+      <div class="correct-line">✅ 2) 有</div>
+      <div>商店的左边 <b>有</b> 学校。 — «Слева от магазина — школа».</div>
+      <div class="hint">有 = «имеется, находится» — классическое для описания местоположения.</div>
+      <div class="expand">Можно ещё проверить: 商店的右边有银行 — справа от магазина банк.</div>
+    </div>
+
+    <!-- 8 -->
+    <div class="task-line">他不____我晚上给他打电话。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '1', 'g8')"><span class="num">1)</span> 让</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g8')"><span class="num">2)</span> 请</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g8')"><span class="num">3)</span> 叫</button>
+    </div>
+    <div class="answer-block" id="ans_g8">
+      <div class="correct-line">✅ 1) 让</div>
+      <div>他不 <b>让</b> 我晚上给他打电话。 — «Он не разрешает мне звонить ему вечером».</div>
+      <div class="hint">让 = «позволять / заставлять». 请 = «попросить вежливо». 叫 = «звать».</div>
+      <div class="expand">Можно ещё проверить: 妈妈不让我晚睡 — мама не разрешает мне поздно ложиться.</div>
+    </div>
+
+    <!-- 9 -->
+    <div class="task-line">你看见王老师，____他到我这来一下。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '1', 'g9')"><span class="num">1)</span> 让</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g9')"><span class="num">2)</span> 请</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g9')"><span class="num">3)</span> 叫</button>
+    </div>
+    <div class="answer-block" id="ans_g9">
+      <div class="correct-line">✅ 1) 让</div>
+      <div>你看见王老师，<b>让</b> 他到我这来一下。 — «Увидишь учителя Вана — попроси его зайти ко мне».</div>
+      <div class="hint">让 + человек + действие — «пусть он сделает».</div>
+      <div class="expand">Можно ещё проверить: 让他等一下 — пусть он подождёт.</div>
+    </div>
+
+    <!-- 10 -->
+    <div class="task-line">我____去年开始学习汉语。</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, '1', 'g10')"><span class="num">1)</span> 从</button>
+      <button class="opt" onclick="checkChoice(this, '1', 'g10')"><span class="num">2)</span> 离</button>
+    </div>
+    <div class="answer-block" id="ans_g10">
+      <div class="correct-line">✅ 1) 从</div>
+      <div>我 <b>从</b> 去年开始学习汉语。 — «Я начал учить китайский с прошлого года».</div>
+      <div class="hint">从 + время — «с какого-то времени».</div>
+      <div class="expand">Можно ещё проверить: 从早上八点到晚上六点 — с 8 утра до 6 вечера.</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 5: КОМПЛЕМЕНТ РЕЗУЛЬТАТА -->
+  <!-- ================================================ -->
+  <div class="card lvl pink">
+    <div class="task-instruction"><span class="task-num">5</span> Впишите подходящий комплемент результата.</div>
+
+    <div class="task-line">老师说的话我都听____了。 (<b>懂</b>)</div>
+    <button class="opt" onclick="toggleAnswer('ans_r1')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_r1">
+      <div class="correct-line">✅ 懂 → 老师说的话我都听<b>懂</b>了。</div>
+      <div class="hint">听 + 懂 = «услышать и понять» — результатив.</div>
+      <div class="expand">Можно ещё проверить: 看懂 (kàn dǒng) — понять читая.</div>
+    </div>
+
+    <div class="task-line">我妈妈看____你的女朋友了。 (<b>见</b>)</div>
+    <button class="opt" onclick="toggleAnswer('ans_r2')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_r2">
+      <div class="correct-line">✅ 见 → 我妈妈看<b>见</b>你的女朋友了。</div>
+      <div class="hint">看 + 见 = «увидеть». 看 — процесс, 看见 — результат.</div>
+      <div class="expand">Можно ещё проверить: 听 + 见 = услышать.</div>
+    </div>
+
+    <div class="task-line">我没做____了考试题。 (<b>完</b>)</div>
+    <button class="opt" onclick="toggleAnswer('ans_r3')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_r3">
+      <div class="correct-line">✅ 完 → 我没做<b>完</b>考试题。</div>
+      <div class="hint">做 + 完 = «доделать до конца». Здесь с 没 — отрицание.</div>
+      <div class="expand">Можно ещё проверить: 吃完 (chī wán) — доесть; 写完 (xiě wán) — дописать.</div>
+    </div>
+
+    <div class="task-line">你妈妈做____中国菜了。 (<b>好</b>)</div>
+    <button class="opt" onclick="toggleAnswer('ans_r4')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_r4">
+      <div class="correct-line">✅ 好 → 你妈妈做<b>好</b>中国菜了。</div>
+      <div class="hint">做 + 好 = «сделать хорошо / закончить». Оттенок «успешно завершено».</div>
+      <div class="expand">Можно ещё проверить: 准备好了 — уже готов.</div>
+    </div>
+
+    <div class="task-line">明天的汉语课你都准备____了吗？ (<b>好</b>)</div>
+    <button class="opt" onclick="toggleAnswer('ans_r5')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_r5">
+      <div class="correct-line">✅ 好 → 明天的汉语课你都准备<b>好</b>了吗？</div>
+      <div class="hint">准备 + 好 = «подготовить полностью». Классическая коллокация.</div>
+      <div class="expand">Можно ещё проверить: 准备好 (zhǔnbèi hǎo) — быть готовым.</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 6: СОСТАВЬ ПРЕДЛОЖЕНИЯ -->
+  <!-- ================================================ -->
+  <div class="card lvl red">
+    <div class="task-instruction"><span class="task-num">6</span> Составьте предложения из данных слов.</div>
+
+    <div class="task-line">1. 第 · 请 · 现在 · 一个 · 回答 · 问题 · 你 。</div>
+    <button class="opt" onclick="toggleAnswer('ans_s1')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_s1">
+      <div class="correct-line">✅ 现在请你回答第一个问题。</div>
+      <div class="hint">Порядок: время → подл. → гл. → объект. 第一个 = «первый».</div>
+    </div>
+
+    <div class="task-line">2. 你 · 的 · 怎么 · 是 · 你的 · 认识 · 和 · 男朋友？</div>
+    <button class="opt" onclick="toggleAnswer('ans_s2')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_s2">
+      <div class="correct-line">✅ 你和你的男朋友是怎么认识的？</div>
+      <div class="hint">是...的 — конструкция выделения способа. 怎么 + 认识 = «как познакомились».</div>
+    </div>
+
+    <div class="task-line">3. 什么时候 · 吗 · 你知道 · 学校 · 今天 · 来 · 她？</div>
+    <button class="opt" onclick="toggleAnswer('ans_s3')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_s3">
+      <div class="correct-line">✅ 你知道她今天什么时候来学校吗？</div>
+      <div class="hint">你知道…吗 — «Ты знаешь…?». Внутри — вопросительное слово 什么时候.</div>
+    </div>
+
+    <div class="task-line">4. 中国 · 这儿 · 有 · 离 · 一个 · 饭馆 · 不远 。</div>
+    <button class="opt" onclick="toggleAnswer('ans_s4')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_s4">
+      <div class="correct-line">✅ 离这儿不远有一个中国饭馆。</div>
+      <div class="hint">离这儿不远 — «недалеко отсюда». Классическая конструкция.</div>
+    </div>
+
+    <div class="task-line">5. 我 · 打篮球 · 八岁 · 的时候 · 第 · 是 · 一次 · 在 。</div>
+    <button class="opt" onclick="toggleAnswer('ans_s5')"><span class="num">👁</span> Показать ответ</button>
+    <div class="answer-block" id="ans_s5">
+      <div class="correct-line">✅ 我第一次打篮球是在八岁的时候。</div>
+      <div class="hint">是...的 — выделение обстоятельства времени. 第一次 = «в первый раз».</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 7: ЧТЕНИЕ -->
+  <!-- ================================================ -->
+  <div class="card section-head">ЧТЕНИЕ</div>
+
+  <div class="card lvl blue">
+    <div class="task-instruction"><span class="task-num">7</span> Прочитайте информацию и определите, верны ли утверждения под ★.</div>
+
+    <!-- 1 -->
+    <div class="task-line">不要在公共汽车上看书、看报纸，因为那样对眼睛不好。</div>
+    <div class="task-line"><span class="who">★</span>坐公共汽车对眼睛不好。</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, false, 'r71')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, true, 'r71')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_r71">
+      <div class="correct-line">✅ 不对</div>
+      <div>В тексте: «на автобусе <b>читать</b> вредно для глаз», а не «автобус вреден сам по себе».</div>
+      <div class="hint">Ловушка: убрали ключевое действие 看书/看报纸 и оставили «автобус» — это подмена.</div>
+    </div>
+
+    <!-- 2 -->
+    <div class="task-line">从学校到机场，坐车要一小时，我们十点的飞机，八点从学校走可以吗？</div>
+    <div class="task-line"><span class="who">★</span>他们坐八点的飞机。</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, false, 'r72')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, true, 'r72')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_r72">
+      <div class="correct-line">✅ 不对</div>
+      <div>У них самолёт в <b>десять</b>, а в восемь они выходят из школы.</div>
+      <div class="hint">Числа 10:00 и 8:00 легко перепутать — читаем внимательно.</div>
+    </div>
+
+    <!-- 3 -->
+    <div class="task-line">姐姐，第一题我不会做，你做完饭能帮我看看吗？</div>
+    <div class="task-line"><span class="who">★</span>姐姐正在房间里学习。</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, false, 'r73')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, true, 'r73')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_r73">
+      <div class="correct-line">✅ 不对</div>
+      <div>Сестра в этот момент <b>готовит</b> (做完饭), а не учится.</div>
+      <div class="hint">做饭 ≠ 学习. Не путать.</div>
+    </div>
+
+    <!-- 4 -->
+    <div class="task-line">刘小姐生病了，所以今天没来公司。您有什么事情可以和我说，等她来了，我再告诉她。</div>
+    <div class="task-line"><span class="who">★</span>刘小姐今天身体不太好。</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, true, 'r74')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, false, 'r74')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_r74">
+      <div class="correct-line">✅ 对</div>
+      <div>生病 = «заболела» → 身体不太好.</div>
+      <div class="hint">生病 и 身体不太好 — синонимичны в этом контексте.</div>
+    </div>
+
+    <!-- 5 -->
+    <div class="task-line">爸爸明天早上9点下飞机，我们7点从家去机场就可以。</div>
+    <div class="task-line"><span class="who">★</span>他们明天早上去机场。</div>
+    <div class="options">
+      <button class="opt" onclick="checkYesNo(this, true, 'r75')"><span class="num">✅</span>对</button>
+      <button class="opt" onclick="checkYesNo(this, false, 'r75')"><span class="num">❌</span>不对</button>
+    </div>
+    <div class="answer-block" id="ans_r75">
+      <div class="correct-line">✅ 对</div>
+      <div>7 утра → это «早上».</div>
+      <div class="hint">早上 = с 5-6 утра до ~9-10 утра.</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 8: СОЕДИНИ РЕПЛИКИ -->
+  <!-- ================================================ -->
+  <div class="card lvl green">
+    <div class="task-instruction"><span class="task-num">8</span> Соедините подходящие по смыслу реплики.</div>
+    <div class="tip">
+      A. 对不起，请等一下，大卫还没到。<br>
+      B. 你是这里的服务员吗？<br>
+      C. 晚上去看电影？<br>
+      D. 希望这次你能在这儿多住几天。<br>
+      E. 好，没关系，我们再去别的商店看看。
+    </div>
+
+    <div class="task-line"><b>1.</b> 我是新来的，所以您可能没见过我。 → B</div>
+    <div class="task-line"><b>2.</b> 怎么样？现在可以开始了吗？ → A</div>
+    <div class="task-line"><b>3.</b> 明天要考试，考完试再去吧。 → C</div>
+    <div class="task-line"><b>4.</b> 这是我第二次来北京。 → D</div>
+    <div class="task-line"><b>5.</b> 这件衣服的颜色，我不喜欢。 → E</div>
+
+    <button class="opt" onclick="toggleAnswer('ans_conn')"><span class="num">👁</span> Показать пояснения</button>
+    <div class="answer-block" id="ans_conn">
+      <div class="correct-line">✅ Разбор:</div>
+      <div><b>1–B:</b> «Я новенький» → ответ-вопрос «вы здесь официант?» (уточнение статуса).</div>
+      <div><b>2–A:</b> «Начинаем?» → «Подождите, Дэвид ещё не пришёл».</div>
+      <div><b>3–C:</b> «После экзамена пойдём» → про кино (C — именно про кино).</div>
+      <div><b>4–D:</b> «Я второй раз в Пекине» → «Надеюсь, поживёшь подольше».</div>
+      <div><b>5–E:</b> «Цвет не нравится» → «Ничего, пойдём в другой магазин».</div>
+      <div class="hint">Логика диалога: смотри не на отдельные слова, а на смысл ответа.</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 9: ПОДБЕРИ КАРТИНКИ -->
+  <!-- ================================================ -->
+  <div class="card lvl purple">
+    <div class="task-instruction"><span class="task-num">9</span> Подберите подходящие картинки к утверждениям.</div>
+    <div class="tip">A 🍉 арбуз · B 💼 бизнесмен с чемоданом · C 👨‍🍳 повар · D 🙍‍♀️ женщина хватается за голову · E 👫 пара стирает бельё</div>
+
+    <div class="pic-block"><span class="emoji">🍉</span><span class="caption">A · Арбуз</span></div>
+    <div class="pic-block"><span class="emoji">💼</span><span class="caption">B · Бизнесмен с чемоданом</span></div>
+    <div class="pic-block"><span class="emoji">👨‍🍳</span><span class="caption">C · Повар</span></div>
+    <div class="pic-block"><span class="emoji">🙍‍♀️</span><span class="caption">D · Женщина в стрессе</span></div>
+    <div class="pic-block"><span class="emoji">👫</span><span class="caption">E · Пара со стиркой</span></div>
+
+    <div class="task-line"><b>1.</b> 喂，我已经下飞机了，现在正往家里走呢。 → B</div>
+    <div class="task-line"><b>2.</b> 丈夫帮助她一起洗衣服。 → E</div>
+    <div class="task-line"><b>3.</b> 你别说了，我不想听，不想听。 → D</div>
+    <div class="task-line"><b>4.</b> 西瓜是我最爱吃的水果。 → A</div>
+    <div class="task-line"><b>5.</b> 她在饭店工作，她做的菜很好吃。 → C</div>
+
+    <button class="opt" onclick="toggleAnswer('ans_pics')"><span class="num">👁</span> Показать пояснения</button>
+    <div class="answer-block" id="ans_pics">
+      <div class="correct-line">✅ Совпадения:</div>
+      <div>1–B: «Я вышел из самолёта, иду домой» → бизнесмен с чемоданом.<br>
+      2–E: 洗衣服 = «стирать» → пара у стиральной машины.<br>
+      3–D: «Не говори, не хочу слушать» → женщина в стрессе, закрывает уши.<br>
+      4–A: 西瓜 = «арбуз».<br>
+      5–C: работает в ресторане + готовит → повар.</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- РАЗДЕЛ 10: АУДИРОВАНИЕ (по скрипту) -->
+  <!-- ================================================ -->
+  <div class="card section-head">АУДИРОВАНИЕ</div>
+
+  <div class="card lvl blue">
+    <div class="task-instruction"><span class="task-num">10</span> Прослушайте аудиозапись и ответьте на вопросы.</div>
+    <div class="tip">Скрипт (можно прочитать перед ответом): «妈妈在图书馆工作。她每天早上六点起床，起床后给我和爸爸做早饭，然后我们一起吃。七点半，她会先送我去学校，然后再去工作。图书馆九点开门，她常常差一刻九点到图书馆门口。中午妈妈会在图书馆的食堂吃饭。晚上我们一起在家吃晚饭，有时候一起看电视。这是我妈妈的一天。»</div>
+
+    <!-- 1 -->
+    <div class="task-line"><b>1.</b> 她每天早上几点起床？</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'A', 'a1')"><span class="num">A</span> 六点</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'a1')"><span class="num">B</span> 七点</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'a1')"><span class="num">C</span> 差一刻九点</button>
+    </div>
+    <div class="answer-block" id="ans_a1">
+      <div class="correct-line">✅ A · 六点</div>
+      <div>«每天早上六点起床» — прямо в скрипте.</div>
+    </div>
+
+    <!-- 2 -->
+    <div class="task-line"><b>2.</b> 起床后她做什么？</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'B', 'a2')"><span class="num">A</span> 去工作</button>
+      <button class="opt" onclick="checkChoice(this, 'B', 'a2')"><span class="num">B</span> 做早饭</button>
+      <button class="opt" onclick="checkChoice(this, 'B', 'a2')"><span class="num">C</span> 送「我」去学校</button>
+    </div>
+    <div class="answer-block" id="ans_a2">
+      <div class="correct-line">✅ B · 做早饭</div>
+      <div>После подъёма — сразу 做早饭. Школа — в 7:30.</div>
+    </div>
+
+    <!-- 3 -->
+    <div class="task-line"><b>3.</b> 妈妈在哪儿工作？</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'C', 'a3')"><span class="num">A</span> 学校</button>
+      <button class="opt" onclick="checkChoice(this, 'C', 'a3')"><span class="num">B</span> 食堂</button>
+      <button class="opt" onclick="checkChoice(this, 'C', 'a3')"><span class="num">C</span> 图书馆</button>
+    </div>
+    <div class="answer-block" id="ans_a3">
+      <div class="correct-line">✅ C · 图书馆</div>
+      <div>«妈妈在图书馆工作» — первое предложение скрипта.</div>
+    </div>
+
+    <!-- 4 -->
+    <div class="task-line"><b>4.</b> «我»是谁？</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'D', 'a4')"><span class="num">A</span> 妈妈</button>
+      <button class="opt" onclick="checkChoice(this, 'D', 'a4')"><span class="num">B</span> 爸爸</button>
+      <button class="opt" onclick="checkChoice(this, 'D', 'a4')"><span class="num">C</span> 女儿</button>
+    </div>
+    <div class="answer-block" id="ans_a4">
+      <div class="correct-line">✅ C · 女儿</div>
+      <div>«送我去学校» — значит, говорящий ребёнок, дочка.</div>
+    </div>
+
+    <!-- 5 -->
+    <div class="task-line"><b>5.</b> 图书馆几点开门？</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'A', 'a5')"><span class="num">A</span> 九点</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'a5')"><span class="num">B</span> 差一刻九点</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'a5')"><span class="num">C</span> 八点</button>
+    </div>
+    <div class="answer-block" id="ans_a5">
+      <div class="correct-line">✅ A · 九点</div>
+      <div>«图书馆九点开门» — прямая цитата.</div>
+      <div class="expand">差一刻九点 = «без четверти девять» — она приходит раньше открытия.</div>
+    </div>
+
+    <!-- 6 -->
+    <div class="task-line"><b>6.</b> 他们在哪儿吃晚饭？</div>
+    <div class="options">
+      <button class="opt" onclick="checkChoice(this, 'A', 'a6')"><span class="num">A</span> 家里</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'a6')"><span class="num">B</span> 外面</button>
+      <button class="opt" onclick="checkChoice(this, 'A', 'a6')"><span class="num">C</span> 食堂</button>
+    </div>
+    <div class="answer-block" id="ans_a6">
+      <div class="correct-line">✅ A · 家里</div>
+      <div>«晚上我们一起在家吃晚饭» — дома. В食堂 она ест только в обед.</div>
+      <div class="expand">Можно ещё проверить: 在家吃 / 在外面吃 / 在食堂吃 — три варианта.</div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- ПИСЬМО -->
+  <!-- ================================================ -->
+  <div class="card section-head">ПИСЬМО</div>
+  <div class="card lvl red">
+    <div class="task-instruction"><span class="task-num">11</span> Диктант по пройденной лексике (до 15 слов).</div>
+    <div class="tip">Преподаватель диктует слова — вы записываете. Проверьте себя по шпоре и своим заметкам.</div>
+  </div>
+
+</div>
+
+<script>
+// ===== ГЛОБАЛЬНЫЕ КНОПКИ ПИНЬИНЬ/ПЕРЕВОД =====
+function showAllPinyin() {
+  document.querySelectorAll('.pinyin').forEach(el => el.classList.remove('hidden'));
+}
+function hideAllPinyin() {
+  document.querySelectorAll('.pinyin').forEach(el => el.classList.add('hidden'));
+}
+function showAllTrans() {
+  document.querySelectorAll('.trans').forEach(el => el.classList.remove('hidden'));
+}
+function hideAllTrans() {
+  document.querySelectorAll('.trans').forEach(el => el.classList.add('hidden'));
+}
+
+// ===== ВЫБОР ОТВЕТА (multiple choice) =====
+function checkChoice(btn, correctLetter, answerId) {
+  const parent = btn.closest('.options');
+  parent.querySelectorAll('.opt').forEach(o => {
+    o.classList.add('disabled');
+    o.onclick = null;
+  });
+  if (btn.textContent.includes(correctLetter) || btn.dataset.value === correctLetter) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    // подсветить правильный
+    parent.querySelectorAll('.opt').forEach(o => {
+      if (o.textContent.includes(correctLetter)) o.classList.add('correct');
+    });
+  }
+  // показать блок ответа
+  const ans = document.getElementById(answerId);
+  if (ans) ans.classList.add('show');
+}
+
+// ===== ВЕРНО/НЕВЕРНО =====
+function checkYesNo(btn, isCorrect, answerId) {
+  const parent = btn.closest('.options');
+  parent.querySelectorAll('.opt').forEach(o => {
+    o.classList.add('disabled');
+    o.onclick = null;
+  });
+  if (isCorrect) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+  }
+  const ans = document.getElementById(answerId);
+  if (ans) ans.classList.add('show');
+}
+
+// ===== ПОКАЗ ОТВЕТА (открытые задания) =====
+function toggleAnswer(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('show');
+}
+</script>
+</body>
+</html>
