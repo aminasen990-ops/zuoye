@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Российская система поступления · Два пути · Обязательная база · Подводные камни</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', 'SF Pro Text', 'Roboto', 'Noto Sans SC', sans-serif;
+  background: linear-gradient(150deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 2rem 1rem;
+  line-height: 1.7;
+  color: #1f2937;
+}
+.container { max-width: 950px; margin: 0 auto; }
+
+/* ===== ЗАГОЛОВОК ===== */
+.module-header {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  text-align: center;
+  border-bottom: 4px solid #10b981;
+}
+.module-header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #059669, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+.module-header p { font-size: 15px; color: #6b7280; }
+
+/* ===== ГЛОБАЛЬНЫЕ КНОПКИ ===== */
+.controls {
+  display: flex; gap: 1rem; justify-content: center;
+  margin-bottom: 2rem; flex-wrap: wrap;
+}
+.controls button {
+  padding: 0.6rem 1.3rem; border-radius: 40px; border: none;
+  background: #10b981; color: #fff; font-weight: 600; font-size: 14px;
+  cursor: pointer; transition: 0.2s ease;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.3);
+  font-family: inherit;
+}
+.controls button:hover { background: #059669; transform: translateY(-2px); }
+
+/* ===== КАРТОЧКА АБЗАЦА ===== */
+.para-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.4rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  position: relative;
+  border-left: 6px solid #b8914a;
+}
+.para-card.t-green::before { content:''; position:absolute; left:0; top:0; bottom:0; width:6px; background:#10b981; border-radius:24px 0 0 24px; }
+.para-card.t-blue::before { content:''; position:absolute; left:0; top:0; bottom:0; width:6px; background:#3b82f6; border-radius:24px 0 0 24px; }
+.para-card.t-purple::before { content:''; position:absolute; left:0; top:0; bottom:0; width:6px; background:#8b5cf6; border-radius:24px 0 0 24px; }
+.para-card.t-pink::before { content:''; position:absolute; left:0; top:0; bottom:0; width:6px; background:#ec489a; border-radius:24px 0 0 24px; }
+.para-card.t-red::before { content:''; position:absolute; left:0; top:0; bottom:0; width:6px; background:#ef4444; border-radius:24px 0 0 24px; }
+.para-card.t-orange::before { content:''; position:absolute; left:0; top:0; bottom:0; width:6px; background:#f59e0b; border-radius:24px 0 0 24px; }
+
+.para-num {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #4a3f2f;
+  border-radius: 50%;
+  width: 32px; height: 32px;
+  line-height: 32px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 13px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ===== КИТАЙСКИЙ ТЕКСТ ===== */
+.para-cn {
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.9;
+  margin: 0.8rem 0;
+  padding: 0.9rem 1.1rem;
+  background: #f9fdf9;
+  border-radius: 14px;
+  border: 1px solid #d1fae5;
+}
+
+/* ===== ПИНЬИНЬ ===== */
+.para-py {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.8;
+  padding: 0.6rem 1rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  font-style: italic;
+  margin: 0.5rem 0;
+  display: none;
+  transition: opacity 0.2s;
+}
+.para-py.show { display: block; }
+
+/* ===== ПЕРЕВОД ===== */
+.para-ru {
+  font-size: 0.98rem;
+  color: #1f2937;
+  line-height: 1.75;
+  padding: 0.9rem 1.1rem;
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 12px 12px 0;
+  margin: 0.6rem 0;
+  display: none;
+}
+.para-ru.show { display: block; }
+
+/* ===== КОЛЛОКАЦИИ ===== */
+.colloc-block {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #e2e8f0;
+}
+.colloc-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #b8914a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.6rem;
+}
+.colloc-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.colloc-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  flex: 1 1 220px;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.colloc-item .emoji { font-size: 1.1rem; }
+.colloc-item .cn { font-weight: 700; color: #0f172a; }
+.colloc-item .py { font-size: 0.78rem; color: #64748b; font-style: italic; }
+.colloc-item .ru { font-size: 0.85rem; color: #1e293b; }
+
+/* ===== ПЕРЕКЛЮЧАТЕЛИ АБЗАЦА ===== */
+.para-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+}
+.para-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 30px;
+  border: 2px solid #e2e8f0;
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  color: #4a3f2f;
+  transition: 0.2s;
+}
+.para-btn:hover { border-color: #10b981; color: #059669; }
+.para-btn.active { background: #10b981; color: #fff; border-color: #10b981; }
+
+/* ===== УМНАЯ ПОДСКАЗКА ===== */
+.smart-tip {
+  background: #eff6ff;
+  border-left: 4px solid #3b82f6;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  margin: 0.8rem 0;
+  font-size: 0.9rem;
+  color: #1e40af;
+  line-height: 1.6;
+}
+.smart-tip::before {
+  content: '💡 Амина: ';
+  font-weight: 800;
+}
+
+/* ===== МОБИЛЬНЫЕ ===== */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .module-header h1 { font-size: 18px; }
+  .para-card { padding: 1.2rem 1rem; }
+  .para-cn { font-size: 1.02rem; padding: 0.7rem 0.9rem; }
+  .colloc-item { flex: 1 1 100%; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== ЗАГОЛОВОК ===== -->
+  <div class="module-header">
+    <h1>🇷🇺 Российская система поступления: два пути, обязательная база и подводные камни</h1>
+    <p>俄罗斯升学体系：两条路径、必备基础与暗藏陷阱</p>
+  </div>
+
+  <!-- ===== ГЛОБАЛЬНЫЕ КНОПКИ ===== -->
+  <div class="controls">
+    <button onclick="showAll('py')">🔊 Пиньинь вкл</button>
+    <button onclick="hideAll('py')">🔇 Пиньинь выкл</button>
+    <button onclick="showAll('ru')">🌐 Перевод вкл</button>
+    <button onclick="hideAll('ru')">📖 Перевод выкл</button>
+  </div>
+
+  <!-- ================= АБЗАЦ 1 ================= -->
+  <div class="para-card t-green">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 1)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 1)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">1</span>
+    <div class="para-cn">俄罗斯升学体系：两条路径、必备基础与暗藏陷阱</div>
+    <div class="para-py" id="py-1">é luó sī shēng xué tǐ xì ：liǎng tiáo lù jìng 、bì bèi jī chǔ yǔ àn cáng xiàn jǐng</div>
+    <div class="para-ru" id="ru-1">Российская система поступления в вузы: два пути, обязательная база и скрытые подводные камни</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📚</span><span class="cn">升学体系</span><span class="py">shēng xué tǐ xì</span><span class="ru">— система поступления в вузы</span></div>
+        <div class="colloc-item"><span class="emoji">📋</span><span class="cn">必备基础</span><span class="py">bì bèi jī chǔ</span><span class="ru">— обязательная база</span></div>
+        <div class="colloc-item"><span class="emoji">⚠️</span><span class="cn">暗藏陷阱</span><span class="py">àn cáng xiàn jǐng</span><span class="ru">— подводные камни</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 2 ================= -->
+  <div class="para-card t-blue">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 2)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 2)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">2</span>
+    <div class="para-cn">谈及俄罗斯的大学升学，首先要讲的并非专业选择，而是两门绕不开的基础科目：俄语与数学。拿不到这两科的合格成绩，就无法获得中学毕业证，升学之路也就就此断绝。在此基础上，考生通常会选择下面两条路径之一。</div>
+    <div class="para-py" id="py-2">tán jí é luó sī de dà xué shēng xué ，shǒu xiān yào jiǎng de bìng fēi zhuān yè xuǎn zé ，ér shì liǎng mén rào bù kāi de jī chǔ kē mù ：é yǔ yǔ shù xué 。ná bù dào zhè liǎng kē de hé gé chéng jì ，jiù wú fǎ huò dé zhōng xué bì yè zhèng ，shēng xué zhī lù yě jiù jiù cǐ duàn jué 。zài cǐ jī chǔ shàng ，kǎo shēng tōng cháng huì xuǎn zé xià miàn liǎng tiáo lù jìng zhī yī 。</div>
+    <div class="para-ru" id="ru-2">Когда мы говорим о поступлении в российские вузы, сначала речь идёт не о выборе специальности, а о двух обязательных предметах: русском языке и математике. Без удовлетворительных баллов по этим двум предметам нельзя получить школьный аттестат, и путь в университет закрывается. На этой основе абитуриент обычно выбирает один из двух путей.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🎓</span><span class="cn">大学升学</span><span class="py">dà xué shēng xué</span><span class="ru">— поступление в вузы</span></div>
+        <div class="colloc-item"><span class="emoji">🧑‍💼</span><span class="cn">专业选择</span><span class="py">zhuān yè xuǎn zé</span><span class="ru">— выбор специальности</span></div>
+        <div class="colloc-item"><span class="emoji">📖</span><span class="cn">基础科目</span><span class="py">jī chǔ kē mù</span><span class="ru">— базовые предметы</span></div>
+        <div class="colloc-item"><span class="emoji">📄</span><span class="cn">中学毕业证</span><span class="py">zhōng xué bì yè zhèng</span><span class="ru">— школьный аттестат</span></div>
+        <div class="colloc-item"><span class="emoji">🛤️</span><span class="cn">升学之路</span><span class="py">shēng xué zhī lù</span><span class="ru">— путь в вуз</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 3 ================= -->
+  <div class="para-card t-purple">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 3)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 3)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">3</span>
+    <div class="para-cn">路径一：国家统一考试（ЕГЭ）</div>
+    <div class="para-py" id="py-3">lù jìng yī ：guó jiā tǒng yī kǎo shì （ЕГЭ）</div>
+    <div class="para-ru" id="ru-3">Путь первый: Единый государственный экзамен (ЕГЭ)</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">1️⃣</span><span class="cn">路径一</span><span class="py">lù jìng yī</span><span class="ru">— путь первый</span></div>
+        <div class="colloc-item"><span class="emoji">✅</span><span class="cn">国家统一考试</span><span class="py">guó jiā tǒng yī kǎo shì</span><span class="ru">— Единый государственный экзамен</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 4 ================= -->
+  <div class="para-card t-blue">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 4)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 4)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">4</span>
+    <div class="para-cn">ЕГЭ即国家统一考试，是所有中学毕业生都要参加的标准化统考。每所高校都会在官网提前公布各专业要求的考试科目以及最低录取分数线，规则逻辑如下：</div>
+    <div class="para-py" id="py-4">ЕГЭ jí guó jiā tǒng yī kǎo shì ，shì suǒ yǒu zhōng xué bì yè shēng dōu yào cān jiā de biāo zhǔn huà tǒng kǎo 。měi suǒ gāo xiào dōu huì zài guān wǎng tí qián gōng bù gè zhuān yè yāo qiú de kǎo shì kē mù yǐ jí zuì dī lù qǔ fēn shù xiàn ，guī zé luó jí rú xià ：</div>
+    <div class="para-ru" id="ru-4">ЕГЭ — это Единый государственный экзамен, стандартизированный экзамен, который сдают все выпускники школ. Каждый вуз заранее публикует на официальном сайте перечень экзаменационных предметов для каждой специальности и минимальные проходные баллы. Логика правил такая:</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📝</span><span class="cn">标准化统考</span><span class="py">biāo zhǔn huà tǒng kǎo</span><span class="ru">— стандартизированный экзамен</span></div>
+        <div class="colloc-item"><span class="emoji">🎒</span><span class="cn">中学毕业生</span><span class="py">zhōng xué bì yè shēng</span><span class="ru">— выпускники школ</span></div>
+        <div class="colloc-item"><span class="emoji">🏫</span><span class="cn">高校</span><span class="py">gāo xiào</span><span class="ru">— вуз</span></div>
+        <div class="colloc-item"><span class="emoji">📢</span><span class="cn">提前公布</span><span class="py">tí qián gōng bù</span><span class="ru">— заранее публиковать</span></div>
+        <div class="colloc-item"><span class="emoji">📊</span><span class="cn">最低录取分数线</span><span class="py">zuì dī lù qǔ fēn shù xiàn</span><span class="ru">— минимальные проходные баллы</span></div>
+        <div class="colloc-item"><span class="emoji">🧠</span><span class="cn">规则逻辑</span><span class="py">guī zé luó jí</span><span class="ru">— логика правил</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 5 ================= -->
+  <div class="para-card t-green">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 5)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 5)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">5</span>
+    <div class="para-cn">市场营销、社会学、经济学方向：需要社会知识、英语，部分专业要求专业级数学。专业级数学是难度更高的单独考试，题目包含大学阶段内容；报考工科、经济、信息技术类专业的考生需要考这一科。基础级数学仅用来获取中学毕业证。</div>
+    <div class="para-py" id="py-5">shì chǎng yíng xiāo 、shè huì xué 、jīng jì xué fāng xiàng ：xū yào shè huì zhī shí 、yīng yǔ ，bù fen zhuān yè yāo qiú zhuān yè jí shù xué 。zhuān yè jí shù xué shì nán dù gèng gāo de dān dú kǎo shì ，tí mù bāo hán dà xué jiē duàn nèi róng ；bào kǎo gōng kē 、jīng jì 、xìn xī jì shù lèi zhuān yè de kǎo shēng xū yào kǎo zhè yī kē 。jī chǔ jí shù xué jǐn yòng lái huò qǔ zhōng xué bì yè zhèng 。</div>
+    <div class="para-ru" id="ru-5">Направления маркетинга, социологии и экономики требуют обществознания и английского языка, некоторые специальности требуют профильной математики. Профильная математика — это отдельный более сложный экзамен с заданиями университетского уровня. Его сдают абитуриенты, поступающие на инженерные, экономические и ИТ-специальности. Базовая математика нужна только для получения школьного аттестата.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">💼</span><span class="cn">市场营销</span><span class="py">shì chǎng yíng xiāo</span><span class="ru">— маркетинг</span></div>
+        <div class="colloc-item"><span class="emoji">👥</span><span class="cn">社会学</span><span class="py">shè huì xué</span><span class="ru">— социология</span></div>
+        <div class="colloc-item"><span class="emoji">💹</span><span class="cn">经济学</span><span class="py">jīng jì xué</span><span class="ru">— экономика</span></div>
+        <div class="colloc-item"><span class="emoji">📐</span><span class="cn">专业级数学</span><span class="py">zhuān yè jí shù xué</span><span class="ru">— профильная математика</span></div>
+        <div class="colloc-item"><span class="emoji">📑</span><span class="cn">单独考试</span><span class="py">dān dú kǎo shì</span><span class="ru">— отдельный экзамен</span></div>
+        <div class="colloc-item"><span class="emoji">⚙️</span><span class="cn">工科</span><span class="py">gōng kē</span><span class="ru">— инженерные специальности</span></div>
+        <div class="colloc-item"><span class="emoji">💻</span><span class="cn">信息技术</span><span class="py">xìn xī jì shù</span><span class="ru">— информационные технологии</span></div>
+        <div class="colloc-item"><span class="emoji">📉</span><span class="cn">基础级数学</span><span class="py">jī chǔ jí shù xué</span><span class="ru">— базовая математика</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 6 ================= -->
+  <div class="para-card t-purple">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 6)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 6)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">6</span>
+    <div class="para-cn">工科类专业：大多要求物理或化学，外加专业级数学。</div>
+    <div class="para-py" id="py-6">gōng kē lèi zhuān yè ：dà duō yāo qiú wù lǐ huò huà xué ，wài jiā zhuān yè jí shù xué 。</div>
+    <div class="para-ru" id="ru-6">Инженерные специальности чаще всего требуют физики или химии плюс профильная математика.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">⚛️</span><span class="cn">物理</span><span class="py">wù lǐ</span><span class="ru">— физика</span></div>
+        <div class="colloc-item"><span class="emoji">🧪</span><span class="cn">化学</span><span class="py">huà xué</span><span class="ru">— химия</span></div>
+        <div class="colloc-item"><span class="emoji">➕</span><span class="cn">外加</span><span class="py">wài jiā</span><span class="ru">— плюс</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 7 ================= -->
+  <div class="para-card t-pink">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 7)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 7)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">7</span>
+    <div class="para-cn">国际关系专业：历史、地理、外语。</div>
+    <div class="para-py" id="py-7">guó jì guān xì zhuān yè ：lì shǐ 、dì lǐ 、wài yǔ 。</div>
+    <div class="para-ru" id="ru-7">Специальность «международные отношения»: история, география, иностранный язык.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🌍</span><span class="cn">国际关系</span><span class="py">guó jì guān xì</span><span class="ru">— международные отношения</span></div>
+        <div class="colloc-item"><span class="emoji">📜</span><span class="cn">历史</span><span class="py">lì shǐ</span><span class="ru">— история</span></div>
+        <div class="colloc-item"><span class="emoji">🗺️</span><span class="cn">地理</span><span class="py">dì lǐ</span><span class="ru">— география</span></div>
+        <div class="colloc-item"><span class="emoji">🗣️</span><span class="cn">外语</span><span class="py">wài yǔ</span><span class="ru">— иностранный язык</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 8 ================= -->
+  <div class="para-card t-orange">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 8)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 8)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">8</span>
+    <div class="para-cn">选考科目不由中学决定，而是取决于你的升学目标。这点一定要提前明白：选择ЕГЭ考试科目，实际上相当于在毕业前一到两年，就选定了未来的职业方向。</div>
+    <div class="para-py" id="py-8">xuǎn kǎo kē mù bù yóu zhōng xué jué dìng ，ér shì qǔ jué yú nǐ de shēng xué mù biāo 。zhè diǎn yí dìng yào tí qián míng bái ：xuǎn zé ЕГЭ kǎo shì kē mù ，shí jì shàng xiāng dāng yú zài bì yè qián yī dào liǎng nián ，jiù xuǎn dìng le wèi lái de zhí yè fāng xiàng 。</div>
+    <div class="para-ru" id="ru-8">Набор выбираемых экзаменационных предметов определяется не школой, а вашей целью поступления. Это важно понять заранее: выбор предметов для ЕГЭ фактически означает выбор будущей профессии за один-два года до выпуска.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📚</span><span class="cn">选考科目</span><span class="py">xuǎn kǎo kē mù</span><span class="ru">— выбираемые экзаменационные предметы</span></div>
+        <div class="colloc-item"><span class="emoji">⚖️</span><span class="cn">取决于</span><span class="py">qǔ jué yú</span><span class="ru">— зависеть от</span></div>
+        <div class="colloc-item"><span class="emoji">🎯</span><span class="cn">升学目标</span><span class="py">shēng xué mù biāo</span><span class="ru">— цель поступления</span></div>
+        <div class="colloc-item"><span class="emoji">🔜</span><span class="cn">提前明白</span><span class="py">tí qián míng bái</span><span class="ru">— понять заранее</span></div>
+        <div class="colloc-item"><span class="emoji">🧭</span><span class="cn">职业方向</span><span class="py">zhí yè fāng xiàng</span><span class="ru">— направление будущей профессии</span></div>
+        <div class="colloc-item"><span class="emoji">⏳</span><span class="cn">毕业前</span><span class="py">bì yè qián</span><span class="ru">— до выпуска</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 9 ================= -->
+  <div class="para-card t-purple">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 9)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 9)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">9</span>
+    <div class="para-cn">路径二：全俄中学生奥林匹克竞赛（ВсОШ）</div>
+    <div class="para-py" id="py-9">lù jìng èr ：quán é zhōng xué shēng ào lín pǐ kè jìng sài （ВсОШ）</div>
+    <div class="para-ru" id="ru-9">Путь второй: Всероссийская олимпиада школьников (ВсОШ)</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">2️⃣</span><span class="cn">路径二</span><span class="py">lù jìng èr</span><span class="ru">— путь второй</span></div>
+        <div class="colloc-item"><span class="emoji">🏅</span><span class="cn">全俄中学生奥林匹克竞赛</span><span class="py">quán é zhōng xué shēng ào lín pǐ kè jìng sài</span><span class="ru">— Всероссийская олимпиада школьников</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 10 ================= -->
+  <div class="para-card t-green">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 10)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 10)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">10</span>
+    <div class="para-cn">ВсОШ是全俄中学生奥林匹克竞赛，规则完全不同：只考一门科目。如果拿到合格名次、斩获奖项，就能获得БВИ资格——免试入学资格。凭借该资格可以自动录取、不受名额竞争限制，就读公费（预算内）专业。重要前提：БВИ免试资格并非所有高校都认可，只适用于承认这项竞赛的院校。竞赛获奖也可以带来加分，一般在ЕГЭ总分上加5至10分。</div>
+    <div class="para-py" id="py-10">ВсОШ shì quán é zhōng xué shēng ào lín pǐ kè jìng sài ，guī zé wán quán bù tóng ：zhǐ kǎo yī mén kē mù 。rú guǒ ná dào hé gé míng cì 、zhǎn huò jiǎng xiàng ，jiù néng huò dé БВИ zī gé —— miǎn shì rù xué zī gé 。píng jiè gāi zī gé kě yǐ zì dòng lù qǔ 、bù shòu míng é jìng zhēng xiàn zhì ，jiù dú gōng fèi （yù suàn nèi ）zhuān yè 。zhòng yào qián tí ：БВИ miǎn shì zī gé bìng fēi suǒ yǒu gāo xiào dōu rèn kě ，zhǐ shì yòng yú chéng rèn zhè xiàng jìng sài de yuàn xiào 。jìng sài huò jiǎng yě kě yǐ dài lái jiā fēn ，yì bān zài ЕГЭ zǒng fēn shàng jiā 5 zhì 10 fēn 。</div>
+    <div class="para-ru" id="ru-10">ВсОШ — это Всероссийская олимпиада школьников, у неё совершенно другие правила: сдаётся только один предмет. При занятом проходном месте и победе участник получает право БВИ — поступление без вступительных испытаний. По этому праву зачисление происходит автоматически, вне конкурса на бюджетные места. Важное условие: БВИ действует не во всех вузах, а только там, где олимпиада признана. Призёрство в олимпиаде также даёт дополнительные баллы, обычно от 5 до 10 баллов к сумме баллов ЕГЭ.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🏆</span><span class="cn">斩获奖项</span><span class="py">zhǎn huò jiǎng xiàng</span><span class="ru">— победить / стать призёром</span></div>
+        <div class="colloc-item"><span class="emoji">🎟️</span><span class="cn">免试入学资格</span><span class="py">miǎn shì rù xué zī gé</span><span class="ru">— право БВИ</span></div>
+        <div class="colloc-item"><span class="emoji">🤖</span><span class="cn">自动录取</span><span class="py">zì dòng lù qǔ</span><span class="ru">— автоматическое зачисление</span></div>
+        <div class="colloc-item"><span class="emoji">🚫</span><span class="cn">不受名额限制</span><span class="py">bù shòu míng é xiàn zhì</span><span class="ru">— вне конкурса</span></div>
+        <div class="colloc-item"><span class="emoji">💰</span><span class="cn">公费专业</span><span class="py">gōng fèi zhuān yè</span><span class="ru">— бюджетная специальность</span></div>
+        <div class="colloc-item"><span class="emoji">⚠️</span><span class="cn">重要前提</span><span class="py">zhòng yào qián tí</span><span class="ru">— важное условие</span></div>
+        <div class="colloc-item"><span class="emoji">➕</span><span class="cn">加分</span><span class="py">jiā fēn</span><span class="ru">— дополнительные баллы</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 11 ================= -->
+  <div class="para-card t-blue">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 11)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 11)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">11</span>
+    <div class="para-cn">这或许是最公平的筛选标准，却也是门槛最严苛的一项。竞赛的考题内容对标大学大一、大二专业课。参赛者需要长期参加竞赛集训、在教育中心晚间补课，本质上是在中学之外，并行开启另一段高强度的学习生活。</div>
+    <div class="para-py" id="py-11">zhè huò xǔ shì zuì gōng píng de shāi xuǎn biāo zhǔn ，què yě shì mén kǎn zuì yán kē de yī xiàng 。jìng sài de kǎo tí nèi róng duì biāo dà xué dà yī 、dà èr zhuān yè kè 。cān sài zhě xū yào cháng qī cān jiā jìng sài jí xùn 、zài jiào yù zhōng xīn wǎn jiān bǔ kè ，běn zhì shàng shì zài zhōng xué zhī wài ，bìng xíng kāi qǐ lìng yī duàn gāo qiáng dù de xué xí shēng huó 。</div>
+    <div class="para-ru" id="ru-11">Возможно, это самый справедливый критерий отбора, но и самый строгий. Задания олимпиад соответствуют программам первых и вторых курсов вузов. Участники проходят длительные сборы и дополнительные вечерние занятия в образовательных центрах. По сути, это отдельная интенсивная учёба параллельно со школьной программой.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">⚖️</span><span class="cn">筛选标准</span><span class="py">shāi xuǎn biāo zhǔn</span><span class="ru">— критерий отбора</span></div>
+        <div class="colloc-item"><span class="emoji">🚧</span><span class="cn">严苛的门槛</span><span class="py">yán kē de mén kǎn</span><span class="ru">— строгий порог</span></div>
+        <div class="colloc-item"><span class="emoji">📄</span><span class="cn">考题内容</span><span class="py">kǎo tí nèi róng</span><span class="ru">— содержание заданий</span></div>
+        <div class="colloc-item"><span class="emoji">🎯</span><span class="cn">对标</span><span class="py">duì biāo</span><span class="ru">— соответствовать</span></div>
+        <div class="colloc-item"><span class="emoji">📚</span><span class="cn">专业课</span><span class="py">zhuān yè kè</span><span class="ru">— вузовские дисциплины</span></div>
+        <div class="colloc-item"><span class="emoji">🏃</span><span class="cn">竞赛集训</span><span class="py">jìng sài jí xùn</span><span class="ru">— олимпиадные сборы</span></div>
+        <div class="colloc-item"><span class="emoji">📖</span><span class="cn">晚间补课</span><span class="py">wǎn jiān bǔ kè</span><span class="ru">— вечерние доп. занятия</span></div>
+        <div class="colloc-item"><span class="emoji">💪</span><span class="cn">高强度学习</span><span class="py">gāo qiáng dù xué xí</span><span class="ru">— интенсивная учёба</span></div>
+        <div class="colloc-item"><span class="emoji">🔄</span><span class="cn">并行</span><span class="py">bìng xíng</span><span class="ru">— параллельно</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 12 ================= -->
+  <div class="para-card t-pink">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 12)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 12)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">12</span>
+    <div class="para-cn">红色毕业证：荣誉证书，但有附加隐患</div>
+    <div class="para-py" id="py-12">hóng sè bì yè zhèng ：róng yù zhèng shū ，dàn yǒu fù jiā yǐn huàn</div>
+    <div class="para-ru" id="ru-12">Красный аттестат: награда, но со скрытыми рисками</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📕</span><span class="cn">红色毕业证</span><span class="py">hóng sè bì yè zhèng</span><span class="ru">— красный аттестат</span></div>
+        <div class="colloc-item"><span class="emoji">🏅</span><span class="cn">荣誉证书</span><span class="py">róng yù zhèng shū</span><span class="ru">— награда</span></div>
+        <div class="colloc-item"><span class="emoji">⚠️</span><span class="cn">附加隐患</span><span class="py">fù jiā yǐn huàn</span><span class="ru">— скрытые риски</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 13 ================= -->
+  <div class="para-card t-red">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 13)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 13)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">13</span>
+    <div class="para-cn">红色毕业证（11年中学所有科目全部拿满分5分）可以为升学带来2至10分的加分。但我认为这项评判标准存在争议，容易滋生舞弊问题：俄罗斯没有全国统一的教学大纲、各科统一考核标准，而且ЕГЭ考题本身就超出普通中学课程范围。</div>
+    <div class="para-py" id="py-13">hóng sè bì yè zhèng （11 nián zhōng xué suǒ yǒu kē mù quán bù ná mǎn fēn 5 fēn ）kě yǐ wèi shēng xué dài lái 2 zhì 10 fēn de jiā fēn 。dàn wǒ rèn wéi zhè xiàng píng pàn biāo zhǔn cún zài zhēng yì ，róng yì zī shēng wǔ bì wèn tí ：é luó sī méi yǒu quán guó tǒng yī de jiào xué dà gāng 、gè kē tǒng yī kǎo hé biāo zhǔn ，ér qiě ЕГЭ kǎo tí běn shēn jiù chāo chū pǔ tōng zhōng xué kè chéng fàn wéi 。</div>
+    <div class="para-ru" id="ru-13">Красный аттестат (отличные оценки «5» по всем предметам за 11 лет учёбы) даёт от 2 до 10 дополнительных баллов при поступлении. Но я считаю этот критерий спорным и уязвимым для злоупотреблений: в России нет единой общенациональной учебной программы и единых требований по предметам, а задания ЕГЭ выходят за рамки обычной школьной программы.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">💯</span><span class="cn">满分</span><span class="py">mǎn fēn</span><span class="ru">— отличная оценка «5»</span></div>
+        <div class="colloc-item"><span class="emoji">➕</span><span class="cn">加分</span><span class="py">jiā fēn</span><span class="ru">— дополнительные баллы</span></div>
+        <div class="colloc-item"><span class="emoji">⚖️</span><span class="cn">存在争议</span><span class="py">cún zài zhēng yì</span><span class="ru">— спорный критерий</span></div>
+        <div class="colloc-item"><span class="emoji">🚫</span><span class="cn">滋生舞弊</span><span class="py">zī shēng wǔ bì</span><span class="ru">— уязвимый для злоупотреблений</span></div>
+        <div class="colloc-item"><span class="emoji">📖</span><span class="cn">教学大纲</span><span class="py">jiào xué dà gāng</span><span class="ru">— учебная программа</span></div>
+        <div class="colloc-item"><span class="emoji">📏</span><span class="cn">超出范围</span><span class="py">chāo chū fàn wéi</span><span class="ru">— выходить за рамки</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 14 ================= -->
+  <div class="para-card t-orange">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 14)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 14)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">14</span>
+    <div class="para-cn">现在还有一种趋势：中学越来越多地推出函授面授混合教学模式。学生自主选择到校上课的科目，其余科目只需要参加期末考核、完成作业。也有人从十年级转入线上学校，学籍仍然挂靠原中学，等到十一年级毕业时返校领取毕业证即可。</div>
+    <div class="para-py" id="py-14">xiàn zài hái yǒu yī zhǒng qū shì ：zhōng xué yuè lái yuè duō de tuī chū hán shòu miàn shòu hùn hé jiào xué mó shì 。xué shēng zì zhǔ xuǎn zé dào xiào shàng kè de kē mù ，qí yú kē mù zhǐ xū yào cān jiā qī mò kǎo hé 、wán chéng zuò yè 。yě yǒu rén cóng shí nián jí zhuǎn rù xiàn shàng xué xiào ，xué jí réng rán guà kào yuán zhōng xué ，děng dào shí yī nián jí bì yè shí fǎn xiào lǐng qǔ bì yè zhèng jí kě 。</div>
+    <div class="para-ru" id="ru-14">Сейчас наблюдается тенденция: школы всё чаще предлагают очно-заочную форму обучения. Ученик сам выбирает, на какие занятия ходить очно, а по остальным предметам сдаёт только сессии и выполняет домашние задания. Некоторые переходят в онлайн-школу с 10 класса, оставаясь прикреплёнными к исходной школе, и приезжают только в 11 класс за аттестатом.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📈</span><span class="cn">趋势</span><span class="py">qū shì</span><span class="ru">— тенденция</span></div>
+        <div class="colloc-item"><span class="emoji">🏫</span><span class="cn">函授面授混合教学</span><span class="py">hán shòu miàn shòu hùn hé jiào xué mó shì</span><span class="ru">— очно-заочная форма</span></div>
+        <div class="colloc-item"><span class="emoji">📝</span><span class="cn">期末考核</span><span class="py">qī mò kǎo hé</span><span class="ru">— сдавать сессии</span></div>
+        <div class="colloc-item"><span class="emoji">📓</span><span class="cn">家庭作业</span><span class="py">jiā tíng zuò yè</span><span class="ru">— домашние задания</span></div>
+        <div class="colloc-item"><span class="emoji">💻</span><span class="cn">线上学校</span><span class="py">xiàn shàng xué xiào</span><span class="ru">— онлайн-школа</span></div>
+        <div class="colloc-item"><span class="emoji">📇</span><span class="cn">学籍挂靠</span><span class="py">xué jí guà kào</span><span class="ru">— быть прикреплённым к школе</span></div>
+        <div class="colloc-item"><span class="emoji">🎓</span><span class="cn">返校领取毕业证</span><span class="py">fǎn xiào lǐng qǔ bì yè zhèng</span><span class="ru">— приехать за аттестатом</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 15 ================= -->
+  <div class="para-card t-red">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 15)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 15)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">15</span>
+    <div class="para-cn">所以红色毕业证这件事，其中门道很多：它很大程度取决于师生之间的相处、协商沟通的能力。当然，也有凭真本事拿到满分的优秀学生。但俄罗斯公立中学也是一所“社会历练场”，它会让你亲眼见识现实世界里不公与人情庇护如何运作。说实话，我不希望这些台面下的协商，分散年轻人的注意力。我们需要客观的标准化测试：由机器阅卷，考察的不是死记硬背，而是知识在现实场景里的实际运用能力。</div>
+    <div class="para-py" id="py-15">suǒ yǐ hóng sè bì yè zhèng zhè jiàn shì ，qí zhōng mén dào hěn duō ：tā hěn dà chéng dù qǔ jué yú shī shēng zhī jiān de xiāng chǔ 、xié shāng gōu tōng de néng lì 。dāng rán ，yě yǒu píng zhēn běn shì ná dào mǎn fēn de yōu xiù xué shēng 。dàn é luó sī gōng lì zhōng xué yě shì yī suǒ “shè huì lì liàn chǎng ”，tā huì ràng nǐ qīn yǎn jiàn shí xiàn shí shì jiè lǐ bù gōng yǔ rén qíng bì hù rú hé yùn zuò 。shuō shí huà ，wǒ bù xī wàng zhè xiē tái miàn xià de xié shāng ，fēn sàn nián qīng rén de zhù yì lì 。wǒ men xū yào kè guān de biāo zhǔn huà cè shì ：yóu jī qì yuè juàn ，kǎo chá de bù shì sǐ jì yìng bèi ，ér shì zhī shí zài xiàn shí chǎng jǐng lǐ de shí jì yùn yòng néng lì 。</div>
+    <div class="para-ru" id="ru-15">Поэтому у красного аттестата много нюансов: во многом он зависит от отношений между учителем и учеником, умения договариваться. Конечно, есть честные отличники, которые получили пятёрки своими силами. Но российская государственная школа — это настоящая школа жизни, она показывает, как работают несправедливость и протекция в реальном мире. Честно говоря, я не хочу, чтобы такие неофициальные договорённости отвлекали молодых людей. Нам нужен объективный стандартизированный тест: с машинной проверкой работ, проверяющий не зубрёжку, а умение применять знания в реальных ситуациях.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🤫</span><span class="cn">门道很多</span><span class="py">mén dào hěn duō</span><span class="ru">— много нюансов</span></div>
+        <div class="colloc-item"><span class="emoji">👩‍🏫</span><span class="cn">师生关系</span><span class="py">shī shēng guān xì</span><span class="ru">— отношения учитель–ученик</span></div>
+        <div class="colloc-item"><span class="emoji">🤝</span><span class="cn">协商沟通</span><span class="py">xié shāng gōu tōng</span><span class="ru">— умение договариваться</span></div>
+        <div class="colloc-item"><span class="emoji">⭐</span><span class="cn">优秀学生</span><span class="py">yōu xiù xué shēng</span><span class="ru">— отличники</span></div>
+        <div class="colloc-item"><span class="emoji">🏫</span><span class="cn">公立中学</span><span class="py">gōng lì zhōng xué</span><span class="ru">— государственная школа</span></div>
+        <div class="colloc-item"><span class="emoji">🌱</span><span class="cn">社会历练场</span><span class="py">shè huì lì liàn chǎng</span><span class="ru">— школа жизни</span></div>
+        <div class="colloc-item"><span class="emoji">⚖️</span><span class="cn">不公</span><span class="py">bù gōng</span><span class="ru">— несправедливость</span></div>
+        <div class="colloc-item"><span class="emoji">🤝</span><span class="cn">人情庇护</span><span class="py">rén qíng bì hù</span><span class="ru">— протекция</span></div>
+        <div class="colloc-item"><span class="emoji">🤫</span><span class="cn">台面下的协商</span><span class="py">tái miàn xià de xié shāng</span><span class="ru">— неофициальные договорённости</span></div>
+        <div class="colloc-item"><span class="emoji">👀</span><span class="cn">分散注意力</span><span class="py">fēn sàn zhù yì lì</span><span class="ru">— отвлекать внимание</span></div>
+        <div class="colloc-item"><span class="emoji">📝</span><span class="cn">标准化测试</span><span class="py">biāo zhǔn huà cè shì</span><span class="ru">— стандартизированный тест</span></div>
+        <div class="colloc-item"><span class="emoji">🤖</span><span class="cn">机器阅卷</span><span class="py">jī qì yuè juàn</span><span class="ru">— машинная проверка работ</span></div>
+        <div class="colloc-item"><span class="emoji">📖</span><span class="cn">死记硬背</span><span class="py">sǐ jì yìng bèi</span><span class="ru">— зубрёжка</span></div>
+        <div class="colloc-item"><span class="emoji">💡</span><span class="cn">实际运用能力</span><span class="py">shí jì yùn yòng néng lì</span><span class="ru">— умение применять знания</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 16 ================= -->
+  <div class="para-card t-purple">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 16)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 16)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">16</span>
+    <div class="para-cn">个人特长加分项</div>
+    <div class="para-py" id="py-16">gè rén tè cháng jiā fēn xiàng</div>
+    <div class="para-ru" id="ru-16">Дополнительные баллы за личные достижения</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🏅</span><span class="cn">个人特长</span><span class="py">gè rén tè cháng</span><span class="ru">— личные достижения</span></div>
+        <div class="colloc-item"><span class="emoji">➕</span><span class="cn">加分项</span><span class="py">jiā fēn xiàng</span><span class="ru">— дополнительные баллы</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 17 ================= -->
+  <div class="para-card t-blue">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 17)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 17)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">17</span>
+    <div class="para-cn">除学业成绩外，官方划定了一系列个人成就项目，也可以影响录取，不过加分权重更低：</div>
+    <div class="para-py" id="py-17">chú xué yè chéng jì wài ，guān fāng huà dìng le yī xì liè gè rén chéng jiù xiàng mù ，yě kě yǐ yǐng xiǎng lù qǔ ，bù guò jiā fēn quán zhòng gèng dī ：</div>
+    <div class="para-ru" id="ru-17">Помимо академических оценок, государство установило список личных достижений, которые также влияют на зачисление, но дают меньше баллов:</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📚</span><span class="cn">学业成绩</span><span class="py">xué yè chéng jì</span><span class="ru">— академические оценки</span></div>
+        <div class="colloc-item"><span class="emoji">🏆</span><span class="cn">个人成就</span><span class="py">gè rén chéng jiù</span><span class="ru">— личные достижения</span></div>
+        <div class="colloc-item"><span class="emoji">⚖️</span><span class="cn">权重</span><span class="py">quán zhòng</span><span class="ru">— вес (баллов)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 18 ================= -->
+  <div class="para-card t-green">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 18)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 18)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">18</span>
+    <div class="para-cn">志愿活动：在俄罗斯境内官方机构（莫斯科志愿组织、Добродело等）累计完成300小时志愿工作。不同高校加分规则不一样，最高可加10分。</div>
+    <div class="para-py" id="py-18">zhì yuàn huó dòng ：zài é luó sī jìng nèi guān fāng jī gòu （mò sī kē zhì yuàn zǔ zhī 、Добродело děng ）lěi jì wán chéng 300 xiǎo shí zhì yuàn gōng zuò 。bù tóng gāo xiào jiā fēn guī zé bù yī yàng ，zuì gāo kě jiā 10 fēn 。</div>
+    <div class="para-ru" id="ru-18">Волонтёрство: суммарно 300 часов волонтёрской работы в официальных российских организациях (Московские волонтёры, Добродело и другие). Правила начисления баллов отличаются в разных вузах, максимум дают 10 баллов.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🤝</span><span class="cn">志愿活动</span><span class="py">zhì yuàn huó dòng</span><span class="ru">— волонтёрство</span></div>
+        <div class="colloc-item"><span class="emoji">⏱️</span><span class="cn">累计</span><span class="py">lěi jì</span><span class="ru">— суммарно</span></div>
+        <div class="colloc-item"><span class="emoji">🏢</span><span class="cn">官方机构</span><span class="py">guān fāng jī gòu</span><span class="ru">— официальные организации</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 19 ================= -->
+  <div class="para-card t-orange">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 19)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 19)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">19</span>
+    <div class="para-cn">体育：劳卫制证书（ГТО，“劳动与卫国”体育标准）对升学加分有明显作用。很有意思的现象：到了高年级，同班同学会突然开始刻苦训练、达标考核：俯卧撑、引体向上、长跑。</div>
+    <div class="para-py" id="py-19">tǐ yù ：láo wèi zhì zhèng shū （ГТО，“láo dòng yǔ wèi guó ” tǐ yù biāo zhǔn ）duì shēng xué jiā fēn yǒu míng xiǎn zuò yòng 。hěn yǒu yì si de xiàn xiàng ：dào le gāo nián jí ，tóng bān tóng xué huì tū rán kāi shǐ kè kǔ xùn liàn 、dá biāo kǎo hé ：fǔ wò chēng 、yǐn tǐ xiàng shàng 、cháng pǎo 。</div>
+    <div class="para-ru" id="ru-19">Спорт: значительные дополнительные баллы даёт знак ГТО («Готов к труду и обороне»). Интересное явление: в старших классах одноклассники внезапно начинают интенсивно тренироваться, чтобы сдать нормативы: отжимания, подтягивания, бег на длинные дистанции.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🏃</span><span class="cn">体育</span><span class="py">tǐ yù</span><span class="ru">— спорт</span></div>
+        <div class="colloc-item"><span class="emoji">📜</span><span class="cn">劳卫制证书</span><span class="py">láo wèi zhì zhèng shū</span><span class="ru">— знак ГТО</span></div>
+        <div class="colloc-item"><span class="emoji">💪</span><span class="cn">刻苦训练</span><span class="py">kè kǔ xùn liàn</span><span class="ru">— интенсивно тренироваться</span></div>
+        <div class="colloc-item"><span class="emoji">✅</span><span class="cn">达标考核</span><span class="py">dá biāo kǎo hé</span><span class="ru">— сдать нормативы</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 20 ================= -->
+  <div class="para-card t-purple">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 20)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 20)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">20</span>
+    <div class="para-cn">哪怕计划出国，ЕГЭ也必须考</div>
+    <div class="para-py" id="py-20">nǎ pà jì huà chū guó ，ЕГЭ yě bì xū kǎo</div>
+    <div class="para-ru" id="ru-20">Даже при плане поступать за границу ЕГЭ нужно сдать</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">✈️</span><span class="cn">出国</span><span class="py">chū guó</span><span class="ru">— за границу</span></div>
+        <div class="colloc-item"><span class="emoji">📌</span><span class="cn">必须考</span><span class="py">bì xū kǎo</span><span class="ru">— нужно обязательно сдать</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 21 ================= -->
+  <div class="para-card t-red">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 21)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 21)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">21</span>
+    <div class="para-cn">有一点务必清楚：ЕГЭ属于必考项目。就算打算出国读大学，也至少要考到及格线60分，否则无法拿到中学毕业证。</div>
+    <div class="para-py" id="py-21">yǒu yī diǎn wù bì qīng chǔ ：ЕГЭ shǔ yú bì kǎo xiàng mù 。jiù suàn dǎ suàn chū guó dú dà xué ，yě zhì shǎo yào kǎo dào jí gé xiàn 60 fēn ，fǒu zé wú fǎ ná dào zhōng xué bì yè zhèng 。</div>
+    <div class="para-ru" id="ru-21">Важно понимать: ЕГЭ — обязательный экзамен. Даже если вы планируете учиться в иностранном вузе, нужно набрать минимум 60 баллов (порог удовлетворительно), иначе аттестат не выдадут.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📌</span><span class="cn">必考项目</span><span class="py">bì kǎo xiàng mù</span><span class="ru">— обязательный экзамен</span></div>
+        <div class="colloc-item"><span class="emoji">📈</span><span class="cn">及格线</span><span class="py">jí gé xiàn</span><span class="ru">— минимальный порог баллов</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 22 ================= -->
+  <div class="para-card t-green">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 22)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 22)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">22</span>
+    <div class="para-cn">地理位置的影响</div>
+    <div class="para-py" id="py-22">dì lǐ wèi zhì de yǐng xiǎng</div>
+    <div class="para-ru" id="ru-22">Влияние географического положения</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🌍</span><span class="cn">地理位置</span><span class="py">dì lǐ wèi zhì</span><span class="ru">— географическое положение</span></div>
+        <div class="colloc-item"><span class="emoji">📈</span><span class="cn">影响</span><span class="py">yǐng xiǎng</span><span class="ru">— влияние</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 23 ================= -->
+  <div class="para-card t-blue">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 23)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 23)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">23</span>
+    <div class="para-cn">如果看就业，资源类行业（黄金、钢铁等相关专业）毕业生更容易找到工作。西伯利亚、乌拉尔地区的优质地方院校就是很好的选择：校区就设在资源开采地，授课老师都是行业在职专家，毕业后就业会更顺畅。</div>
+    <div class="para-py" id="py-23">rú guǒ kàn jiù yè ，zī yuán lèi háng yè （huáng jīn 、gāng tiě děng xiāng guān zhuān yè ）bì yè shēng gèng róng yì zhǎo dào gōng zuò 。xī bó lì yà 、wū lā ěr dì qū de yōu zhì dì fāng yuàn xiào jiù shì hěn hǎo de xuǎn zé ：xiào qū jiù shè zài zī yuán kāi cǎi dì ，shòu kè lǎo shī dōu shì háng yè zài zhí zhuān jiā ，bì yè hòu jiù yè huì gèng shùn chàng 。</div>
+    <div class="para-ru" id="ru-23">Если говорить о трудоустройстве, выпускники направлений ресурсной отрасли (золото, металлургия и другие) легче находят работу. Качественные региональные вузы Сибири и Урала — хороший вариант: кампусы расположены рядом с месторождениями, преподаватели — действующие специалисты отрасли, после выпуска проще устроиться на работу.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">💼</span><span class="cn">就业</span><span class="py">jiù yè</span><span class="ru">— трудоустройство</span></div>
+        <div class="colloc-item"><span class="emoji">⛏️</span><span class="cn">资源类行业</span><span class="py">zī yuán lèi háng yè</span><span class="ru">— ресурсная отрасль</span></div>
+        <div class="colloc-item"><span class="emoji">🏫</span><span class="cn">地方院校</span><span class="py">dì fāng yuàn xiào</span><span class="ru">— региональные вузы</span></div>
+        <div class="colloc-item"><span class="emoji">⛰️</span><span class="cn">资源开采地</span><span class="py">zī yuán kāi cǎi dì</span><span class="ru">— месторождения</span></div>
+        <div class="colloc-item"><span class="emoji">👨‍🔬</span><span class="cn">在职专家</span><span class="py">zài zhí zhuān jiā</span><span class="ru">— действующие специалисты</span></div>
+        <div class="colloc-item"><span class="emoji">🚀</span><span class="cn">就业顺畅</span><span class="py">jiù yè shùn chàng</span><span class="ru">— легко устроиться на работу</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 24 ================= -->
+  <div class="para-card t-pink">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 24)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 24)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">24</span>
+    <div class="para-cn">但俄罗斯考生大多不会把院校地理位置当作首要考量。只要家庭经济条件允许，所有人都想报考首都或者圣彼得堡的高校；也有一部分人选择留在家乡读书。</div>
+    <div class="para-py" id="py-24">dàn é luó sī kǎo shēng dà duō bù huì bǎ yuàn xiào dì lǐ wèi zhì dàng zuò shǒu yào kǎo liàng 。zhǐ yào jiā tíng jīng jì tiáo jiàn yǔn xǔ ，suǒ yǒu rén dōu xiǎng bào kǎo shǒu dū huò zhě shèng bǐ dé bǎo de gāo xiào ；yě yǒu yī bù fen rén xuǎn zé liú zài jiā xiāng dú shū 。</div>
+    <div class="para-ru" id="ru-24">Но большинство российских абитуриентов не ставят географическое положение вуза на первое место. Если финансовое положение семьи позволяет, многие хотят поступать в вузы столицы или Санкт-Петербурга; часть абитуриентов остаётся учиться в родном городе.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🥇</span><span class="cn">首要考量</span><span class="py">shǒu yào kǎo liàng</span><span class="ru">— первое по важности</span></div>
+        <div class="colloc-item"><span class="emoji">💰</span><span class="cn">经济条件</span><span class="py">jīng jì tiáo jiàn</span><span class="ru">— финансовое положение</span></div>
+        <div class="colloc-item"><span class="emoji">🏙️</span><span class="cn">首都</span><span class="py">shǒu dū</span><span class="ru">— столица</span></div>
+        <div class="colloc-item"><span class="emoji">🏡</span><span class="cn">家乡</span><span class="py">jiā xiāng</span><span class="ru">— родной город</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 25 ================= -->
+  <div class="para-card t-purple">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 25)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 25)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">25</span>
+    <div class="para-cn">职业规划教育缺失</div>
+    <div class="para-py" id="py-25">zhí yè guī huà jiào yù quē shī</div>
+    <div class="para-ru" id="ru-25">Отсутствие профориентации</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📋</span><span class="cn">职业规划</span><span class="py">zhí yè guī huà</span><span class="ru">— профориентация</span></div>
+        <div class="colloc-item"><span class="emoji">❌</span><span class="cn">缺失</span><span class="py">quē shī</span><span class="ru">— отсутствие</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 26 ================= -->
+  <div class="para-card t-orange">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 26)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 26)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">26</span>
+    <div class="para-cn">整体来看，俄罗斯高中完全缺少职业规划课程，学生很难客观了解各个专业真实面貌，这点和西方教育不一样。很多学生会选择覆盖面广的泛专业，方便之后更换发展方向；也有很多人继承家族事业，医生世家就是非常普遍的例子。</div>
+    <div class="para-py" id="py-26">zhěng tǐ lái kàn ，é luó sī gāo zhōng wán quán quē shī zhí yè guī huà kè chéng ，xué shēng hěn nán kè guān liǎo jiě gè gè zhuān yè zhēn shí miàn mào ，zhè diǎn hé xī fāng jiào yù bù yī yàng 。hěn duō xué shēng huì xuǎn zé fù gài miàn guǎng de fàn zhuān yè ，fāng biàn zhī hòu gēng huàn fā zhǎn fāng xiàng ；yě yǒu hěn duō rén jì chéng jiā zú shì yè ，yī shēng shì jiā jiù shì fēi cháng pǔ biàn de lì zi 。</div>
+    <div class="para-ru" id="ru-26">В целом, в российских старших школах почти нет уроков профориентации, поэтому ученикам сложно объективно понять реальное содержание специальностей. Это отличие от западной системы образования. Многие выбирают широкие универсальные специальности, чтобы потом было проще менять вектор развития. Также часто наследуют семейную профессию; династии врачей — очень распространённый пример.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📖</span><span class="cn">职业规划课程</span><span class="py">zhí yè guī huà kè chéng</span><span class="ru">— уроки профориентации</span></div>
+        <div class="colloc-item"><span class="emoji">👀</span><span class="cn">真实面貌</span><span class="py">zhēn shí miàn mào</span><span class="ru">— реальное содержание</span></div>
+        <div class="colloc-item"><span class="emoji">🌐</span><span class="cn">覆盖面广</span><span class="py">fù gài miàn guǎng</span><span class="ru">— широкий, универсальный</span></div>
+        <div class="colloc-item"><span class="emoji">🔄</span><span class="cn">更换发展方向</span><span class="py">gēng huàn fā zhǎn fāng xiàng</span><span class="ru">— менять вектор развития</span></div>
+        <div class="colloc-item"><span class="emoji">🏠</span><span class="cn">继承家族事业</span><span class="py">jì chéng jiā zú shì yè</span><span class="ru">— наследовать семейную профессию</span></div>
+        <div class="colloc-item"><span class="emoji">👨‍⚕️</span><span class="cn">医生世家</span><span class="py">yī shēng shì jiā</span><span class="ru">— врачебные династии</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 27 ================= -->
+  <div class="para-card t-green">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 27)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 27)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">27</span>
+    <div class="para-cn">几项并不公平的趋势</div>
+    <div class="para-py" id="py-27">jǐ xiàng bìng bù gōng píng de qū shì</div>
+    <div class="para-ru" id="ru-27">Несколько несправедливых тенденций</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">⚖️</span><span class="cn">不公平</span><span class="py">bù gōng píng</span><span class="ru">— несправедливый</span></div>
+        <div class="colloc-item"><span class="emoji">📈</span><span class="cn">趋势</span><span class="py">qū shì</span><span class="ru">— тенденция</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 28 ================= -->
+  <div class="para-card t-red">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 28)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 28)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">28</span>
+    <div class="para-cn">既然提到医学类专业，这里也要聊聊相关现状：公费录取的医学生，现在有毕业后强制无偿服务条款：毕业之后必须在公立医疗机构工作数年；如果不履约，则需要退还全部培养费用（这条信息建议查阅新闻核实，政策一直在变动）。</div>
+    <div class="para-py" id="py-28">jì rán tí dào yī xué lèi zhuān yè ，zhè lǐ yě yào liáo liáo xiāng guān xiàn zhuàng ：gōng fèi lù qǔ de yī xué shēng ，xiàn zài yǒu bì yè hòu qiáng zhì wú cháng fú wù tiáo kuǎn ：bì yè zhī hòu bì xū zài gōng lì yī liáo jī gòu gōng zuò shù nián ；rú guǒ bù lǚ yuē ，zé xū yào tuì huán quán bù péi yǎng fèi yòng （zhè tiáo xìn xī jiàn yì chá yuè xīn wén hé shí ，zhèng cè yī zhí zài biàn dòng ）。</div>
+    <div class="para-ru" id="ru-28">Раз мы заговорили о медицинских специальностях, стоит рассказать о текущей ситуации. Студенты-медики, принятые на бюджет, сейчас обязаны отработать несколько лет в государственных медицинских учреждениях после выпуска. Если они не выполняют обязательство, нужно вернуть все средства, потраченные на обучение. (Рекомендую проверить эту информацию по новостям, политика постоянно меняется.)</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">👨‍⚕️</span><span class="cn">医学类专业</span><span class="py">yī xué lèi zhuān yè</span><span class="ru">— медицинские специальности</span></div>
+        <div class="colloc-item"><span class="emoji">📜</span><span class="cn">强制无偿服务条款</span><span class="py">qiáng zhì wú cháng fú wù tiáo kuǎn</span><span class="ru">— обязательство отработки</span></div>
+        <div class="colloc-item"><span class="emoji">🏥</span><span class="cn">公立医疗机构</span><span class="py">gōng lì yī liáo jī gòu</span><span class="ru">— государственные учреждения</span></div>
+        <div class="colloc-item"><span class="emoji">💸</span><span class="cn">退还培养费用</span><span class="py">tuì huán péi yǎng fèi yòng</span><span class="ru">— вернуть средства на обучение</span></div>
+        <div class="colloc-item"><span class="emoji">📰</span><span class="cn">查阅新闻核实</span><span class="py">chá yuè xīn wén hé shí</span><span class="ru">— проверить по новостям</span></div>
+        <div class="colloc-item"><span class="emoji">📌</span><span class="cn">政策变动</span><span class="py">zhèng cè biàn dòng</span><span class="ru">— политика меняется</span></div>
+      </div>
+    </div>
+    <div class="smart-tip">Амина напоминает: <b>политика может меняться</b> — всегда сверяйтесь с официальными источниками!</div>
+  </div>
+
+  <!-- ================= АБЗАЦ 29 ================= -->
+  <div class="para-card t-purple">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 29)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 29)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">29</span>
+    <div class="para-cn">大量录取配额，优先分配给特别军事行动参与者子女以及难民，不看ЕГЭ分数。当然，很多这类学生在第一学期期末考试后就会被退学，但他们依然保留“互不冲突的再次报考资格”——也就是第二年依然可以重新申请公费名额，不会丧失报考机会。</div>
+    <div class="para-py" id="py-29">dà liàng lù qǔ pèi é ，yōu xiān fēn pèi gěi tè bié jūn shì xíng dòng cān yù zhě zǐ nǚ yǐ jí nàn mín ，bù kàn ЕГЭ fēn shù 。dāng rán ，hěn duō zhè lèi xué shēng zài dì yī xué qī qī mò kǎo shì hòu jiù huì bèi tuì xué ，dàn tā men yī rán bǎo liú “hù bù chōng tū de zài cì bào kǎo zī gé ”—— yě jiù shì dì èr nián yī rán kě yǐ chóng xīn shēn qǐng gōng fèi míng é ，bù huì sàng shī bào kǎo jī huì 。</div>
+    <div class="para-ru" id="ru-29">Большое количество квот на поступление отдаётся в приоритет детям участников специальной военной операции и беженцам без учёта баллов ЕГЭ. Конечно, многие из этих студентов отчисляются после первой сессии. Но при этом они сохраняют право повторно поступать — то есть на следующий год снова могут претендовать на бюджетные места, право на поступление не теряется.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📋</span><span class="cn">录取配额</span><span class="py">lù qǔ pèi é</span><span class="ru">— квоты на поступление</span></div>
+        <div class="colloc-item"><span class="emoji">🥇</span><span class="cn">优先分配</span><span class="py">yōu xiān fēn pèi</span><span class="ru">— отдавать в приоритет</span></div>
+        <div class="colloc-item"><span class="emoji">📝</span><span class="cn">第一学期</span><span class="py">dì yī xué qī</span><span class="ru">— первый семестр</span></div>
+        <div class="colloc-item"><span class="emoji">🚪</span><span class="cn">退学</span><span class="py">tuì xué</span><span class="ru">— быть отчисленным</span></div>
+        <div class="colloc-item"><span class="emoji">📑</span><span class="cn">再次报考资格</span><span class="py">zài cì bào kǎo zī gé</span><span class="ru">— право повторного поступления</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 30 ================= -->
+  <div class="para-card t-green">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 30)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 30)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">30</span>
+    <div class="para-cn">升学如同打扑克</div>
+    <div class="para-py" id="py-30">shēng xué rú tóng dǎ pū kè</div>
+    <div class="para-ru" id="ru-30">Поступление похоже на игру в карты</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🃏</span><span class="cn">打扑克</span><span class="py">dǎ pū kè</span><span class="ru">— игра в карты</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 31 ================= -->
+  <div class="para-card t-blue">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 31)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 31)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">31</span>
+    <div class="para-cn">顶尖高校的录取过程，就像扑克牌游戏：半公开模式。录取候选名单会对外公示，但最终结果取决于考生是否撤回档案。所有人能看到名单，却无法保证最终录取。考生能看到自己排在名单末尾，但如果排名靠前的人撤回档案、去更好的大学，自己就会补位获得机会。考生最多可以填报5所大学，但其中必须选定一所第一志愿院校。高校很清楚这一点，不太愿意把名额留给不把本校当作首选的考生。</div>
+    <div class="para-py" id="py-31">dǐng jiān gāo xiào de lù qǔ guò chéng ，jiù xiàng pū kè pái yóu xì ：bàn gōng kāi mó shì 。lù qǔ hòu xuǎn míng dān huì duì wài gōng shì ，dàn zuì zhōng jié guǒ qǔ jué yú kǎo shēng shì fǒu chè huí dàng àn 。suǒ yǒu rén néng kàn dào míng dān ，què wú fǎ bǎo zhèng zuì zhōng lù qǔ 。kǎo shēng néng kàn dào zì jǐ pái zài míng dān mò wěi ，dàn rú guǒ pái míng kào qián de rén chè huí dàng àn 、qù gèng hǎo de dà xué ，zì jǐ jiù huì bǔ wèi huò dé jī huì 。kǎo shēng zuì duō kě yǐ tián bào 5 suǒ dà xué ，dàn qí zhōng bì xū xuǎn dìng yī suǒ dì yī zhì yuàn yuàn xiào 。gāo xiào hěn qīng chǔ zhè yī diǎn ，bù tài yuàn yì bǎ míng é liú gěi bù bǎ běn xiào dàng zuò shǒu xuǎn de kǎo shēng 。</div>
+    <div class="para-ru" id="ru-31">Процесс зачисления в топовые вузы похож на карточную игру: полупрозрачная система. Списки рекомендованных к зачислению публикуются, но финальный результат зависит от того, заберёт ли абитуриент документы. Все видят списки, но нет гарантии поступления. Абитуриент может видеть себя в конце списка, но если люди выше по рейтингу заберут документы и уйдут в другой вуз, он займёт освободившееся место. Можно подать заявление максимум в 5 вузов, один из них должен быть приоритетным. Вузы это хорошо понимают и неохотно отдают места тем, кто не выбрал их как первый приоритет.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">⭐</span><span class="cn">顶尖高校</span><span class="py">dǐng jiān gāo xiào</span><span class="ru">— топовые вузы</span></div>
+        <div class="colloc-item"><span class="emoji">📋</span><span class="cn">候选名单</span><span class="py">hòu xuǎn míng dān</span><span class="ru">— списки рекомендованных</span></div>
+        <div class="colloc-item"><span class="emoji">📤</span><span class="cn">撤回档案</span><span class="py">chè huí dàng àn</span><span class="ru">— забрать документы</span></div>
+        <div class="colloc-item"><span class="emoji">🔄</span><span class="cn">补位</span><span class="py">bǔ wèi</span><span class="ru">— занять освободившееся место</span></div>
+        <div class="colloc-item"><span class="emoji">📝</span><span class="cn">填报志愿</span><span class="py">tián bào zhì yuàn</span><span class="ru">— подать заявление</span></div>
+        <div class="colloc-item"><span class="emoji">🥇</span><span class="cn">第一志愿</span><span class="py">dì yī zhì yuàn</span><span class="ru">— первый приоритет</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 32 ================= -->
+  <div class="para-card t-pink">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 32)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 32)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">32</span>
+    <div class="para-cn">最重要的一点：结果至上的社会心态</div>
+    <div class="para-py" id="py-32">zuì zhòng yào de yī diǎn ：jié guǒ zhì shàng de shè huì xīn tài</div>
+    <div class="para-ru" id="ru-32">Самое важное: общественное мышление, ориентированное только на результат</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">🏆</span><span class="cn">结果至上</span><span class="py">jié guǒ zhì shàng</span><span class="ru">— ориентация только на результат</span></div>
+        <div class="colloc-item"><span class="emoji">🧠</span><span class="cn">社会心态</span><span class="py">shè huì xīn tài</span><span class="ru">— общественное мышление</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= АБЗАЦ 33 ================= -->
+  <div class="para-card t-red">
+    <div class="para-controls">
+      <button class="para-btn active" onclick="togglePara('py', 33)">🔤 Пиньинь</button>
+      <button class="para-btn active" onclick="togglePara('ru', 33)">🌐 Перевод</button>
+    </div>
+    <span class="para-num">33</span>
+    <div class="para-cn">网络上越来越多ЕГЭ成绩曝光的视频，人们面对分数时激烈的情绪反应令人担忧。仿佛大家看不到其他出路，把人生所有可能性压缩成唯一一条赛道。我很遗憾，学校没有教会学生：人生有多种发展剧本。一次糟糕的选择，未必带来糟糕的一生；反过来，考上好大学，也不能保证拥有美好的人生。</div>
+    <div class="para-py" id="py-33">wǎng luò shàng yuè lái yuè duō ЕГЭ chéng jì pù guāng de shì pín ，rén men miàn duì fēn shù shí jī liè de qíng xù fǎn yìng lìng rén dān yōu 。fǎng fú dà jiā kàn bù dào qí tā chū lù ，bǎ rén shēng suǒ yǒu kě néng xìng yā suō chéng wéi yī yī tiáo sài dào 。wǒ hěn yí hàn ，xué xiào méi yǒu jiào huì xué shēng ：rén shēng yǒu duō zhǒng fā zhǎn jù běn 。yī cì zāo gāo de xuǎn zé ，wèi bì dài lái zāo gāo de yī shēng ；fǎn guò lái ，kǎo shàng hǎo dà xué ，yě bù néng bǎo zhèng yōng yǒu měi hǎo de rén shēng 。</div>
+    <div class="para-ru" id="ru-33">В интернете всё больше видео с оглашением результатов ЕГЭ, бурная эмоциональная реакция людей на баллы вызывает беспокойство. Будто люди не видят других путей и сжимают все жизненные возможности в одну единственную траекторию. Мне жаль, что школа не учит учеников: у жизни есть разные сценарии развития. Один плохой выбор не означает плохую всю жизнь. И наоборот: поступление в хороший вуз не гарантирует счастливую жизнь.</div>
+    <div class="colloc-block">
+      <div class="colloc-title">📚 Коллокации</div>
+      <div class="colloc-grid">
+        <div class="colloc-item"><span class="emoji">📺</span><span class="cn">成绩曝光视频</span><span class="py">chéng jì pù guāng shì pín</span><span class="ru">— видео с результатами экзаменов</span></div>
+        <div class="colloc-item"><span class="emoji">😰</span><span class="cn">令人担忧</span><span class="py">lìng rén dān yōu</span><span class="ru">— вызывает беспокойство</span></div>
+        <div class="colloc-item"><span class="emoji">🛤️</span><span class="cn">出路</span><span class="py">chū lù</span><span class="ru">— жизненный путь</span></div>
+        <div class="colloc-item"><span class="emoji">📉</span><span class="cn">压缩可能性</span><span class="py">yā suō kě néng xìng</span><span class="ru">— сжимать возможности</span></div>
+        <div class="colloc-item"><span class="emoji">🏁</span><span class="cn">赛道</span><span class="py">sài dào</span><span class="ru">— траектория жизни</span></div>
+        <div class="colloc-item"><span class="emoji">📖</span><span class="cn">发展剧本</span><span class="py">fā zhǎn jù běn</span><span class="ru">— сценарии развития жизни</span></div>
+        <div class="colloc-item"><span class="emoji">🎓</span><span class="cn">考上好大学</span><span class="py">kǎo shàng hǎo dà xué</span><span class="ru">— поступить в хороший вуз</span></div>
+        <div class="colloc-item"><span class="emoji">✅</span><span class="cn">保证</span><span class="py">bǎo zhèng</span><span class="ru">— гарантировать</span></div>
+      </div>
+    </div>
+    <div class="smart-tip">Главная мысль текста: <b>один плохой выбор не равен плохой жизни</b>. И наоборот — хороший вуз не гарантирует счастье. Держите это в голове!</div>
+  </div>
+
+</div>
+
+<script>
+function togglePara(type, num) {
+  const el = document.getElementById(type + '-' + num);
+  if (!el) return;
+  el.classList.toggle('show');
+  // подсветить кнопку
+  const btn = el.closest('.para-card').querySelector(`.para-btn:nth-child(${type === 'py' ? 1 : 2})`);
+  if (btn) btn.classList.toggle('active', el.classList.contains('show'));
+}
+
+function showAll(type) {
+  document.querySelectorAll('.' + (type === 'py' ? 'para-py' : 'para-ru')).forEach(el => el.classList.add('show'));
+  document.querySelectorAll('.para-card').forEach(card => {
+    const btns = card.querySelectorAll('.para-btn');
+    if (btns.length >= 2) btns[type === 'py' ? 0 : 1].classList.add('active');
+  });
+}
+
+function hideAll(type) {
+  document.querySelectorAll('.' + (type === 'py' ? 'para-py' : 'para-ru')).forEach(el => el.classList.remove('show'));
+  document.querySelectorAll('.para-card').forEach(card => {
+    const btns = card.querySelectorAll('.para-btn');
+    if (btns.length >= 2) btns[type === 'py' ? 0 : 1].classList.remove('active');
+  });
+}
+</script>
+</body>
+</html>
