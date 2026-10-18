@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK 6 — разбор лексики по транскриптам Шэнь Амины</title>
+<style>
+  :root{
+    --bg:#fbfaf7;
+    --card:#ffffff;
+    --ink:#1f2328;
+    --muted:#5b6570;
+    --line:#e6e1d8;
+    --gold:#f1c40f;
+    --gold-soft:#fff6cf;
+    --accent:#8a6d1f;
+    --head:#2c3e50;
+    --shadow:0 2px 10px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans",system-ui,-apple-system,sans-serif;
+    line-height:1.65;
+    font-size:16px;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:28px 18px 80px;}
+  header.top{
+    background:linear-gradient(135deg,#2c3e50,#3d566e);
+    color:#fff;border-radius:16px;padding:26px 28px;box-shadow:var(--shadow);
+    margin-bottom:26px;
+  }
+  header.top h1{margin:0 0 6px;font-size:1.45rem;letter-spacing:.2px;}
+  header.top p{margin:0;opacity:.85;font-size:.95rem;}
+  .part-banner{
+    background:var(--gold-soft);
+    border-left:6px solid var(--gold);
+    border-radius:10px;
+    padding:12px 16px;
+    margin:34px 0 18px;
+    font-weight:600;
+    color:var(--accent);
+    font-size:1.02rem;
+  }
+  .word{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px 24px 18px;
+    margin:22px 0;
+    box-shadow:var(--shadow);
+  }
+  .word h2{
+    margin:0 0 4px;
+    font-size:1.3rem;
+    color:var(--head);
+    line-height:1.4;
+    display:flex;
+    flex-wrap:wrap;
+    gap:.35em;
+    align-items:baseline;
+  }
+  .word h2 .emoji{font-size:1.35rem;}
+  .word h2 .hanzi{color:#111;font-weight:800;}
+  .word h2 .pinyin{color:var(--accent);font-weight:600;font-size:1.05rem;}
+  .word h2 .trans{color:var(--muted);font-weight:500;font-size:1rem;}
+  .register{
+    display:inline-block;
+    font-size:.82rem;
+    color:var(--muted);
+    background:#f3f0ea;
+    border-radius:999px;
+    padding:2px 10px;
+    margin:2px 0 10px;
+  }
+  .block{margin:14px 0;}
+  .block .label{
+    font-weight:700;color:var(--head);margin-bottom:4px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .check{color:#2e9e5b;font-weight:800;}
+  ul.plain{margin:6px 0 6px 1.2em;padding:0;}
+  ul.plain li{margin:3px 0;}
+  table.colloc{
+    width:100%;border-collapse:collapse;margin:8px 0 4px;
+    font-size:.94rem;
+    overflow:hidden;border-radius:10px;
+  }
+  table.colloc th,table.colloc td{
+    border-bottom:1px solid var(--line);
+    padding:8px 10px;text-align:left;vertical-align:top;
+  }
+  table.colloc thead th{
+    background:#f3f0ea;color:var(--head);font-weight:700;
+    border-bottom:2px solid var(--line);
+  }
+  table.colloc tbody tr:nth-child(even){background:#fcfbf8;}
+  table.colloc td.hz{font-weight:600;color:#111;}
+  blockquote.example{
+    margin:10px 0;padding:10px 14px;
+    background:#f7f9fb;
+    border-left:4px solid #9db4c8;
+    border-radius:8px;
+    font-size:.95rem;
+  }
+  blockquote.example .hz{font-weight:600;color:#111;}
+  blockquote.example .py{color:var(--accent);font-size:.9rem;}
+  blockquote.example .ru{color:var(--muted);}
+  .hanzi-key{
+    display:inline-block;
+    background:var(--gold-soft);
+    color:#000;
+    font-weight:700;
+    padding:0 4px;
+    border-radius:4px;
+    border-bottom:2px solid var(--gold);
+  }
+  .compare li{margin:4px 0;}
+  .teacher{
+    background:linear-gradient(135deg,#fff8e1,#fffdf5);
+    border:1px dashed var(--gold);
+    border-radius:12px;
+    padding:12px 16px;
+    margin:14px 0;
+    font-size:.95rem;
+  }
+  .teacher .who{font-weight:800;color:var(--accent);}
+  .test{
+    background:#eef7f0;
+    border:1px solid #cfe6d6;
+    border-radius:12px;
+    padding:12px 16px;
+    margin:14px 0;
+    font-size:.95rem;
+  }
+  .test ol{margin:6px 0 6px 1.3em;padding:0;}
+  .test .answers{
+    margin-top:8px;padding-top:8px;border-top:1px dashed #cfe6d6;
+    font-size:.9rem;color:var(--muted);
+  }
+  .hsk6{
+    background:#eaf1fb;
+    border-left:4px solid #5b8fd6;
+    border-radius:8px;
+    padding:10px 14px;
+    margin:14px 0;
+    font-size:.95rem;
+  }
+  .hsk6 .tag{font-weight:800;color:#355f9e;}
+  .hsk6 .py{color:var(--accent);font-size:.9rem;}
+  .hsk6 .ru{color:var(--muted);}
+  .checklist{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:20px 24px;
+    margin-top:34px;
+    box-shadow:var(--shadow);
+  }
+  .checklist h3{margin-top:0;color:var(--head);}
+  .checklist ul{list-style:none;padding:0;margin:0;}
+  .checklist li{margin:6px 0;padding-left:26px;position:relative;}
+  .checklist li::before{
+    content:"✔";position:absolute;left:0;top:0;
+    color:#2e9e5b;font-weight:800;
+  }
+  .footer-note{
+    text-align:center;color:var(--muted);font-size:.88rem;
+    margin-top:30px;
+  }
+  @media (max-width:600px){
+    .wrap{padding:16px 10px 60px;}
+    .word{padding:16px 14px;}
+    .word h2{font-size:1.12rem;}
+    table.colloc{font-size:.86rem;}
+    table.colloc th,table.colloc td{padding:6px 7px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>HSK 6 — полный разбор лексики по трём транскриптам Шэнь Амины</h1>
+  <p>29 лексических единиц · коллокации · пиньинь · живые примеры · разбор иероглифов · ловушки · мини-тесты · предложения для эссе</p>
+</header>
+
+<div class="part-banner">Часть 1 из 3 — Слов: 24 (по транскриптам), начало</div>
+
+<!-- 1 -->
+<section class="word" id="w1">
+  <h2><span class="emoji">🔄</span><span class="hanzi">实现</span><span class="pinyin">shíxiàn</span><span class="trans">— осуществлять, реализовывать (воплощать в реальность)</span></h2>
+
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол</div>
+    <div><span class="check">✅</span> Китайское толкование: 把想法、目标、梦想变成真实的事情。</div>
+    <div><span class="check">✅</span> Русский перевод: осуществлять, воплощать (мечту, цель); реализовывать</div>
+  </div>
+
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">实现梦想</td><td>shíxiàn mèngxiǎng</td><td>осуществить мечту</td><td>高频，HSK 6 常考</td></tr>
+        <tr><td class="hz">实现目标</td><td>shíxiàn mùbiāo</td><td>достичь цели</td><td>固定搭配</td></tr>
+        <tr><td class="hz">实现愿望</td><td>shíxiàn yuànwàng</td><td>исполнить желание</td><td>固定搭配</td></tr>
+        <tr><td class="hz">实现现代化</td><td>shíxiàn xiàndàihuà</td><td>осуществить модернизацию</td><td>官方/新闻</td></tr>
+        <tr><td class="hz">得以实现</td><td>déyǐ shíxiàn</td><td>получить возможность осуществиться</td><td>书面，被动意味</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">他从小就梦想成为诺贝尔奖获得者，这个发明让他实现了梦想。</div>
+      <div class="py">Tā cóngxiǎo jiù mèngxiǎng chéngwéi Nuòbèi'ěr jiǎng huòdézhě, zhège fāmíng ràng tā shíxiànle mèngxiǎng.</div>
+      <div class="ru">Он с детства мечтал получить Нобелевскую премию — это изобретение позволило ему осуществить мечту.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">结婚典礼让她实现了想象中的场景。</div>
+      <div class="py">Jiéhūn diǎnlǐ ràng tā shíxiànle xiǎngxiàng zhōng de chǎngjǐng.</div>
+      <div class="ru">Свадебная церемония позволила ей воплотить воображаемую картину.</div>
+    </blockquote>
+  </div>
+
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">实</span> — «реальный, плотный» (宀 крыша + 头 голова → полный дом). Легко спутать с 买 (покупать) — у 实 сверху крыша, у 买 — крюк.</li>
+      <li><span class="hanzi-key">现</span> — «сейчас, проявиться» (王 нефрит + 见 видеть). Видишь нефрит → он проявился. Даёт смысл «стать видимым/реальным».</li>
+      <li>Вместе: «сделать реальным и видимым».</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>实现 — осуществить (довести до реальности: мечту, цель)</li>
+      <li>展现 — являть, показывать (дать увидеть: сцену, картину) — это visualization, не realization</li>
+      <li>表现 — выражать, проявлять (себя, качество)</li>
+      <li>Пример-сравнение: 电影让人们<span class="hanzi-key">展现</span>了真实的生活场景 (фильм показал сцену — ты её увидел), но 这个发明让我<span class="hanzi-key">实现</span>了梦想 (изобретение воплотило мечту — она стала реальностью). Нельзя: ❌ 实现生活场景 — сцена на экране не «стала реальностью», её только показали.</li>
+    </ul>
+  </div>
+
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина чётко развела по-английски: 实现 = realize (ize = сделать реальным), 展现 = visualization (дать увидеть). Если сомневаешься — спроси себя: объект «стал реальным» или «стал видимым»? Мечта — реализуется, сцена — показывается.</div>
+
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>这个项目终于______了。</li>
+      <li>舞台上______了美丽的画面。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 实现 · 2. 展现</div>
+  </div>
+
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 只有把理想付诸行动，梦想才有可能真正实现。<br><span class="py">Zhǐyǒu bǎ lǐxiǎng fùzhū xíngdòng, mèngxiǎng cái yǒu kěnéng zhēnzhèng shíxiàn.</span><br><span class="ru">Только претворив идеал в действие, можно по-настоящему осуществить мечту.</span></div>
+</section>
+
+<!-- 2 -->
+<section class="word" id="w2">
+  <h2><span class="emoji">🖼️</span><span class="hanzi">展现</span><span class="pinyin">zhǎnxiàn</span><span class="trans">— являть, показывать, разворачивать (перед взором)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол</div>
+    <div><span class="check">✅</span> Китайское толкование: 让某种景象、面貌清楚地出现在别人眼前。</div>
+    <div><span class="check">✅</span> Русский перевод: являть, показывать, раскрывать (взору)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">展现风貌</td><td>zhǎnxiàn fēngmào</td><td>явить облик</td><td>书面/新闻</td></tr>
+        <tr><td class="hz">展现才华</td><td>zhǎnxiàn cáihuá</td><td>проявить талант</td><td>固定搭配</td></tr>
+        <tr><td class="hz">展现眼前</td><td>zhǎnxiàn yǎnqián</td><td>предстать перед глазами</td><td>书面</td></tr>
+        <tr><td class="hz">充分展现</td><td>chōngfèn zhǎnxiàn</td><td>в полной мере явить</td><td>高频</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">电影把那个时代的生活场景展现在观众眼前。</div>
+      <div class="py">Diànyǐng bǎ nàge shídài de shēnghuó chǎngjǐng zhǎnxiàn zài guānzhòng yǎnqián.</div>
+      <div class="ru">Фильм явил зрителю жизненные сцены той эпохи.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这场比赛充分展现了队员们的实力。</div>
+      <div class="py">Zhè chǎng bǐsài chōngfèn zhǎnxiànle duìyuánmen de shílì.</div>
+      <div class="ru">Этот матч в полной мере показал силу игроков.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">展</span> — «разворачивать» (尸 + 龷 + 衣-подобный низ). Картинка: разворачивают свиток. Легко спутать с 辗 (катить) — редко.</li>
+      <li><span class="hanzi-key">现</span> — «проявиться, видимый» (см. выше). Тот же элемент, что в 实现 — запомни один раз: 现 = стать видимым.</li>
+      <li>Вместе: «развернуть и сделать видимым».</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>展现 — явить взору (сцену, облик, талант)</li>
+      <li>实现 — воплотить в реальность (мечту, цель)</li>
+      <li>显示 — показывать (данные, результат — нейтральнее, техничнее)</li>
+      <li>Пример-сравнение: 数据<span class="hanzi-key">显示</span> (данные показывают) ≠ 电影<span class="hanzi-key">展现</span>生活场景 (фильм являет сцену) ≠ 他<span class="hanzi-key">实现</span>了梦想 (он осуществил мечту).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 展现 — это про «глаз видит». Если объект нельзя увидеть (мечта, цель) — не 展现, а 实现. Типичная ошибка студентов: ставят 实现 туда, где нужно 展现, потому что по-русски и то и другое «осуществить/показать» звучит похоже.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>这幅画______了江南水乡的美景。</li>
+      <li>他终于______了多年的愿望。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 展现 · 2. 实现</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 优秀的文学作品能够展现一个时代的精神面貌。<br><span class="py">Yōuxiù de wénxué zuòpǐn nénggòu zhǎnxiàn yīgè shídài de jīngshén miànmào.</span><br><span class="ru">Выдающиеся литературные произведения способны явить духовный облик эпохи.</span></div>
+</section>
+
+<!-- 3 -->
+<section class="word" id="w3">
+  <h2><span class="emoji">⬆️</span><span class="hanzi">促进</span><span class="pinyin">cùjìn</span><span class="trans">— способствовать, стимулировать, продвигать</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол</div>
+    <div><span class="check">✅</span> Китайское толкование: 推动某事物向前发展或进步。</div>
+    <div><span class="check">✅</span> Русский перевод: способствовать, стимулировать, содействовать (развитию)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">促进发展</td><td>cùjìn fāzhǎn</td><td>способствовать развитию</td><td>固定搭配，高频</td></tr>
+        <tr><td class="hz">促进进步</td><td>cùjìn jìnbù</td><td>содействовать прогрессу</td><td>固定搭配</td></tr>
+        <tr><td class="hz">促进血液循环</td><td>cùjìn xuèyè xúnhuán</td><td>стимулировать кровообращение</td><td>医学/生活</td></tr>
+        <tr><td class="hz">促进合作</td><td>cùjìn hézuò</td><td>способствовать сотрудничеству</td><td>新闻/官方</td></tr>
+        <tr><td class="hz">促进关系</td><td>cùjìn guānxi</td><td>улучшать отношения</td><td>固定搭配</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">语言的使用促进了人类思维的发展。</div>
+      <div class="py">Yǔyán de shǐyòng cùjìnle rénlèi sīwéi de fāzhǎn.</div>
+      <div class="ru">Использование языка способствовало развитию человеческого мышления.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">适度的运动可以促进血液循环。</div>
+      <div class="py">Shìdù de yùndòng kěyǐ cùjìn xuèyè xúnhuán.</div>
+      <div class="ru">Умеренные физические нагрузки стимулируют кровообращение.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">促</span> — «торопить, подгонять» (亻 человек + 足 нога). Человек ногой подгоняет → побуждать. Легко спутать с 捉 (ловить) — у 捉 рука 扌.</li>
+      <li><span class="hanzi-key">进</span> — «двигаться вперёд» (辶 идти + 井 колодец). Движение вперёд. Частый элемент — запомни.</li>
+      <li>Вместе: «подгонять вперёд» = стимулировать развитие.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>促进 — способствовать (развитию, прогрессу, отношениям) — объект обычно «развитие/прогресс»</li>
+      <li>提高 — повышать (уровень, способность, эффективность) — объект «измеримый показатель»</li>
+      <li>推动 — двигать, толкать вперёд (реформы, проект) — сильнее, с усилием</li>
+      <li>Пример-сравнение: 促进思维<span class="hanzi-key">的发展</span> ✅, но 提高思维能力 ✅ (нельзя ❌ 促进思维能力 — 促进 требует «发展/进步»). Шэнь Амина прямо сказала: «促进的搭配是促进了谁的发展、谁的进步».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Запомни формулу: <b>促进 + 发展/进步/关系/循环</b>, <b>提高 + 能力/水平/效率/素质</b>. Это классическая ловушка HSK 6 на коллокацию, а не на грамматику. Если хочется сказать «улучшить мышление» — 提高思维能力, а не 促进.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>这项政策______了经济的快速发展。</li>
+      <li>多读书可以______写作水平。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 促进 · 2. 提高</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 文化交流有助于促进各国人民之间的相互理解。<br><span class="py">Wénhuà jiāoliú yǒuzhùyú cùjìn gèguó rénmín zhījiān de xiānghù lǐjiě.</span><br><span class="ru">Культурный обмен способствует взаимопониманию между народами.</span></div>
+</section>
+
+<!-- 4 -->
+<section class="word" id="w4">
+  <h2><span class="emoji">📈</span><span class="hanzi">提高</span><span class="pinyin">tígāo</span><span class="trans">— повышать, улучшать, поднимать (уровень)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол</div>
+    <div><span class="check">✅</span> Китайское толкование: 使水平、能力、质量等变得更高。</div>
+    <div><span class="check">✅</span> Русский перевод: повышать, улучшать (уровень, качество, способность)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">提高水平</td><td>tígāo shuǐpíng</td><td>повысить уровень</td><td>固定搭配，高频</td></tr>
+        <tr><td class="hz">提高效率</td><td>tígāo xiàolǜ</td><td>повысить эффективность</td><td>固定搭配</td></tr>
+        <tr><td class="hz">提高素质</td><td>tígāo sùzhì</td><td>повысить качество (человека)</td><td>固定搭配</td></tr>
+        <tr><td class="hz">提高能力</td><td>tígāo nénglì</td><td>развить способность</td><td>固定搭配</td></tr>
+        <tr><td class="hz">不断提高</td><td>bùduàn tígāo</td><td>непрерывно повышать</td><td>书面/新闻</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">公司正在想办法提高工作效率。</div>
+      <div class="py">Gōngsī zhèngzài xiǎng bànfǎ tígāo gōngzuò xiàolǜ.</div>
+      <div class="ru">Компания ищет способы повысить эффективность работы.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">他想通过阅读提高自己的思维能力。</div>
+      <div class="py">Tā xiǎng tōngguò yuèdú tígāo zìjǐ de sīwéi nénglì.</div>
+      <div class="ru">Он хочет через чтение развить своё мышление.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">提</span> — «поднимать рукой» (扌 рука + 是). Рука тянет вверх. Легко спутать с 题 (тема) — у 题 页 внизу.</li>
+      <li><span class="hanzi-key">高</span> — «высокий» — цельная картинка: башня с крышей и этажами. Запомни как образ.</li>
+      <li>Вместе: «поднять выше» = повысить.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>提高 — повышать измеримый показатель (уровень, эффективность)</li>
+      <li>促进 — способствовать процессу (развитие, прогресс)</li>
+      <li>增强 — усиливать (сознание, иммунитет, 信心)</li>
+      <li>Пример-сравнение: 提高效率 ✅ / 促进效率 ❌; 促进发展 ✅ / 提高发展 ❌. Шэнь Амина: «если хочешь 思维 — 提高思维能力, а не 促进思维».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 提高 и 促进 — близнецы, которых постоянно путают. Тест на коллокацию: подставь объект. «Развитие/прогресс» → 促进. «Уровень/эффективность/способность» → 提高. Запомни парами, как формулы.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>新系统大大______了工作效率。</li>
+      <li>这项合作______了两国关系的发展。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 提高 · 2. 促进</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 只有不断提高自身素质，才能在激烈的竞争中立于不败之地。<br><span class="py">Zhǐyǒu bùduàn tígāo zìshēn sùzhì, cái néng zài jīliè de jìngzhēng zhōng lìyú bùbài zhī dì.</span><br><span class="ru">Только непрерывно повышая собственную квалификацию, можно оставаться непобедимым в жёсткой конкуренции.</span></div>
+</section>
+
+<!-- 5 -->
+<section class="word" id="w5">
+  <h2><span class="emoji">📢</span><span class="hanzi">反映</span><span class="pinyin">fǎnyìng</span><span class="trans">— отражать; доводить (мнение) до сведения</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол (также существительное «отражение»)</div>
+    <div><span class="check">✅</span> Китайское толкование: 把情况或意见告诉上级；也指表现出某种情况。</div>
+    <div><span class="check">✅</span> Русский перевод: отражать; сообщать (наверх), доводить до сведения</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">反映情况</td><td>fǎnyìng qíngkuàng</td><td>доложить обстановку</td><td>固定搭配，高频</td></tr>
+        <tr><td class="hz">向上级反映</td><td>xiàng shàngjí fǎnyìng</td><td>доложить начальству</td><td>固定搭配</td></tr>
+        <tr><td class="hz">反映意见</td><td>fǎnyìng yìjiàn</td><td>довести мнение</td><td>固定搭配</td></tr>
+        <tr><td class="hz">反映现实</td><td>fǎnyìng xiànshí</td><td>отражать реальность</td><td>书面</td></tr>
+        <tr><td class="hz">反映民意</td><td>fǎnyìng mínyì</td><td>отражать волю народа</td><td>新闻/官方</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">外面太吵了，我们应该向学校反映一下。</div>
+      <div class="py">Wàimiàn tài chǎo le, wǒmen yīnggāi xiàng xuéxiào fǎnyìng yīxià.</div>
+      <div class="ru">Снаружи слишком шумно, нам стоит сообщить об этом в администрацию школы.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这部小说反映了当时社会的真实情况。</div>
+      <div class="py">Zhè bù xiǎoshuō fǎnyìngle dāngshí shèhuì de zhēnshí qíngkuàng.</div>
+      <div class="ru">Этот роман отразил реальную ситуацию того общества.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">反</span> — «обратно, наоборот» (厂 + 又 рука). Рука поворачивает назад. Цельная картинка «разворот».</li>
+      <li><span class="hanzi-key">映</span> — «отражать свет» (日 солнце + 央 центр). Солнце в центре → отражение. Легко спутать с 应 (отвечать) — у 应 心 внизу, у 映 日 слева.</li>
+      <li>Вместе: «отражать обратно» = доносить/отражать.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>反映 — отражать; доводить мнение до сведения (особенно наверх)</li>
+      <li>反应 — реакция (ответ на стимул); реагировать</li>
+      <li>回答 — отвечать (на вопрос)</li>
+      <li>Пример-сравнение: 同学们向学校<span class="hanzi-key">反映</span>食堂问题 (студенты довели до школы проблему столовой — выразили мнение) ≠ 他听到这个消息，<span class="hanzi-key">反应</span>很激烈 (он на это известие бурно отреагировал — ответная реакция). Нельзя: ❌ 向学校反应情况 — здесь только 反映.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина объяснила по-русски: 反映 = выразить своё мнение, особенно上级; 反应 = ответная реакция на событие. Оба читаются fǎnyìng — на слух не различить, поэтому на письме это классическая ловушка HSK 6. Запомни: 反映 с 言-смыслом (говорить наверх), 反应 с 忄-смыслом (эмоциональный отклик).</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>居民向政府______了环境污染问题。</li>
+      <li>他对这个坏消息的______非常平静。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 反映 · 2. 反应</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 文学作品往往通过具体的人物命运反映社会现实。<br><span class="py">Wénxué zuòpǐn wǎngwǎng tōngguò jùtǐ de rénwù mìngyùn fǎnyìng shèhuì xiànshí.</span><br><span class="ru">Литература часто через конкретные судьбы персонажей отражает социальную реальность.</span></div>
+</section>
+
+<!-- 6 -->
+<section class="word" id="w6">
+  <h2><span class="emoji">⚡</span><span class="hanzi">反应</span><span class="pinyin">fǎnyìng</span><span class="trans">— реакция; реагировать</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: существительное / глагол</div>
+    <div><span class="check">✅</span> Китайское толкование: 对某个事情或刺激作出的回应。</div>
+    <div><span class="check">✅</span> Русский перевод: реакция; реагировать, откликаться</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">反应激烈</td><td>fǎnyìng jīliè</td><td>бурная реакция</td><td>固定搭配</td></tr>
+        <tr><td class="hz">第一反应</td><td>dì-yī fǎnyìng</td><td>первая реакция</td><td>口语/高频</td></tr>
+        <tr><td class="hz">化学反应</td><td>huàxué fǎnyìng</td><td>химическая реакция</td><td>术语</td></tr>
+        <tr><td class="hz">反应速度</td><td>fǎnyìng sùdù</td><td>скорость реакции</td><td>固定搭配</td></tr>
+        <tr><td class="hz">引起反应</td><td>yǐnqǐ fǎnyìng</td><td>вызвать реакцию</td><td>书面</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">听到这个消息，他的第一反应是沉默。</div>
+      <div class="py">Tīngdào zhège xiāoxi, tā de dì-yī fǎnyìng shì chénmò.</div>
+      <div class="ru">Услышав эту новость, его первой реакцией было молчание.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这个新政策在社会上引起了强烈的反应。</div>
+      <div class="py">Zhège xīn zhèngcè zài shèhuì shàng yǐnqǐle qiángliè de fǎnyìng.</div>
+      <div class="ru">Эта новая политика вызвала в обществе бурную реакцию.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">反</span> — «обратно» (см. выше).</li>
+      <li><span class="hanzi-key">应</span> — «отвечать, откликаться» (广 + 心-подобный низ). Сердце откликается. Легко спутать с 映 — у 应 нет 日.</li>
+      <li>Вместе: «ответный отклик» = реакция.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>反应 — реакция (на событие/стимул)</li>
+      <li>反映 — отражать; доводить мнение (см. выше)</li>
+      <li>回应 — отклик, ответ (более формально, на вопрос/запрос)</li>
+      <li>Пример-сравнение: 他的<span class="hanzi-key">反应</span>很快 (у него быстрая реакция) ≠ 他向上级<span class="hanzi-key">反映</span>了情况 (он доложил начальству). Разница — в первом иероглифе-ключе: 忄 vs 言.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> На HSK 6 оба слова стоят рядом в одном задании — и это не случайно. Произношение одинаковое, различие только на письме. Запомни ключ: 反映 = «говорить» (доводить), 反应 = «чувствовать/откликаться» (реакция). Если в предложении есть 向…反映 — точно 反映.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>他的______速度比一般人快。</li>
+      <li>群众向有关部门______了这个问题。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 反应 · 2. 反映</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 面对突发事件，保持冷静的反应能力至关重要。<br><span class="py">Miànduì tūfā shìjiàn, bǎochí lěngjìng de fǎnyìng nénglì zhìguān zhòngyào.</span><br><span class="ru">Перед лицом внезапных событий способность сохранять хладнокровную реакцию критически важна.</span></div>
+</section>
+
+<div class="part-banner">Часть 2 из 3 — Слов: 24 (продолжение)</div>
+
+<!-- 7 -->
+<section class="word" id="w7">
+  <h2><span class="emoji">💪</span><span class="hanzi">毅然</span><span class="pinyin">yìrán</span><span class="trans">— решительно, твёрдо (о волевом решении)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: наречие</div>
+    <div><span class="check">✅</span> Китайское толкование: 非常坚决地（做出某个重大决定）。</div>
+    <div><span class="check">✅</span> Русский перевод: решительно, твёрдо, без колебаний</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">毅然决定</td><td>yìrán juédìng</td><td>твёрдо решить</td><td>固定搭配，高频</td></tr>
+        <tr><td class="hz">毅然放弃</td><td>yìrán fàngqì</td><td>решительно отказаться</td><td>固定搭配</td></tr>
+        <tr><td class="hz">毅然选择</td><td>yìrán xuǎnzé</td><td>решительно выбрать</td><td>固定搭配</td></tr>
+        <tr><td class="hz">毅然投身</td><td>yìrán tóushēn</td><td>решительно посвятить себя</td><td>书面</td></tr>
+        <tr><td class="hz">毅然分手</td><td>yìrán fēnshǒu</td><td>решительно расстаться</td><td>口语/生活</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">她发现男朋友有了别的女朋友以后，毅然和他分了手。</div>
+      <div class="py">Tā fāxiàn nánpéngyou yǒule bié de nǚpéngyou yǐhòu, yìrán hé tā fēnle shǒu.</div>
+      <div class="ru">Узнав, что у парня появилась другая, она решительно с ним рассталась.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">大学毕业后，他毅然决定去中国学中文。</div>
+      <div class="py">Dàxué bìyè hòu, tā yìrán juédìng qù Zhōngguó xué Zhōngwén.</div>
+      <div class="ru">После университета он твёрдо решил поехать в Китай учить китайский.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">毅</span> — «твёрдая воля» (殳 оружие + 豙-подобный низ). Картинка: оружие + решимость. Легко спутать с 意 (смысл) — у 毅 слева 殳, у 意 сверху 音.</li>
+      <li><span class="hanzi-key">然</span> — «так, таким образом» (суффикс наречия). Частый элемент: 自然, 果然, 固然 — запомни один раз как «-образом».</li>
+      <li>Вместе: «волевым образом» = решительно.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>毅然 — решительно (о крупном жизненном решении, с усилием воли)</li>
+      <li>果然 — действительно, как и предполагалось (подтверждение догадки)</li>
+      <li>固然 — конечно, правда (уступка: «конечно…, но»)</li>
+      <li>自然 — естественно, само собой</li>
+      <li>Пример-сравнение: 他<span class="hanzi-key">毅然</span>放弃了高薪工作 (он решительно отказался от высокооплачиваемой работы — волевое решение) ≠ 昨天淋了雨，今天<span class="hanzi-key">果然</span>感冒了 (вчера промок — сегодня, как и ожидалось, простудился — подтверждение догадки). Нельзя: ❌ 毅然感冒 — это не решение воли.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина дала железный тест: 毅然 = «очень твёрдое решение, большой шаг». Если это не волевой выбор (простуда, результат), то не 毅然. Из четырёх 然-слов на HSK 6 путают именно 毅然/果然/固然 — различай по смыслу: воля / подтверждение / уступка.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>为了理想，他______辞去了稳定的工作。</li>
+      <li>天气预报说下雨，______下午就下起了大雨。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 毅然 · 2. 果然</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 面对人生的十字路口，她毅然选择了那条更艰难的路。<br><span class="py">Miànduì rénshēng de shízìlùkǒu, tā yìrán xuǎnzéle nà tiáo gèng jiānnán de lù.</span><br><span class="ru">На жизненном перекрёстке она решительно выбрала более трудный путь.</span></div>
+</section>
+
+<!-- 8 -->
+<section class="word" id="w8">
+  <h2><span class="emoji">✅</span><span class="hanzi">果然</span><span class="pinyin">guǒrán</span><span class="trans">— действительно, как и предполагалось</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: наречие</div>
+    <div><span class="check">✅</span> Китайское толкование: 事情的结果和预想的一样。</div>
+    <div><span class="check">✅</span> Русский перевод: действительно, как и ожидалось, и вправду</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">果然如此</td><td>guǒrán rúcǐ</td><td>действительно так</td><td>固定搭配</td></tr>
+        <tr><td class="hz">果然不出所料</td><td>guǒrán bù chū suǒliào</td><td>как и предполагалось</td><td>书面/成语性</td></tr>
+        <tr><td class="hz">果然名不虚传</td><td>guǒrán míng bù xū chuán</td><td>слава не напрасна</td><td>书面</td></tr>
+        <tr><td class="hz">果然有效</td><td>guǒrán yǒuxiào</td><td>действительно эффективно</td><td>口语/高频</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">昨天他淋了雨，今天果然感冒了。</div>
+      <div class="py">Zuótiān tā línle yǔ, jīntiān guǒrán gǎnmào le.</div>
+      <div class="ru">Вчера он промок под дождём — сегодня, как и ожидалось, простудился.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这家餐厅果然名不虚传，菜特别好吃。</div>
+      <div class="py">Zhè jiā cāntīng guǒrán míng bù xū chuán, cài tèbié hǎochī.</div>
+      <div class="ru">Этот ресторан действительно оправдал славу — еда очень вкусная.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">果</span> — «плод, результат» (田 поле + 木 дерево). Дерево даёт плод → результат. Цельная картинка.</li>
+      <li><span class="hanzi-key">然</span> — «так, таким образом» (см. выше).</li>
+      <li>Вместе: «как плод/результат показал» = как и предполагалось.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>果然 — как и предполагалось (догадка подтвердилась)</li>
+      <li>竟然 — оказывается, вопреки ожиданиям (неожиданно)</li>
+      <li>居然 — надо же, как ни странно (удивление)</li>
+      <li>固然 — конечно (уступка)</li>
+      <li>Пример-сравнение: 我猜他会迟到，他<span class="hanzi-key">果然</span>迟到了 (я предполагал — он опоздал, догадка верна) ≠ 他<span class="hanzi-key">竟然</span>迟到了 (он, оказывается, опоздал — неожиданно). Направление ожидания противоположное!</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина: «果然 — я猜有一个结果, и результат совпал». Если ожидание НЕ совпало — это 竟然/居然. На HSK 6 это любимая пара-ловушка: 果然 (ожидаемо) vs 竟然 (неожиданно).</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>我早就说他会成功，他______成功了。</li>
+      <li>这么难的题，他______做出来了！</li>
+    </ol>
+    <div class="answers">Ответы: 1. 果然 · 2. 竟然</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 经过反复实验，这种新药果然显示出显著的疗效。<br><span class="py">Jīngguò fǎnfù shíyàn, zhè zhǒng xīn yào guǒrán xiǎnshì chū xiǎnzhù de liáoxiào.</span><br><span class="ru">После многократных экспериментов новое лекарство действительно показало заметный эффект.</span></div>
+</section>
+
+<!-- 9 -->
+<section class="word" id="w9">
+  <h2><span class="emoji">🤔</span><span class="hanzi">固然</span><span class="pinyin">gùrán</span><span class="trans">— конечно, правда (уступка: «конечно…, но»)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: наречие/союз</div>
+    <div><span class="check">✅</span> Китайское толкование: 承认某个事实是对的，但后面往往有转折。</div>
+    <div><span class="check">✅</span> Русский перевод: конечно, правда, разумеется (с последующим «но»)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">固然…但是…</td><td>gùrán…dànshì…</td><td>конечно…, но…</td><td>固定框架，高频</td></tr>
+        <tr><td class="hz">固然重要</td><td>gùrán zhòngyào</td><td>конечно, важно</td><td>固定搭配</td></tr>
+        <tr><td class="hz">固然不错</td><td>gùrán bùcuò</td><td>конечно, неплохо</td><td>口语</td></tr>
+        <tr><td class="hz">固然有道理</td><td>gùrán yǒu dàolǐ</td><td>конечно, есть резон</td><td>书面</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">北京固然好，但是气候太干燥了。</div>
+      <div class="py">Běijīng gùrán hǎo, dànshì qìhòu tài gānzào le.</div>
+      <div class="ru">Пекин, конечно, хорош, но климат слишком сухой.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">经验固然重要，但只靠经验工作也是不行的。</div>
+      <div class="py">Jīngyàn gùrán zhòngyào, dàn zhǐ kào jīngyàn gōngzuò yě shì bù xíng de.</div>
+      <div class="ru">Опыт, конечно, важен, но работать, полагаясь только на опыт, тоже нельзя.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">固</span> — «твёрдый, прочный» (囗 ограда + 古 древний). Древняя ограда → прочно. Легко спутать с 国 (страна) — у 国 внутри 玉, у 固 внутри 古.</li>
+      <li><span class="hanzi-key">然</span> — «так» (см. выше).</li>
+      <li>Вместе: «прочно так» = признаём факт, но…</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>固然 — конечно (уступка, дальше обязательно 但/但是/可是)</li>
+      <li>虽然 — хотя (тоже уступка, но нейтральнее и чаще в разговоре)</li>
+      <li>当然 — разумеется (без обязательного «но»)</li>
+      <li>Пример-сравнение: <span class="hanzi-key">固然</span>…但… (книжнее, эссе) vs <span class="hanzi-key">虽然</span>…但是… (нейтральное, разговорное). Шэнь Амина: «固然往往后面有但». Если «но» нет — скорее 当然.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 固然 — маркер эссе HSK 6: «X固然重要，但Y更…». Это готовая конструкция для дебатов и письма. Запомни: 固然 почти всегда тянет за собой 但/但是. Без «но» — слово повисает.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>金钱______重要，但健康更重要。</li>
+      <li>他______同意，但心里并不高兴。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 固然 · 2. 虽然</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 天赋固然重要，但后天的努力往往才是决定成败的关键。<br><span class="py">Tiānfù gùrán zhòngyào, dàn hòutiān de nǔlì wǎngwǎng cái shì juédìng chéngbài de guānjiàn.</span><br><span class="ru">Природные данные, конечно, важны, но решающим для успеха часто оказывается последующий труд.</span></div>
+</section>
+
+<!-- 10 -->
+<section class="word" id="w10">
+  <h2><span class="emoji">🧹</span><span class="hanzi">整顿</span><span class="pinyin">zhěngdùn</span><span class="trans">— наводить порядок, оздоровлять (негативные явления)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол</div>
+    <div><span class="check">✅</span> Китайское толкование: 对不好的风气、秩序、市场等进行整理和改革。</div>
+    <div><span class="check">✅</span> Русский перевод: наводить порядок, оздоровлять, приводить в порядок (рынок, дисциплину)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">整顿风气</td><td>zhěngdùn fēngqì</td><td>оздоровить нравы/атмосферу</td><td>固定搭配</td></tr>
+        <tr><td class="hz">整顿市场</td><td>zhěngdùn shìchǎng</td><td>оздоровить рынок</td><td>新闻/官方</td></tr>
+        <tr><td class="hz">整顿秩序</td><td>zhěngdùn zhìxù</td><td>навести порядок</td><td>固定搭配</td></tr>
+        <tr><td class="hz">整顿纪律</td><td>zhěngdùn jìlǜ</td><td>укрепить дисциплину</td><td>官方</td></tr>
+        <tr><td class="hz">加以整顿</td><td>jiāyǐ zhěngdùn</td><td>подвергнуть оздоровлению</td><td>书面</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">学校的食堂要整顿一下，每个学生每天喝一杯奶茶的习惯不好。</div>
+      <div class="py">Xuéxiào de shítáng yào zhěngdùn yīxià, měi gè xuésheng měitiān hē yī bēi nǎichá de xíguàn bù hǎo.</div>
+      <div class="ru">Столовую школы надо привести в порядок — привычка каждого ученика пить по стакану чая с молоком каждый день плоха.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">有关部门正在整顿乱收费现象。</div>
+      <div class="py">Yǒuguān bùmén zhèngzài zhěngdùn luàn shōufèi xiànxiàng.</div>
+      <div class="ru">Компетентные органы наводят порядок с произвольными поборами.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">整</span> — «целый, приводить в порядок» (敕 + 正). Выправить до целого. Легко спутать с 正 (прямой) — у 整 сверху 敕.</li>
+      <li><span class="hanzi-key">顿</span> — «пауза, упорядочить» (屯 + 页). Картинка: остановиться и выровнять. Легко спутать с 吨 (тонна) — у 吨 口 слева.</li>
+      <li>Вместе: «выправить до целого порядка» = оздоровить.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>整顿 — оздоровить негативные явления (风气, 市场, 纪律) — властный, официальный</li>
+      <li>整理 — привести в порядок вещи/материалы (комнату, данные) — бытовой</li>
+      <li>订正 — исправить ошибки (в тексте, расчётах)</li>
+      <li>Пример-сравнение: <span class="hanzi-key">整顿</span>市场 (оздоровить рынок — борьба с плохим) ≠ <span class="hanzi-key">整理</span>房间 (убрать комнату — навести порядок в вещах) ≠ <span class="hanzi-key">订正</span>错误 (исправить ошибки). Шэнь Амина: «整顿 — это когда плохое явление надо перевернуть».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 整顿 — слово с властным оттенком: его берут, когда борются с плохим (风气, 乱收费). Для комнаты и бумаг — только 整理. Для ошибок в работе — 订正. На HSK 6 это чистая проверка коллокации.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>政府决定______市场秩序，打击假冒伪劣产品。</li>
+      <li>请把桌上的文件______一下。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 整顿 · 2. 整理</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 只有下决心整顿行业风气，才能赢得公众的信任。<br><span class="py">Zhǐyǒu xià juéxīn zhěngdùn hángyè fēngqì, cái néng yíngdé gōngzhòng de xìnrèn.</span><br><span class="ru">Только решив оздоровить нравы в отрасли, можно завоевать доверие публики.</span></div>
+</section>
+
+<!-- 11 -->
+<section class="word" id="w11">
+  <h2><span class="emoji">📁</span><span class="hanzi">整理</span><span class="pinyin">zhěnglǐ</span><span class="trans">— приводить в порядок, систематизировать</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол</div>
+    <div><span class="check">✅</span> Китайское толкование: 把杂乱的东西收拾得有条理。</div>
+    <div><span class="check">✅</span> Русский перевод: приводить в порядок, разбирать, систематизировать</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">整理房间</td><td>zhěnglǐ fángjiān</td><td>убрать комнату</td><td>口语/高频</td></tr>
+        <tr><td class="hz">整理资料</td><td>zhěnglǐ zīliào</td><td>систематизировать материалы</td><td>固定搭配</td></tr>
+        <tr><td class="hz">整理思路</td><td>zhěnglǐ sīlù</td><td>упорядочить мысли</td><td>固定搭配</td></tr>
+        <tr><td class="hz">整理行李</td><td>zhěnglǐ xíngli</td><td>собрать/разобрать багаж</td><td>生活</td></tr>
+        <tr><td class="hz">加以整理</td><td>jiāyǐ zhěnglǐ</td><td>подвергнуть упорядочению</td><td>书面</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">考试前，他把笔记重新整理了一遍。</div>
+      <div class="py">Kǎoshì qián, tā bǎ bǐjì chóngxīn zhěnglǐle yī biàn.</div>
+      <div class="ru">Перед экзаменом он заново систематизировал конспекты.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">房间太乱了，我得花一个小时整理。</div>
+      <div class="py">Fángjiān tài luàn le, wǒ děi huā yī gè xiǎoshí zhěnglǐ.</div>
+      <div class="ru">Комната слишком захламлена, мне нужно час на уборку.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">整</span> — «целый, выправить» (см. выше).</li>
+      <li><span class="hanzi-key">理</span> — «упорядочивать» (王 нефрит + 里 внутри). Нефрит внутри → приводить в порядок. Частый элемент: 管理, 处理 — запомни.</li>
+      <li>Вместе: «выправить до порядка» = систематизировать.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>整理 — упорядочить вещи/материалы (бытовое, нейтральное)</li>
+      <li>整顿 — оздоровить негативные явления (официальное, властное)</li>
+      <li>收拾 — прибрать, убрать (разговорное, бытовое)</li>
+      <li>Пример-сравнение: <span class="hanzi-key">整理</span>资料 (разобрать материалы) ≠ <span class="hanzi-key">整顿</span>纪律 (укрепить дисциплину) ≠ <span class="hanzi-key">收拾</span>桌子 (прибрать стол — самое разговорное).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 整理 — «сделать из хаоса порядок» без борьбы и власти. 整顿 — с борьбой против плохого. Если объект — вещи, бумаги, мысли — 整理. Если объект — 风气/市场/纪律 — 整顿.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>他花了一晚上______这些数据。</li>
+      <li>政府开始______交通秩序。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 整理 · 2. 整顿</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 善于整理信息，是现代人必备的一项能力。<br><span class="py">Shànyú zhěnglǐ xìnxī, shì xiàndài rén bìbèi de yī xiàng nénglì.</span><br><span class="ru">Умение систематизировать информацию — обязательный навык современного человека.</span></div>
+</section>
+
+<!-- 12 -->
+<section class="word" id="w12">
+  <h2><span class="emoji">🐦</span><span class="hanzi">一鸣惊人</span><span class="pinyin">yī míng jīng rén</span><span class="trans">— поразить всех с первого раза</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: чэнъюй (идиома)</div>
+    <div><span class="check">✅</span> Китайское толкование: 平时没有特别表现，一下子做出惊人的成绩。</div>
+    <div><span class="check">✅</span> Русский перевод: поразить всех одним ударом; прогреметь с первого раза</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">一鸣惊人</td><td>yī míng jīng rén</td><td>поразить всех</td><td>固定成语</td></tr>
+        <tr><td class="hz">不鸣则已，一鸣惊人</td><td>bù míng zé yǐ, yī míng jīng rén</td><td>молчал — так молчал, а заговорил — так поразил</td><td>完整成语，书面</td></tr>
+        <tr><td class="hz">一举成名</td><td>yī jǔ chéng míng</td><td>прославиться одним деянием</td><td>近义成语</td></tr>
+        <tr><td class="hz">一炮而红</td><td>yī pào ér hóng</td><td>прогреметь с первого раза</td><td>口语/娱乐</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">许多有抱负的人都忽视积少成多的道理，一心只想一鸣惊人。</div>
+      <div class="py">Xǔduō yǒu bàofù de rén dōu hūshì jī shǎo chéng duō de dàolǐ, yīxīn zhǐ xiǎng yī míng jīng rén.</div>
+      <div class="ru">Многие честолюбивые люди пренебрегают принципом «из малого складывается много» и думают лишь о том, чтобы поразить всех разом.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这位年轻导演的第一部电影就一鸣惊人，拿下了国际大奖。</div>
+      <div class="py">Zhè wèi niánqīng dǎoyǎn de dì-yī bù diànyǐng jiù yī míng jīng rén, náxiàle guójì dàjiǎng.</div>
+      <div class="ru">Первый же фильм этого молодого режиссёра прогремел — он взял международную премию.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">鸣</span> — «кричать, издавать звук» (口 рот + 鸟 птица). Птица ртом → крик. Легко спутать с 呜 (плакать) — у 呜 乌, у 鸣 鸟.</li>
+      <li><span class="hanzi-key">惊</span> — «удивлять» (忄 сердце + 京 столица). Сердце в столице → потрясение. Частый элемент: 惊人, 惊喜.</li>
+      <li>Картинка: птица молчала-молчала — и вдруг крикнула так, что все ахнули.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>一鸣惊人 — поразить с первого раза (после молчания/незаметности)</li>
+      <li>一举成名 — прославиться одним деянием (акцент на славе)</li>
+      <li>脱颖而出 — выделиться из массы (акцент на превосходстве)</li>
+      <li>Пример-сравнение: 他平时默默无闻，这次比赛却<span class="hanzi-key">一鸣惊人</span> (был незаметен — на соревновании поразил) ≠ 她在众多选手中<span class="hanzi-key">脱颖而出</span> (выделилась среди многих — без оттенка «молчал до этого»).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 一鸣惊人 — про контраст «молчал → прогремел». Шэнь Амина дала полную форму: 不鸣则已，一鸣惊人 (не кричал — так не кричал; крикнул — так поразил). В эссе это хороший образ против «пустой славы»: 成功不是一鸣惊人，而是日积月累.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>他默默努力了十年，终于在这次比赛中______。</li>
+      <li>她凭借出色的表现，在面试中______。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 一鸣惊人 · 2. 脱颖而出</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 真正的成功从来不是一鸣惊人，而是长期积累的结果。<br><span class="py">Zhēnzhèng de chénggōng cónglái bù shì yī míng jīng rén, ér shì chángqī jīlěi de jiéguǒ.</span><br><span class="ru">Настоящий успех — никогда не внезапный прорыв, а результат долгого накопления.</span></div>
+</section>
+
+<!-- 13 -->
+<section class="word" id="w13">
+  <h2><span class="emoji">📊</span><span class="hanzi">可观</span><span class="pinyin">kěguān</span><span class="trans">— внушительный, значительный (о количестве); достойный зрелища</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: прилагательное</div>
+    <div><span class="check">✅</span> Китайское толкование: 数量很大，或景象值得看。</div>
+    <div><span class="check">✅</span> Русский перевод: внушительный, значительный (о сумме/количестве); впечатляющий</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">可观的收入</td><td>kěguān de shōurù</td><td>внушительный доход</td><td>固定搭配，高频</td></tr>
+        <tr><td class="hz">数量可观</td><td>shùliàng kěguān</td><td>количество внушительно</td><td>书面</td></tr>
+        <tr><td class="hz">可观的收获</td><td>kěguān de shōuhuò</td><td>значительный урожай/результат</td><td>固定搭配</td></tr>
+        <tr><td class="hz">利润可观</td><td>lìrùn kěguān</td><td>прибыль значительна</td><td>新闻/商务</td></tr>
+        <tr><td class="hz">颇为可观</td><td>pō wéi kěguān</td><td>довольно внушительно</td><td>书面</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">直到有一天，他看见比自己开始晚、天资差的人都已经有了可观的收获。</div>
+      <div class="py">Zhídào yǒu yī tiān, tā kànjiàn bǐ zìjǐ kāishǐ wǎn, tiānzī chà de rén dōu yǐjīng yǒule kěguān de shōuhuò.</div>
+      <div class="ru">Пока однажды не увидел, что люди, начавшие позже и менее одарённые, уже получили внушительные результаты.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这家公司今年的利润相当可观。</div>
+      <div class="py">Zhè jiā gōngsī jīnnián de lìrùn xiāngdāng kěguān.</div>
+      <div class="ru">Прибыль этой компании в этом году довольно внушительна.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">可</span> — «можно, достойный» (丁 + 口). Цельная картинка: рот может → достойно.</li>
+      <li><span class="hanzi-key">观</span> — «смотреть» (见 видеть + 雚-подобная часть). Смотреть → зрелище. Частый элемент: 观看, 乐观.</li>
+      <li>Вместе: «достойно того, чтобы смотреть» → впечатляющий по размеру.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>可观 — внушительный по количеству (доход, прибыль,收获); также «достойный зрелища»</li>
+      <li>壮观 — величественный, грандиозный (вид, пейзаж, 长城)</li>
+      <li>宏观 — макро- (宏观经济学); антоним 微观</li>
+      <li>美观 — красивый внешне (о вещи)</li>
+      <li>Пример-сравнение: <span class="hanzi-key">可观</span>的收入 (внушительный доход — про цифру) ≠ <span class="hanzi-key">壮观</span>的景色 (грандиозный пейзаж — про вид) ≠ <span class="hanzi-key">宏观</span>经济 (макроэкономика — про масштаб) ≠ <span class="hanzi-key">美观</span>的设计 (красивый дизайн — про внешность). Шэнь Амина: «只有可观的收获很多».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Четыре «观»-слова — классическая ловушка HSK 6 на один пропуск. Ключ: 可观 = цифра/количество, 壮观 = вид, 宏观 = масштаб (↔微观), 美观 = внешняя красота. Если речь о «много денег/результатов» — только 可观.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>他通过投资获得了______的收益。</li>
+      <li>站在山顶，眼前的景色十分______。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 可观 · 2. 壮观</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 随着电商的发展，不少年轻人获得了可观的额外收入。<br><span class="py">Suízhe diànshāng de fāzhǎn, bùshǎo niánqīngrén huòdéle kěguān de èwài shōurù.</span><br><span class="ru">С развитием электронной коммерции немало молодых людей получило внушительный дополнительный доход.</span></div>
+</section>
+
+<!-- 14 -->
+<section class="word" id="w14">
+  <h2><span class="emoji">🕳️</span><span class="hanzi">一无所有</span><span class="pinyin">yī wú suǒ yǒu</span><span class="trans">— не иметь ничего, быть ни с чем</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: чэнъюй (идиома), прилагательное/предикат</div>
+    <div><span class="check">✅</span> Китайское толкование: 什么都没有，非常贫穷或空无。</div>
+    <div><span class="check">✅</span> Русский перевод: не иметь ничего; остаться ни с чем</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">一无所有</td><td>yī wú suǒ yǒu</td><td>ничего не иметь</td><td>固定成语</td></tr>
+        <tr><td class="hz">变得一无所有</td><td>biànde yī wú suǒ yǒu</td><td>остаться ни с чем</td><td>固定搭配</td></tr>
+        <tr><td class="hz">除了…一无所有</td><td>chúle… yī wú suǒ yǒu</td><td>кроме… — ничего</td><td>句式</td></tr>
+        <tr><td class="hz">一无所有的年轻人</td><td>yī wú suǒ yǒu de niánqīngrén</td><td>молодой человек без ничего</td><td>书面/文学</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">还发现自己这片园地上一无所有。</div>
+      <div class="py">Hái fāxiàn zìjǐ zhè piàn yuándì shàng yī wú suǒ yǒu.</div>
+      <div class="ru">И обнаружил, что на его собственном участке — ровным счётом ничего.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">创业失败后，他几乎变得一无所有。</div>
+      <div class="py">Chuàngyè shībài hòu, tā jīhū biànde yī wú suǒ yǒu.</div>
+      <div class="ru">После провала стартапа он остался почти ни с чем.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">一</span> — «один» — цельная черта.</li>
+      <li><span class="hanzi-key">无</span> — «нет» (二 + 儿-подобное). Цельная картинка: «не иметь».</li>
+      <li><span class="hanzi-key">所有</span> — «всё, что есть» (所 + 有). Вместе: «одного нет из всего, что есть» = ничего.</li>
+      <li>Формула: 一 + 无 + 所有 — «ни одного из всех имеющихся».</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>一无所有 — ничего не иметь (акцент на полном отсутствии имущества)</li>
+      <li>一无所知 — ничего не знать (о знании)</li>
+      <li>一无所获 — ничего не добиться (о результате)</li>
+      <li>半途而废 — бросить на полпути (о процессе)</li>
+      <li>Пример-сравнение: 他破产后<span class="hanzi-key">一无所有</span> (после банкротства у него ничего нет — об имуществе) ≠ 他对这件事<span class="hanzi-key">一无所知</span> (он об этом ничего не знает — о знании) ≠ 这次调查<span class="hanzi-key">一无所获</span> (расследование ничего не дало — о результате).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Семья 一无所X — готовая матрица HSK 6: 一无所有 (имущество), 一无所知 (знание), 一无所获 (результат). Подставляй нужный иероглиф по смыслу. В эссе хорошо звучит контраст: 从一无所有到事业有成.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>一场大火让他变得______。</li>
+      <li>我对这件事______，你别问我。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 一无所有 · 2. 一无所知</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 许多企业家都是从一无所有开始，靠坚持和智慧走向成功。<br><span class="py">Xǔduō qǐyèjiā dōu shì cóng yī wú suǒ yǒu kāishǐ, kào jiānchí hé zhìhuì zǒuxiàng chénggōng.</span><br><span class="ru">Многие предприниматели начинали с нуля и шли к успеху благодаря настойчивости и уму.</span></div>
+</section>
+
+<!-- 15 -->
+<section class="word" id="w15">
+  <h2><span class="emoji">🛑</span><span class="hanzi">半途而废</span><span class="pinyin">bàn tú ér fèi</span><span class="trans">— бросить на полпути</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: чэнъюй (идиома)</div>
+    <div><span class="check">✅</span> Китайское толкование: 事情做到一半就停止，不坚持到底。</div>
+    <div><span class="check">✅</span> Русский перевод: бросить дело на полпути; не довести до конца</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">半途而废</td><td>bàn tú ér fèi</td><td>бросить на полпути</td><td>固定成语</td></tr>
+        <tr><td class="hz">不能半途而废</td><td>bù néng bàn tú ér fèi</td><td>нельзя бросать на полпути</td><td>固定搭配</td></tr>
+        <tr><td class="hz">做事半途而废</td><td>zuòshì bàn tú ér fèi</td><td>бросать дела незавершёнными</td><td>固定搭配</td></tr>
+        <tr><td class="hz">坚持到底，不半途而废</td><td>jiānchí dàodǐ, bù bàn tú ér fèi</td><td>довести до конца, не бросать</td><td>书面/励志</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">这些都不想半途而废，做了一半就停止了。</div>
+      <div class="py">Zhèxiē dōu bù xiǎng bàn tú ér fèi, zuòle yībàn jiù tíngzhǐle.</div>
+      <div class="ru">Никто не хочет бросать на полпути — сделать половину и остановиться.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">学外语最忌讳半途而废。</div>
+      <div class="py">Xué wàiyǔ zuì jìhuì bàn tú ér fèi.</div>
+      <div class="ru">В изучении иностранного языка хуже всего — бросить на полпути.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">半</span> — «половина» — цельная картинка: черта делит надвое.</li>
+      <li><span class="hanzi-key">途</span> — «путь» (辶 идти + 余 остаток). Дорога. Легко спутать с 涂 (мазать) — у 涂 氵.</li>
+      <li><span class="hanzi-key">废</span> — «бросать, забрасывать» (广 + 发). Картинка: заброшенное здание. Частый элемент: 废话, 废品.</li>
+      <li>Вместе: «на половине пути — и забросить».</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>半途而废 — бросить на полпути (о деле)</li>
+      <li>有始无终 — есть начало, нет конца (книжнее, о характере)</li>
+      <li>坚持不懈 — настойчиво не отступать (антоним)</li>
+      <li>Пример-сравнение: 他做事总是<span class="hanzi-key">半途而废</span> (он всегда бросает дела на полпути — конкретное дело) ≠ 这个人<span class="hanzi-key">有始无终</span> (у этого человека нет завершённости — черта характера, книжнее).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 半途而废 — антоним 坚持到底 / 有始有终. В эссе HSK 6 это готовый аргумент: 无论做什么事，都不能半途而废. Запомни иероглиф 废 — он же в 废话 (пустые слова), 废品 (отходы): везде «негодное/брошенное».</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>学习需要毅力，不能______。</li>
+      <li>他做事有始有终，从不______。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 半途而废 · 2. 半途而废</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 成功往往属于那些能够坚持到底、绝不半途而废的人。<br><span class="py">Chénggōng wǎngwǎng shǔyú nàxiē nénggòu jiānchí dàodǐ, jué bù bàn tú ér fèi de rén.</span><br><span class="ru">Успех обычно принадлежит тем, кто способен дойти до конца и никогда не бросает на полпути.</span></div>
+</section>
+
+<!-- 16 -->
+<section class="word" id="w16">
+  <h2><span class="emoji">🧵</span><span class="hanzi">有条不紊</span><span class="pinyin">yǒu tiáo bù wěn</span><span class="trans">— чётко и без суеты, размеренно</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: чэнъюй (идиома)</div>
+    <div><span class="check">✅</span> Китайское толкование: 做事很有条理，一点也不乱。</div>
+    <div><span class="check">✅</span> Русский перевод: размеренно и чётко; без суеты, по порядку</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">有条不紊</td><td>yǒu tiáo bù wěn</td><td>чётко и размеренно</td><td>固定成语</td></tr>
+        <tr><td class="hz">工作有条不紊</td><td>gōngzuò yǒu tiáo bù wěn</td><td>работа идёт размеренно</td><td>固定搭配</td></tr>
+        <tr><td class="hz">有条不紊地进行</td><td>yǒu tiáo bù wěn de jìnxíng</td><td>проходить организованно</td><td>书面/新闻</td></tr>
+        <tr><td class="hz">井然有序</td><td>jǐngrán yǒuxù</td><td>в образцовом порядке</td><td>近义成语</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">整个救援工作有条不紊地进行着。</div>
+      <div class="py">Zhěnggè jiùyuán gōngzuò yǒu tiáo bù wěn de jìnxíngzhe.</div>
+      <div class="ru">Вся спасательная операция шла чётко и размеренно.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">她做事一向有条不紊，从不手忙脚乱。</div>
+      <div class="py">Tā zuòshì yīxiàng yǒu tiáo bù wěn, cóng bù shǒumáng jiǎoluàn.</div>
+      <div class="ru">Она всегда работает размеренно и никогда не суетится.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">条</span> — «полоска, порядок» (夂 + 木). Ветка → порядок. Частый элемент: 条件, 条理.</li>
+      <li><span class="hanzi-key">紊</span> — «спутанный» (文 + 糸). Нитки в беспорядке. Ключ: отрицание 不 + 紊 = «не спутанный».</li>
+      <li>Формула: <b>有条(理) + 不紊(乱)</b> = есть порядок, нет хаоса.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>有条不紊 — размеренно и чётко (о процессе/работе)</li>
+      <li>井然有序 — в образцовом порядке (о пространстве/организации, книжнее)</li>
+      <li>井井有条 — аккуратно и по порядку (о вещах/делах)</li>
+      <li>Пример-сравнение: 救援工作<span class="hanzi-key">有条不紊</span>地进行 (операция идёт размеренно — о процессе) ≠ 会场布置得<span class="hanzi-key">井然有序</span> (зал организован образцово — о пространстве).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 有条不紊 — про процесс, который идёт без суеты. В паре с антонимом 手忙脚乱 (суетиться, терять голову) это готовый контраст для эссе: 越是紧急，越要有条不紊.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>尽管情况紧急，医护人员仍然______地工作。</li>
+      <li>他遇到突发情况总是______。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 有条不紊 · 2. 手忙脚乱</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 面对复杂局面，只有有条不紊地推进，才能避免忙中出错。<br><span class="py">Miànduì fùzá júmiàn, zhǐyǒu yǒu tiáo bù wěn de tuījìn, cái néng bìmiǎn máng zhōng chū cuò.</span><br><span class="ru">Перед лицом сложной ситуации только размеренное продвижение позволяет избежать ошибок из-за спешки.</span></div>
+</section>
+
+<div class="part-banner">Часть 3 из 3 — Слов: 15 (окончание)</div>
+
+<!-- 17 -->
+<section class="word" id="w17">
+  <h2><span class="emoji">🌐</span><span class="hanzi">众所周知</span><span class="pinyin">zhòng suǒ zhōu zhī</span><span class="trans">— как всем известно</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: чэнъюй (идиома), вводная фраза</div>
+    <div><span class="check">✅</span> Китайское толкование: 所有的人都知道的事情。</div>
+    <div><span class="check">✅</span> Русский перевод: как всем известно; общеизвестно</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">众所周知</td><td>zhòng suǒ zhōu zhī</td><td>как всем известно</td><td>固定成语，书面/新闻</td></tr>
+        <tr><td class="hz">众所周知的事实</td><td>zhòng suǒ zhōu zhī de shìshí</td><td>общеизвестный факт</td><td>固定搭配</td></tr>
+        <tr><td class="hz">众所周知，…</td><td>zhòng suǒ zhōu zhī, …</td><td>как известно, …</td><td>вводная конструкция</td></tr>
+        <tr><td class="hz">尽人皆知</td><td>jìn rén jiē zhī</td><td>всем до единого известно</td><td>近义成语</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">众所周知，吸烟有害健康。</div>
+      <div class="py">Zhòng suǒ zhōu zhī, xīyān yǒuhài jiànkāng.</div>
+      <div class="ru">Как всем известно, курение вредит здоровью.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这是一件众所周知的事实，不需要再解释。</div>
+      <div class="py">Zhè shì yī jiàn zhòng suǒ zhōu zhī de shìshí, bù xūyào zài jiěshì.</div>
+      <div class="ru">Это общеизвестный факт, не нужно его объяснять.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">众</span> — «множество, толпа» (三个人 сверху). Три человека = все. Цельная картинка.</li>
+      <li><span class="hanzi-key">所</span> — «то, что» (户 + 斤). Частый служебный элемент: 所以, 所有.</li>
+      <li><span class="hanzi-key">周</span> — «кругом, повсюду» (冂 + 土 + 口). Обойти кругом. Легко спутать с 同 (одинаковый) — у 周 внутри 土+口.</li>
+      <li><span class="hanzi-key">知</span> — «знать» (矢 + 口). Стрела в цель → знание.</li>
+      <li>Формула: <b>众(все) + 所(то, что) + 周(повсюду) + 知(знают)</b> = «то, что знают все повсюду».</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>众所周知 — как всем известно (вводная фраза для эссе)</li>
+      <li>尽人皆知 — известно каждому (сильнее, книжнее)</li>
+      <li>不言而喻 — само собой разумеется (не требует доказательств)</li>
+      <li>Пример-сравнение: <span class="hanzi-key">众所周知</span>，环境保护很重要 (как известно, охрана среды важна — вводим общеизвестный факт) ≠ 这个道理<span class="hanzi-key">不言而喻</span> (эта истина самоочевидна — не требует слов).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 众所周知 — золотая вводная фраза для эссе HSK 6: ставишь в начало абзаца и получаешь академический тон. Но не злоупотребляй: если факт спорный, 众所周知 звучит манипулятивно. Антоним по смыслу — 鲜为人知 (мало кому известно).</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>______，健康是人生最重要的财富。</li>
+      <li>这个道理______，不用多说。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 众所周知 · 2. 不言而喻</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 众所周知，教育是改变命运最有效的途径之一。<br><span class="py">Zhòng suǒ zhōu zhī, jiàoyù shì gǎibiàn mìngyùn zuì yǒuxiào de tújìng zhī yī.</span><br><span class="ru">Как всем известно, образование — один из самых действенных путей изменить судьбу.</span></div>
+</section>
+
+<!-- 18 -->
+<section class="word" id="w18">
+  <h2><span class="emoji">🐎</span><span class="hanzi">络绎不绝</span><span class="pinyin">luòyì bù jué</span><span class="trans">— непрерывным потоком (о людях, повозках)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: чэнъюй (идиома)</div>
+    <div><span class="check">✅</span> Китайское толкование: 人、车马等来来往往，连续不断。</div>
+    <div><span class="check">✅</span> Русский перевод: непрерывным потоком; вереницей (о людях, машинах)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">络绎不绝</td><td>luòyì bù jué</td><td>непрерывным потоком</td><td>固定成语</td></tr>
+        <tr><td class="hz">游客络绎不绝</td><td>yóukè luòyì bù jué</td><td>поток туристов не иссякает</td><td>固定搭配，新闻/旅游</td></tr>
+        <tr><td class="hz">车辆络绎不绝</td><td>chēliàng luòyì bù jué</td><td>непрерывный поток машин</td><td>固定搭配</td></tr>
+        <tr><td class="hz">顾客络绎不绝</td><td>gùkè luòyì bù jué</td><td>покупатели идут потоком</td><td>商务</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">九寨沟的游客络绎不绝，从早到晚都是人。</div>
+      <div class="py">Jiǔzhàigōu de yóukè luòyì bù jué, cóng zǎo dào wǎn dōu shì rén.</div>
+      <div class="ru">Поток туристов в Цзючжайгоу не иссякает — с утра до вечера полно людей.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">学院路上的车络绎不绝，川流不息。</div>
+      <div class="py">Xuéyuàn Lù shàng de chē luòyì bù jué, chuānliú bùxī.</div>
+      <div class="ru">На улице Сюэюаньлу непрерывный поток машин.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">络</span> — «связывать, нить» (糸 шёлк + 各 каждый). Нитки. Шэнь Амина: 络绎 изначально — украшения-подвески на древних повозках, которые непрерывно мелькали.</li>
+      <li><span class="hanzi-key">绎</span> — «тянуться, распутывать» (糸 + 又 + 幸-подобное). Тянуть нить. Редкий иероглиф — запомни как «тянущаяся нить».</li>
+      <li><span class="hanzi-key">绝</span> — «прерываться» (糸 + 色). Нить оборвалась. Частый элемент: 拒绝, 绝对.</li>
+      <li>Вместе: «нити тянутся и не обрываются» = непрерывный поток.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>络绎不绝 — непрерывный поток людей/повозок (образ из древних повозок)</li>
+      <li>川流不息 — непрерывное течение (люди/машины, как река)</li>
+      <li>人山人海 — море людей (о толпе, статично)</li>
+      <li>Пример-сравнение: 游客<span class="hanzi-key">络绎不绝</span> (поток туристов не прерывается — динамика) ≈ 车辆<span class="hanzi-key">川流不息</span> (машины текут непрерывно — динамика, образ реки). Оба — про движение; 人山人海 — про плотность толпы. Шэнь Амина: «令人… не может быть 络绎不绝, потому что 令人 требует чувства, а 络绎不绝 — это люди/машины».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина дала яркую этимологию: 络绎 — подвески-украшения на древних повозках, которые мелькали непрерывно. Отсюда «вереница повозок → поток людей». И жёсткое правило: после 令人 (вызывать чувство) 络绎不绝 НЕЛЬЗЯ — 令人 требует эмоции (令人难忘, 令人流连忘返), а не «много людей».</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>节假日期间，景区的游客______。</li>
+      <li>九寨沟的美景令人______。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 络绎不绝 · 2. 流连忘返</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 随着旅游业的发展，古镇的游客络绎不绝，带动了当地经济。<br><span class="py">Suízhe lǚyóuyè de fāzhǎn, gǔzhèn de yóukè luòyì bù jué, dàidòngle dāngdì jīngjì.</span><br><span class="ru">С развитием туризма поток туристов в древние городки не иссякает, что стимулирует местную экономику.</span></div>
+</section>
+
+<!-- 19 -->
+<section class="word" id="w19">
+  <h2><span class="emoji">🌊</span><span class="hanzi">川流不息</span><span class="pinyin">chuān liú bù xī</span><span class="trans">— непрерывным потоком, как течение реки</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: чэнъюй (идиома)</div>
+    <div><span class="check">✅</span> Китайское толкование: 像河水一样连续不断地流动，形容人、车很多。</div>
+    <div><span class="check">✅</span> Русский перевод: непрерывным потоком (о людях, транспорте); как река</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">川流不息</td><td>chuān liú bù xī</td><td>непрерывное течение</td><td>固定成语</td></tr>
+        <tr><td class="hz">车辆川流不息</td><td>chēliàng chuān liú bù xī</td><td>непрерывный поток машин</td><td>固定搭配</td></tr>
+        <tr><td class="hz">人群川流不息</td><td>rénqún chuān liú bù xī</td><td>людской поток не иссякает</td><td>固定搭配</td></tr>
+        <tr><td class="hz">川流不息的车流</td><td>chuān liú bù xī de chēliú</td><td>нескончаемый поток машин</td><td>新闻/描写</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">学院路上的车川流不息，从早到晚都是车。</div>
+      <div class="py">Xuéyuàn Lù shàng de chē chuān liú bù xī, cóng zǎo dào wǎn dōu shì chē.</div>
+      <div class="ru">На улице Сюэюаньлу нескончаемый поток машин — с утра до вечера.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">大城市里，人群川流不息，每个人都步履匆匆。</div>
+      <div class="py">Dàchéngshì lǐ, rénqún chuān liú bù xī, měi gè rén dōu bùlǚ cōngcōng.</div>
+      <div class="ru">В больших городах людской поток не иссякает, и каждый спешит.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">川</span> — «река» — цельная картинка: три вертикальные струи. Запомни как «река».</li>
+      <li><span class="hanzi-key">流</span> — «течь» (氵 вода + 㐬). Вода течёт. Частый элемент: 交流, 流行.</li>
+      <li><span class="hanzi-key">息</span> — «останавливаться, дышать» (自 + 心). Сердце успокоилось. Отрицание 不息 = «не останавливается».</li>
+      <li>Вместе: «река течёт, не останавливаясь».</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>川流不息 — непрерывное течение (образ реки; люди/машины)</li>
+      <li>络绎不绝 — вереница, непрерывный поток (образ повозок; люди/машины)</li>
+      <li>车水马龙 — оживлённое движение (улица, книжное)</li>
+      <li>Пример-сравнение: 车辆<span class="hanzi-key">川流不息</span> (машины текут, как река) ≈ 游客<span class="hanzi-key">络绎不绝</span> (вереница туристов). Оба — динамика; 车水马龙 — общая картина оживлённой улицы. Шэнь Амина объединила их: 落地学川流不息 — оба про «много людей и машин».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 川流不息 и 络绎不绝 — синонимы-близнецы. Разница в образе: 川流不息 — река (плавное течение), 络绎不绝 — вереница повозок (цепочка). В эссе взаимозаменяемы, но 川流不息 чаще о транспорте, 络绎不绝 — о посетителях/покупателях.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>上下班高峰时，马路上车流______。</li>
+      <li>这家店生意很好，顾客______。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 川流不息 · 2. 络绎不绝</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 城市的夜晚灯火通明，马路上车流川流不息，展现出蓬勃的活力。<br><span class="py">Chéngshì de yèwǎn dēnghuǒ tōngmíng, mǎlù shàng chēliú chuān liú bù xī, zhǎnxiàn chū péngbó de huólì.</span><br><span class="ru">Ночью город сияет огнями, на дорогах нескончаемый поток машин — он явит кипучую жизненную силу.</span></div>
+</section>
+
+<!-- 20 -->
+<section class="word" id="w20">
+  <h2><span class="emoji">🪨</span><span class="hanzi">锲而不舍</span><span class="pinyin">qiè ér bù shě</span><span class="trans">— настойчиво, неотступно (долбить, пока не пробьёшь)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: чэнъюй (идиома)</div>
+    <div><span class="check">✅</span> Китайское толкование: 不断地雕刻，比喻有恒心、有毅力，坚持到底。</div>
+    <div><span class="check">✅</span> Русский перевод: настойчиво, неотступно; упорно добиваться своего</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">锲而不舍</td><td>qiè ér bù shě</td><td>настойчиво, не отступая</td><td>固定成语</td></tr>
+        <tr><td class="hz">锲而不舍地努力</td><td>qiè ér bù shě de nǔlì</td><td>упорно трудиться</td><td>固定搭配</td></tr>
+        <tr><td class="hz">锲而不舍的精神</td><td>qiè ér bù shě de jīngshén</td><td>дух настойчивости</td><td>固定搭配，书面</td></tr>
+        <tr><td class="hz">坚持不懈</td><td>jiānchí bùxiè</td><td>неуклонно настойчивый</td><td>近义成语</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">他凭着锲而不舍的精神，终于攻克了这个难题。</div>
+      <div class="py">Tā píngzhe qiè ér bù shě de jīngshén, zhōngyú gōngkèled zhège nántí.</div>
+      <div class="ru">Благодаря духу настойчивости он в конце концов одолел эту трудную задачу.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">做学问需要锲而不舍，不能三天打鱼两天晒网。</div>
+      <div class="py">Zuò xuéwèn xūyào qiè ér bù shě, bù néng sān tiān dǎ yú liǎng tiān shài wǎng.</div>
+      <div class="ru">В науке нужна настойчивость, нельзя работать с перерывами (букв.: три дня ловить рыбу, два дня сушить сети).</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">锲</span> — «вырезать, гравировать» (钅 металл + 契 договор). Резец по металлу. Легко спутать с 契 (договор) — у 锲 钅 слева.</li>
+      <li><span class="hanzi-key">舍</span> — «бросать» (人 + 舌). Отрицание 不舍 = «не бросать».</li>
+      <li>Образ из 荀子: «锲而舍之，朽木不折；锲而不舍，金石可镂» — бросишь резец — и гнилое дерево не переломишь; не бросишь — и металл/камень прорежешь.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>锲而不舍 — настойчиво долбить, пока не пробьёшь (образ резца)</li>
+      <li>坚持不懈 — неуклонно держаться курса (нейтральнее, чаще)</li>
+      <li>持之以恒 — с постоянством, долго и ровно</li>
+      <li>Пример-сравнение: <span class="hanzi-key">锲而不舍</span>的精神 (дух «долбить до победы» — образ резца, книжнее) ≈ <span class="hanzi-key">坚持不懈</span>的努力 (неуклонные усилия — универсально). Шэнь Амина ставит их в один ряд: 锲而不舍, 川流不息, 络绎不绝 — учи как блок.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 锲而不舍 — из 荀子《劝学》, это цитатный чэнъюй для эссе. Идеальная пара-антоним: 半途而废. Готовая формула для HSK 6: 只有锲而不舍，才能取得成功. И не путай с 舍 (shě — бросать) в 宿舍 (shè — общежитие): чтение меняется.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>科学研究需要______的精神。</li>
+      <li>他做事总是______，很难成功。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 锲而不舍 · 2. 半途而废</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 在追求梦想的道路上，唯有锲而不舍，才能抵达成功的彼岸。<br><span class="py">Zài zhuīqiú mèngxiǎng de dàolù shàng, wéi yǒu qiè ér bù shě, cái néng dǐdá chénggōng de bǐ’àn.</span><br><span class="ru">На пути к мечте только настойчивость позволяет достичь берега успеха.</span></div>
+</section>
+
+<!-- 21 -->
+<section class="word" id="w21">
+  <h2><span class="emoji">💊</span><span class="hanzi">良药苦口利于病，忠言逆耳利于行</span><span class="pinyin">liáng yào kǔ kǒu lì yú bìng, zhōng yán nì ěr lì yú xíng</span><span class="trans">— горькое лекарство лечит, резкие слова помогают</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: пословица (谚语)</div>
+    <div><span class="check">✅</span> Китайское толкование: 好药虽然苦，但能治病；忠告虽然不好听，但有利于行动。</div>
+    <div><span class="check">✅</span> Русский перевод: горькое лекарство исцеляет, правдивые слова, режущие слух, помогают делу</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">良药苦口利于病</td><td>liáng yào kǔ kǒu lì yú bìng</td><td>горькое лекарство лечит</td><td>固定谚语</td></tr>
+        <tr><td class="hz">忠言逆耳利于行</td><td>zhōng yán nì ěr lì yú xíng</td><td>резкая правда помогает</td><td>固定谚语</td></tr>
+        <tr><td class="hz">良药苦口，忠言逆耳</td><td>liáng yào kǔ kǒu, zhōng yán nì ěr</td><td>лекарство горько, правда режет слух</td><td>常用变体</td></tr>
+        <tr><td class="hz">忠言逆耳</td><td>zhōng yán nì ěr</td><td>правда режет слух</td><td>四字变体，高频</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">中国有句俗话：良药苦口利于病，忠言逆耳利于行。别人的劝告虽然不好听，但对你有很大的帮助。</div>
+      <div class="py">Zhōngguó yǒu jù súhuà: liáng yào kǔ kǒu lì yú bìng, zhōng yán nì ěr lì yú xíng. Biéren de quàngào suīrán bù hǎotīng, dàn duì nǐ yǒu hěn dà de bāngzhù.</div>
+      <div class="ru">В Китае есть поговорка: горькое лекарство лечит, резкие слова помогают. Чужие советы хоть и неприятны на слух, но очень тебе полезны.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">忠言逆耳，你要善于接受别人的批评。</div>
+      <div class="py">Zhōng yán nì ěr, nǐ yào shànyú jiēshòu biéren de pīpíng.</div>
+      <div class="ru">Правда режет слух — нужно уметь принимать чужую критику.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">良</span> — «хороший» (丶 + 艮). Цельная картинка.</li>
+      <li><span class="hanzi-key">逆</span> — «против, навстречу» (辶 идти + 屰). Идти против. Легко спутать с 送 (провожать) — у 送 关.</li>
+      <li><span class="hanzi-key">耳</span> — «ухо» — цельная картинка. 逆耳 = «режет ухо».</li>
+      <li>Структура: <b>良药苦口 (лекарство горько) ↔ 忠言逆耳 (правда режет слух)</b>; <b>利于病 ↔ 利于行</b> — параллелизм, запомни парами.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>良药苦口利于病，忠言逆耳利于行 — полная пословица (эссе, речь)</li>
+      <li>忠言逆耳 — краткий вариант (чаще в разговоре)</li>
+      <li>苦口婆心 — увещевать с искренним усердием (о том, кто уговаривает)</li>
+      <li>Пример-сравнение: <span class="hanzi-key">良药苦口利于病</span> — общая истина-пословица (вводим как аргумент) ≠ 他<span class="hanzi-key">苦口婆心</span>地劝了我半天 (он долго и сердечно меня уговаривал — о человеке). Шэнь Амина: «药虽然很苦，但对病有很大的帮助；别人劝你的话虽然不好听，但对你有帮助».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина разобрала это как 谚语 (пословица), а не 寓言 (басня) и не 闲话 (сплетни) — это важное различие в задании 67. Для эссе бери краткую форму 忠言逆耳: короче и звучит академично.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>中国有句谚语：______，忠言逆耳利于行。</li>
+      <li>他______地劝了孩子一晚上。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 良药苦口利于病 · 2. 苦口婆心</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 俗话说，良药苦口利于病，忠言逆耳利于行，我们应当虚心接受批评。<br><span class="py">Súhuà shuō, liáng yào kǔ kǒu lì yú bìng, zhōng yán nì ěr lì yú xíng, wǒmen yīngdāng xūxīn jiēshòu pīpíng.</span><br><span class="ru">Как говорится, горькое лекарство лечит, резкая правда помогает — нам следует с открытым сердцем принимать критику.</span></div>
+</section>
+
+<!-- 22 -->
+<section class="word" id="w22">
+  <h2><span class="emoji">🤷</span><span class="hanzi">何妨</span><span class="pinyin">hé fáng</span><span class="trans">— почему бы и нет; что мешает</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: наречие/риторический оборот</div>
+    <div><span class="check">✅</span> Китайское толкование: 用反问的语气表示「不妨、没关系」。</div>
+    <div><span class="check">✅</span> Русский перевод: почему бы и нет; что мешает (сделать)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">再…又何妨</td><td>zài… yòu hé fáng</td><td>что мешает ещё раз…</td><td>固定句式，高频</td></tr>
+        <tr><td class="hz">何妨一试</td><td>hé fáng yī shì</td><td>почему бы не попробовать</td><td>固定搭配</td></tr>
+        <tr><td class="hz">说说何妨</td><td>shuōshuō hé fáng</td><td>что мешает сказать</td><td>口语</td></tr>
+        <tr><td class="hz">不妨</td><td>bùfáng</td><td>почему бы не; не мешало бы</td><td>近义词，更常用</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">反正帮都帮了，再帮一次又何妨？</div>
+      <div class="py">Fǎnzhèng bāng dōu bāng le, zài bāng yī cì yòu hé fáng?</div>
+      <div class="ru">Раз уж помог, что мешает помочь ещё раз?</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">既然来了，何妨进去看看？</div>
+      <div class="py">Jìrán lái le, hé fáng jìnqù kànkan?</div>
+      <div class="ru">Раз уж пришёл, почему бы не зайти посмотреть?</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">何</span> — «что, почему» (亻 + 可). Человек может → «что/как». Частый элемент: 如何, 何必.</li>
+      <li><span class="hanzi-key">妨</span> — «мешать» (女 + 方). Женщина в стороне → помеха. Частый элемент: 妨碍, 不妨.</li>
+      <li>Вместе: «что мешает» = почему бы и нет.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>何妨 — почему бы и нет (риторично, книжнее)</li>
+      <li>不妨 — почему бы не; не мешало бы (нейтральное, чаще в совете)</li>
+      <li>何必 — зачем, к чему (риторично: «не стоит»)</li>
+      <li>Пример-сравнение: 再试一次<span class="hanzi-key">又何妨</span> (что мешает попробовать ещё раз — призыв, «почему бы нет») ≠ <span class="hanzi-key">何必</span>这么生气呢 (к чему так злиться — «не стоит»). Направление противоположное: 何妨 → «давай», 何必 → «не надо».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина взяла это из текста про «foot-in-the-door»: 反正帮都帮了，再帮一次又何妨. Формула <b>再…又何妨</b> — готовая риторическая рамка для эссе и дебатов. Не путай с 何必 (зачем — отговариваешь) и 不妨 (почему бы не — мягкий совет).</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>既然有机会，______大胆尝试一下？</li>
+      <li>事情已经过去了，你______耿耿于怀呢？</li>
+    </ol>
+    <div class="answers">Ответы: 1. 何妨 · 2. 何必</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 人生短暂，既然有机会追梦，何妨大胆一试？<br><span class="py">Rénshēng duǎnzàn, jìrán yǒu jīhuì zhuī mèng, hé fáng dàdǎn yī shì?</span><br><span class="ru">Жизнь коротка — раз есть шанс pursue мечту, почему бы не попробовать смело?</span></div>
+</section>
+
+<!-- 23 -->
+<section class="word" id="w23">
+  <h2><span class="emoji">🚀</span><span class="hanzi">进取</span><span class="pinyin">jìnqǔ</span><span class="trans">— стремиться вперёд, проявлять инициативу</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол/прилагательное (进取心 — существительное)</div>
+    <div><span class="check">✅</span> Китайское толкование: 努力向上，追求进步。</div>
+    <div><span class="check">✅</span> Русский перевод: стремиться вперёд, добиваться прогресса; инициативный</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">进取心</td><td>jìnqǔxīn</td><td>стремление вперёд, амбициозность</td><td>固定搭配，高频</td></tr>
+        <tr><td class="hz">积极进取</td><td>jījí jìnqǔ</td><td>активно стремиться вперёд</td><td>固定搭配，书面</td></tr>
+        <tr><td class="hz">不断进取</td><td>bùduàn jìnqǔ</td><td>непрерывно двигаться вперёд</td><td>固定搭配</td></tr>
+        <tr><td class="hz">进取精神</td><td>jìnqǔ jīngshén</td><td>дух предприимчивости</td><td>书面/励志</td></tr>
+        <tr><td class="hz">安于现状，不思进取</td><td>ān yú xiànzhuàng, bù sī jìnqǔ</td><td>довольствоваться малым, не стремиться</td><td>反义表达</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">在教育教学管理中，可以先提较低的要求，使学生乐于进取。</div>
+      <div class="py">Zài jiàoyù jiàoxué guǎnlǐ zhōng, kěyǐ xiān tí jiào dī de yāoqiú, shǐ xuéshēng lèyú jìnqǔ.</div>
+      <div class="ru">В управлении учебным процессом можно сначала ставить более низкие требования, чтобы ученики охотно стремились вперёд.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">年轻人应该有进取心，不能安于现状。</div>
+      <div class="py">Niánqīngrén yīnggāi yǒu jìnqǔxīn, bù néng ān yú xiànzhuàng.</div>
+      <div class="ru">Молодые люди должны быть устремлёнными и не довольствоваться текущим положением.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">进</span> — «двигаться вперёд» (辶 + 井). Дорога вперёд. Частый элемент: 进步, 促进.</li>
+      <li><span class="hanzi-key">取</span> — «брать, добиваться» (耳 ухо + 又 рука). Рука хватает → добиваться. Частый элемент: 取得, 争取.</li>
+      <li>Вместе: «идти вперёд и добиваться» = устремлённость.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>进取 — стремиться вперёд (к прогрессу, развитию)</li>
+      <li>进步 — прогресс, делать успехи (результат)</li>
+      <li>上进 — стремиться вверх (о человеке, разговорнее)</li>
+      <li>Пример-сравнение: 他有很强的<span class="hanzi-key">进取心</span> (у него сильное стремление вперёд — черта характера) ≠ 这学期他<span class="hanzi-key">进步</span>很大 (в этом семестре он сильно продвинулся — результат). 进取 — про мотивацию, 进步 — про результат.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина взяла 进取 из текста про «foot-in-the-door»: 使每个人都乐于进取. Ключевая коллокация — 进取心 (амбициозность, драйв). Антоним-фраза для эссе: 安于现状，不思进取. Это готовый контраст для дебатов.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>一个优秀的团队需要成员有强烈的______。</li>
+      <li>经过一学期的努力，他的成绩有了明显的______。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 进取心 · 2. 进步</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 在竞争激烈的社会中，唯有保持进取心，才能不断突破自我。<br><span class="py">Zài jìngzhēng jīliè de shèhuì zhōng, wéi yǒu bǎochí jìnqǔxīn, cái néng bùduàn tūpò zìwǒ.</span><br><span class="ru">В обществе жёсткой конкуренции только сохраняя устремлённость можно постоянно превосходить себя.</span></div>
+</section>
+
+<!-- 24 -->
+<section class="word" id="w24">
+  <h2><span class="emoji">⏳</span><span class="hanzi">迫不及待</span><span class="pinyin">pò bù jí dài</span><span class="trans">— не терпится, сгорать от нетерпения</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: чэнъюй (идиома)</div>
+    <div><span class="check">✅</span> Китайское толкование: 急迫得不能再等待。</div>
+    <div><span class="check">✅</span> Русский перевод: не терпится; сгорать от нетерпения</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">迫不及待地</td><td>pò bù jí dài de</td><td>с нетерпением</td><td>固定搭配，高频</td></tr>
+        <tr><td class="hz">迫不及待地想</td><td>pò bù jí dài de xiǎng</td><td>не терпится (сделать)</td><td>固定搭配</td></tr>
+        <tr><td class="hz">迫不及待地打开</td><td>pò bù jí dài de dǎkāi</td><td>с нетерпением открыть</td><td>固定搭配</td></tr>
+        <tr><td class="hz">急不可待</td><td>jí bù kě dài</td><td>не терпится (вариант)</td><td>近义成语</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">孩子们迫不及待地打开了礼物。</div>
+      <div class="py">Háizimen pò bù jí dài de dǎkāile lǐwù.</div>
+      <div class="ru">Дети с нетерпением открыли подарки.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">一放假，他就迫不及待地踏上了回家的火车。</div>
+      <div class="py">Yī fàngjià, tā jiù pò bù jí dài de tàshàngle huí jiā de huǒchē.</div>
+      <div class="ru">Как только начались каникулы, он с нетерпением сел на поезд домой.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">迫</span> — «вынуждать, теснить» (辶 + 白). Давить. Частый элемент: 强迫, 压迫.</li>
+      <li><span class="hanzi-key">待</span> — «ждать» (彳 + 寺). Стоять и ждать. Частый элемент: 等待, 待遇.</li>
+      <li>Формула: <b>迫(теснит) + 不(не) + 及(до) + 待(ждать)</b> = «теснит так, что невозможно дождаться».</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>迫不及待 — не терпится (о сильном желании действовать)</li>
+      <li>急不可待 — не терпится (вариант, реже)</li>
+      <li>刻不容缓 — не терпит отлагательства (о срочности дела, не о желании)</li>
+      <li>Пример-сравнение: 他<span class="hanzi-key">迫不及待</span>地想打开礼物 (ему не терпится открыть подарок — личное желание) ≠ 这件事<span class="hanzi-key">刻不容缓</span>，必须马上处理 (дело не терпит отлагательства — объективная срочность).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 迫不及待 — про «горю желанием», а не про «срочно». Если речь о деле, которое нельзя отложить, — 刻不容缓. В эссе о мотивации: 年轻人迫不及待地想要证明自己 — звучит живо.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>收到录取通知书后，他______地告诉了父母。</li>
+      <li>救灾工作______，必须立刻展开。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 迫不及待 · 2. 刻不容缓</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 面对新的机遇，年轻人总是迫不及待地想要证明自己的能力。<br><span class="py">Miànduì xīn de jīyù, niánqīngrén zǒngshì pò bù jí dài de xiǎngyào zhèngmíng zìjǐ de nénglì.</span><br><span class="ru">Перед лицом новых возможностей молодые люди всегда сгорают от нетерпения доказать свои способности.</span></div>
+</section>
+
+<!-- 25 -->
+<section class="word" id="w25">
+  <h2><span class="emoji">🎬</span><span class="hanzi">情景</span><span class="pinyin">qíngjǐng</span><span class="trans">— сцена, картина, обстановка (визуальная)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: существительное</div>
+    <div><span class="check">✅</span> Китайское толкование: 某个场合的具体景象和情形。</div>
+    <div><span class="check">✅</span> Русский перевод: сцена, картина, обстановка (зримая)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">情景交融</td><td>qíngjǐng jiāoróng</td><td>слияние чувства и пейзажа</td><td>文学术语</td></tr>
+        <tr><td class="hz">感人的情景</td><td>gǎnrén de qíngjǐng</td><td>трогательная сцена</td><td>固定搭配</td></tr>
+        <tr><td class="hz">当时的场景/情景</td><td>dāngshí de chǎngjǐng/qíngjǐng</td><td>тогдашняя обстановка</td><td>高频</td></tr>
+        <tr><td class="hz">情景喜剧</td><td>qíngjǐng xǐjù</td><td>ситком</td><td>媒体</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">电影让观众看到了那个时代真实的生活情景。</div>
+      <div class="py">Diànyǐng ràng guānzhòng kàndàole nàge shídài zhēnshí de shēnghuó qíngjǐng.</div>
+      <div class="ru">Фильм позволил зрителю увидеть реальные жизненные сцены той эпохи.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">回忆起当时的情景，她仍然很激动。</div>
+      <div class="py">Huíyì qǐ dāngshí de qíngjǐng, tā réngrán hěn jīdòng.</div>
+      <div class="ru">Вспоминая ту сцену, она до сих пор волнуется.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">情</span> — «чувство, ситуация» (忄 + 青). Сердце + молодость → чувство. Частый элемент: 情况, 感情.</li>
+      <li><span class="hanzi-key">景</span> — «пейзаж, вид» (日 + 京). Солнце над столицей → вид. Частый элемент: 风景, 景色.</li>
+      <li>Вместе: «чувство + вид» = зримая сцена с эмоцией.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>情景 — сцена, зримая картина (с эмоцией; 情景交融)</li>
+      <li>情形 — положение, ситуация (абстрактнее: 当时的情形)</li>
+      <li>情况 — ситуация, обстановка (самое общее, нейтральное)</li>
+      <li>情节 — сюжет, эпизод (в рассказе/фильме)</li>
+      <li>Пример-сравнение: 梦中的<span class="hanzi-key">情景</span> (сцена из сна — зримая) ≈ 梦中的<span class="hanzi-key">情形/情况</span> (то, что происходило — абстрактнее). <span class="hanzi-key">情节</span> — только про сюжет: 故事情节 (сюжет истории). Шэнь Амина: «这四个情不好区分，但情景是场景的景».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина честно сказала: в задании 68 все четыре (情景/情形/情况/情节) подходили — это редкий случай, когда контекст не различает. Но запомни ядро: 情景 = «сцена с глазами», 情节 = «сюжет», 情况 = «ситуация вообще». В эссе о кино: 影片真实地再现了当时的情景.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>这部电影的______非常曲折，吸引了很多观众。</li>
+      <li>看到孩子们重逢的______，在场的人都哭了。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 情节 · 2. 情景</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 这部纪录片真实地记录了灾区人民重建家园的感人情景。<br><span class="py">Zhè bù jìlùpiàn zhēnshí de jìlùle zāiqū rénmín chóngjiàn jiāyuán de gǎnrén qíngjǐng.</span><br><span class="ru">Этот документальный фильм правдиво запечатлел трогательные сцены восстановления домов жителями зоны бедствия.</span></div>
+</section>
+
+<!-- 26 -->
+<section class="word" id="w26">
+  <h2><span class="emoji">🩺</span><span class="hanzi">损害</span><span class="pinyin">sǔnhài</span><span class="trans">— наносить ущерб, вредить (здоровью, интересам, репутации)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол/существительное</div>
+    <div><span class="check">✅</span> Китайское толкование: 使健康、利益、名誉等受到损失。</div>
+    <div><span class="check">✅</span> Русский перевод: наносить ущерб, вредить, подрывать</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">损害健康</td><td>sǔnhài jiànkāng</td><td>вредить здоровью</td><td>固定搭配，高频</td></tr>
+        <tr><td class="hz">损害利益</td><td>sǔnhài lìyì</td><td>наносить ущерб интересам</td><td>固定搭配</td></tr>
+        <tr><td class="hz">损害名誉</td><td>sǔnhài míngyù</td><td>подрывать репутацию</td><td>固定搭配</td></tr>
+        <tr><td class="hz">损害形象</td><td>sǔnhài xíngxiàng</td><td>вредить имиджу</td><td>新闻/官方</td></tr>
+        <tr><td class="hz">受到损害</td><td>shòudào sǔnhài</td><td>понести ущерб</td><td>书面</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">长期熬夜会严重损害身体健康。</div>
+      <div class="py">Chángqī áoyè huì yánzhòng sǔnhài shēntǐ jiànkāng.</div>
+      <div class="ru">Хроническое недосыпание серьёзно вредит здоровью.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这种言论损害了公司的形象。</div>
+      <div class="py">Zhè zhǒng yánlùn sǔnhàile gōngsī de xíngxiàng.</div>
+      <div class="ru">Такие заявления подорвали имидж компании.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">损</span> — «уменьшать, терять» (扌 рука + 员). Рука отнимает. Частый элемент: 损失, 损坏.</li>
+      <li><span class="hanzi-key">害</span> — «вредить» (宀 + 丰 + 口). Цельная картинка: вред. Частый элемент: 危害, 有害.</li>
+      <li>Вместе: «отнимать и вредить» = наносить ущерб.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>损害 — наносить ущерб (здоровью, интересам, репутации — абстрактное/длительное)</li>
+      <li>伤害 — ранить, обижать (чувства, человека — эмоционально/физически)</li>
+      <li>危害 — подвергать опасности (общество, безопасность — масштабнее)</li>
+      <li>破坏 — разрушать (объект, порядок — физически/грубо)</li>
+      <li>Пример-сравнение: 吸烟<span class="hanzi-key">损害</span>健康 (курение вредит здоровью — длительный ущерб) ≠ 他的话<span class="hanzi-key">伤害</span>了我的感情 (его слова ранили мои чувства — эмоция) ≠ 这种行为<span class="hanzi-key">危害</span>公共安全 (это подвергает опасности общественную безопасность — масштаб).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина в задании 68 разбирала пару 损害/伤害/危害: «大脑受到损害/伤害 — оба можно, 危害 — про опасность для многих». Ключ: 损害 — ущерб здоровью/интересам, 伤害 — обида/рана, 危害 — угроза обществу. Для эссе о курении — только 损害健康.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>长期吸烟会______身体健康。</li>
+      <li>你这样说会______她的自尊心。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 损害 · 2. 伤害</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 网络谣言不仅损害个人名誉，也危害社会秩序。<br><span class="py">Wǎngluò yáoyán bùjǐn sǔnhài gèrén míngyù, yě wēihài shèhuì zhìxù.</span><br><span class="ru">Интернет-слухи не только подрывают личную репутацию, но и угрожают общественному порядку.</span></div>
+</section>
+
+<!-- 27 -->
+<section class="word" id="w27">
+  <h2><span class="emoji">⚠️</span><span class="hanzi">危害</span><span class="pinyin">wēihài</span><span class="trans">— подвергать опасности, наносить вред (обществу, здоровью)</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: глагол/существительное</div>
+    <div><span class="check">✅</span> Китайское толкование: 对人或事物造成危险和破坏。</div>
+    <div><span class="check">✅</span> Русский перевод: подвергать опасности; наносить вред (масштабный)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">危害健康</td><td>wēihài jiànkāng</td><td>вредить здоровью (опасно)</td><td>固定搭配</td></tr>
+        <tr><td class="hz">危害社会</td><td>wēihài shèhuì</td><td>угрожать обществу</td><td>固定搭配，新闻</td></tr>
+        <tr><td class="hz">危害公共安全</td><td>wēihài gōnggòng ānquán</td><td>угрожать общественной безопасности</td><td>官方</td></tr>
+        <tr><td class="hz">严重危害</td><td>yánzhòng wēihài</td><td>серьёзно угрожать</td><td>书面</td></tr>
+        <tr><td class="hz">危害性</td><td>wēihàixìng</td><td>вредоносность, опасность</td><td>术语</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">酒后驾车严重危害公共安全。</div>
+      <div class="py">Jiǔhòu jiàchē yánzhòng wēihài gōnggòng ānquán.</div>
+      <div class="ru">Вождение в нетрезвом виде серьёзно угрожает общественной безопасности.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这种化学物质对人体有危害。</div>
+      <div class="py">Zhè zhǒng huàxué wùzhì duì réntǐ yǒu wēihài.</div>
+      <div class="ru">Это химическое вещество вредно для организма.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">危</span> — «опасность» (厃 + 㔾). Человек на обрыве. Цельная картинка: опасно.</li>
+      <li><span class="hanzi-key">害</span> — «вредить» (см. выше).</li>
+      <li>Вместе: «опасность + вред» = угроза.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>危害 — угрожать (обществу, безопасности, здоровью — масштабно)</li>
+      <li>损害 — наносить ущерб (здоровью, интересам, репутации — конкретнее)</li>
+      <li>迫害 — преследовать (человека — политически/жестоко)</li>
+      <li>Пример-сравнение: 吸烟<span class="hanzi-key">损害</span>健康 (курение вредит здоровью — личный ущерб) ≈ 吸烟<span class="hanzi-key">危害</span>健康 (курение опасно для здоровья — сильнее, «угроза»). <span class="hanzi-key">迫害</span> — только о людях: 政治迫害. Шэнь Амина: «危害是什么？危险；迫害一般是迫害什么人».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 危害 и 损害 часто взаимозаменяемы со здоровьем, но 危害 сильнее (угроза) и чаще идёт с 社会/安全/公众. 迫害 — ложный друг: это «преследовать человека», не «вредить». В эссе о экологии: 环境污染危害人类健康.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>空气污染严重______着人们的健康。</li>
+      <li>他的行为______了公司的利益。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 危害 · 2. 损害</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 保护环境就是保护我们自己，因为环境污染最终危害的是全人类。<br><span class="py">Bǎohù huánjìng jiù shì bǎohù wǒmen zìjǐ, yīnwèi huánjìng wūrǎn zuìzhōng wēihài de shì quán rénlèi.</span><br><span class="ru">Защищать природу — значит защищать себя, ведь загрязнение среды в конечном счёте угрожает всему человечеству.</span></div>
+</section>
+
+<!-- 28 -->
+<section class="word" id="w28">
+  <h2><span class="emoji">🌸</span><span class="hanzi">优雅</span><span class="pinyin">yōuyǎ</span><span class="trans">— изящный, элегантный, грациозный</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: прилагательное</div>
+    <div><span class="check">✅</span> Китайское толкование: 优美高雅，举止自然大方。</div>
+    <div><span class="check">✅</span> Русский перевод: изящный, элегантный, грациозный</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">优雅的姿态</td><td>yōuyǎ de zītài</td><td>изящная поза/манера</td><td>固定搭配</td></tr>
+        <tr><td class="hz">举止优雅</td><td>jǔzhǐ yōuyǎ</td><td>элегантные манеры</td><td>固定搭配</td></tr>
+        <tr><td class="hz">优雅的环境</td><td>yōuyǎ de huánjìng</td><td>изысканная обстановка</td><td>固定搭配</td></tr>
+        <tr><td class="hz">优雅的气质</td><td>yōuyǎ de qìzhì</td><td>элегантный шарм</td><td>固定搭配</td></tr>
+        <tr><td class="hz">优雅地转身</td><td>yōuyǎ de zhuǎnshēn</td><td>грациозно обернуться</td><td>书面/文学</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">她举止优雅，给人留下了深刻的印象。</div>
+      <div class="py">Tā jǔzhǐ yōuyǎ, gěi rén liúxiàle shēnkè de yìnxiàng.</div>
+      <div class="ru">У неё элегантные манеры, она произвела глубокое впечатление.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">这是一项艺术性很强的、动作优雅的体育运动。</div>
+      <div class="py">Zhè shì yī xiàng yìshùxìng hěn qiáng de, dòngzuò yōuyǎ de tǐyù yùndòng.</div>
+      <div class="ru">Это вид спорта с высокой художественностью и грациозными движениями.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">优</span> — «отличный, изящный» (亻 + 尤). Человек выдающийся. Частый элемент: 优秀, 优点.</li>
+      <li><span class="hanzi-key">雅</span> — «изысканный» (牙 + 隹). Птица с зубом-украшением → утончённость. Легко спутать с 难 (трудный) — у 难 又 слева.</li>
+      <li>Вместе: «выдающийся и утончённый» = элегантный.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>优雅 — элегантный, грациозный (о манерах, движениях, обстановке)</li>
+      <li>优美 — красивый, изящный (о пейзаже, мелодии, языке)</li>
+      <li>精致 — тонкой работы, изысканный (о вещах, деталях)</li>
+      <li>华丽 — роскошный, блестящий (о наряде, стиле — «слишком»)</li>
+      <li>Пример-сравнение: <span class="hanzi-key">优雅</span>的动作 (грациозные движения — о человеке/спорте) ≠ <span class="hanzi-key">优美</span>的风景 (красивый пейзаж — о природе) ≠ <span class="hanzi-key">精致</span>的礼物 (изысканный подарок — о вещи). Шэнь Амина: «优雅的体育运动 — да, 精致的运动 — странно».</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> Шэнь Амина в задании про синхронное плавание отсекла 精致 и 华丽: спорт не бывает «тонкой работы» или «роскошным», он бывает 优雅/优美. Ключ: 优雅 — про движения и манеры, 优美 — про красоту вообще, 精致 — про мелкую работу.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>她的舞姿______大方，赢得了全场的掌声。</li>
+      <li>这件手工艺品做得非常______。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 优雅 · 2. 精致</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 真正的优雅不仅体现在外表，更体现在一个人的修养和举止中。<br><span class="py">Zhēnzhèng de yōuyǎ bùjǐn tǐxiàn zài wàibiǎo, gèng tǐxiàn zài yīgè rén de xiūyǎng hé jǔzhǐ zhōng.</span><br><span class="ru">Истинная элегантность проявляется не только во внешности, но и в воспитании и манерах человека.</span></div>
+</section>
+
+<!-- 29 -->
+<section class="word" id="w29">
+  <h2><span class="emoji">🔍</span><span class="hanzi">精致</span><span class="pinyin">jīngzhì</span><span class="trans">— тонкой работы, изысканный, утончённый</span></h2>
+  <div class="block">
+    <div class="label"><span class="check">✅</span> Часть речи: прилагательное</div>
+    <div><span class="check">✅</span> Китайское толкование: 精巧细致，做工讲究。</div>
+    <div><span class="check">✅</span> Русский перевод: тонкой работы, изысканный, утончённый (о вещах, деталях)</div>
+  </div>
+  <div class="block">
+    <div class="label">Коллокации</div>
+    <table class="colloc">
+      <thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+      <tbody>
+        <tr><td class="hz">精致的礼物</td><td>jīngzhì de lǐwù</td><td>изысканный подарок</td><td>固定搭配</td></tr>
+        <tr><td class="hz">精致的工艺品</td><td>jīngzhì de gōngyìpǐn</td><td>изделие тонкой работы</td><td>固定搭配</td></tr>
+        <tr><td class="hz">做工精致</td><td>zuògōng jīngzhì</td><td>тонкая работа</td><td>固定搭配</td></tr>
+        <tr><td class="hz">精致的生活</td><td>jīngzhì de shēnghuó</td><td>утончённая жизнь</td><td>现代用法</td></tr>
+        <tr><td class="hz">精致的外表</td><td>jīngzhì de wàibiǎo</td><td>ухоженная внешность</td><td>口语/媒体</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="label">Жизненные примеры</div>
+    <blockquote class="example">
+      <div class="hz">这件木雕做工精致，很值得收藏。</div>
+      <div class="py">Zhè jiàn mùdiāo zuògōng jīngzhì, hěn zhídé shōucáng.</div>
+      <div class="ru">Эта резьба по дереву тонкой работы, вполне достойна коллекции.</div>
+    </blockquote>
+    <blockquote class="example">
+      <div class="hz">她喜欢过精致的生活，哪怕只是一顿早餐。</div>
+      <div class="py">Tā xǐhuan guò jīngzhì de shēnghuó, nǎpà zhǐ shì yī dùn zǎocān.</div>
+      <div class="ru">Она любит утончённую жизнь, пусть даже это всего лишь завтрак.</div>
+    </blockquote>
+  </div>
+  <div class="block">
+    <div class="label">Разбор по иероглифам</div>
+    <ul class="plain">
+      <li><span class="hanzi-key">精</span> — «очищенный, тонкий» (米 рис + 青). Отборный рис → тонкость. Частый элемент: 精神, 精彩.</li>
+      <li><span class="hanzi-key">致</span> — «доводить до; изящный» (至 + 攵). Довести до конца. Частый элемент: 一致, 细致.</li>
+      <li>Вместе: «доведённый до тонкости» = изысканный.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <div class="label">Близкие слова + нюансы-ловушки</div>
+    <ul class="plain compare">
+      <li>精致 — тонкой работы (о вещах, деталях, внешности)</li>
+      <li>优雅 — элегантный (о манерах, движениях)</li>
+      <li>精美 — изысканно-красивый (о оформлении, упаковке)</li>
+      <li>Пример-сравнение: <span class="hanzi-key">精致</span>的工艺品 (изделие тонкой работы) ≈ <span class="hanzi-key">精美</span>的包装 (изысканная упаковка). 精致 — про мастерство/детали, 优雅 — про поведение. Нельзя: ❌ 精致的体育运动 (спорт не «тонкой работы») — только 优雅的体育运动.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> 精致 — модное слово в современном китайском: 精致生活, 精致的女孩 (ухоженная, со вкусом). Но в задании HSK про спорт оно не подошло — Шэнь Амина права: спорт не бывает «тонкой работы». Держи границу: вещи/детали — 精致, движения/манеры — 优雅.</div>
+  <div class="test">
+    <div class="label">Мини-тест</div>
+    <ol>
+      <li>这个首饰盒做工______，一看就很贵。</li>
+      <li>她的举止______得体，很有教养。</li>
+    </ol>
+    <div class="answers">Ответы: 1. 精致 · 2. 优雅</div>
+  </div>
+  <div class="hsk6"><span class="tag">Для HSK 6:</span> 精致的生活不在于物质的多少，而在于对细节的用心。<br><span class="py">Jīngzhì de shēnghuó bù zàiyú wùzhì de duōshǎo, ér zàiyú duì xìjié de yòngxīn.</span><br><span class="ru">Утончённая жизнь — не в количестве материальных благ, а во внимании к деталям.</span></div>
+</section>
+
+<section class="checklist">
+  <h3>Чек-лист после ответа</h3>
+  <ul>
+    <li>последнее слово (精致) разобрано так же плотно, как первое (实现)?</li>
+    <li>нет выдуманных коллокаций — все взяты из речи Шэнь Амины или стандартных HSK-6 коллокаций?</li>
+    <li>нет «учебных» примеров — примеры из новостей, жизни, эссе, дебатов?</li>
+    <li>нет пустых комментариев учителя — везде конкретика (этимология, ловушка, формула)?</li>
+    <li>нет пропущенных слов из транскриптов?</li>
+    <li>пиньинь везде, где нужно?</li>
+    <li>нет запрещённых служебных надписей?</li>
+  </ul>
+</section>
+
+<p class="footer-note">Если хочешь — могу собрать из этих 29 слов мини-тест на 10 пропусков (смешанный, с ответами в конце) или готовый набор предложений для эссе HSK 6 по темам: здоровье, конкуренция, культура, экология.</p>
+
+</div>
+</body>
+</html>
