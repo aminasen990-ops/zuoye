@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ДЗ · 18.10.2026 · Северсталь</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', 'SF Pro Text', 'Roboto', sans-serif;
+  background: linear-gradient(150deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 2rem 1rem;
+  line-height: 1.65;
+  color: #1f2937;
+}
+.container { max-width: 950px; margin: 0 auto; }
+
+/* ===== ЗАГОЛОВОК ===== */
+.module-header {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  text-align: center;
+  border-bottom: 4px solid #10b981;
+}
+.module-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #059669, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+.module-header p { font-size: 15px; color: #6b7280; }
+
+/* ===== РУКОВОДСТВО / ОБРАЩЕНИЕ ===== */
+.guide {
+  background: #fffbeb;
+  border: 3px solid #f59e0b;
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 24px rgba(245,158,11,0.15);
+}
+.guide-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #b45309;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+.guide-step {
+  background: #ffffff;
+  border-left: 5px solid #f59e0b;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+.guide-step strong { color: #b45309; font-weight: 800; }
+.guide-final {
+  background: #fef3c7;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  font-weight: 700;
+  color: #92400e;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* ===== ССЫЛКА НА ЗАПИСЬ ===== */
+.recording-box {
+  background: #eff6ff;
+  border: 3px solid #3b82f6;
+  border-radius: 20px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 24px rgba(59,130,246,0.15);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.recording-box .icon { font-size: 2.2rem; }
+.recording-box .text { flex: 1; min-width: 200px; font-size: 0.95rem; }
+.recording-box .text strong { color: #1e40af; }
+.recording-box a {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  padding: 0.7rem 1.3rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+.recording-box a:hover { background: #1d4ed8; transform: translateY(-2px); }
+
+/* ===== ЧАСТИ ДЗ ===== */
+.part-header {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #fff;
+  border-radius: 20px;
+  padding: 1rem 1.6rem;
+  margin: 2rem 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 6px 20px rgba(16,185,129,0.3);
+}
+.part-header .part-num {
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: rgba(255,255,255,0.25);
+  width: 50px; height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  flex-shrink: 0;
+}
+.part-header .part-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.part-header .part-sub {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* ===== КАРТОЧКИ ЗАДАНИЙ ===== */
+.task-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  position: relative;
+}
+.task-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  border-radius: 20px 0 0 20px;
+  background: #10b981;
+}
+.task-card.blue::before { background: #3b82f6; }
+.task-card.purple::before { background: #8b5cf6; }
+.task-card.pink::before { background: #ec489a; }
+.task-card.orange::before { background: #f59e0b; }
+
+.task-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ===== УМНАЯ ПОДСКАЗКА ===== */
+.tip {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+  margin: 0.7rem 0;
+  font-size: 0.9rem;
+  color: #78350f;
+  line-height: 1.6;
+}
+.tip::before {
+  content: '🧑‍🏫 Амина: ';
+  font-weight: 800;
+  color: #b45309;
+}
+
+/* ===== ЧЕК-ЛИСТ ===== */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0;
+}
+.checklist li {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 0.7rem 1rem 0.7rem 2.8rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 2px solid transparent;
+}
+.checklist li::before {
+  content: '☐';
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  color: #b8914a;
+  font-weight: 800;
+}
+.checklist li:hover { background: #ecfdf5; border-color: #10b981; }
+.checklist li.done {
+  background: #d1fae5;
+  color: #065f46;
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+.checklist li.done::before {
+  content: '✅';
+  color: #059669;
+}
+
+/* ===== ВАЖНЫЙ БЛОК ===== */
+.important {
+  background: #fee2e2;
+  border: 3px solid #ef4444;
+  border-radius: 18px;
+  padding: 1.1rem 1.3rem;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+.important strong { color: #b91c1c; font-weight: 800; }
+.important .title {
+  font-weight: 800;
+  color: #b91c1c;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+}
+
+/* ===== ФРАЗЫ ДЛЯ ОБМЕНА ===== */
+.phrase-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 0.8rem 0;
+}
+.phrase-item {
+  background: #f0f9ff;
+  border: 2px solid #0284c7;
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+  flex: 1 1 250px;
+  font-size: 0.92rem;
+}
+.phrase-item .cn {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0c4a6e;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.phrase-item .pinyin {
+  font-size: 0.82rem;
+  color: #0369a1;
+  display: block;
+  font-style: italic;
+  margin-bottom: 0.2rem;
+}
+.phrase-item .ru {
+  font-size: 0.85rem;
+  color: #1f2937;
+}
+
+/* ===== КАРТОЧКИ ГОРОДОВ ===== */
+.cities-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.8rem 0;
+}
+.city-slot {
+  flex: 1 1 220px;
+  background: #fef9c3;
+  border: 2px dashed #eab308;
+  border-radius: 18px;
+  padding: 1.1rem;
+  text-align: center;
+}
+.city-slot .num {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #a16207;
+  margin-bottom: 0.3rem;
+}
+.city-slot .label {
+  font-size: 0.85rem;
+  color: #78350f;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.city-slot .line {
+  border-bottom: 2px dotted #a16207;
+  height: 1.5rem;
+  margin: 0.4rem 0;
+}
+
+/* ===== ПРОГРЕСС ===== */
+.progress-bar {
+  background: #e5e7eb;
+  border-radius: 30px;
+  height: 24px;
+  overflow: hidden;
+  margin: 1rem 0;
+  position: relative;
+}
+.progress-fill {
+  background: linear-gradient(90deg, #10b981, #059669);
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.progress-text {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+/* ===== КАРТОЧКИ ВЫПОЛНЕННЫХ ЗАДАНИЙ ===== */
+.highlight-item {
+  background: #eff6ff;
+  border-left: 4px solid #3b82f6;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+.highlight-item strong { color: #1e40af; }
+
+/* ===== ИДЕИ ДЛЯ ГОРОДОВ ===== */
+.city-ideas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.8rem;
+}
+.city-idea {
+  background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+  border: 2px solid #ec489a;
+  border-radius: 14px;
+  padding: 0.7rem 1rem;
+  flex: 1 1 200px;
+  font-size: 0.9rem;
+}
+.city-idea .emoji { font-size: 1.4rem; display: block; margin-bottom: 0.2rem; }
+.city-idea .name { font-weight: 800; color: #be185d; }
+.city-idea .desc { font-size: 0.82rem; color: #831843; line-height: 1.5; margin-top: 0.2rem; }
+
+/* ===== МОБИЛЬНЫЕ ===== */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .module-header h1 { font-size: 20px; }
+  .part-header { padding: 0.8rem 1rem; }
+  .part-header .part-num { width: 40px; height: 40px; line-height: 40px; font-size: 1.4rem; }
+  .part-header .part-title { font-size: 1rem; }
+  .task-card { padding: 1.1rem 1rem; }
+  .city-idea { flex: 1 1 100%; }
+}
+
+/* ===== АНИМАЦИЯ ===== */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.pulse { animation: pulse 2s infinite; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== ЗАГОЛОВОК ===== -->
+  <div class="module-header">
+    <h1>📅 Домашнее задание · 18 октября 2026</h1>
+    <p>Группа «Северсталь» · До следующего урока</p>
+  </div>
+
+  <!-- ===== ОБРАЩЕНИЕ / РУКОВОДСТВО ===== -->
+  <div class="guide">
+    <div class="guide-title">🧭 КАК ДЕЛАТЬ ЭТО ДЗ</div>
+    <div class="guide-step"><strong>1 шаг:</strong> Прочитай ВСЕ части от начала до конца — для ориентации.</div>
+    <div class="guide-step"><strong>2 шаг:</strong> Отметь галочками то, что уже сделал. Всё сохраняется в твоём браузере.</div>
+    <div class="guide-step"><strong>3 шаг:</strong> Не откладывай на последний день — каникулы быстро кончатся.</div>
+    <div class="guide-final">💬 «Если не сделал ДЗ — сначала сделай, потом спрашивай. Иначе это не вопросы, а отработка долгов в прямом эфире».</div>
+  </div>
+
+  <!-- ===== ССЫЛКА НА ЗАПИСЬ ===== -->
+  <div class="recording-box">
+    <span class="icon">🎥</span>
+    <div class="text">
+      <strong>Запись урока 18.10.2026</strong><br>
+      ⚠️ Последние 30 минут не записались (облако не почистила). Но если изголодаетесь по китайскому на каникулах — смотрите пятничную запись.
+    </div>
+    <a href="https://voovmeeting.com/crm/e5pGElE8cc" target="_blank">▶️ Смотреть запись</a>
+  </div>
+
+  <!-- ===== ПРОГРЕСС ===== -->
+  <div class="progress-text" id="progressText">Выполнено: 0 из 0</div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill">0%</div></div>
+
+  <!-- ================================================ -->
+  <!-- ЧАСТЬ 1: КОНСПЕКТ -->
+  <!-- ================================================ -->
+  <div class="part-header">
+    <div class="part-num">1</div>
+    <div>
+      <div class="part-title">📝 Конспект урока</div>
+      <div class="part-sub">Советы и рекомендации — на отдельный лист!</div>
+    </div>
+  </div>
+
+  <div class="task-card">
+    <div class="task-title">📓 Что нужно сделать</div>
+    <p style="font-size:0.95rem; margin-bottom:0.6rem;">Сделай конспект урока. Но <b>на отдельном листе</b> запиши именно <b>советы и рекомендации</b>, которые Амина говорит на русском и выделяет в речи как отступление.</p>
+    <div class="tip">Советы — это то, что я говорю «в сторону»: как лучше запоминать, где ошибаетесь чаще всего, какие ловушки в грамматике, какие лайфхаки для речи. Их нужно выписать отдельно и перечитывать перед каждым уроком.</div>
+
+    <div class="important">
+      <div class="title">🚫 Не путать!</div>
+      Конспект урока — это <b>лексика + грамматика</b>.<br>
+      Лист с советами — это <b>рекомендации, лайфхаки, разборы ошибок</b>. Это разные листы.
+    </div>
+
+    <ul class="checklist" data-part="p1">
+      <li data-id="p1_1">Записал(а) конспект урока (лексика + грамматика)</li>
+      <li data-id="p1_2">Выделил(а) ОТДЕЛЬНЫЙ лист для советов и рекомендаций</li>
+      <li data-id="p1_3">Переписал(а) туда все советы Амины (на русском)</li>
+    </ul>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- ЧАСТЬ 2: СТАРЫЕ ДОЛГИ -->
+  <!-- ================================================ -->
+  <div class="part-header">
+    <div class="part-num">2</div>
+    <div>
+      <div class="part-title">✅ Старые долги</div>
+      <div class="part-sub">Сначала — то, что ты себе давно обещал</div>
+    </div>
+  </div>
+
+  <div class="task-card blue">
+    <div class="task-title">🎯 Что нужно сделать</div>
+    <p style="font-size:0.95rem; margin-bottom:0.6rem;">Напечатай в свои заметки <b>краткий список</b> того, что ты себе записывал в долг и давно хотел сделать. Каждый пункт — <b>максимально кратко</b>.</p>
+
+    <div class="tip">Не надо расписывать длинно. Один пункт — одна строка. Пример: «Выписать свои лайфхаки из разговорной практики». Всё.</div>
+
+    <div class="task-title" style="margin-top:1rem; font-size:0.95rem;">📋 Примеры того, что обычно записывают в долг:</div>
+    <ul class="checklist" data-part="p2">
+      <li data-id="p2_1">Выписать свои лайфхаки из разговорной практики (то, что уже работает на практике)</li>
+      <li data-id="p2_2">Посмотреть <b>2 ролика по 15 минут</b> с канала влогов на YouTube</li>
+      <li data-id="p2_3">Найти в инстаграме у китаянки свои проблемные сочетания и потренироваться вслух</li>
+      <li data-id="p2_4">Открыть <a href="https://aminasen990-ops.github.io/zuoye/kol.html" target="_blank" style="color:#1d4ed8; font-weight:700;">тренажёр разговорной практики</a> — найти сложную тему (или свою) и написать краткий мини-диалог</li>
+    </ul>
+
+    <div class="highlight-item">
+      <strong>💡 Важно:</strong> тренируйся <b>вслух</b> на лексике из <b>последних трёх уроков</b>. Не бери старые слова — свежие должны звучать.
+    </div>
+
+    <div class="important">
+      <div class="title">📌 Про ролики</div>
+      «2 ролика по 15 минут» — это не «полистать шортсы». Это <b>влоги носителей</b>, где живая речь. Смотри с субтитрами (лучше на китайском), слушай интонацию.
+    </div>
+
+    <div class="highlight-item" style="background:#fdf2f8; border-left-color:#ec489a;">
+      <strong style="color:#be185d;">✨ Про тренажёр:</strong> это ли не чудо в изучении языка — что всегда есть возможность переучиться? Нужна лишь <b>ваша инициатива</b> (первостепенно) и <b>умный подход</b> (второй приоритет). Переиграйте сложный диалог — и он больше не будет сложным.
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- ЧАСТЬ 3: ПЛАН ГОРОДОВ -->
+  <!-- ================================================ -->
+  <div class="part-header">
+    <div class="part-num">3</div>
+    <div>
+      <div class="part-title">🏙️ План из 3 городов</div>
+      <div class="part-sub">Куда хочешь поехать — по-настоящему</div>
+    </div>
+  </div>
+
+  <div class="task-card purple">
+    <div class="task-title">🎯 Что нужно сделать</div>
+    <p style="font-size:0.95rem; margin-bottom:0.6rem;">Составь план из <b>3 городов</b> в Китае, которые ты хочешь посетить. Посмотри в <b>Douyin</b>, <b>Xiaohongshu</b>, <b>Instagram</b> — что там есть интересного.</p>
+
+    <div class="tip">Пиши не просто «Шанхай», а почему именно туда. Что ты хочешь там увидеть? Что попробовать? Это помогает запоминать названия городов через личный интерес.</div>
+
+    <div class="important" style="background:#fef3c7; border-color:#f59e0b;">
+      <div class="title" style="color:#92400e;">🤔 Сначала ответь себе: а чего ты вообще хочешь от путешествий?</div>
+      Потому что в Китае есть <b>всё</b> — и вы найдёте здесь и Америку, и Европу. Из-за сложного колониального прошлого (Шанхай, Гуанчжоу, Тяньцзинь) здесь причудливо смешались стили, а природа и развлечения — на любой вкус. Выбирайте под своё настроение.
+    </div>
+
+    <div class="task-title" style="margin-top:1rem; font-size:0.95rem;">💡 Идеи (спросите у ИИ, если интересно):</div>
+    <div class="city-ideas">
+      <div class="city-idea">
+        <span class="emoji">🏜️</span>
+        <span class="name">Синьцзян (Xinjiang)</span>
+        <div class="desc">Пустыни, барханы, верблюды. Совсем другая планета — не похожая на привычный Китай.</div>
+      </div>
+      <div class="city-idea">
+        <span class="emoji">🔮</span>
+        <span class="name">Капсульные отели</span>
+        <div class="desc">Шары-капсулы прямо на открытой природе, как из будущего. Спросите ИИ — в Куньмин(е) или Наньнине.</div>
+      </div>
+      <div class="city-idea">
+        <span class="emoji">🏰</span>
+        <span class="name">Шанхай — Диснейленд</span>
+        <div class="desc">Настоящий Диснейленд, как в Париже или Орландо. Плюс колониальная архитектура на набережной.</div>
+      </div>
+      <div class="city-idea">
+        <span class="emoji">🍣</span>
+        <span class="name">Суши на дорожке</span>
+        <div class="desc">Рестораны с конвейером — тарелочки едут прямо к вам. Плюс картинг, 24/7 спа за 2500 руб.</div>
+      </div>
+      <div class="city-idea">
+        <span class="emoji">🏛️</span>
+        <span class="name">Европа в Китае</span>
+        <div class="desc">Колониальные кварталы, европейские фасады, но с китайской душой. Реально поинтересуйтесь.</div>
+      </div>
+      <div class="city-idea">
+        <span class="emoji">🗽</span>
+        <span class="name">Америка в Китае</span>
+        <div class="desc">Небоскрёбы, огромные моллы, тематические парки. Всё, что ждёте от США — только ближе.</div>
+      </div>
+    </div>
+
+    <div class="important" style="background:#fef2f2; border-color:#b5443c;">
+      <div class="title" style="color:#b5443c;">😔 От Амины:</div>
+      Я очень огорчилась и удивилась, что вы не знаете китайские города. Мне казалось, что мы именно <b>этого ждали</b> и скачивали эти видео с таким трудом — били-били, дочини и т.д. Включите интерес — и города запомнятся сами.
+    </div>
+
+    <div class="cities-grid">
+      <div class="city-slot">
+        <div class="num">1</div>
+        <div class="label">🏙️ Город</div>
+        <div class="line"></div>
+        <div class="label">Почему?</div>
+        <div class="line"></div>
+      </div>
+      <div class="city-slot">
+        <div class="num">2</div>
+        <div class="label">🏙️ Город</div>
+        <div class="line"></div>
+        <div class="label">Почему?</div>
+        <div class="line"></div>
+      </div>
+      <div class="city-slot">
+        <div class="num">3</div>
+        <div class="label">🏙️ Город</div>
+        <div class="line"></div>
+        <div class="label">Почему?</div>
+        <div class="line"></div>
+      </div>
+    </div>
+
+    <ul class="checklist" data-part="p3">
+      <li data-id="p3_1">Выбрал(а) 3 города (посмотрел(а) в Douyin / Xiaohongshu / Instagram)</li>
+      <li data-id="p3_2">Записал(а), почему именно эти города (что посмотреть, что попробовать)</li>
+      <li data-id="p3_3">Выписал(а) китайские названия городов и их пиньинь</li>
+    </ul>
+
+    <div class="highlight-item">
+      <strong>💡 Подсказка:</strong> Названия городов по-китайски часто звучат иначе, чем мы привыкли. Пекин — 北京, Шанхай — 上海, Гуанчжоу — 广州, Чэнду — 成都, Сиань — 西安. Выписывай их с пиньинем — пригодится.
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- ЧАСТЬ 4: КИТАЙСКИЙ РЕСТОРАН -->
+  <!-- ================================================ -->
+  <div class="part-header">
+    <div class="part-num">4</div>
+    <div>
+      <div class="part-title">🍜 Китайский ресторан в Москве</div>
+      <div class="part-sub">Обменяться WeChat с носителем</div>
+    </div>
+  </div>
+
+  <div class="task-card orange">
+    <div class="task-title">🎯 Что нужно сделать</div>
+    <p style="font-size:0.95rem; margin-bottom:0.6rem;">Сходи в китайский ресторан в Москве и <b>обменяйся WeChat</b> с китаянкой или китайцем. Заранее подготовь вопросы и ветки диалога.</p>
+
+    <div class="tip">Не бойся подойти. Китайцы в Москве часто рады, когда иностранец говорит по-китайски. Начни с простого: «Привет! Вы из Китая? Я учу китайский».</div>
+
+    <div class="task-title" style="margin-top:1rem; font-size:0.95rem;">💬 Обязательные фразы для диалога:</div>
+    <div class="phrase-grid">
+      <div class="phrase-item">
+        <span class="cn">你们第一次来莫斯科？</span>
+        <span class="pinyin">Nǐmen dì yī cì lái Mòsīkē?</span>
+        <span class="ru">Вы впервые в Москве?</span>
+      </div>
+      <div class="phrase-item">
+        <span class="cn">你们是中国哪里的？</span>
+        <span class="pinyin">Nǐmen shì Zhōngguó nǎlǐ de?</span>
+        <span class="ru">Вы откуда из Китая?</span>
+      </div>
+      <div class="phrase-item">
+        <span class="cn">我是俄罗斯人，我在学中文。</span>
+        <span class="pinyin">Wǒ shì Éluósī rén, wǒ zài xué Zhōngwén.</span>
+        <span class="ru">Я из России, учу китайский.</span>
+      </div>
+      <div class="phrase-item">
+        <span class="cn">可以加你的微信吗？</span>
+        <span class="pinyin">Kěyǐ jiā nǐ de Wēixìn ma?</span>
+        <span class="ru">Можно добавить твой WeChat?</span>
+      </div>
+    </div>
+
+    <ul class="checklist" data-part="p4">
+      <li data-id="p4_1">Сходил(а) в китайский ресторан в Москве</li>
+      <li data-id="p4_2">Подготовил(а) вопросы заранее (не менее 4 фраз)</li>
+      <li data-id="p4_3">Обменялся(ась) WeChat с китаянкой / китайцем</li>
+      <li data-id="p4_4">Написал(а) краткий отчёт: что спросил, что ответили</li>
+    </ul>
+
+    <div class="important">
+      <div class="title">📌 Ветки диалога (заготовь заранее!)</div>
+      • <b>你们第一次来莫斯科？</b> — если «да»: «Как вам Москва?» → если «нет»: «Сколько лет вы здесь живёте?»<br>
+      • <b>你们是中国哪里的？</b> — если «Пекин»: «Я хочу поехать в Пекин!» → если другой город: «О, я слышал(а), это красивый город!»
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- ФИНАЛЬНЫЙ ЧЕК-ЛИСТ -->
+  <!-- ================================================ -->
+  <div class="part-header" style="background: linear-gradient(135deg, #b5443c, #e74c3c);">
+    <div class="part-num">✓</div>
+    <div>
+      <div class="part-title">Финальная самопроверка</div>
+      <div class="part-sub">Пройдись по списку перед уроком</div>
+    </div>
+  </div>
+
+  <div class="task-card">
+    <ul class="checklist" data-part="final">
+      <li data-id="f_1">Конспект урока сделан + отдельный лист советов</li>
+      <li data-id="f_2">Старые долги — краткий список + хотя бы 1 пункт выполнен</li>
+      <li data-id="f_3">План из 3 городов — с причинами</li>
+      <li data-id="f_4">Китайский ресторан — WeChat обменян</li>
+      <li data-id="f_5">Ролики (2 по 15 минут) — посмотрены</li>
+      <li data-id="f_6">Проблемные сочетания — потренированы вслух</li>
+      <li data-id="f_7">Мини-диалог в тренажёре разговорной практики — написан</li>
+    </ul>
+
+    <div class="guide-final" style="margin-top:1rem;">
+      💪 «Разница между “делаю” и “делаю вид” видна с первого урока - ну это ладно, главное: во время каникул, жду инициативы от Вас - отправляйте дз по частям, регулярно, не пишите мне свои разочарования, пока не попробовали сделать дз. Перейдите на следующий этап, я же всегда рядом и если захотите - можете отправлять фотки из 火锅饭店 или рассказать об опыте с китайцами - это самый быстрый путь».
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== ЧЕК-ЛИСТЫ С СОХРАНЕНИЕМ =====
+const STORAGE_KEY = 'hw_18_10_2026_severstal';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function updateProgress() {
+  const all = document.querySelectorAll('.checklist li[data-id]');
+  const done = document.querySelectorAll('.checklist li.done');
+  const total = all.length;
+  const count = done.length;
+  const percent = total > 0 ? Math.round(count / total * 100) : 0;
+  document.getElementById('progressFill').style.width = percent + '%';
+  document.getElementById('progressFill').textContent = percent + '%';
+  document.getElementById('progressText').textContent = `Выполнено: ${count} из ${total}`;
+}
+
+function initChecklists() {
+  const state = loadState();
+  document.querySelectorAll('.checklist li[data-id]').forEach(li => {
+    const id = li.dataset.id;
+    if (state[id]) li.classList.add('done');
+    li.addEventListener('click', (e) => {
+      // не переключать чекбокс, если кликнули по ссылке внутри пункта
+      if (e.target.tagName === 'A') return;
+      li.classList.toggle('done');
+      const s = loadState();
+      s[id] = li.classList.contains('done');
+      saveState(s);
+      updateProgress();
+    });
+  });
+  updateProgress();
+}
+
+// ===== ИНИЦИАЛИЗАЦИЯ =====
+document.addEventListener('DOMContentLoaded', initChecklists);
+</script>
+</body>
+</html>
