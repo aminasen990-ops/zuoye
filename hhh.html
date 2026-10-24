@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK 6 — новый материал (34 карточки) с поиском</title>
+<style>
+  :root{
+    --bg:#faf8f4; --card:#fff; --ink:#1f2328; --muted:#5b6570;
+    --line:#e8e2d8; --gold:#e6b800; --gold-soft:#fff8d6;
+    --accent:#8a6d1f; --head:#2c3e50;
+    --blue:#eaf1fb; --blue-line:#5b8fd6;
+    --green:#eef7f0; --green-line:#cfe6d6;
+    --teacher:#fffdf5; --shadow:0 2px 12px rgba(0,0,0,.07);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans",system-ui,-apple-system,sans-serif;
+    line-height:1.65;font-size:16px;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:24px 16px 80px;}
+
+  /* ── Поиск ── */
+  .searchbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,248,244,.94);backdrop-filter:blur(8px);
+    padding:12px 0 10px;margin:0 -16px 20px;
+    padding-left:16px;padding-right:16px;
+    border-bottom:1px solid var(--line);
+  }
+  .search-inner{
+    max-width:1000px;margin:0 auto;
+    display:flex;align-items:center;gap:10px;
+    background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:8px 16px;box-shadow:var(--shadow);
+  }
+  .search-inner .icon{font-size:1.1rem;color:var(--muted);}
+  #q{flex:1;border:none;outline:none;font-size:1rem;background:transparent;color:var(--ink);font-family:inherit;}
+  #q::placeholder{color:#9aa3ad;}
+  .search-meta{font-size:.82rem;color:var(--muted);white-space:nowrap;}
+  #clearBtn{border:none;background:#f0ece4;color:var(--muted);border-radius:999px;padding:4px 12px;cursor:pointer;font-size:.82rem;font-family:inherit;display:none;}
+  #clearBtn:hover{background:#e6e1d8;}
+
+  /* ── Шапка ── */
+  header.top{
+    background:linear-gradient(135deg,#2c3e50,#3d566e);
+    color:#fff;border-radius:18px;padding:26px 28px;
+    box-shadow:var(--shadow);margin-bottom:24px;
+  }
+  header.top h1{margin:0 0 6px;font-size:1.45rem;letter-spacing:.2px;}
+  header.top p{margin:0;opacity:.85;font-size:.95rem;}
+
+  /* ── Баннеры частей ── */
+  .part-banner{
+    background:var(--gold-soft);border-left:6px solid var(--gold);
+    border-radius:10px;padding:12px 16px;margin:36px 0 16px;
+    font-weight:700;color:var(--accent);font-size:1.05rem;
+  }
+
+  /* ── Карточка ── */
+  .word{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:16px;padding:22px 24px 18px;margin:20px 0;
+    box-shadow:var(--shadow);scroll-margin-top:80px;
+  }
+  .word.hidden{display:none;}
+  .word h2{
+    margin:0 0 6px;font-size:1.3rem;color:var(--head);line-height:1.45;
+    display:flex;flex-wrap:wrap;gap:.35em;align-items:baseline;
+  }
+  .word h2 .emoji{font-size:1.35rem;}
+  .word h2 .hanzi{color:#111;font-weight:800;}
+  .word h2 .pinyin{color:var(--accent);font-weight:600;font-size:1.05rem;}
+  .word h2 .trans{color:var(--muted);font-weight:500;font-size:1rem;}
+  .word h2 mark{background:var(--gold-soft);color:inherit;padding:0 2px;border-radius:3px;}
+
+  .meta-line{font-size:.92rem;color:var(--muted);margin:2px 0 10px;}
+  .meta-line b{color:var(--head);}
+
+  .block{margin:14px 0;}
+  .block .label{font-weight:700;color:var(--head);margin-bottom:4px;display:flex;align-items:center;gap:6px;font-size:.98rem;}
+  .check{color:#2e9e5b;font-weight:800;}
+
+  ul.plain{margin:6px 0 6px 1.2em;padding:0;}
+  ul.plain li{margin:4px 0;}
+
+  table.colloc{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:.94rem;overflow:hidden;border-radius:10px;}
+  table.colloc th,table.colloc td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
+  table.colloc thead th{background:#f3f0ea;color:var(--head);font-weight:700;border-bottom:2px solid var(--line);}
+  table.colloc tbody tr:nth-child(even){background:#fcfbf8;}
+  table.colloc td.hz{font-weight:600;color:#111;}
+
+  blockquote.example{margin:10px 0;padding:10px 14px;background:#f7f9fb;border-left:4px solid #9db4c8;border-radius:8px;font-size:.95rem;}
+  blockquote.example .hz{font-weight:600;color:#111;}
+  blockquote.example .py{color:var(--accent);font-size:.9rem;}
+  blockquote.example .ru{color:var(--muted);}
+
+  .hanzi-key{display:inline-block;background:var(--gold-soft);color:#000;font-weight:700;padding:0 4px;border-radius:4px;border-bottom:2px solid var(--gold);}
+
+  .compare li{margin:4px 0;}
+
+  .teacher{background:linear-gradient(135deg,#fff8e1,#fffdf5);border:1px dashed var(--gold);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:.95rem;}
+  .teacher .who{font-weight:800;color:var(--accent);}
+
+  .test{background:var(--green);border:1px solid var(--green-line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:.95rem;}
+  .test ol{margin:6px 0 6px 1.3em;padding:0;}
+  .test .answers{margin-top:8px;padding-top:8px;border-top:1px dashed var(--green-line);font-size:.9rem;color:var(--muted);}
+
+  .hsk6{background:var(--blue);border-left:4px solid var(--blue-line);border-radius:8px;padding:10px 14px;margin:14px 0;font-size:.95rem;}
+  .hsk6 .tag{font-weight:800;color:#355f9e;}
+  .hsk6 .py{color:var(--accent);font-size:.9rem;}
+  .hsk6 .ru{color:var(--muted);}
+
+  /* ── Ключи ── */
+  .keys{background:#fdf6e3;border:1px solid #f0e2b6;border-radius:12px;padding:14px 18px;margin:14px 0;font-size:.95rem;}
+  .keys .label{font-weight:800;color:#8a6d1f;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+  .keys ul{margin:0;padding-left:1.1em;}
+  .keys li{margin:6px 0;}
+  .keys b{color:#6b5316;}
+  .keys .tip{display:inline-block;background:#fff3c4;border-radius:6px;padding:1px 6px;font-size:.9rem;}
+
+  /* ── Чек-лист ── */
+  .checklist{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin-top:34px;box-shadow:var(--shadow);}
+  .checklist h3{margin-top:0;color:var(--head);}
+  .checklist ul{list-style:none;padding:0;margin:0;}
+  .checklist li{margin:6px 0;padding-left:26px;position:relative;}
+  .checklist li::before{content:"✔";position:absolute;left:0;top:0;color:#2e9e5b;font-weight:800;}
+
+  .no-results{text-align:center;color:var(--muted);padding:40px 20px;font-size:1.05rem;display:none;}
+
+  .footer-note{text-align:center;color:var(--muted);font-size:.88rem;margin-top:30px;}
+
+  #toTop{position:fixed;right:20px;bottom:20px;z-index:60;width:46px;height:46px;border-radius:50%;border:none;background:var(--head);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.25s;}
+  #toTop.show{opacity:1;pointer-events:auto;}
+  #toTop:hover{background:#3d566e;}
+
+  @media (max-width:600px){
+    .wrap{padding:12px 10px 60px;}
+    .word{padding:16px 14px;}
+    .word h2{font-size:1.12rem;}
+    table.colloc{font-size:.86rem;}
+    table.colloc th,table.colloc td{padding:6px 7px;}
+    .search-meta{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="searchbar">
+  <div class="search-inner">
+    <span class="icon">🔍</span>
+    <input id="q" type="search" placeholder="Поиск: иероглиф, пиньинь, перевод, ключ…" autocomplete="off">
+    <span class="search-meta" id="searchMeta"></span>
+    <button id="clearBtn" type="button">✕ сброс</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header class="top">
+  <h1>HSK 6 — новый материал (34 карточки)</h1>
+  <p>Разбор ключей по шаблону · всё сохранено дословно · встроенный поиск</p>
+</header>
+
+<div class="no-results" id="noResults">Ничего не найдено — попробуй другой запрос.</div>
+
+<!-- ═══════════ ЧАСТЬ 1 (продолжение) ═══════════ -->
+<div class="part-banner">🅰️ ЧАСТЬ 1 (продолжение, слова 8–9)</div>
+
+<!-- 8 目睹 -->
+<section class="word" data-search="目睹 mu du mù dǔ видеть собственными глазами свидетель">
+  <h2><span class="emoji">👁️🙌</span><span class="hanzi">目睹</span><span class="pinyin">mù dǔ</span><span class="trans">— видеть собственными глазами, быть свидетелем</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>动词 (переходный).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>亲眼看到，亲眼见到。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>видеть своими глазами, быть свидетелем.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">亲眼目睹</td><td>qīnyǎn mù dǔ</td><td>увидеть своими глазами</td><td>固定搭配</td></tr>
+      <tr><td class="hz">目睹全过程</td><td>mù dǔ quán guòchéng</td><td>быть свидетелем всего процесса</td><td>动词 + объект</td></tr>
+      <tr><td class="hz">目睹变化</td><td>mù dǔ biànhuà</td><td>наблюдать перемены</td><td>动词 + объект</td></tr>
+      <tr><td class="hz">目睹一切</td><td>mù dǔ yíqiè</td><td>видеть всё</td><td>动词 + объект</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">你们可以亲眼目睹很多中国人和中国的事。</div><div class="py">Nǐmen kěyǐ qīnyǎn mù dǔ hěn duō Zhōngguórén hé Zhōngguó de shì.</div><div class="ru">Вы можете своими глазами увидеть многих китайцев и многое в Китае. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">我亲眼目睹了电子地图的神奇。</div><div class="py">Wǒ qīnyǎn mù dǔ le diànzǐ dìtú de shénqí.</div><div class="ru">Я своими глазами увидел, насколько удивительны электронные карты.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>目 (mù) — «глаз».</b> Образ: горизонтально повёрнутый глаз с двумя чертами внутри (зрачок). Встречается в: 目标 (цель), 目前 (в настоящее время), 目录 (содержание), 目睹 (видеть). <span class="tip">🧠 глаз = 目</span></li>
+        <li><b>睹 (dǔ) — «видеть».</b> Образ: глаз (目) + «者» (человек, который смотрит) — «смотреть на человека». Встречается в: 目睹 (видеть), 有目共睹 (все видят). <span class="tip">🧠 глаз смотрит = видеть</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>看见 — «увидеть» — разговорное, нейтральное.</li>
+      <li>见到 — «увидеть» — разговорное.</li>
+      <li>耳闻目睹 — «слышать и видеть» — 成语, пара.</li>
+      <li>Пример-сравнение: 目睹 (книжное, осознанно) vs 看见 (разговорное) vs 耳闻目睹 (пара слух+зрение).</li>
+      <li>🔹 Управление: 目睹 + объект ✅: 目睹全过程; *我目睹了他 ❌ (не о человеке, а о событии/процессе).</li>
+      <li>🔹 Сочетаемость: 亲眼目睹 — 固定搭配, чаще, чем просто 目睹.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 目睹 — «用我的眼睛看…亲眼看到了». (B) И 亲眼目睹 — 固定搭配. (C) Пара 耳闻目睹 — слух + зрение. (D) ❌ Ошибка студента — *我目睹了他 ❌ (目睹 — о событии); правильно 我目睹了全过程 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>我亲眼______了电子地图的神奇。</li><li>这本书是他______的真实故事。</li></ol><div class="answers">Ответы: 1. 目睹 · 2. 耳闻目睹 (пара слух+зрение)</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 我们亲眼目睹了网络和人工智能的迅速发展。<br><span class="py">Wǒmen qīnyǎn mù dǔ le wǎngluò hé réngōng zhìnéng de xùnsù fāzhǎn.</span><br><span class="ru">Мы своими глазами наблюдали стремительное развитие интернета и ИИ.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">我在中国这几年，亲眼目睹了很多变化，跟新闻里看到的不太一样。</div><div class="py">Wǒ zài Zhōngguó zhè jǐ nián, qīnyǎn mù dǔ le hěn duō biànhuà, gēn xīnwén lǐ kàndào de bú tài yíyàng.</div><div class="ru">За эти годы в Китае я своими глазами видел много перемен — они не совсем такие, как в новостях.</div><div class="ru">🗣️ Когда делишься личными наблюдениями о стране/городе.</div></blockquote>
+  </div>
+</section>
+
+<!-- 9 惊慌失措 -->
+<section class="word" data-search="惊慌失措 jing huang shi cuo jīng huāng shī cuò растеряться запаниковать">
+  <h2><span class="emoji">😱🌀</span><span class="hanzi">惊慌失措</span><span class="pinyin">jīng huāng shī cuò</span><span class="trans">— растеряться, запаниковать</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-разговорное; 成语.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>成语; предикат-состояние.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>因为吃惊、害怕而慌张，不知道该怎么办。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>растеряться, запаниковать, потерять голову от страха.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">惊慌失措地跑</td><td>jīng huāng shī cuò de pǎo</td><td>в панике бежать</td><td>状语</td></tr>
+      <tr><td class="hz">不要惊慌失措</td><td>búyào jīng huāng shī cuò</td><td>не паникуй</td><td>разговорное</td></tr>
+      <tr><td class="hz">显得惊慌失措</td><td>xiǎnde jīng huāng shī cuò</td><td>выглядеть растерянным</td><td>动词 + 成语</td></tr>
+      <tr><td class="hz">惊慌失措的样子</td><td>jīng huāng shī cuò de yàngzi</td><td>растерянный вид</td><td>определение</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">你去参加很重要的考试，结果发现忘记带护照，这时候你可能会惊慌失措。</div><div class="py">Nǐ qù cānjiā hěn zhòngyào de kǎoshì, jiéguǒ fāxiàn wàngjì dài hùzhào, zhè shíhou nǐ kěnéng huì jīng huāng shī cuò.</div><div class="ru">Идёшь на важный экзамен, вдруг обнаруживаешь, что забыл паспорт — тут можно запаниковать. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">朋友说：「请你不要惊慌失措，我们再想办法。」</div><div class="py">Péngyou shuō: “Qǐng nǐ búyào jīng huāng shī cuò, wǒmen zài xiǎng bànfǎ.”</div><div class="ru">Друг говорит: «Не паникуй, мы ещё что-нибудь придумаем». (из урока)</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>惊 (jīng) — «испуг, удивление».</b> Образ: сердце (忄) + «京» (звук) — «сердце сжалось от неожиданности». Встречается в: 吃惊 (удивиться), 惊喜 (приятный сюрприз), 惊慌 (паника). <span class="tip">🧠 сердце сжалось = испуг</span></li>
+        <li><b>慌 (huāng) — «паниковать, суетиться».</b> Образ: сердце (忄) + «荒» (пустошь) — «сердце в пустоте, потеряло опору». Встречается в: 慌张 (растерянный), 惊慌 (паника), 心慌 (сердце не на месте). <span class="tip">🧠 сердце в пустоте = паника</span></li>
+        <li><b>失 (shī) — «терять».</b> Образ: рука (手) выпускает предмет — «потерять». Встречается в: 失去 (потерять), 失望 (разочароваться), 失礼 (нарушить этикет). <span class="tip">🧠 рука выпустила = потерять</span></li>
+        <li><b>措 (cuò) — «принимать меры; располагать».</b> Образ: рука (扌) + «昔» (прошлое) — «рука действует по старой памяти». Встречается в: 措施 (меры), 不知所措 (не знать, что делать). <span class="tip">🧠 рука по памяти = действовать</span></li>
+      </ul>
+      <p><b>Связка:</b> 惊 (испуг) + 慌 (паника) + 失 (потерять) + 措 (меры) = «от испуга потерял способность действовать» = растерялся.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>慌张 — «растерянный» — нейтральное, слабее.</li>
+      <li>手忙脚乱 — «суетиться, всё валится из рук» — образное, о действиях.</li>
+      <li>不知所措 — «не знать, что делать» — книжное, без паники.</li>
+      <li>Пример-сравнение: 惊慌失措 (паника + растерянность) vs 慌张 (просто растерян) vs 不知所措 (не знает, что делать).</li>
+      <li>🔹 Сочетаемость: 不要惊慌失措 ✅ — типичная фраза успокоения; *很惊慌失措 ❌ (идиома предельной степени).</li>
+      <li>🔹 Управление: не берёт объект: *我惊慌失措他 ❌.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 惊慌失措 — «吃惊很慌张，以至于我不知道该怎么做». (B) И пример с паспортом на экзамене. (D) ❌ Ошибка студента — *我很惊慌失措 ❌ (идиома + 很); правильно 我突然惊慌失措 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>发现忘带护照，他立刻______。</li><li>朋友安慰他：「不要______，我们再想办法。」</li></ol><div class="answers">Ответы: 1. 惊慌失措 · 2. 惊慌失措</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 遇到突发情况时，最重要的是冷静，不要惊慌失措。<br><span class="py">Yùdào tūfā qíngkuàng shí, zuì zhòngyào de shì lěngjìng, búyào jīng huāng shī cuò.</span><br><span class="ru">При внезапной ситуации главное — сохранять спокойствие, не паниковать.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">孩子走丢的那几分钟，她完全惊慌失措，连电话都拨不出去。</div><div class="py">Háizi zǒudiū de nà jǐ fēnzhōng, tā wánquán jīng huāng shī cuò, lián diànhuà dōu bō bù chūqù.</div><div class="ru">В те несколько минут, когда потерялся ребёнок, она совершенно растерялась — даже не могла набрать номер.</div><div class="ru">🗣️ Когда рассказываешь про стрессовую ситуацию.</div></blockquote>
+  </div>
+</section>
+
+<!-- ═══════════ ЧАСТЬ 2 (слова 10–20) ═══════════ -->
+<div class="part-banner">🅱️ ЧАСТЬ 2 (слова 10–20)</div>
+
+<!-- 10 千变万化 -->
+<section class="word" data-search="千变万化 qian bian wan hua qiān biàn wàn huà бесконечно меняться превращения">
+  <h2><span class="emoji">🔄🎨</span><span class="hanzi">千变万化</span><span class="pinyin">qiān biàn wàn huà</span><span class="trans">— бесконечно меняться; тысяча превращений</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-разговорное; 成语.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>成语; предикат-состояние, определение.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>形容变化非常多，没有穷尽。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>бесконечно меняться; тысяча превращений.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">千变万化的刀工</td><td>qiān biàn wàn huà de dāogōng</td><td>бесконечно разнообразная работа ножом</td><td>из урока</td></tr>
+      <tr><td class="hz">千变万化的天气</td><td>qiān biàn wàn huà de tiānqì</td><td>переменчивая погода</td><td>名词 + 的</td></tr>
+      <tr><td class="hz">心情千变万化</td><td>xīnqíng qiān biàn wàn huà</td><td>настроение постоянно меняется</td><td>сказуемое</td></tr>
+      <tr><td class="hz">国际形势千变万化</td><td>guójì xíngshì qiān biàn wàn huà</td><td>международная обстановка постоянно меняется</td><td>эссе</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">土豆的做法千变万化，不管是哪个国家，都能做出各种各样的菜。</div><div class="py">Tǔdòu de zuòfǎ qiān biàn wàn huà, bùguǎn shì nǎge guójiā, dōu néng zuò chū gè zhǒng gè yàng de cài.</div><div class="ru">Способы готовки картошки бесконечно разнообразны — в любой стране из неё делают самые разные блюда. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">国际形势千变万化，我们要保持冷静。</div><div class="py">Guójì xíngshì qiān biàn wàn huà, wǒmen yào bǎochí lěngjìng.</div><div class="ru">Международная обстановка постоянно меняется — нужно сохранять спокойствие. (из урока)</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>千 (qiān) — «тысяча».</b> Образ: цельная картинка — «10 сотен», черта с наклонной. Встречается в: 千万 (обязательно / десять миллионов), 千里 (тысяча ли), 千变万化. <span class="tip">🧠 десять сотен = тысяча</span></li>
+        <li><b>变 (biàn) — «меняться».</b> Образ: 亦 + 又 — «опять и опять другое» = меняться. Встречается в: 变化 (изменение), 变成 (превратиться), 改变 (изменить). <span class="tip">🧠 опять другое = меняться</span></li>
+        <li><b>万 (wàn) — «десять тысяч».</b> Образ: цельная картинка — «очень много». Встречается в: 万一 (вдруг), 千万 (обязательно), 万岁 (долгие лета). <span class="tip">🧠 очень много = десять тысяч</span></li>
+        <li><b>化 (huà) — «превращать(ся)».</b> Образ: 亻 + 匕 — «человек переворачивается» = превращение. Встречается в: 变化 (изменение), 文化 (культура), 现代化 (модернизация). <span class="tip">🧠 человек перевернулся = превращение</span></li>
+      </ul>
+      <p><b>Связка:</b> 千 (тысяча) + 变 (меняться) + 万 (десять тысяч) + 化 (превращение) = «тысяча перемен, десять тысяч превращений» = бесконечное разнообразие.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>变化多端 — «переменчивый» — книжное, о характере/погоде.</li>
+      <li>各种各样 — «всякие разные» — нейтральное, о разнообразии, не о переменах.</li>
+      <li>五花八门 — «пёстрый» — о разнообразии, не о процессе.</li>
+      <li>Пример-сравнение: 千变万化 (постоянно меняется) vs 各种各样 (разные виды) vs 五花八门 (пёстрое разнообразие).</li>
+      <li>🔹 Сочетаемость: 千变万化 — о процессе/явлении; 五花八门 — о множестве видов.</li>
+      <li>🔹 Культурное: часто в эссе об экономике, международной обстановке, моде.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 千变万化 — «有1000种有1万种变化». (B) И примеры: 土豆的做法, 国际形势, 心情. (D) ❌ Ошибка студента — *很千变万化 ❌ (идиома + 很); правильно 千变万化 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>土豆的做法______，每个国家都不一样。</li><li>国际形势______，我们要保持冷静。</li></ol><div class="answers">Ответы: 1. 千变万化 · 2. 千变万化</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 在这个千变万化的时代，终身学习变得越来越重要。<br><span class="py">Zài zhège qiān biàn wàn huà de shídài, zhōngshēn xuéxí biànde yuèláiyuè zhòngyào.</span><br><span class="ru">В эту эпоху бесконечных перемен непрерывное обучение становится всё важнее.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">她的心情千变万化，刚才还笑，现在就不说话了。</div><div class="py">Tā de xīnqíng qiān biàn wàn huà, gāngcái hái xiào, xiànzài jiù bù shuōhuà le.</div><div class="ru">У неё настроение меняется каждую минуту: только что смеялась — теперь молчит.</div><div class="ru">🗣️ Когда обсуждаешь чьё-то переменчивое настроение.</div></blockquote>
+  </div>
+</section>
+
+<!-- 11 养生 -->
+<section class="word" data-search="养生 yang sheng yǎngshēng заботиться о здоровье">
+  <h2><span class="emoji">🌿💪</span><span class="hanzi">养生</span><span class="pinyin">yǎngshēng</span><span class="trans">— заботиться о здоровье, вести здоровый образ жизни</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-культурное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>动词 / 名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>通过饮食、运动、作息等方式保养身体，让身体健康长寿。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>заботиться о здоровье, вести здоровый образ жизни (по китайской традиции).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">中医养生</td><td>zhōngyī yǎngshēng</td><td>оздоровление по китайской медицине</td><td>固定搭配</td></tr>
+      <tr><td class="hz">养生之道</td><td>yǎngshēng zhī dào</td><td>путь сохранения здоровья</td><td>книжное</td></tr>
+      <tr><td class="hz">注重养生</td><td>zhùzhòng yǎngshēng</td><td>уделять внимание здоровью</td><td>动词 + 养生</td></tr>
+      <tr><td class="hz">养生饮食</td><td>yǎngshēng yǐnshí</td><td>здоровая пища</td><td>определение</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">中医养生讲究喝温水，不喝冰水。</div><div class="py">Zhōngyī yǎngshēng jiǎngjiu hē wēnshuǐ, bù hē bīngshuǐ.</div><div class="ru">Китайская медицина в оздоровлении советует пить тёплую воду, а не ледяную. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">打太极拳、早睡早起、饭后散步，都是很好的养生方式。</div><div class="py">Dǎ tàijíquán, zǎo shuì zǎo qǐ, fànhòu sànbù, dōu shì hěn hǎo de yǎngshēng fāngshì.</div><div class="ru">Тайцзи, ранний сон и подъём, прогулка после еды — всё это хорошие способы заботы о здоровье. (из урока)</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>养 (yǎng) — «кормить, растить, заботиться».</b> Образ: 羊 (овца) + 食 (еда, упрощённо) — «кормить овцу» = заботиться. Встречается в: 养生 (оздоровление), 养成 (выработать привычку), 培养 (воспитывать). <span class="tip">🧠 кормить = заботиться</span></li>
+        <li><b>生 (shēng) — «жизнь, рождаться».</b> Образ: 屮 (росток) + 一 (земля) — «росток из земли» = жизнь. Встречается в: 生活 (жизнь), 生命 (жизнь), 生日 (день рождения). <span class="tip">🧠 росток = жизнь</span></li>
+      </ul>
+      <p><b>Связка:</b> 养 (заботиться) + 生 (жизнь) = «заботиться о жизни» = оздоровление.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>保健 — «здравоохранение, гигиена» — официальное, медицинское.</li>
+      <li>保养 — «уход (за телом, вещами)» — нейтральное, шире.</li>
+      <li>健康 — «здоровье» — нейтральное, общее.</li>
+      <li>Пример-сравнение: 养生 (традиционная забота о здоровье) vs 保健 (официальная гигиена) vs 保养 (уход).</li>
+      <li>🔹 Сочетаемость: 中医养生 ✅; *养生药 ❌ (не говорят).</li>
+      <li>🔹 Культурное: 养生 — китайский концепт, включает 喝温水, 早睡早起, 打太极拳, 饭后散步.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 养生 — «注重我们的身体，让身体健康长寿», примеры: 喝温水, 打太极拳, 早睡早起. (C) Культурная связка: 中医养生 — отдельный концепт. (D) ❌ Ошибка студента — *我养生身体 ❌ (нельзя объект); правильно 我注重养生 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>中医______讲究喝温水。</li><li>打太极拳、早睡早起都是很好的______方式。</li></ol><div class="answers">Ответы: 1. 养生 · 2. 养生</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 现代人越来越重视养生，但也要科学养生，不能盲目跟风。<br><span class="py">Xiàndàirén yuèláiyuè zhòngshì yǎngshēng, dàn yě yào kēxué yǎngshēng, bù néng mángmù gēnfēng.</span><br><span class="ru">Современные люди всё больше внимания уделяют здоровому образу жизни, но важно делать это научно, а не слепо следовать моде.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">我妈退休后特别注重养生，天天喝温水、打太极，还拉着我爸一起。</div><div class="py">Wǒ mā tuìxiū hòu tèbié zhùzhòng yǎngshēng, tiāntiān hē wēnshuǐ, dǎ tàijí, hái lāzhe wǒ bà yìqǐ.</div><div class="ru">После выхода на пенсию мама уделяет много внимания здоровью: каждый день тёплая вода, тайцзи — и отца за собой тянет.</div><div class="ru">🗣️ Когда рассказываешь про здоровые привычки старших.</div></blockquote>
+  </div>
+</section>
+
+<!-- 12 佩服 -->
+<section class="word" data-search="佩服 pei fu pèifú восхищаться уважать">
+  <h2><span class="emoji">👏😮</span><span class="hanzi">佩服</span><span class="pinyin">pèifú</span><span class="trans">— восхищаться, уважать (кого-то за что-то)</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-разговорное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>动词 (переходный).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>觉得某人很了不起，从心里尊敬、钦佩。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>восхищаться, уважать, быть впечатлённым.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">佩服你</td><td>pèifú nǐ</td><td>восхищаюсь тобой</td><td>动词 + 人</td></tr>
+      <tr><td class="hz">很佩服</td><td>hěn pèifú</td><td>очень восхищаться</td><td>很 + 动词</td></tr>
+      <tr><td class="hz">佩服得五体投地</td><td>pèifú de wǔ tǐ tóu dì</td><td>восхищаться до земли</td><td>成语</td></tr>
+      <tr><td class="hz">令人佩服</td><td>lìng rén pèifú</td><td>вызывать восхищение</td><td>固定搭配</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">他一个人骑车去了西藏，我真佩服他。</div><div class="py">Tā yí gè rén qí chē qùle Xīzàng, wǒ zhēn pèifú tā.</div><div class="ru">Он один поехал на велосипеде в Тибет — я им действительно восхищаюсь.</div></blockquote>
+    <blockquote class="example"><div class="hz">我很佩服她的勇气。</div><div class="py">Wǒ hěn pèifú tā de yǒngqì.</div><div class="ru">Я восхищаюсь её смелостью.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>佩 (pèi) — «носить на поясе; восхищаться».</b> Образ: 亻 (человек) + 巾 + 凡 — «человек с поясом и подвеской» = носить. Встречается в: 佩服 (восхищаться), 佩戴 (носить). <span class="tip">🧠 носить на поясе = ценить</span></li>
+        <li><b>服 (fú) — «подчиняться; одежда».</b> Образ: 月 (тело) + 卩 — «тело подчинено» = подчиняться. Встречается в: 衣服 (одежда), 舒服 (удобный), 佩服 (восхищаться). <span class="tip">🧠 подчиниться = признать</span></li>
+      </ul>
+      <p><b>Связка:</b> 佩 (носить как ценность) + 服 (признать) = «признать чьё-то превосходство» = восхищаться.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>钦佩 — «восхищаться» — книжное, сильнее.</li>
+      <li>崇拜 — «поклоняться» — сильнее, о кумирах.</li>
+      <li>尊敬 — «уважать» — нейтральное, о человеке.</li>
+      <li>Пример-сравнение: 佩服 (восхищаться за поступок) vs 钦佩 (книжное) vs 崇拜 (поклоняться, как кумиру) vs 尊敬 (уважать).</li>
+      <li>🔹 Управление: 佩服 + человек ✅: 佩服他; *佩服他的勇气 — тоже ✅, но с 的.</li>
+      <li>🔹 Культурное: 佩服得五体投地 — 成语 «восхищаться до земли», сильная степень.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 佩服 — «钦佩…觉得这样做很好». (C) Пара: 钦佩 — книжнее, 佩服 — разговорнее. (D) ❌ Ошибка студента — *我很佩服他得很 ❌ (лишнее); правильно 我很佩服他 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>他一个人骑车去了西藏，我真______他。</li><li>我很______她的勇气。</li></ol><div class="answers">Ответы: 1. 佩服 · 2. 佩服</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 我最佩服那些在困难面前从不放弃的人。<br><span class="py">Wǒ zuì pèifú nàxiē zài kùnnan miànqián cóng bù fàngqì de rén.</span><br><span class="ru">Я больше всего восхищаюсь теми, кто никогда не сдаётся перед трудностями.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">她一边工作一边带孩子，还把家里打理得特别好，我真佩服她。</div><div class="py">Tā yìbiān gōngzuò yìbiān dài háizi, hái bǎ jiālǐ dǎlǐ de tèbié hǎo, wǒ zhēn pèifú tā.</div><div class="ru">Она и работает, и воспитывает ребёнка, и дома всё в порядке — я ею восхищаюсь.</div><div class="ru">🗣️ Когда хвалишь знакомую за то, как она всё успевает.</div></blockquote>
+  </div>
+</section>
+
+<!-- 13 罕见 -->
+<section class="word" data-search="罕见 han jian hǎnjiàn редкий">
+  <h2><span class="emoji">🦄💎</span><span class="hanzi">罕见</span><span class="pinyin">hǎnjiàn</span><span class="trans">— редкий, редчайший</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-нейтральное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>形容词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>非常少见的，很难遇到的。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>редкий, редчайший.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">罕见的病</td><td>hǎnjiàn de bìng</td><td>редкая болезнь</td><td>形容词 + 名词</td></tr>
+      <tr><td class="hz">罕见的天才</td><td>hǎnjiàn de tiāncái</td><td>редкий талант</td><td>形容词 + 名词</td></tr>
+      <tr><td class="hz">十分罕见</td><td>shífēn hǎnjiàn</td><td>крайне редкий</td><td>副词 + 形容词</td></tr>
+      <tr><td class="hz">罕见现象</td><td>hǎnjiàn xiànxiàng</td><td>редкое явление</td><td>形容词 + 名词</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">这种病非常罕见，全国只有几十个病例。</div><div class="py">Zhè zhǒng bìng fēicháng hǎnjiàn, quánguó zhǐyǒu jǐ shí gè bìnglì.</div><div class="ru">Эта болезнь очень редкая — во всей стране всего несколько десятков случаев.</div></blockquote>
+    <blockquote class="example"><div class="hz">冬天下这么大的雪，在北京很罕见。</div><div class="py">Dōngtiān xià zhème dà de xuě, zài Běijīng hěn hǎnjiàn.</div><div class="ru">Такой сильный снег зимой в Пекине — редкость.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>罕 (hǎn) — «редкий, редчайший».</b> Образ: 网 (сеть) + 干 — «сеть с редкими ячейками» = редко. Встречается в: 罕见 (редкий), 稀罕 (редкость). <span class="tip">🧠 сеть с большими ячейками = редко</span></li>
+        <li><b>见 (jiàn) — «видеть».</b> Образ: 目 (глаз) на ножках 儿 — «глаз идёт». Встречается в: 看见 (увидеть), 见面 (встретиться), 意见 (мнение). <span class="tip">🧠 глаз идёт = видеть</span></li>
+      </ul>
+      <p><b>Связка:</b> 罕 (редко) + 见 (видеть) = «редко можно увидеть» = редкий.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>稀少 — «скудный, редкий» — о количестве, книжное.</li>
+      <li>稀有 — «редкий (ресурс)» — о ресурсах/металлах, книжное.</li>
+      <li>少见 — «редко встречается» — разговорное.</li>
+      <li>Пример-сравнение: 罕见 (редкое явление/болезнь) vs 稀少 (мало по количеству) vs 少见 (разговорное).</li>
+      <li>🔹 Сочетаемость: 很罕见 ✅ (прил. + 很); 罕见病 ✅ (固定搭配, медицинское).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 罕见 — «更少，稀少，非常难得». (B) И 罕见 vs 稀少: 罕见 — «редко можно увидеть», 稀少 — «мало по количеству». (D) ❌ Ошибка студента — *很罕见病 ❌ (не в постпозиции); правильно 罕见的病 / 罕见病 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>这种病非常______，全国只有几十个病例。</li><li>冬天下这么大的雪，在北京很______。</li></ol><div class="answers">Ответы: 1. 罕见 · 2. 罕见</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 在全球范围内，这种罕见病的治疗方法仍然是医学难题。<br><span class="py">Zài quánqiú fànwéi nèi, zhè zhǒng hǎnjian bìng de zhìliáo fāngfǎ réngrán shì yīxué nántí.</span><br><span class="ru">Во всём мире лечение этой редкой болезни до сих пор остаётся медицинской проблемой.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">这么早就能看到彩虹，真是罕见。</div><div class="py">Zhème zǎo jiù néng kàndào cǎihóng, zhēn shì hǎnjian.</div><div class="ru">Увидеть радугу так рано — действительно редкость.</div><div class="ru">🗣️ Когда наблюдаешь необычное природное явление.</div></blockquote>
+  </div>
+</section>
+
+<!-- 14 透过 -->
+<section class="word" data-search="透过 tou guo tòuguò через сквозь">
+  <h2><span class="emoji">🔍🪟</span><span class="hanzi">透过</span><span class="pinyin">tòuguò</span><span class="trans">— через, сквозь; видеть насквозь</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-книжное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>предлог / 动词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>穿过某个物体（看、感受）；也表示通过某个角度。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>через, сквозь; посредством (видеть).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">透过窗户</td><td>tòuguò chuānghu</td><td>через окно</td><td>固定搭配</td></tr>
+      <tr><td class="hz">透过现象看本质</td><td>tòuguò xiànxiàng kàn běnzhì</td><td>видеть суть через явления</td><td>固定搭配</td></tr>
+      <tr><td class="hz">透过无瑕的眼睛</td><td>tòuguò Wúxiá de yǎnjing</td><td>глазами Уся</td><td>из урока</td></tr>
+      <tr><td class="hz">透过什么什么小说</td><td>tòuguò shénme shénme xiǎoshuō</td><td>через какой-то роман</td><td>из урока</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">阳光透过窗户照进来，屋子里很暖和。</div><div class="py">Yángguāng tòuguò chuānghu zhào jìnlái, wūzi lǐ hěn nuǎnhuo.</div><div class="ru">Солнечный свет проходит через окно — в комнате тепло.</div></blockquote>
+    <blockquote class="example"><div class="hz">透过他的书，我们从全新的角度了解了中国菜。</div><div class="py">Tòuguò tā de shū, wǒmen cóng quánxīn de jiǎodù liǎojiěle Zhōngguó cài.</div><div class="ru">Через его книгу мы с совершенно нового угла узнали китайскую кухню. (из урока)</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>透 (tòu) — «проникать, насквозь».</b> Образ: 辶 (идти) + 秀 — «идти насквозь» = проникать. Встречается в: 透明 (прозрачный), 透过 (через), 渗透 (просачиваться). <span class="tip">🧠 идти насквозь = проникать</span></li>
+        <li><b>过 (guò) — «проходить, через».</b> Образ: 寸 (мера) + 辶 (идти) — «пройти меру» = пройти. Встречается в: 经过 (пройти), 通过 (через), 过马路 (перейти дорогу). <span class="tip">🧠 пройти = через</span></li>
+      </ul>
+      <p><b>Связка:</b> 透 (проникать) + 过 (через) = «проникнуть через» = сквозь.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>通过 — «через, посредством» — нейтральное, шире.</li>
+      <li>经过 — «пройдя через» — о процессе.</li>
+      <li>穿越 — «пересекать» — книжное, о пространстве/времени.</li>
+      <li>Пример-сравнение: 透过 (сквозь, видеть через) vs 通过 (посредством) vs 经过 (пройдя через).</li>
+      <li>🔹 Управление: 透过 + объект + 看/感受: 透过窗户看 ✅; *透过看窗户 ❌.</li>
+      <li>🔹 Культурное: 透过现象看本质 — 固定 фраза, часто в эссе.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 透过 — «光透过窗户…透过什么什么小说，我可以了解». (B) И 透过 + объект + глагол. (D) ❌ Ошибка студента — *透过看窗户 ❌ (неверный порядок); правильно 透过窗户看 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>阳光______窗户照进来。</li><li>______他的书，我们了解了中国菜。</li></ol><div class="answers">Ответы: 1. 透过 · 2. 透过</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 我们要学会透过现象看本质，不要被表面迷惑。<br><span class="py">Wǒmen yào xuéhuì tòuguò xiànxiàng kàn běnzhì, búyào bèi biǎomiàn míhuò.</span><br><span class="ru">Нужно учиться видеть суть через явления и не давать себя обмануть внешностью.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">透过她的眼睛，我看到了一个完全不一样的中国。</div><div class="py">Tòuguò tā de yǎnjing, wǒ kàndàole yígè wánquán bù yíyàng de Zhōngguó.</div><div class="ru">Через её глаза я увидел совершенно другой Китай.</div><div class="ru">🗣️ Когда говоришь о чьём-то взгляде на вещи.</div></blockquote>
+  </div>
+</section>
+
+<!-- 15 学士/硕士/博士 -->
+<section class="word" data-search="学士 硕士 博士 xueshi shuoshi boshi бакалавр магистр доктор">
+  <h2><span class="emoji">🎓📜</span><span class="hanzi">学士 / 硕士 / 博士</span><span class="pinyin">xuéshì / shuòshì / bóshì</span><span class="trans">— бакалавр / магистр / доктор</span></h2>
+  <div class="meta-line"><b>Регистр:</b> официально-нейтральное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>名词 (все три).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>学士 — 本科毕业；硕士 — 研究生毕业；博士 — 最高学位。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>бакалавр / магистр / доктор (наук).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">本科学士学位</td><td>běnkē xuéshì xuéwèi</td><td>степень бакалавра</td><td>固定搭配</td></tr>
+      <tr><td class="hz">硕士学位</td><td>shuòshì xuéwèi</td><td>степень магистра</td><td>固定搭配</td></tr>
+      <tr><td class="hz">博士学位</td><td>bóshì xuéwèi</td><td>степень доктора</td><td>固定搭配</td></tr>
+      <tr><td class="hz">读硕士</td><td>dú shuòshì</td><td>учиться в магистратуре</td><td>разговорное</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">她本科毕业后读了硕士，现在在读博士。</div><div class="py">Tā běnkē bìyè hòu dúle shuòshì, xiànzài zài dú bóshì.</div><div class="ru">После бакалавриата она пошла в магистратуру, сейчас учится в докторантуре.</div></blockquote>
+    <blockquote class="example"><div class="hz">现在很多工作要求硕士以上学历。</div><div class="py">Xiànzài hěn duō gōngzuò yāoqiú shuòshì yǐshàng xuélì.</div><div class="ru">Сейчас многие работы требуют образования не ниже магистра.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>学 (xué) — «учиться».</b> Образ: ⺍ (руки) + 冖 (крыша) + 子 (ребёнок) — «ребёнок под крышей с поднятыми руками» = учиться. Встречается в: 学生 (студент), 学习 (учиться), 大学 (университет). <span class="tip">🧠 ребёнок под крышей = учиться</span></li>
+        <li><b>士 (shì) — «учёный муж; воин».</b> Образ: 十 над 一 — «человек с дощечкой для письма» = образованный. Встречается в: 学士 (бакалавр), 博士 (доктор), 战士 (воин). <span class="tip">🧠 человек с дощечкой = учёный</span></li>
+        <li><b>硕 (shuò) — «большой, эрудированный».</b> Образ: 石 + 页 — «большая голова» = эрудированный. Встречается в: 硕士 (магистр), 硕果 (большие плоды). <span class="tip">🧠 большая голова = эрудит</span></li>
+        <li><b>博 (bó) — «обширный, эрудированный».</b> Образ: 十 + 尃 — «широко охватывать» = обширный. Встречается в: 博士 (доктор), 博物馆 (музей), 博学 (эрудированный). <span class="tip">🧠 широко охватывать = обширный</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>学历 — «образовательный уровень» — общее понятие.</li>
+      <li>学位 — «учёная степень» — официальное.</li>
+      <li>研究生 — «аспирант» — общее для магистра и доктора.</li>
+      <li>Пример-сравнение: 学士 (бакалавр) &lt; 硕士 (магистр) &lt; 博士 (доктор); 学历 — общее, 学位 — конкретная степень.</li>
+      <li>🔹 Сочетаемость: 硕士学位 ✅, *硕士学历 ✅ (тоже, но с другим оттенком); 读硕士/读博士 ✅.</li>
+      <li>🔹 Культурное: 博士 иногда шутливо — «всезнайка», но обычно нейтрально.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель перечислила: «学士，硕士，博士» — как три уровня. (B) И в тексте про Уся: «英国文学学士…硕士是中国研究». (D) ❌ Ошибка студента — *我读学士 ❌ (не говорят); правильно 我读本科 / 我读硕士 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>本科毕业拿到的是______学位。</li><li>研究生毕业拿到的是______学位。</li><li>最高学位是______。</li></ol><div class="answers">Ответы: 1. 学士 · 2. 硕士 · 3. 博士</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 越来越多的人选择读完硕士再读博士，但学历并不等于能力。<br><span class="py">Yuèláiyuè duō de rén xuǎnzé dú wán shuòshì zài dú bóshì, dàn xuélì bìng bù děngyú nénglì.</span><br><span class="ru">Всё больше людей идут в магистратуру, а потом в докторантуру, но образование не равно способностям.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">他本科是学历史的，硕士转了计算机，现在在读博士。</div><div class="py">Tā běnkē shì xué lìshǐ de, shuòshì zhuǎnle jìsuànjī, xiànzài zài dú bóshì.</div><div class="ru">На бакалавриате он изучал историю, в магистратуре перешёл на информатику, сейчас в докторантуре.</div><div class="ru">🗣️ Когда рассказываешь про чей-то академический путь.</div></blockquote>
+  </div>
+</section>
+
+<!-- 16 焦虑 -->
+<section class="word" data-search="焦虑 jiao lü jiāolǜ тревожность беспокойство">
+  <h2><span class="emoji">😰💭</span><span class="hanzi">焦虑</span><span class="pinyin">jiāolǜ</span><span class="trans">— тревожность, беспокойство</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-нейтральное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>形容词 / 名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>心里着急、担心，坐立不安。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>тревожность, беспокойство; тревожный.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">感到焦虑</td><td>gǎndào jiāolǜ</td><td>чувствовать тревогу</td><td>动词 + 焦虑</td></tr>
+      <tr><td class="hz">焦虑不安</td><td>jiāolǜ bù'ān</td><td>тревожно и неспокойно</td><td>固定搭配</td></tr>
+      <tr><td class="hz">缓解焦虑</td><td>huǎnjiě jiāolǜ</td><td>снимать тревогу</td><td>动词 + 焦虑</td></tr>
+      <tr><td class="hz">考试焦虑</td><td>kǎoshì jiāolǜ</td><td>экзаменационная тревожность</td><td>名词 + 焦虑</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">考试前很多人都很焦虑，睡不着觉。</div><div class="py">Kǎoshì qián hěn duō rén dōu hěn jiāolǜ, shuì bù zháo jiào.</div><div class="ru">Перед экзаменом многие тревожатся и не могут уснуть.</div></blockquote>
+    <blockquote class="example"><div class="hz">工作压力大，他最近一直很焦虑。</div><div class="py">Gōngzuò yālì dà, tā zuìjìn yìzhí hěn jiāolǜ.</div><div class="ru">Из-за большого давления на работе он в последнее время постоянно тревожится.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>焦 (jiāo) — «гореть, обжигать; тревожиться».</b> Образ: 隹 (птица) + 灬 (огонь) — «птица над огнём» = гореть, тревожиться. Встречается в: 焦虑 (тревога), 焦急 (встревоженный), 烧焦 (подгореть). <span class="tip">🧠 птица над огнём = тревога</span></li>
+        <li><b>虑 (lǜ) — «думать, заботиться».</b> Образ: 虍 (тигр) + 心 (сердце) — «сердце под тигром» = тревожная дума. Встречается в: 考虑 (обдумывать), 忧虑 (тревога), 焦虑. <span class="tip">🧠 сердце под тигром = тревожная дума</span></li>
+      </ul>
+      <p><b>Связка:</b> 焦 (гореть) + 虑 (думать) = «гореть в думах» = тревожиться.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>忧虑 — «тревога» — книжнее, о будущем.</li>
+      <li>担心 — «беспокоиться» — разговорное.</li>
+      <li>紧张 — «напряжённый» — о состоянии, нейтральное.</li>
+      <li>Пример-сравнение: 焦虑 (тревожность, медицинский оттенок) vs 忧虑 (книжное) vs 担心 (разговорное) vs 紧张 (напряжение).</li>
+      <li>🔹 Сочетаемость: 很焦虑 ✅; 焦虑不安 ✅ (固定搭配).</li>
+      <li>🔹 Культурное: в современном языке — почти медицинский термин (焦虑症 — тревожное расстройство).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель перечислила «焦虑» в списке слов к тексту — как один из ключевых. (B) И 焦虑 vs 忧虑: 焦虑 — о состоянии, 忧虑 — о будущем. (D) ❌ Ошибка студента — *我很焦虑你 ❌ (нельзя объект); правильно 我为你焦虑 / 我很担心你 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>考试前很多人都很______，睡不着觉。</li><li>工作压力大，他最近一直很______。</li></ol><div class="answers">Ответы: 1. 焦虑 · 2. 焦虑</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 现代社会的快节奏让很多年轻人感到焦虑。<br><span class="py">Xiàndài shèhuì de kuài jiézòu ràng hěn duō niánqīngrén gǎndào jiāolǜ.</span><br><span class="ru">Быстрый ритм современного общества заставляет многих молодых людей чувствовать тревогу.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">找工作那段时间我特别焦虑，天天刷招聘网站到半夜。</div><div class="py">Zhǎo gōngzuò nà duàn shíjiān wǒ tèbié jiāolǜ, tiāntiān shuā zhāopìn wǎngzhàn dào bànyè.</div><div class="ru">В период поиска работы я особенно тревожился — каждый день до полуночи листал сайты с вакансиями.</div><div class="ru">🗣️ Когда рассказываешь про стрессовый период в жизни.</div></blockquote>
+  </div>
+</section>
+
+<!-- 17 相逢 -->
+<section class="word" data-search="相逢 xiang feng xiāngféng встретиться повстречаться">
+  <h2><span class="emoji">🤝🛤️</span><span class="hanzi">相逢</span><span class="pinyin">xiāngféng</span><span class="trans">— встретиться, повстречаться (книжное)</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжное, поэтическое.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>动词 (взаимный).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>相遇，碰到一起（多用于书面语、歌词）。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>встретиться, повстречаться (книжное).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">久别相逢</td><td>jiǔbié xiāngféng</td><td>встретиться после долгой разлуки</td><td>固定搭配</td></tr>
+      <tr><td class="hz">萍水相逢</td><td>píngshuǐ xiāngféng</td><td>случайно встретиться (как поплавки на воде)</td><td>成语</td></tr>
+      <tr><td class="hz">相逢是缘</td><td>xiāngféng shì yuán</td><td>встреча — это судьба</td><td>固定搭配</td></tr>
+      <tr><td class="hz">狭路相逢</td><td>xiá lù xiāngféng</td><td>столкнуться на узкой дороге (о врагах)</td><td>成语</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">久别相逢，两个人抱在一起哭了。</div><div class="py">Jiǔbié xiāngféng, liǎng gè rén bào zài yìqǐ kū le.</div><div class="ru">Встретившись после долгой разлуки, они обнялись и заплакали.</div></blockquote>
+    <blockquote class="example"><div class="hz">萍水相逢，却能成为一生的朋友，真是缘分。</div><div class="py">Píngshuǐ xiāngféng, què néng chéngwéi yìshēng de péngyou, zhēn shì yuánfèn.</div><div class="ru">Случайно встретились — и стали друзьями на всю жизнь, вот это судьба.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>相 (xiāng) — «взаимно».</b> Образ: 木 (дерево) + 目 (глаз) — «глаз смотрит на дерево» = смотреть друг на друга. Встречается в: 相遇 (встретиться), 相同 (одинаковый), 相信 (верить). <span class="tip">🧠 глаз на дерево = взаимно</span></li>
+        <li><b>逢 (féng) — «встречать, наталкиваться».</b> Образ: 辶 (идти) + 夆 — «идти и наткнуться» = встретить. Встречается в: 相逢 (встретиться), 重逢 (снова встретиться). <span class="tip">🧠 идти и наткнуться = встретить</span></li>
+      </ul>
+      <p><b>Связка:</b> 相 (взаимно) + 逢 (встретить) = «встретиться друг с другом».</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>相遇 — «встретиться» — нейтрально-книжное, чаще.</li>
+      <li>遇见 — «встретить» — разговорное.</li>
+      <li>邂逅 — «случайно встретиться» — книжное, без договорённости.</li>
+      <li>Пример-сравнение: 相逢 (книжное, поэтичное) vs 相遇 (нейтрально-книжное) vs 遇见 (разговорное) vs 邂逅 (случайно, книжное).</li>
+      <li>🔹 Управление: 主语 — несколько человек: 我们相逢 ✅; *我相逢他 ❌.</li>
+      <li>🔹 Культурное: 萍水相逢 — 成语 «случайно встретиться, как поплавки на воде»; 狭路相逢 — «столкнуться на узкой дороге» (о врагах).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 相逢 — «和相遇是一样的意思». (B) И 相逢 — книжнее, чаще в песнях/литературе. (D) ❌ Ошибка студента — *我相逢他 ❌ (нужен 跟/和); правильно 我和他相逢 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>久别______，两个人抱在一起哭了。</li><li>______是缘，我们要珍惜。</li></ol><div class="answers">Ответы: 1. 相逢 · 2. 相逢</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 人生中每一次相逢都值得珍惜。<br><span class="py">Rénshēng zhōng měi yí cì xiāngféng dōu zhídé zhēnxī.</span><br><span class="ru">Каждая встреча в жизни достойна того, чтобы её ценить.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">毕业十年后老同学相逢，大家都变了，但感情还在。</div><div class="py">Bìyè shí nián hòu lǎo tóngxué xiāngféng, dàjiā dōu biàn le, dàn gǎnqíng hái zài.</div><div class="ru">Через десять лет после выпуска старые однокурсники встретились — все изменились, но чувства остались.</div><div class="ru">🗣️ Когда рассказываешь про встречу выпускников.</div></blockquote>
+  </div>
+</section>
+
+<!-- 18 毫不差 -->
+<section class="word" data-search="毫不差 hao bu cha háo bù chà точь-в-точь">
+  <h2><span class="emoji">🎯✅</span><span class="hanzi">毫不差</span><span class="pinyin">háo bù chà</span><span class="trans">— ни малейшего расхождения; точь-в-точь</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-разговорное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>выражение (наречие).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>一点儿也不差，完全一样。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>ни малейшего расхождения; точь-в-точь.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">丝毫不差</td><td>sīháo bù chà</td><td>ни малейшего расхождения</td><td>固定搭配</td></tr>
+      <tr><td class="hz">毫不差</td><td>háo bù chà</td><td>точь-в-точь</td><td>разговорное</td></tr>
+      <tr><td class="hz">分毫不差</td><td>fēnháo bù chà</td><td>до последней капли точно</td><td>固定搭配</td></tr>
+      <tr><td class="hz">说得毫不差</td><td>shuō de háo bù chà</td><td>сказать точно</td><td>разговорное</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">他算出来的结果和答案毫不差。</div><div class="py">Tā suàn chūlái de jiéguǒ hé dá'àn háo bù chà.</div><div class="ru">Его расчёт совпал с ответом точь-в-точь.</div></blockquote>
+    <blockquote class="example"><div class="hz">我按你说的做了，效果丝毫不差。</div><div class="py">Wǒ àn nǐ shuō de zuò le, xiàoguǒ sīháo bù chà.</div><div class="ru">Я сделал, как ты сказал — эффект точно такой же.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>毫 (háo) — «тонкий волосок; мельчайшая часть».</b> Образ: 毛 (шерсть) + 亠 — «волосок» = мельчайшее. Встречается в: 毫米 (миллиметр), 毫不 (ни капли), 丝毫 (ни малейшего). <span class="tip">🧠 волосок = мельчайшее</span></li>
+        <li><b>不 (bù) — «не».</b> Цельная картинка — отрицание. Встречается в: 不好 (плохо), 不是 (не есть), 不要 (не надо). <span class="tip">🧠 отрицание</span></li>
+        <li><b>差 (chà) — «отличаться, не хватать».</b> Образ: 羊 (овца) + 工 (работа) — «овца не доделала работу» = не хватает. Встречается в: 差别 (разница), 差不多 (почти), 差一分 (не хватает одного балла). <span class="tip">🧠 не хватает = разница</span></li>
+      </ul>
+      <p><b>Связка:</b> 毫 (волосок) + 不 (не) + 差 (отличаться) = «ни на волосок не отличается» = точь-в-точь.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>丝毫不差 — «ни малейшего расхождения» — книжное, полная форма.</li>
+      <li>分毫不差 — «до последней капли точно» — книжное, сильнее.</li>
+      <li>一模一样 — «одинаковый как две капли» — разговорное, о внешности.</li>
+      <li>Пример-сравнение: 毫不差 / 丝毫不差 (о результате/числах) vs 一模一样 (о внешности/вещах).</li>
+      <li>🔹 Сочетаемость: 丝毫不差 ✅ — полная форма; 毫不差 — разговорное сокращение.</li>
+      <li>🔹 Управление: 和…毫不差 ✅; *毫不差我 ❌.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 丝毫不差 / 毫不差 — «一点儿也不差». (B) И 丝毫 vs 毫不: 丝毫 — книжнее. (D) ❌ Ошибка студента — *毫不差我 ❌ (нельзя объект); правильно 和答案毫不差 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>他算出来的结果和答案______。</li><li>我按你说的做了，效果______不差。</li></ol><div class="answers">Ответы: 1. 毫不差 · 2. 丝毫</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 他做事非常认真，每次交上来的数据和报告都丝毫不差。<br><span class="py">Tā zuòshì fēicháng rènzhēn, měi cì jiāo shànglái de shùjù hé bàogào dōu sīháo bù chà.</span><br><span class="ru">Он очень серьёзно относится к работе — все данные и отчёты, которые он сдаёт, точны до мелочей.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">这个仿品做得太像了，跟真的一模一样，价格却毫不差。</div><div class="py">Zhège fǎngpǐn zuò de tài xiàng le, gēn zhēn de yìmúyíyàng, jiàgé què háo bù chà.</div><div class="ru">Эта копия сделана так похоже — как настоящая, и цена точь-в-точь.</div><div class="ru">🗣️ Когда обсуждаешь подделку/копию.</div></blockquote>
+  </div>
+</section>
+
+<!-- 19 着迷 -->
+<section class="word" data-search="着迷 zhao mi zháomí увлекаться">
+  <h2><span class="emoji">😍🎮</span><span class="hanzi">着迷</span><span class="pinyin">zháomí</span><span class="trans">— увлекаться, быть очарованным</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-разговорное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>动词 (непереходный).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>对某事物非常感兴趣，入迷。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>увлекаться, быть очарованным, «залипнуть».</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">对…着迷</td><td>duì … zháomí</td><td>увлекаться чем-то</td><td>对 + объект</td></tr>
+      <tr><td class="hz">着迷于…</td><td>zháomí yú …</td><td>быть очарованным чем-то</td><td>着迷于 + объект</td></tr>
+      <tr><td class="hz">玩得着迷</td><td>wán de zháomí</td><td>заиграться</td><td>补语</td></tr>
+      <tr><td class="hz">让人着迷</td><td>ràng rén zháomí</td><td>завораживать</td><td>каузатив</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">他对打游戏着迷了，上课也在想游戏。</div><div class="py">Tā duì dǎ yóuxì zháomí le, shàngkè yě zài xiǎng yóuxì.</div><div class="ru">Он залип на играх — даже на занятиях думает об игре. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">她对中国文化特别着迷，学了三年汉语。</div><div class="py">Tā duì Zhōngguó wénhuà tèbié zháomí, xuéle sān nián Hànyǔ.</div><div class="ru">Она очень увлечена китайской культурой — три года учит китайский.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>着 (zháo) — «попасть, зацепиться».</b> Образ: 羊 (овца) + 目 (глаз) — «овца уставилась» = зацепиться. Встречается в: 着急 (торопиться), 睡着 (уснуть), 着迷 (увлечься). <span class="tip">🧠 зацепился = попал</span></li>
+        <li><b>迷 (mí) — «терять направление, быть очарованным».</b> Образ: 辶 (идти) + 米 — «идти по крупинкам, заблудиться» = быть очарованным. Встречается в: 迷信 (суеверие), 迷路 (заблудиться), 着迷 (увлечься). <span class="tip">🧠 заблудился = очарован</span></li>
+      </ul>
+      <p><b>Связка:</b> 着 (зацепиться) + 迷 (быть очарованным) = «зацепиться и потерять голову» = увлечься.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>入迷 — «погрузиться» — нейтральное, слабее.</li>
+      <li>迷恋 — «страстно увлекаться» — сильнее, книжнее.</li>
+      <li>神魂颠倒 — «потерять голову» — идиома, сильнее.</li>
+      <li>Пример-сравнение: 着迷 (увлечься) vs 入迷 (погрузиться) vs 迷恋 (страстно увлекаться) vs 神魂颠倒 (потерять голову).</li>
+      <li>🔹 Управление: 对…着迷 ✅; *着我迷 ❌.</li>
+      <li>🔹 Чтение: 着 здесь zháo, не zhe / zhuó.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 着迷 — «迷上了…被游戏迷得神魂颠倒». (B) И 对…着迷 ✅. (D) ❌ Ошибка студента — *我着迷游戏 ❌ (нужен 对); правильно 我对游戏着迷 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>他对打游戏______了，上课也在想。</li><li>她对中国文化特别______。</li></ol><div class="answers">Ответы: 1. 着迷 · 2. 着迷</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 很多年轻人对短视频着迷，浪费了大量时间。<br><span class="py">Hěn duō niánqīngrén duì duǎn shìpín zháomí, làngfèile dàliàng shíjiān.</span><br><span class="ru">Многие молодые люди «залипают» на коротких видео и тратят кучу времени.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">我爸最近对钓鱼特别着迷，周末一大早就不见人影。</div><div class="py">Wǒ bà zuìjìn duì diàoyú tèbié zháomí, zhōumò yí dàzǎo jiù bú jiàn rényǐng.</div><div class="ru">Отец в последнее время залип на рыбалке — в выходные с утра уже исчезает.</div><div class="ru">🗣️ Когда рассказываешь про чьё-то новое увлечение.</div></blockquote>
+  </div>
+</section>
+
+<!-- 20 邂逅 -->
+<section class="word" data-search="邂逅 xie hou xièhòu случайно встретиться">
+  <h2><span class="emoji">🛤️🌫️</span><span class="hanzi">邂逅</span><span class="pinyin">xièhòu</span><span class="trans">— случайно встретиться; случайная встреча</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-литературное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>动词 / 名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>没有约定，偶然相遇。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>случайно встретиться; случайная встреча.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">邂逅某人</td><td>xièhòu mǒu rén</td><td>случайно встретить кого-то</td><td>动词 + 人</td></tr>
+      <tr><td class="hz">邂逅美食</td><td>xièhòu měishí</td><td>случайно наткнуться на вкусную еду</td><td>переносное, из урока</td></tr>
+      <tr><td class="hz">一次邂逅</td><td>yí cì xièhòu</td><td>одна случайная встреча</td><td>счётное</td></tr>
+      <tr><td class="hz">邂逅爱情</td><td>xièhòu àiqíng</td><td>случайно встретить любовь</td><td>поэтичное</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">他去成都旅行时，在一家小菜馆邂逅了中国菜。</div><div class="py">Tā qù Chéngdū lǚxíng shí, zài yì jiā xiǎo càiguǎn xièhòule Zhōngguó cài.</div><div class="ru">Путешествуя по Чэнду, он в маленьком ресторанчике случайно «встретил» китайскую кухню. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">那是一次美丽的邂逅，我们后来成了好朋友。</div><div class="py">Nà shì yí cì měilì de xièhòu, wǒmen hòulái chéngle hǎo péngyou.</div><div class="ru">Это была прекрасная случайная встреча — потом мы стали хорошими друзьями.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>邂 (xiè) — «случайно встретиться».</b> Образ: 辶 (идти) + 解 — «идти и развязаться» = случайная встреча. Встречается в: 邂逅 (случайно встретиться). <span class="tip">🧠 идти и развязаться = случайно</span></li>
+        <li><b>逅 (hòu) — «встретить».</b> Образ: 辶 (идти) + 后 — «идти за кем-то» = встретить. Встречается в: 邂逅 (случайно встретиться). <span class="tip">🧠 идти за кем-то = встретить</span></li>
+      </ul>
+      <p><b>Связка:</b> 邂 (случайно) + 逅 (встретить) = «случайно встретиться».</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>相遇 — «встретиться» — нейтрально-книжное, часто без «случайно».</li>
+      <li>相逢 — «встретиться» — книжное, поэтичное.</li>
+      <li>遇见 — «встретить» — разговорное.</li>
+      <li>Пример-сравнение: 邂逅 (случайно, книжное) vs 相遇 (нейтрально) vs 遇见 (разговорное).</li>
+      <li>🔹 Управление: 邂逅 + объект ✅: 邂逅美食; *我和他邂逅 ❌ (лучше 我邂逅了他 / 我们偶然邂逅).</li>
+      <li>🔹 Культурное: книжное, поэтичное; в речи — чаще 遇到.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 邂逅 — «没有跟他约好，就是遇见了». (B) И «邂逅没有约，也没有想». (D) ❌ Ошибка студента — *我邂逅他 ❌ (звучит книжно и странно); правильно 我偶然遇到了他 ✅ (в разговоре).</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>他去成都旅行时，在一家小菜馆______了中国菜。</li><li>那是一次美丽的______。</li></ol><div class="answers">Ответы: 1. 邂逅 · 2. 邂逅</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 旅行中最美的往往不是计划中的景点，而是偶然的邂逅。<br><span class="py">Lǚxíng zhōng zuì měi de wǎngwǎng bú shì jìhuà zhōng de jǐngdiǎn, ér shì ǒurán de xièhòu.</span><br><span class="ru">Самое прекрасное в путешествии — часто не запланированные места, а случайные встречи.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">我在书店邂逅了一本改变我人生的书。</div><div class="py">Wǒ zài shūdiàn xièhòule yì běn gǎibiàn wǒ rénshēng de shū.</div><div class="ru">В книжном магазине я случайно наткнулся на книгу, изменившую мою жизнь.</div><div class="ru">🗣️ Когда рассказываешь про неожиданную находку/встречу.</div></blockquote>
+  </div>
+</section>
+
+<!-- ═══════════ ЧАСТЬ 3 (слова 21–27) ═══════════ -->
+<div class="part-banner">🅲 ЧАСТЬ 3 (слова 21–27)</div>
+
+<!-- 21 烹饪 -->
+<section class="word" data-search="烹饪 peng ren pēngrèn кулинария готовить">
+  <h2><span class="emoji">🍳📚</span><span class="hanzi">烹饪</span><span class="pinyin">pēngrèn</span><span class="trans">— кулинария; готовить</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-нейтральное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>名词 / 动词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>做饭，烹调食物。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>кулинария; готовить (пищу).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">烹饪学校</td><td>pēngrèn xuéxiào</td><td>кулинарная школа</td><td>固定搭配</td></tr>
+      <tr><td class="hz">烹饪技术</td><td>pēngrèn jìshù</td><td>кулинарное мастерство</td><td>名词 + 名词</td></tr>
+      <tr><td class="hz">学习烹饪</td><td>xuéxí pēngrèn</td><td>учиться готовить</td><td>动词 + 名词</td></tr>
+      <tr><td class="hz">烹饪专业</td><td>pēngrèn zhuānyè</td><td>кулинарная специальность</td><td>固定搭配</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">她在四川烹饪学校接受了三个月的专业厨师训练。</div><div class="py">Tā zài Sìchuān pēngrèn xuéxiào jiēshòule sān gè yuè de zhuānyè chúshī xùnliàn.</div><div class="ru">Она прошла трёхмесячное профессиональное обучение в Сычуаньской кулинарной школе. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">我对烹饪很感兴趣，周末常在家研究新菜。</div><div class="py">Wǒ duì pēngrèn hěn gǎn xìngqù, zhōumò cháng zài jiā yánjiū xīn cài.</div><div class="ru">Я интересуюсь кулинарией — по выходным часто дома изучаю новые блюда.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>烹 (pēng) — «варить, готовить».</b> Образ: 亠 + 口 + 亨 — «готовить на огне» = варить. Встречается в: 烹饪 (кулинария), 烹调 (кулинарная обработка). <span class="tip">🧠 готовить на огне = варить</span></li>
+        <li><b>饪 (rèn) — «готовить пищу».</b> Образ: 饣 (еда) + 壬 — «еда готова» = готовить. Встречается в: 烹饪 (кулинария). <span class="tip">🧠 еда готова = готовить</span></li>
+      </ul>
+      <p><b>Связка:</b> 烹 (варить) + 饪 (готовить) = «готовить пищу» = кулинария.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>做饭 — «готовить» — разговорное, нейтральное.</li>
+      <li>烹调 — «кулинарная обработка» — книжнее, профессиональнее.</li>
+      <li>料理 — «кулинария» — чаще о японской кухне.</li>
+      <li>Пример-сравнение: 烹饪 (кулинария, книжное) vs 做饭 (готовить, разговорное) vs 烹调 (обработка, профессиональное).</li>
+      <li>🔹 Сочетаемость: 烹饪学校 ✅, 烹饪技术 ✅; *烹饪饭 ❌ (лучше 做饭).</li>
+      <li>🔹 Культурное: 烹饪 в названиях школ/специальностей, 做饭 — в быту.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 烹饪 — «所有做饭有关的». (B) И 烹饪学校 — 固定搭配, название. (D) ❌ Ошибка студента — *我烹饪饭 ❌ (не говорят); правильно 我做饭 ✅ / 我学烹饪 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>她在四川______学校学了三个月。</li><li>我对______很感兴趣，周末常研究新菜。</li></ol><div class="answers">Ответы: 1. 烹饪 · 2. 烹饪</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 烹饪不仅是一门技术，也是一种文化传承。<br><span class="py">Pēngrèn bùjǐn shì yì mén jìshù, yě shì yì zhǒng wénhuà chuánchéng.</span><br><span class="ru">Кулинария — не только навык, но и передача культуры.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">他以前完全不会做饭，后来报了个烹饪班，现在做得比我还好。</div><div class="py">Tā yǐqián wánquán bú huì zuòfàn, hòulái bàole gè pēngrèn bān, xiànzài zuò de bǐ wǒ hái hǎo.</div><div class="ru">Раньше он вообще не умел готовить, потом пошёл на кулинарные курсы — теперь готовит лучше меня.</div><div class="ru">🗣️ Когда рассказываешь, как кто-то научился готовить.</div></blockquote>
+  </div>
+</section>
+
+<!-- 22 奖学金 -->
+<section class="word" data-search="奖学金 jiang xue jin jiǎngxuéjīn стипендия">
+  <h2><span class="emoji">🏫💰</span><span class="hanzi">奖学金</span><span class="pinyin">jiǎngxuéjīn</span><span class="trans">— стипендия</span></h2>
+  <div class="meta-line"><b>Регистр:</b> официально-нейтральное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>学校或机构给优秀学生的钱，用来帮助学习。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>стипендия (за успехи в учёбе).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">获得奖学金</td><td>huòdé jiǎngxuéjīn</td><td>получить стипендию</td><td>动词 + 名词</td></tr>
+      <tr><td class="hz">申请奖学金</td><td>shēnqǐng jiǎngxuéjīn</td><td>подать заявку на стипендию</td><td>动词 + 名词</td></tr>
+      <tr><td class="hz">全额奖学金</td><td>quán'é jiǎngxuéjīn</td><td>полная стипендия</td><td>固定搭配</td></tr>
+      <tr><td class="hz">国家奖学金</td><td>guójiā jiǎngxuéjīn</td><td>государственная стипендия</td><td>固定搭配</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">1994年，她获得英国文化协会奖学金，前往中国四川大学留学。</div><div class="py">1994 nián, tā huòdé Yīngguó Wénhuà Xiéhuì jiǎngxuéjīn, qiánwǎng Zhōngguó Sìchuān Dàxué liúxué.</div><div class="ru">В 1994 году она получила стипендию Британского совета и поехала учиться в Сычуаньский университет. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">他成绩很好，拿到了全额奖学金。</div><div class="py">Tā chéngjì hěn hǎo, nádàole quán'é jiǎngxuéjīn.</div><div class="ru">У него отличные оценки — получил полную стипендию.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>奖 (jiǎng) — «награда, премия».</b> Образ: 爿 + 夕 + 大 — «большая награда» = премия. Встречается в: 奖金 (премия), 奖学金 (стипендия), 奖励 (награждать). <span class="tip">🧠 большая награда = премия</span></li>
+        <li><b>学 (xué) — «учиться».</b> Образ: ⺍ (руки) + 冖 (крыша) + 子 (ребёнок) — «ребёнок под крышей с поднятыми руками» = учиться. Встречается в: 学生 (студент), 学习 (учиться), 大学 (университет). <span class="tip">🧠 ребёнок под крышей = учиться</span></li>
+        <li><b>金 (jīn) — «золото; деньги».</b> Образ: 人 + 王 + 丶 — «золото под крышей» = деньги. Встречается в: 现金 (наличные), 奖金 (премия), 金鱼 (золотая рыбка). <span class="tip">🧠 золото = деньги</span></li>
+      </ul>
+      <p><b>Связка:</b> 奖 (награда) + 学 (учёба) + 金 (деньги) = «деньги в награду за учёбу» = стипендия.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>助学金 — «финансовая помощь студентам» — по нужде, не за успехи.</li>
+      <li>奖金 — «премия» — на работе.</li>
+      <li>补助 — «пособие, субсидия» — общее.</li>
+      <li>Пример-сравнение: 奖学金 (за успехи) vs 助学金 (по нужде) vs 奖金 (на работе).</li>
+      <li>🔹 Сочетаемость: 获得奖学金 ✅, 申请奖学金 ✅; *拿奖学金 ✅ (разговорное).</li>
+      <li>🔹 Культурное: 国家奖学金, 全额奖学金 — 固定 типы.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 奖学金 — «肯定是给钱». (B) И 获得奖学金 ✅. (D) ❌ Ошибка студента — *我拿了奖学金钱 ❌ (лишнее); правильно 我拿了奖学金 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>她获得了英国文化协会______。</li><li>他成绩很好，拿到了全额______。</li></ol><div class="answers">Ответы: 1. 奖学金 · 2. 奖学金</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 奖学金不仅是经济支持，也是对学生努力的肯定。<br><span class="py">Jiǎngxuéjīn bùjǐn shì jīngjì zhīchí, yě shì duì xuésheng nǔlì de kěndìng.</span><br><span class="ru">Стипендия — не только финансовая поддержка, но и признание усилий студента.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">我申请到了全额奖学金，家里负担轻多了。</div><div class="py">Wǒ shēnqǐng dàole quán'é jiǎngxuéjīn, jiālǐ fùdān qīng duō le.</div><div class="ru">Я получил полную стипендию — нагрузка на семью сильно уменьшилась.</div><div class="ru">🗣️ Когда рассказываешь про учёбу за границей.</div></blockquote>
+  </div>
+</section>
+
+<!-- 23 前往 -->
+<section class="word" data-search="前往 qian wang qiánwǎng направляться">
+  <h2><span class="emoji">🚄➡️</span><span class="hanzi">前往</span><span class="pinyin">qiánwǎng</span><span class="trans">— направляться (куда-то), ехать/идти (официальное)</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-официальное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>动词 (непереходный).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>去某个地方（书面语）。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>направляться, отправляться (куда-то).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">前往北京</td><td>qiánwǎng Běijīng</td><td>отправиться в Пекин</td><td>动词 + место</td></tr>
+      <tr><td class="hz">前往机场</td><td>qiánwǎng jīchǎng</td><td>направляться в аэропорт</td><td>动词 + место</td></tr>
+      <tr><td class="hz">前往中国留学</td><td>qiánwǎng Zhōngguó liúxué</td><td>поехать учиться в Китай</td><td>动词 + место + 目的</td></tr>
+      <tr><td class="hz">乘车前往</td><td>chéng chē qiánwǎng</td><td>поехать на машине</td><td>方式 + 前往</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">她获得奖学金，前往中国四川大学留学。</div><div class="py">Tā huòdé jiǎngxuéjīn, qiánwǎng Zhōngguó Sìchuān Dàxué liúxué.</div><div class="ru">Она получила стипендию и отправилась учиться в Сычуаньский университет. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">明天我要前往上海出差。</div><div class="py">Míngtiān wǒ yào qiánwǎng Shànghǎi chūchāi.</div><div class="ru">Завтра я отправляюсь в Шанхай в командировку.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>前 (qián) — «вперёд, перед».</b> Образ: 丷 + 一 + 月 + 刂 — «луна и нож впереди» = вперёд. Встречается в: 前面 (впереди), 前进 (двигаться вперёд), 前往. <span class="tip">🧠 луна и нож впереди = вперёд</span></li>
+        <li><b>往 (wǎng) — «направляться, в сторону».</b> Образ: 彳 (шаг) + 主 (главный) — «шагать к главному» = направляться. Встречается в: 往东走 (идти на восток), 前往 (направляться), 来往 (общение). <span class="tip">🧠 шагать к главному = направляться</span></li>
+      </ul>
+      <p><b>Связка:</b> 前 (вперёд) + 往 (направляться) = «направляться вперёд» = отправляться.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>去 — «идти, ехать» — разговорное.</li>
+      <li>到 — «прибыть» — нейтральное.</li>
+      <li>出发 — «отправляться» — о начале пути.</li>
+      <li>Пример-сравнение: 前往 (официальное, куда-то) vs 去 (разговорное) vs 出发 (отправляться в путь).</li>
+      <li>🔹 Управление: 前往 + место ✅: 前往北京; *前往去北京 ❌ (лишнее 去).</li>
+      <li>🔹 Культурное: 前往 — книжное, в новостях/документах; в быту — 去.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 前往 — «去前往北京前往上海前往去那里». (B) И 前往 + место, без 去. (D) ❌ Ошибка студента — *前往去北京 ❌ (двойное «идти»); правильно 前往北京 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>她获得奖学金，______中国四川大学留学。</li><li>明天我要______上海出差。</li></ol><div class="answers">Ответы: 1. 前往 · 2. 前往</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 每年都有大量外国学生前往中国留学。<br><span class="py">Měi nián dōu yǒu dàliàng wàiguó xuésheng qiánwǎng Zhōngguó liúxué.</span><br><span class="ru">Каждый год большое количество иностранных студентов отправляется учиться в Китай.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">会议结束后，代表团前往机场。</div><div class="py">Huìyì jiéshù hòu, dàibiǎotuán qiánwǎng jīchǎng.</div><div class="ru">После совещания делегация направилась в аэропорт.</div><div class="ru">🗣️ В новостях/официальных сообщениях.</div></blockquote>
+  </div>
+</section>
+
+<!-- 24 原本 -->
+<section class="word" data-search="原本 yuan ben yuánběn изначально">
+  <h2><span class="emoji">📖🔄</span><span class="hanzi">原本</span><span class="pinyin">yuánběn</span><span class="trans">— изначально, первоначально; вначале</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-нейтральное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>наречие / прилагательное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>本来，原来；表示以前的情况，后面常有变化。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>изначально, первоначально; вначале (с последующим изменением).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">原本是…结果…</td><td>yuánběn shì … jiéguǒ …</td><td>изначально было… а в результате…</td><td>固定结构</td></tr>
+      <tr><td class="hz">原本以为</td><td>yuánběn yǐwéi</td><td>изначально думал</td><td>动词 + 以为</td></tr>
+      <tr><td class="hz">原本打算</td><td>yuánběn dǎsuàn</td><td>изначально планировал</td><td>动词 + 打算</td></tr>
+      <tr><td class="hz">他原本</td><td>tā yuánběn</td><td>он изначально</td><td>主语 + 原本</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">她原本是来中国做少数民族研究的，结果爱上了中国菜。</div><div class="py">Tā yuánběn shì lái Zhōngguó zuò shǎoshù mínzú yánjiū de, jiéguǒ àishangle Zhōngguó cài.</div><div class="ru">Она изначально приехала в Китай изучать этнические меньшинства, а в результате влюбилась в китайскую кухню. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">我原本打算本科毕业就来银行工作，后来去北京留学了一年。</div><div class="py">Wǒ yuánběn dǎsuàn běnkē bìyè jiù lái yínháng gōngzuò, hòulái qù Běijīng liúxuéle yì nián.</div><div class="ru">Я изначально планировал после бакалавриата пойти работать в банк, но потом год учился в Пекине. (из урока)</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>原 (yuán) — «изначальный, источник».</b> Образ: 厂 (уступ) + 小 — «источник под уступом» = изначальный. Встречается в: 原来 (оказывается), 原因 (причина), 原本. <span class="tip">🧠 источник под уступом = изначальный</span></li>
+        <li><b>本 (běn) — «корень, основа».</b> Образ: 木 + 一 — «корень дерева» = основа. Встречается в: 本来 (изначально), 基本 (основной), 本子 (тетрадь). <span class="tip">🧠 корень = основа</span></li>
+      </ul>
+      <p><b>Связка:</b> 原 (изначальный) + 本 (корень) = «изначальная основа» = вначале, первоначально.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>本来 — «изначально» — нейтральное, чаще в речи.</li>
+      <li>原来 — «оказывается» — о неожиданном открытии.</li>
+      <li>起初 — «вначале» — книжное.</li>
+      <li>Пример-сравнение: 原本 (книжное, изначально) vs 本来 (нейтральное) vs 原来 (оказывается) vs 起初 (вначале).</li>
+      <li>🔹 Сочетаемость: 原本…结果… / 原本…后来… — типичная структура с изменением.</li>
+      <li>🔹 Управление: 原本 может стоять до или после подлежащего: 他原本 / 原本他 ✅.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 原本 — «本来…原来…后边有了一些变化». (B) И структура: 原本…结果… / 原本…后来…. (D) ❌ Ошибка студента — *原本他去了北京（без изменения） ❌; правильно 原本他要去北京，后来没去 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>她______是来中国做研究的，结果爱上了中国菜。</li><li>我______打算去银行工作，后来去留学了。</li></ol><div class="answers">Ответы: 1. 原本 · 2. 原本</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 很多事情原本很简单，却被我们想复杂了。<br><span class="py">Hěn duō shìqíng yuánběn hěn jiǎndān, què bèi wǒmen xiǎng fùzá le.</span><br><span class="ru">Многие вещи изначально просты, но мы сами их усложняем.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">原本以为周末能好好休息，结果加了两天班。</div><div class="py">Yuánběn yǐwéi zhōumò néng hǎohǎo xiūxi, jiéguǒ jiāle liǎng tiān bān.</div><div class="ru">Думал, на выходных отдохну — в итоге два дня работал.</div><div class="ru">🗣️ Когда жалуешься, что планы сорвались.</div></blockquote>
+  </div>
+</section>
+
+<!-- 25 该 -->
+<section class="word" data-search="该 gai gāi этот вышеупомянутый">
+  <h2><span class="emoji">📄👤</span><span class="hanzi">该</span><span class="pinyin">gāi</span><span class="trans">— этот, вышеупомянутый (официальное)</span></h2>
+  <div class="meta-line"><b>Регистр:</b> официально-книжное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>указательное местоимение (в официальных текстах).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>指前面提到的人或事物（书面语，公文常用）。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>этот, вышеупомянутый (в официальных документах).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">该校</td><td>gāi xiào</td><td>данная школа</td><td>固定搭配, 公文</td></tr>
+      <tr><td class="hz">该公司</td><td>gāi gōngsī</td><td>данная компания</td><td>固定搭配, 公文</td></tr>
+      <tr><td class="hz">该生</td><td>gāi shēng</td><td>данный студент</td><td>固定搭配, 公文</td></tr>
+      <tr><td class="hz">该产品</td><td>gāi chǎnpǐn</td><td>данный продукт</td><td>固定搭配, 公文</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">她成为该校第一位外国学生。</div><div class="py">Tā chéngwéi gāi xiào dì yī wèi wàiguó xuésheng.</div><div class="ru">Она стала первой иностранной студенткой этой школы. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">该公司对2700户进行了调查。</div><div class="py">Gāi gōngsī duì 2700 hù jìnxíngle diàochá.</div><div class="ru">Данная компания провела опрос 2700 домохозяйств. (из урока)</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>该 (gāi) — «должен; этот (вышеупомянутый)».</b> Образ: 讠 (речь) + 亥 — «речь о том, что названо» = указание. Встречается в: 应该 (должен), 该校 (данная школа), 该公司 (данная компания). <span class="tip">🧠 речь о названном = этот</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>这 — «этот» — разговорное, нейтральное.</li>
+      <li>此 — «этот» — книжное, в 成语/официальном.</li>
+      <li>上述 — «вышеупомянутый» — официальное, книжное.</li>
+      <li>Пример-сравнение: 该 (официальное, 公文) vs 这 (разговорное) vs 此 (книжное) vs 上述 (вышеупомянутый).</li>
+      <li>🔹 Сочетаемость: 该校 / 该公司 / 该生 — 固定 в 公文; в разговоре — 这个学校 / 这个公司.</li>
+      <li>🔹 Культурное: 该 — маркер официального стиля; в эссе HSK 6 — уместно.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 该 — «书面语…指前面说过的人或事物…该公司…该生». (B) И 该校第一位外国学生 — 固定 公文. (D) ❌ Ошибка студента — *该我很喜欢 ❌ (неправильное употребление); правильно 该公司很有名 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>她成为______校第一位外国学生。</li><li>______公司对2700户进行了调查。</li></ol><div class="answers">Ответы: 1. 该 · 2. 该</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 该研究表明，年轻人的阅读习惯正在发生改变。<br><span class="py">Gāi yánjiū biǎomíng, niánqīngrén de yuèdú xíguàn zhèngzài fāshēng gǎibiàn.</span><br><span class="ru">Данное исследование показывает, что читательские привычки молодёжи меняются.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">该学生在校期间表现优秀，获得了国家奖学金。</div><div class="py">Gāi xuésheng zài xiào qījiān biǎoxiàn yōuxiù, huòdéle guójiā jiǎngxuéjīn.</div><div class="ru">Данный студент отлично проявил себя в учёбе и получил государственную стипендию.</div><div class="ru">🗣️ В официальном письме/характеристике.</div></blockquote>
+  </div>
+</section>
+
+<!-- 26 摘菜 -->
+<section class="word" data-search="摘菜 zhai cai zhāi cài собирать рвать овощи">
+  <h2><span class="emoji">🥬✂️</span><span class="hanzi">摘菜</span><span class="pinyin">zhāi cài</span><span class="trans">— собирать/рвать овощи; выбирать зелень</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-бытовое.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>动词-словосочетание (动宾).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>把蔬菜从地里摘下来，或把不好的部分挑掉。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>собирать/рвать овощи; перебирать зелень.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">摘菜叶</td><td>zhāi cài yè</td><td>обрывать листья овощей</td><td>动词 + 名词</td></tr>
+      <tr><td class="hz">摘野菜</td><td>zhāi yěcài</td><td>собирать дикие травы</td><td>固定搭配</td></tr>
+      <tr><td class="hz">摘白菜</td><td>zhāi báicài</td><td>собирать пекинскую капусту</td><td>动词 + 名词</td></tr>
+      <tr><td class="hz">摘下来的菜</td><td>zhāi xiàlái de cài</td><td>сорванные овощи</td><td>补语</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">周末我们去郊区摘野菜，回来包饺子。</div><div class="py">Zhōumò wǒmen qù jiāoqū zhāi yěcài, huílái bāo jiǎozi.</div><div class="ru">На выходных мы ездили за город собирать дикие травы, а потом лепили пельмени.</div></blockquote>
+    <blockquote class="example"><div class="hz">奶奶在院子里摘菜，准备做晚饭。</div><div class="py">Nǎinai zài yuànzi lǐ zhāi cài, zhǔnbèi zuò wǎnfàn.</div><div class="ru">Бабушка во дворе перебирает зелень, готовится к ужину.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>摘 (zhāi) — «срывать, выбирать».</b> Образ: 扌 (рука) + 啇 — «рука срывает» = срывать. Встречается в: 摘菜 (собирать овощи), 摘水果 (срывать фрукты), 摘要 (конспект). <span class="tip">🧠 рука срывает = срывать</span></li>
+        <li><b>菜 (cài) — «овощи; блюдо».</b> Образ: 艹 (трава) + 采 (собирать) — «собирать травы» = овощи. Встречается в: 蔬菜 (овощи), 做菜 (готовить), 菜单 (меню). <span class="tip">🧠 собирать травы = овощи</span></li>
+      </ul>
+      <p><b>Связка:</b> 摘 (срывать) + 菜 (овощи) = «срывать овощи» = собирать/перебирать зелень.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>择菜 — «перебирать зелень» — почти синоним, но 择 — «выбирать, отбрасывать плохое».</li>
+      <li>洗菜 — «мыть овощи» — следующий этап.</li>
+      <li>切菜 — «резать овощи» — следующий этап.</li>
+      <li>Пример-сравнение: 摘菜 (срывать/перебирать) vs 择菜 (перебирать, отбрасывая плохое) vs 洗菜 (мыть) vs 切菜 (резать).</li>
+      <li>🔹 Чтение: 摘 zhāi, не zhé; 择 в 择菜 — zhái (разговорное), не zé (в 选择).</li>
+      <li>🔹 Культурное: 摘野菜 — «собирать дикие травы» — популярное весеннее занятие в Китае.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 摘菜 — «挑选…挑出来不是选择，是把它挑出来». (B) И 择菜 — почти синоним, но с «отбрасыванием плохого». (D) ❌ Ошибка студента — *择菜 zhé cài ❌ (неверное чтение); правильно 择菜 zhái cài ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>周末我们去郊区______野菜。</li><li>奶奶在院子里______，准备做晚饭。</li></ol><div class="answers">Ответы: 1. 摘 · 2. 摘菜</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 城市里的孩子很少有机会体验摘菜、做饭这样的农家生活。<br><span class="py">Chéngshì lǐ de háizi hěn shǎo yǒu jīhuì tǐyàn zhāi cài, zuòfàn zhèyàng de nóngjiā shēnghuó.</span><br><span class="ru">У городских детей редко есть возможность попробовать сельскую жизнь — собрать овощи, приготовить еду.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">小时候我常跟奶奶去地里摘菜，回来自己洗、自己炒。</div><div class="py">Xiǎoshíhou wǒ cháng gēn nǎinai qù dìlǐ zhāi cài, huílái zìjǐ xǐ, zìjǐ chǎo.</div><div class="ru">В детстве я часто ходил с бабушкой в поле за овощами, а потом сам мыл и жарил.</div><div class="ru">🗣️ Когда вспоминаешь детство.</div></blockquote>
+  </div>
+</section>
+
+<!-- 27 回忆录 -->
+<section class="word" data-search="回忆录 hui yi lu huíyìlù мемуары">
+  <h2><span class="emoji">📔💭</span><span class="hanzi">回忆录</span><span class="pinyin">huíyìlù</span><span class="trans">— мемуары, воспоминания (книга)</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-нейтральное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>记录自己过去经历的書。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>мемуары, воспоминания (книга).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">写回忆录</td><td>xiě huíyìlù</td><td>писать мемуары</td><td>动词 + 名词</td></tr>
+      <tr><td class="hz">出版回忆录</td><td>chūbǎn huíyìlù</td><td>издать мемуары</td><td>动词 + 名词</td></tr>
+      <tr><td class="hz">一本回忆录</td><td>yì běn huíyìlù</td><td>одни мемуары</td><td>счётное 本</td></tr>
+      <tr><td class="hz">童年回忆录</td><td>tóngnián huíyìlù</td><td>мемуары о детстве</td><td>名词 + 名词</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">英国出版协会评价说，她的书不仅仅是一段回忆录，还是一本旅行作品。</div><div class="py">Yīngguó chūbǎn xiéhuì píngjià shuō, tā de shū bù jǐnjǐn shì yí duàn huíyìlù, hái shì yì běn lǚxíng zuòpǐn.</div><div class="ru">Британская издательская ассоциация оценила: её книга — не просто мемуары, а ещё и книга о путешествиях. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">他退休后开始写回忆录，记录自己的一生。</div><div class="py">Tā tuìxiū hòu kāishǐ xiě huíyìlù, jìlù zìjǐ de yìshēng.</div><div class="ru">После выхода на пенсию он начал писать мемуары — записывать свою жизнь.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>回 (huí) — «возвращаться; вспоминать».</b> Образ: 囗 (ограда) + 口 (рот) — «рот в ограде» = возвращаться. Встречается в: 回来 (вернуться), 回忆 (вспоминать), 回答 (отвечать). <span class="tip">🧠 рот в ограде = возвращаться</span></li>
+        <li><b>忆 (yì) — «вспоминать».</b> Образ: 忄 (сердце) + 乙 — «сердце возвращается» = вспоминать. Встречается в: 回忆 (воспоминания), 记忆 (память). <span class="tip">🧠 сердце возвращается = вспоминать</span></li>
+        <li><b>录 (lù) — «записывать».</b> Образ: 彐 + 氺 — «записывать кистью» = запись. Встречается в: 记录 (записывать), 录音 (аудиозапись), 回忆录 (мемуары). <span class="tip">🧠 записывать = запись</span></li>
+      </ul>
+      <p><b>Связка:</b> 回 (возвращаться) + 忆 (вспоминать) + 录 (запись) = «запись воспоминаний» = мемуары.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>回忆 — «воспоминания» — общее, не книга.</li>
+      <li>自传 — «автобиография» — книжное, официальное.</li>
+      <li>日记 — «дневник» — личное, ежедневное.</li>
+      <li>Пример-сравнение: 回忆录 (мемуары-книга) vs 自传 (автобиография) vs 日记 (дневник).</li>
+      <li>🔹 Сочетаемость: 写回忆录 ✅, 出版回忆录 ✅; *看回忆录 ✅ (тоже можно).</li>
+      <li>🔹 Культурное: 回忆录 — книжный жанр, часто у политиков/артистов.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 回忆录 — «记录是书…这本书里写的是他的回忆». (B) И 写回忆录 ✅. (D) ❌ Ошибка студента — *我回忆录了 ❌ (не глагол); правильно 我写回忆录 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>他退休后开始写______，记录自己的一生。</li><li>她的书不仅仅是一段______，还是一本旅行作品。</li></ol><div class="answers">Ответы: 1. 回忆录 · 2. 回忆录</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 回忆录不仅记录个人经历，也反映了一个时代的面貌。<br><span class="py">Huíyìlù bùjǐn jìlù gèrén jīnglì, yě fǎnyìngle yígè shídài de miànmào.</span><br><span class="ru">Мемуары фиксируют не только личный опыт, но и отражают облик эпохи.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">我爷爷八十岁开始写回忆录，写他年轻时在农村的日子。</div><div class="py">Wǒ yéye bāshí suì kāishǐ xiě huíyìlù, xiě tā niánqīng shí zài nóngcūn de rìzi.</div><div class="ru">Дедушка в восемьдесят начал писать мемуары — о своей молодости в деревне.</div><div class="ru">🗣️ Когда рассказываешь про старшее поколение.</div></blockquote>
+  </div>
+</section>
+
+<!-- ═══════════ ЧАСТЬ 4 (слова 28–34) ═══════════ -->
+<div class="part-banner">🅳 ЧАСТЬ 4 (слова 28–34)</div>
+
+<!-- 28 意义非凡 -->
+<section class="word" data-search="意义非凡 yi yi fei fan yìyì fēifán иметь огромное значение">
+  <h2><span class="emoji">✨🌟</span><span class="hanzi">意义非凡</span><span class="pinyin">yìyì fēifán</span><span class="trans">— иметь огромное значение; знаменательный</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-публицистическое.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>выражение (прилагательное-сказуемое).</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>意义很大，很有价值。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>иметь огромное значение; знаменательный.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">意义非凡的旅行</td><td>yìyì fēifán de lǚxíng</td><td>знаменательное путешествие</td><td>形容词 + 名词</td></tr>
+      <tr><td class="hz">这次活动意义非凡</td><td>zhè cì huódòng yìyì fēifán</td><td>это мероприятие очень значимо</td><td>сказуемое</td></tr>
+      <tr><td class="hz">意义非凡的一年</td><td>yìyì fēifán de yì nián</td><td>знаменательный год</td><td>形容词 + 名词</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">英国出版协会说，这是一场意义非凡的旅行。</div><div class="py">Yīngguó chūbǎn xiéhuì shuō, zhè shì yì chǎng yìyì fēifán de lǚxíng.</div><div class="ru">Британская издательская ассоциация сказала: это было знаменательное путешествие. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">你来中国学习这一年，对你来说意义非凡。</div><div class="py">Nǐ lái Zhōngguó xuéxí zhè yì nián, duì nǐ lái shuō yìyì fēifán.</div><div class="ru">Этот год учёбы в Китае для тебя имеет огромное значение. (из урока)</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>意 (yì) — «смысл, намерение».</b> Образ: 音 (звук) + 心 (сердце) — «звук сердца» = смысл. Встречается в: 意思 (значение), 意义 (смысл), 意见 (мнение). <span class="tip">🧠 звук сердца = смысл</span></li>
+        <li><b>义 (yì) — «справедливость, значение».</b> Образ: 乂 + 丶 — «правильное» = справедливость. Встречается в: 意义 (смысл), 义务 (обязанность), 正义 (справедливость). <span class="tip">🧠 правильное = справедливость</span></li>
+        <li><b>非 (fēi) — «не; необычайный».</b> Образ: цельная картинка — «не так» = не. Встречается в: 非常 (очень), 非凡 (необычайный), 非法 (незаконный). <span class="tip">🧠 не так = не</span></li>
+        <li><b>凡 (fán) — «обычный».</b> Образ: 几 + 丶 — «обычный» = обычное. Встречается в: 凡人 (обычный человек), 平凡 (обычный), 非凡 (необычайный). <span class="tip">🧠 обычный = простое</span></li>
+      </ul>
+      <p><b>Связка:</b> 意义 (смысл) + 非凡 (необычайный) = «необычайно значимый».</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>意义重大 — «иметь важное значение» — книжное, тоже часто.</li>
+      <li>非凡 — «необычайный» — часть выражения, отдельно тоже используется.</li>
+      <li>重要 — «важный» — нейтральное, слабее.</li>
+      <li>Пример-сравнение: 意义非凡 / 意义重大 (знаменательный, книжное) vs 重要 (важный, нейтральное).</li>
+      <li>🔹 Сочетаемость: 意义非凡 ✅; *很意义非凡 ❌ (идиома-выражение, не с 很).</li>
+      <li>🔹 Культурное: 非凡 也 в 热闹非凡 (очень оживлённо), 意义非凡 (очень значимо).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 意义非凡 — «意义很大，很有意义». (B) И 非凡 в 热闹非凡 / 意义非凡 — в постпозиции. (D) ❌ Ошибка студента — *很意义非凡 ❌ (не с 很); правильно 这次活动意义非凡 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>你来中国学习这一年，对你来说______。</li><li>这是一场______的旅行。</li></ol><div class="answers">Ответы: 1. 意义非凡 · 2. 意义非凡</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 这次文化交流活动对促进两国人民的理解意义非凡。<br><span class="py">Zhè cì wénhuà jiāoliú huódòng duì cùjìn liǎng guó rénmín de lǐjiě yìyì fēifán.</span><br><span class="ru">Это культурное мероприятие имеет огромное значение для взаимопонимания народов двух стран.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">对我来说，第一次一个人出国旅行意义非凡。</div><div class="py">Duì wǒ lái shuō, dì yī cì yígè rén chūguó lǚxíng yìyì fēifán.</div><div class="ru">Для меня первая самостоятельная поездка за границу имела огромное значение.</div><div class="ru">🗣️ Когда делишься важным жизненным опытом.</div></blockquote>
+  </div>
+</section>
+
+<!-- 29 非凡 -->
+<section class="word" data-search="非凡 fei fan fēifán необычайный выдающийся">
+  <h2><span class="emoji">🌟🎭</span><span class="hanzi">非凡</span><span class="pinyin">fēifán</span><span class="trans">— необычайный, выдающийся</span></h2>
+  <div class="meta-line"><b>Регистр:</b> книжно-публицистическое.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>形容词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>不平常，非常出色。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>необычайный, выдающийся.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">非凡的天赋</td><td>fēifán de tiānfù</td><td>необычайный талант</td><td>形容词 + 名词</td></tr>
+      <tr><td class="hz">热闹非凡</td><td>rènao fēifán</td><td>очень оживлённо</td><td>固定搭配</td></tr>
+      <tr><td class="hz">意义非凡</td><td>yìyì fēifán</td><td>очень значимо</td><td>固定搭配</td></tr>
+      <tr><td class="hz">非凡的成就</td><td>fēifán de chéngjiù</td><td>выдающиеся достижения</td><td>形容词 + 名词</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">学习汉语需要有非凡的天赋吗？不一定。</div><div class="py">Xuéxí Hànyǔ xūyào yǒu fēifán de tiānfù ma? Bù yídìng.</div><div class="ru">Нужен ли необычайный талант, чтобы выучить китайский? Не обязательно. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">春节的时候，街上热闹非凡。</div><div class="py">Chūnjié de shíhou, jiēshang rènao fēifán.</div><div class="ru">На Новый год на улицах необычайно оживлённо.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>非 (fēi) — «не; необычайный».</b> Образ: цельная картинка — «не так» = не. Встречается в: 非常 (очень), 非凡 (необычайный), 非法 (незаконный). <span class="tip">🧠 не так = не</span></li>
+        <li><b>凡 (fán) — «обычный».</b> Образ: 几 + 丶 — «обычный» = обычное. Встречается в: 凡人 (обычный человек), 平凡 (обычный), 非凡 (необычайный). <span class="tip">🧠 обычный = простое</span></li>
+      </ul>
+      <p><b>Связка:</b> 非 (не) + 凡 (обычный) = «не обычный» = необычайный.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>不平凡 — «необычный» — нейтральное, почти синоним.</li>
+      <li>了不起 — «выдающийся» — разговорное.</li>
+      <li>出色 — «отличный» — нейтральное.</li>
+      <li>Пример-сравнение: 非凡 (книжное, выдающийся) vs 不平凡 (нейтральное) vs 了不起 (разговорное) vs 出色 (отличный).</li>
+      <li>🔹 Сочетаемость: 意义非凡 / 热闹非凡 — в постпозиции (после 意义/热闹), не перед ними.</li>
+      <li>🔹 Культурное: 非凡 也 в 热闹非凡 (оживлённо), 意义非凡 (значимо) — не только о человеке.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 非凡 — «非常…热闹非凡，意义非凡…非凡的天赋». (B) И порядок: 热闹非凡 / 意义非凡 — 非凡 в постпозиции. (D) ❌ Ошибка студента — *非凡热闹 ❌ (нарушен порядок); правильно 热闹非凡 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>春节的时候，街上热闹______。</li><li>学习汉语需要有______的天赋吗？</li></ol><div class="answers">Ответы: 1. 非凡 · 2. 非凡</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 他在科学领域取得了非凡的成就。<br><span class="py">Tā zài kēxué lǐngyù qǔdéle fēifán de chéngjiù.</span><br><span class="ru">Он добился выдающихся достижений в науке.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">那个小城不大，但每年樱花季热闹非凡。</div><div class="py">Nàge xiǎo chéng bú dà, dàn měi nián yīnghuā jì rènao fēifán.</div><div class="ru">Городок небольшой, но в сезон сакуры там необычайно оживлённо.</div><div class="ru">🗣️ Когда рассказываешь про туристическое место.</div></blockquote>
+  </div>
+</section>
+
+<!-- 30 视觉 -->
+<section class="word" data-search="视觉 shi jue shìjué зрение визуальное">
+  <h2><span class="emoji">👁️🎨</span><span class="hanzi">视觉</span><span class="pinyin">shìjué</span><span class="trans">— зрение; визуальное восприятие</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-книжное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>眼睛看东西的感觉。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>зрение; визуальное восприятие.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">视觉效果</td><td>shìjué xiàoguǒ</td><td>визуальный эффект</td><td>固定搭配</td></tr>
+      <tr><td class="hz">视觉体验</td><td>shìjué tǐyàn</td><td>визуальный опыт</td><td>名词 + 名词</td></tr>
+      <tr><td class="hz">视觉艺术</td><td>shìjué yìshù</td><td>визуальное искусство</td><td>固定搭配</td></tr>
+      <tr><td class="hz">从视觉上</td><td>cóng shìjué shàng</td><td>с точки зрения зрения</td><td>介词结构</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">从视觉、听觉和味觉的体验之外，还有更多的感受。</div><div class="py">Cóng shìjué, tīngjué hé wèijué de tǐyàn zhī wài, hái yǒu gèng duō de gǎnshòu.</div><div class="ru">Помимо визуального, слухового и вкусового опыта есть ещё много ощущений. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">这个电影的视觉效果特别震撼。</div><div class="py">Zhège diànyǐng de shìjué xiàoguǒ tèbié zhènjùn.</div><div class="ru">Визуальные эффекты этого фильма особенно впечатляют.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>视 (shì) — «смотреть, зрение».</b> Образ: 礻 (алтарь) + 见 (видеть) — «смотреть на алтарь» = зрение. Встречается в: 视觉 (зрение), 电视 (телевизор), 重视 (ценить). <span class="tip">🧠 смотреть = зрение</span></li>
+        <li><b>觉 (jué) — «чувство, ощущение».</b> Образ: 学 + 见 — «учиться и видеть» = осознавать. Встречается в: 感觉 (чувство), 视觉 (зрение), 觉得 (казаться). <span class="tip">🧠 осознавать = ощущение</span></li>
+      </ul>
+      <p><b>Связка:</b> 视 (смотреть) + 觉 (ощущение) = «ощущение от зрения» = зрение.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>听觉 — «слух» — пара к 视觉.</li>
+      <li>味觉 — «вкус» — пара к 视觉.</li>
+      <li>嗅觉 — «обоняние» — пара к 视觉.</li>
+      <li>Пример-сравнение: 视觉 (зрение) / 听觉 (слух) / 味觉 (вкус) / 嗅觉 (обоняние) — четыре чувства, часто в паре.</li>
+      <li>🔹 Сочетаемость: 视觉效果 ✅, 视觉体验 ✅; *视觉的看电影 ❌ (лучше 看电影的视觉体验).</li>
+      <li>🔹 Культурное: в файле преподаватель дала все четыре: 视觉, 听觉, 味觉, 嗅觉.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 视觉 — «怎么样看». (B) И пара к 听觉, 味觉, 嗅觉. (D) ❌ Ошибка студента — *我很视觉 ❌ (не прил.); правильно 视觉效果很好 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>这个电影的______效果特别震撼。</li><li>除了______、听觉和味觉，还有触觉。</li></ol><div class="answers">Ответы: 1. 视觉 · 2. 视觉</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 这部电影不仅视觉效果出色，音乐也非常动人。<br><span class="py">Zhè bù diànyǐng bùjǐn shìjué xiàoguǒ chūsè, yīnyuè yě fēicháng dòngrén.</span><br><span class="ru">В этом фильме не только превосходные визуальные эффекты, но и очень трогательная музыка.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">这个展览的视觉效果太震撼了，我拍了好多照片。</div><div class="py">Zhège zhǎnlǎn de shìjué xiàoguǒ tài zhènjùn le, wǒ pāile hǎoduō zhàopiàn.</div><div class="ru">Визуальные эффекты выставки просто потрясающие — я сделал кучу фото.</div><div class="ru">🗣️ Когда делишься впечатлением от выставки/фильма.</div></blockquote>
+  </div>
+</section>
+
+<!-- 31 味觉 -->
+<section class="word" data-search="味觉 wei jue wèijué вкус чувство вкуса">
+  <h2><span class="emoji">👅🍜</span><span class="hanzi">味觉</span><span class="pinyin">wèijué</span><span class="trans">— вкус (чувство вкуса)</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-книжное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>舌头尝东西的感觉。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>вкус (чувство вкуса).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">味觉体验</td><td>wèijué tǐyàn</td><td>вкусовой опыт</td><td>名词 + 名词</td></tr>
+      <tr><td class="hz">味觉失灵</td><td>wèijué shīlíng</td><td>потеря вкуса</td><td>固定搭配</td></tr>
+      <tr><td class="hz">味觉被征服</td><td>wèijué bèi zhēngfú</td><td>вкус покорён</td><td>из урока</td></tr>
+      <tr><td class="hz">酸甜苦辣</td><td>suān tián kǔ là</td><td>кислое, сладкое, горькое, острое</td><td>味觉 четыре вкуса</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">她的味觉彻底被中国菜征服了。</div><div class="py">Tā de wèijué chèdǐ bèi Zhōngguó cài zhēngfú le.</div><div class="ru">Её вкус был полностью покорён китайской кухней. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">感冒的时候味觉会变差，吃什么都没味道。</div><div class="py">Gǎnmào de shíhou wèijué huì biàn chà, chī shénme dōu méi wèidào.</div><div class="ru">При простуде вкус притупляется — всё кажется безвкусным.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>味 (wèi) — «вкус, запах».</b> Образ: 口 (рот) + 未 — «рот ещё не пробовал» = вкус. Встречается в: 味道 (вкус), 味觉 (чувство вкуса), 口味 (вкус, предпочтение). <span class="tip">🧠 рот пробует = вкус</span></li>
+        <li><b>觉 (jué) — «чувство, ощущение».</b> Образ: 学 + 见 — «учиться и видеть» = осознавать. Встречается в: 感觉 (чувство), 味觉 (вкус), 觉得 (казаться). <span class="tip">🧠 осознавать = ощущение</span></li>
+      </ul>
+      <p><b>Связка:</b> 味 (вкус) + 觉 (ощущение) = «ощущение вкуса» = вкус.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>味道 — «вкус, аромат» — конкретный вкус еды.</li>
+      <li>口味 — «вкус, предпочтение» — о предпочтениях.</li>
+      <li>嗅觉 — «обоняние» — запах, не вкус.</li>
+      <li>Пример-сравнение: 味觉 (чувство вкуса) vs 味道 (конкретный вкус) vs 口味 (предпочтение) vs 嗅觉 (обоняние).</li>
+      <li>🔹 Сочетаемость: 味觉被征服 ✅, 味觉失灵 ✅; *味觉好吃 ❌ (лучше 味道好).</li>
+      <li>🔹 Культурное: 酸甜苦辣 — четыре вкуса, часто в паре с 味觉.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 味觉 — «吃了以后尝到酸甜苦辣». (B) И 味觉 vs 嗅觉: 味觉 — вкус, 嗅觉 — запах. (D) ❌ Ошибка студента — *味觉很香 ❌ (неправильно); правильно 味道很香 / 嗅觉很好 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>她的______彻底被中国菜征服了。</li><li>感冒的时候______会变差。</li></ol><div class="answers">Ответы: 1. 味觉 · 2. 味觉</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 中国菜讲究色香味俱全，不仅满足味觉，也满足视觉和嗅觉。<br><span class="py">Zhōngguó cài jiǎngjiu sè xiāng wèi jù quán, bùjǐn mǎnzú wèijué, yě mǎnzú shìjué hé xiùjué.</span><br><span class="ru">Китайская кухня ценит «цвет, аромат и вкус» — она удовлетворяет не только вкус, но и зрение, и обоняние.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">他吃了一个月的中国菜，味觉完全变了，回国吃西餐觉得没味道。</div><div class="py">Tā chīle yígè yuè de Zhōngguó cài, wèijué wánquán biàn le, huíguó chī xīcān juéde méi wèidào.</div><div class="ru">Он месяц ел китайскую еду — вкус полностью изменился: вернувшись домой, западная еда кажется безвкусной.</div><div class="ru">🗣️ Когда рассказываешь, как привык к местной кухне.</div></blockquote>
+  </div>
+</section>
+
+<!-- 32 嗅觉 -->
+<section class="word" data-search="嗅觉 xiu jue xiùjué обоняние">
+  <h2><span class="emoji">👃🌸</span><span class="hanzi">嗅觉</span><span class="pinyin">xiùjué</span><span class="trans">— обоняние</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-книжное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>鼻子闻气味的感觉。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>обоняние.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">嗅觉灵敏</td><td>xiùjué língmǐn</td><td>тонкое обоняние</td><td>固定搭配</td></tr>
+      <tr><td class="hz">嗅觉失灵</td><td>xiùjué shīlíng</td><td>потеря обоняния</td><td>固定搭配</td></tr>
+      <tr><td class="hz">嗅觉体验</td><td>xiùjué tǐyàn</td><td>обонятельный опыт</td><td>名词 + 名词</td></tr>
+      <tr><td class="hz">满足嗅觉</td><td>mǎnzú xiùjué</td><td>удовлетворять обоняние</td><td>动词 + 名词</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">嗅觉是我闻一闻，觉得香还是不香。</div><div class="py">Xiùjué shì wǒ wén yì wén, juéde xiāng háishi bù xiāng.</div><div class="ru">Обоняние — это когда я нюхаю и чувствую: пахнет или нет. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">狗的嗅觉比人灵敏得多。</div><div class="py">Gǒu de xiùjué bǐ rén língmǐn de duō.</div><div class="ru">У собак обоняние гораздо тоньше, чем у людей.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>嗅 (xiù) — «нюхать».</b> Образ: 口 (рот) + 臭 (запах) — «рот чувствует запах» = нюхать. Встречается в: 嗅觉 (обоняние). <span class="tip">🧠 рот чувствует запах = нюхать</span></li>
+        <li><b>觉 (jué) — «чувство, ощущение».</b> Образ: 学 + 见 — «учиться и видеть» = осознавать. Встречается в: 感觉 (чувство), 嗅觉 (обоняние), 觉得 (казаться). <span class="tip">🧠 осознавать = ощущение</span></li>
+      </ul>
+      <p><b>Связка:</b> 嗅 (нюхать) + 觉 (ощущение) = «ощущение запаха» = обоняние.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>味觉 — «вкус» — язык, не нос.</li>
+      <li>闻 — «нюхать» — глагол, действие.</li>
+      <li>气味 — «запах» — сам запах.</li>
+      <li>Пример-сравнение: 嗅觉 (обоняние) vs 味觉 (вкус) vs 闻 (нюхать) vs 气味 (запах).</li>
+      <li>🔹 Сочетаемость: 嗅觉灵敏 ✅, 嗅觉失灵 ✅; *嗅觉好吃 ❌ (неправильно).</li>
+      <li>🔹 Культурное: в файле преподаватель связала 味觉 / 嗅觉 / 视觉 / 听觉 — четыре чувства.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель объяснила: 嗅觉 — «闻一闻觉得是香还是不香». (B) И 嗅觉 vs 味觉: 嗅觉 — нос, 味觉 — язык. (D) ❌ Ошибка студента — *嗅觉很香 ❌ (смешение с 味道); правильно 嗅觉很灵敏 / 闻起来很香 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>狗的______比人灵敏得多。</li><li>______是我闻一闻，觉得香还是不香。</li></ol><div class="answers">Ответы: 1. 嗅觉 · 2. 嗅觉</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 中国菜讲究色香味俱全，嗅觉的享受同样重要。<br><span class="py">Zhōngguó cài jiǎngjiu sè xiāng wèi jù quán, xiùjué de xiǎngshòu tóngyàng zhòngyào.</span><br><span class="ru">Китайская кухня ценит «цвет, аромат и вкус» — обонятельное удовольствие не менее важно.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">一走进那家面包店，嗅觉就被香味抓住了。</div><div class="py">Yì zǒujìn nà jiā miànbāodiàn, xiùjué jiù bèi xiāngwèi zhuāzhù le.</div><div class="ru">Как только заходишь в ту пекарню, обоняние сразу ловит аромат.</div><div class="ru">🗣️ Когда описываешь приятный запах.</div></blockquote>
+  </div>
+</section>
+
+<!-- 33 听觉 -->
+<section class="word" data-search="听觉 ting jue tīngjué слух">
+  <h2><span class="emoji">👂🎵</span><span class="hanzi">听觉</span><span class="pinyin">tīngjué</span><span class="trans">— слух (чувство слуха)</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-книжное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>耳朵听声音的感觉。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>слух (чувство слуха).</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">听觉体验</td><td>tīngjué tǐyàn</td><td>слуховой опыт</td><td>名词 + 名词</td></tr>
+      <tr><td class="hz">听觉效果</td><td>tīngjué xiàoguǒ</td><td>звуковой эффект</td><td>固定搭配</td></tr>
+      <tr><td class="hz">听觉灵敏</td><td>tīngjué língmǐn</td><td>тонкий слух</td><td>固定搭配</td></tr>
+      <tr><td class="hz">听觉享受</td><td>tīngjué xiǎngshòu</td><td>слуховое удовольствие</td><td>名词 + 名词</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">从视觉、听觉和味觉的体验之外，还有更多的感受。</div><div class="py">Cóng shìjué, tīngjué hé wèijué de tǐyàn zhī wài, hái yǒu gèng duō de gǎnshòu.</div><div class="ru">Помимо визуального, слухового и вкусового опыта есть ещё много ощущений. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">这首曲子的听觉效果特别震撼。</div><div class="py">Zhè shǒu qǔzi de tīngjué xiàoguǒ tèbié zhènjùn.</div><div class="ru">Звуковой эффект этой мелодии особенно впечатляет.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>听 (tīng) — «слушать».</b> Образ: 口 (рот) + 斤 (топор) — «рот и топор» = слушать (упрощённо). Встречается в: 听见 (услышать), 听说 (слышал), 听觉 (слух). <span class="tip">🧠 слушать = 听</span></li>
+        <li><b>觉 (jué) — «чувство, ощущение».</b> Образ: 学 + 见 — «учиться и видеть» = осознавать. Встречается в: 感觉 (чувство), 听觉 (слух), 觉得 (казаться). <span class="tip">🧠 осознавать = ощущение</span></li>
+      </ul>
+      <p><b>Связка:</b> 听 (слушать) + 觉 (ощущение) = «ощущение слуха» = слух.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>视觉 — «зрение» — глаза.</li>
+      <li>味觉 — «вкус» — язык.</li>
+      <li>嗅觉 — «обоняние» — нос.</li>
+      <li>Пример-сравнение: 视觉 (зрение) / 听觉 (слух) / 味觉 (вкус) / 嗅觉 (обоняние) — четыре чувства.</li>
+      <li>🔹 Сочетаемость: 听觉效果 ✅, 听觉体验 ✅; *听觉好听 ❌ (лучше 声音好听).</li>
+      <li>🔹 Культурное: в файле преподаватель дала все четыре: 视觉, 听觉, 味觉, 嗅觉.</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель дала все четыре чувства. (B) И 听觉 vs 视觉: 听觉 — уши, 视觉 — глаза. (D) ❌ Ошибка студента — *听觉很漂亮 ❌ (смешение); правильно 声音很好听 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>除了视觉、______和味觉，还有触觉。</li><li>这首曲子的______效果特别震撼。</li></ol><div class="answers">Ответы: 1. 听觉 · 2. 听觉</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 音乐不仅给人听觉上的享受，也能触动心灵。<br><span class="py">Yīnyuè bùjǐn gěi rén tīngjué shàng de xiǎngshòu, yě néng chùdòng xīnlíng.</span><br><span class="ru">Музыка не только даёт слуховое удовольствие, но и трогает душу.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">戴上耳机听这首歌，听觉上的享受太强了。</div><div class="py">Dàishàng ěrjī tīng zhè shǒu gē, tīngjué shàng de xiǎngshòu tài qiáng le.</div><div class="ru">Надеваешь наушники и слушаешь эту песню — слуховое удовольствие просто огромное.</div><div class="ru">🗣️ Когда делишься любимой музыкой.</div></blockquote>
+  </div>
+</section>
+
+<!-- 34 触觉 -->
+<section class="word" data-search="触觉 chu jue chùjué осязание">
+  <h2><span class="emoji">✋🖐️</span><span class="hanzi">触觉</span><span class="pinyin">chùjué</span><span class="trans">— осязание, тактильное чувство</span></h2>
+  <div class="meta-line"><b>Регистр:</b> нейтрально-книжное.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Часть речи:</div>名词.</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Китайское толкование:</div>皮肤接触东西的感觉。</div>
+  <div class="block"><div class="label"><span class="check">✅</span> Русский перевод:</div>осязание, тактильное чувство.</div>
+  <div class="block"><div class="label">Коллокации</div>
+    <table class="colloc"><thead><tr><th>搭配</th><th>拼音</th><th>俄译</th><th>考点/регистр</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">触觉体验</td><td>chùjué tǐyàn</td><td>тактильный опыт</td><td>名词 + 名词</td></tr>
+      <tr><td class="hz">触觉灵敏</td><td>chùjué língmǐn</td><td>тонкое осязание</td><td>固定搭配</td></tr>
+      <tr><td class="hz">触觉感受</td><td>chùjué gǎnshòu</td><td>тактильное ощущение</td><td>名词 + 名词</td></tr>
+      <tr><td class="hz">触觉刺激</td><td>chùjué cìjī</td><td>тактильный стимул</td><td>名词 + 名词</td></tr>
+    </tbody></table>
+  </div>
+  <div class="block"><div class="label">Жизненные примеры</div>
+    <blockquote class="example"><div class="hz">除了视觉、听觉、味觉和嗅觉，还有触觉。</div><div class="py">Chúle shìjué, tīngjué, wèijué hé xiùjué, hái yǒu chùjué.</div><div class="ru">Помимо зрения, слуха, вкуса и обоняния есть ещё осязание. (из урока)</div></blockquote>
+    <blockquote class="example"><div class="hz">这块布料的触觉很柔软，摸着特别舒服。</div><div class="py">Zhè kuài bùliào de chùjué hěn róuruǎn, mōzhe tèbié shūfu.</div><div class="ru">Эта ткань на ощупь очень мягкая — трогать особенно приятно.</div></blockquote>
+  </div>
+  <div class="block"><div class="label">Разбор по иероглифам</div>
+    <div class="keys"><div class="label">🔑 Улучшенное пояснение ключей</div>
+      <ul>
+        <li><b>触 (chù) — «касаться».</b> Образ: 角 (рог) + 虫 (насекомое) — «рог касается» = касаться. Встречается в: 接触 (контакт), 触觉 (осязание), 触摸 (трогать). <span class="tip">🧠 рог касается = касаться</span></li>
+        <li><b>觉 (jué) — «чувство, ощущение».</b> Образ: 学 + 见 — «учиться и видеть» = осознавать. Встречается в: 感觉 (чувство), 触觉 (осязание), 觉得 (казаться). <span class="tip">🧠 осознавать = ощущение</span></li>
+      </ul>
+      <p><b>Связка:</b> 触 (касаться) + 觉 (ощущение) = «ощущение от касания» = осязание.</p>
+    </div>
+  </div>
+  <div class="block"><div class="label">Близкие слова + ловушки</div>
+    <ul class="plain compare">
+      <li>视觉 — «зрение» — глаза.</li>
+      <li>听觉 — «слух» — уши.</li>
+      <li>味觉 — «вкус» — язык.</li>
+      <li>嗅觉 — «обоняние» — нос.</li>
+      <li>Пример-сравнение: 视觉 / 听觉 / 味觉 / 嗅觉 / 触觉 — пять чувств.</li>
+      <li>🔹 Сочетаемость: 触觉体验 ✅, 触觉灵敏 ✅; *触觉好吃 ❌ (неправильно).</li>
+    </ul>
+  </div>
+  <div class="teacher"><span class="who">Комментарий учителя:</span> (A) В файле преподаватель перечислила все чувства. (B) И 触觉 — пятое чувство, после 视觉/听觉/味觉/嗅觉. (D) ❌ Ошибка студента — *触觉很香 ❌ (смешение); правильно 触觉很柔软 ✅.</div>
+  <div class="test"><div class="label">Мини-тест</div><ol><li>除了视觉、听觉、味觉和嗅觉，还有______。</li><li>这块布料的______很柔软。</li></ol><div class="answers">Ответы: 1. 触觉 · 2. 触觉</div></div>
+  <div class="hsk6"><span class="tag">Для HSK 6 (эссе):</span> 好的设计不仅考虑视觉，也考虑触觉体验。<br><span class="py">Hǎo de shèjì bùjǐn kǎolǜ shìjué, yě kǎolǜ chùjué tǐyàn.</span><br><span class="ru">Хороший дизайн учитывает не только зрение, но и тактильный опыт.</span></div>
+  <div class="block"><div class="label">✨ Живой пример</div>
+    <blockquote class="example"><div class="hz">这件毛衣的触觉特别舒服，一摸就知道是好料子。</div><div class="py">Zhè jiàn máoyī de chùjué tèbié shūfu, yì mō jiù zhīdào shì hǎo liàozi.</div><div class="ru">Этот свитер на ощупь особенно приятный — сразу чувствуется хороший материал.</div><div class="ru">🗣️ Когда выбираешь одежду в магазине.</div></blockquote>
+  </div>
+</section>
+
+<!-- ЧЕК-ЛИСТ -->
+<section class="checklist">
+  <h3>Чек-лист</h3>
+  <ul>
+    <li>все 34 карточки сохранены дословно?</li>
+    <li>разбор ключей по шаблону: [иероглиф] (пиньинь) — значение. Образ: … Встречается в: … 🧠 ассоциация?</li>
+    <li>пиньинь везде, где нужно?</li>
+    <li>таблицы коллокаций на месте?</li>
+    <li>живые примеры с пометкой «когда говорить»?</li>
+    <li>мини-тесты с ответами?</li>
+    <li>предложения для HSK 6 с пиньинем и переводом?</li>
+    <li>ничего не выдумано, ничего не удалено?</li>
+  </ul>
+</section>
+
+<p class="footer-note">34 карточки · разбор ключей по шаблону · встроенный поиск</p>
+
+</div>
+
+<button id="toTop" title="Наверх">↑</button>
+
+<script>
+(function(){
+  const q = document.getElementById('q');
+  const words = Array.from(document.querySelectorAll('.word'));
+  const meta = document.getElementById('searchMeta');
+  const clearBtn = document.getElementById('clearBtn');
+  const noResults = document.getElementById('noResults');
+  const toTop = document.getElementById('toTop');
+
+  const index = words.map(w => ({
+    el: w,
+    text: ((w.dataset.search || '') + ' ' + w.textContent).toLowerCase()
+  }));
+
+  function runSearch(){
+    const term = q.value.trim().toLowerCase();
+    let shown = 0;
+    if(!term){
+      index.forEach(o => o.el.classList.remove('hidden'));
+      meta.textContent = '';
+      clearBtn.style.display = 'none';
+      noResults.style.display = 'none';
+      return;
+    }
+    clearBtn.style.display = 'inline-block';
+    index.forEach(o => {
+      const hit = o.text.includes(term);
+      o.el.classList.toggle('hidden', !hit);
+      if(hit) shown++;
+    });
+    meta.textContent = shown + ' из ' + index.length;
+    noResults.style.display = shown ? 'none' : 'block';
+  }
+
+  q.addEventListener('input', runSearch);
+  clearBtn.addEventListener('click', () => { q.value=''; runSearch(); q.focus(); });
+
+  document.addEventListener('keydown', e => {
+    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
+      e.preventDefault(); q.focus(); q.select();
+    }
+    if(e.key === 'Escape' && document.activeElement === q){
+      q.value=''; runSearch(); q.blur();
+    }
+  });
+
+  window.addEventListener('scroll', () => {
+    toTop.classList.toggle('show', window.scrollY > 400);
+  });
+  toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+})();
+</script>
+</body>
+</html>
